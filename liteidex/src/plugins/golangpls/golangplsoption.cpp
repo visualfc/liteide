@@ -45,6 +45,9 @@ void GolangPlsOption::save()
     m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_ST1, ui->st1CheckBox->isChecked());
     m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_QF1, ui->qf1CheckBox->isChecked());
     m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_UNREACHABLE, ui->unreachableCheckBox->isChecked());
+    m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_COMPILER, ui->compilerCheckBox->isChecked());
+    m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_SYNTAX, ui->syntaxCheckBox->isChecked());
+    m_liteApp->settings()->setValue(GOLANGPLS_STATICCHECK_SHADOW, ui->shadowCheckBox->isChecked());
 }
 
 void GolangPlsOption::load()
@@ -60,4 +63,7 @@ void GolangPlsOption::load()
     ui->st1CheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_ST1, true).toBool());
     ui->qf1CheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_QF1, true).toBool());
     ui->unreachableCheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_UNREACHABLE, true).toBool());
+    ui->compilerCheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_COMPILER, true).toBool());
+    ui->syntaxCheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SYNTAX, true).toBool());
+    ui->shadowCheckBox->setChecked(m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SHADOW, true).toBool());
 }

@@ -11,6 +11,7 @@
 #include "golangplsusage.h"
 
 class GoPlsServer;
+class GolangPlsHighlighterFactory;
 
 class GolangPls : public QObject
 {
@@ -20,16 +21,16 @@ public:
     ~GolangPls();
 
     void setCompleter(LiteApi::ICompleter *completer);
-
+    void setHighlightFactory(GolangPlsHighlighterFactory *factory);
 public slots:
-    void currentEditorChanged(LiteApi::IEditor*editor);
+    void currentEditorChanged(LiteApi::IEditor *editor);
     void editorCreated(LiteApi::IEditor *editor);
     void editorClosed(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor *editor);
     void editorChanged();
 
     void prefixChanged(QTextCursor, QString, bool force);
-    void wordCompleted(QString,QString,QString);
+    void wordCompleted(QString, QString, QString);
 
     void onLogMessage(const QString &message, bool isError);
     void onAutoCompletion(const QString &filename, const QList<AutoCompletionResult> &result);
@@ -39,7 +40,8 @@ public slots:
     void onHoverResult(const QString &filename, const QList<HoverResult> &result);
     void onHoverDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions);
     void onDiagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
-    void onDocumentSymbolsRfesult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
+    void onDocumentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
+    void onSemanticTokensResult(const QString &filename, const QVariantList &list);
 
     void editorJumpToDecl();
     void renameSymbol();
@@ -49,8 +51,8 @@ public slots:
     void onUpdateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
 
     static void computeModifications(const QString &original, const QString &current, int &startLine, int &startPos, int &endLine, int &endPos, QString &content);
-    void fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos) const;
-    void fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column) const;
+    static void fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos);
+    static void fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column);
     void applyOption(QString id);
     void appLoaded();
     QString findModulePath(const QString &filepath) const;
@@ -81,6 +83,8 @@ private:
     QStringList m_staticcheckEnables;
 
     GolangPlsUsage *m_fileSearch;
+
+    GolangPlsHighlighterFactory *m_highlightFactory;
 };
 
 #endif // GOLANGPLS_H

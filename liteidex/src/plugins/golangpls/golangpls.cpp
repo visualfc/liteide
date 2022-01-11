@@ -4,6 +4,9 @@
 #include "goplsserver.h"
 #include "quickopenapi/quickopenapi.h"
 #include "golangpls_global.h"
+#include "../liteeditor/liteeditor.h"
+#include "golangplshighlighterfactory.h"
+#include "golangplshighlighter.h"
 
 GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     : QObject(parent)
@@ -11,18 +14,18 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     , m_completer(nullptr)
     , m_server(new GoPlsServer(app))
 {
-    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangPls");
+    LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this, "GolangPls");
 
-    m_jumpDeclAct = new QAction(tr("Jump to Declaration"),this);
-    actionContext->regAction(m_jumpDeclAct,"JumpToDeclaration!","CTRL+SHIFT+J;F2");
+    m_jumpDeclAct = new QAction(tr("Jump to Declaration"), this);
+    actionContext->regAction(m_jumpDeclAct, "JumpToDeclaration!", "CTRL+SHIFT+J;F2");
     connect(m_jumpDeclAct, &QAction::triggered, this, &GolangPls::editorJumpToDecl);
 
-    m_refactorAct = new QAction(tr("Rename symbol"),this);
-    actionContext->regAction(m_refactorAct,"RenameSymbol!","CTRL+SHIFT+R");
+    m_refactorAct = new QAction(tr("Rename symbol"), this);
+    actionContext->regAction(m_refactorAct, "RenameSymbol!", "CTRL+SHIFT+R");
     connect(m_refactorAct, &QAction::triggered, this, &GolangPls::renameSymbol);
 
-    m_usageAct = new QAction(tr("Find usages"),this);
-    actionContext->regAction(m_usageAct,"FindUsages!","CTRL+SHIFT+U");
+    m_usageAct = new QAction(tr("Find usages"), this);
+    actionContext->regAction(m_usageAct, "FindUsages!", "CTRL+SHIFT+U");
     connect(m_usageAct, &QAction::triggered, this, &GolangPls::findUsage);
 
     connect(m_liteApp, &LiteApi::IApplication::sessionListChanged, this, &GolangPls::appLoaded);
@@ -35,13 +38,14 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_server, &GoPlsServer::hoverDefinitionResult, this, &GolangPls::onHoverDefinitionResult);
     connect(m_server, &GoPlsServer::diagnosticsInfo, this, &GolangPls::onDiagnosticsInfo);
     connect(m_server, &GoPlsServer::documentSymbolsResult, this, &GolangPls::onDocumentSymbolsResult);
+    connect(m_server, &GoPlsServer::semanticTokensResult, this, &GolangPls::onSemanticTokensResult);
 
-    connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::currentEditorChanged,this, &GolangPls::currentEditorChanged);
-    connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorCreated,this, &GolangPls::editorCreated);
+    connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::currentEditorChanged, this, &GolangPls::currentEditorChanged);
+    connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorCreated, this, &GolangPls::editorCreated);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToClose, this, &GolangPls::editorClosed);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorAboutToSave, this, &GolangPls::editorSaved);
 
-    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+    connect(m_liteApp->optionManager(), SIGNAL(applyOption(QString)), this, SLOT(applyOption(QString)));
     m_liteApp->optionManager()->emitApplyOption(OPTION_GOLANGPLS);
     //connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorModifyChanged, this, &GolangPls::editorChanged);
 
@@ -66,15 +70,20 @@ GolangPls::~GolangPls()
 void GolangPls::setCompleter(LiteApi::ICompleter *completer)
 {
     if (m_completer) {
-        disconnect(m_completer,0,this,0);
+        disconnect(m_completer, 0, this, 0);
     }
     m_completer = completer;
     if (m_completer) {
         m_completer->setSearchSeparator(false);
         m_completer->setExternalMode(true);
-        connect(m_completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(prefixChanged(QTextCursor,QString,bool)));
-        connect(m_completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(wordCompleted(QString,QString,QString)));
+        connect(m_completer, SIGNAL(prefixChanged(QTextCursor, QString, bool)), this, SLOT(prefixChanged(QTextCursor, QString, bool)));
+        connect(m_completer, SIGNAL(wordCompleted(QString, QString, QString)), this, SLOT(wordCompleted(QString, QString, QString)));
     }
+}
+
+void GolangPls::setHighlightFactory(GolangPlsHighlighterFactory *factory)
+{
+    m_highlightFactory = factory;
 }
 
 void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
@@ -85,24 +94,24 @@ void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
     }
 
     auto liteEditor = LiteApi::getLiteEditor(editor);
-    if(liteEditor){
+    if (liteEditor) {
         liteEditor->clearAnnotations("staticcheck");
     }
 
     if (editor->mimeType() == "text/x-gosrc") {
-        LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
+        LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter *>(editor, "LiteApi.ICompleter");
         this->setCompleter(completer);
     } else if (editor->mimeType() == "browser/goplay") {
-        LiteApi::IEditor* pedit = LiteApi::findExtensionObject<LiteApi::IEditor*>(m_liteApp->extension(),"LiteApi.Goplay.IEditor");
+        LiteApi::IEditor *pedit = LiteApi::findExtensionObject<LiteApi::IEditor *>(m_liteApp->extension(), "LiteApi.Goplay.IEditor");
         if (pedit && pedit->mimeType() == "text/x-gosrc") {
             editor = pedit;
-            LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
+            LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter *>(editor, "LiteApi.ICompleter");
             this->setCompleter(completer);
         }
     } else {
         this->setCompleter(0);
         return;
-        if(m_currentFile != "") {
+        if (m_currentFile != "") {
             m_server->fileClosed(m_currentFile);
         }
     }
@@ -114,8 +123,6 @@ void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
 
     m_currentFile = m_editor->filePath();
     QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(m_editor);
-    m_server->fileOpened(editor->filePath(), plainTextEditor->toPlainText());
-    m_server->documentSymbols(editor->filePath());
     m_plainText = plainTextEditor->toPlainText();
 }
 
@@ -145,23 +152,25 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
         return;
     }
     auto workspaceDirectory = findModulePath(filePath);
-    if(!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
+    if (!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
         m_server->updateWorkspaceFolders({workspaceDirectory}, {});
         m_opendWorkspace.insert(workspaceDirectory, true);
     }
     connect(editor, &LiteApi::IEditor::contentsChanged, this, &GolangPls::editorChanged);
-    connect(editor, SIGNAL(updateLink(QTextCursor,QPoint,bool)), this, SLOT(onUpdateLink(QTextCursor,QPoint,bool)));
+    connect(editor, SIGNAL(updateLink(QTextCursor, QPoint, bool)), this, SLOT(onUpdateLink(QTextCursor, QPoint, bool)));
 
     QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(editor);
+    m_server->fileOpened(editor->filePath(), plainTextEditor->toPlainText());
+    m_server->documentSymbols(editor->filePath());
+
     const QString filepath = editor->filePath();
     m_plainText = plainTextEditor->toPlainText();
-    connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, editor, filepath, plainTextEditor]() {
+    connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, filepath, plainTextEditor]() {
         int startLine, startPos, endLine, endPos;
         QString content;
         computeModifications(m_plainText, plainTextEditor->toPlainText(), startLine, startPos, endLine, endPos, content);
         m_server->fileChanged(filepath, startLine, startPos, endLine, endPos, content);
         m_plainText = plainTextEditor->toPlainText();
-        m_server->documentHighlight(m_currentFile, 0, 0, 0,0);
     });
 }
 
@@ -169,17 +178,17 @@ void GolangPls::editorClosed(LiteApi::IEditor *editor)
 {
     auto folders = activeWorkspaces();
     QStringList remove;
-    for(auto folder : m_opendWorkspace.keys()) {
-        if(!folders.contains(folder)){
+    for (const auto &folder : m_opendWorkspace.keys()) {
+        if (!folders.contains(folder)) {
             remove << folder;
             m_opendWorkspace.remove(folder);
         }
     }
     m_server->updateWorkspaceFolders({}, remove);
     // editor is the new one, get the last one
-    LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
-    if(currentEditor) {
-        m_server->fileClosed(currentEditor->filePath());
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (textEditor) {
+        m_server->fileClosed(textEditor->filePath());
     }
 }
 
@@ -189,14 +198,14 @@ void GolangPls::editorSaved(LiteApi::IEditor *editor)
     //    m_server->organizeImports(currentEditor->filePath());
     m_server->formatDocument(currentEditor->filePath());
     m_server->fileSaved(currentEditor->filePath(), LiteApi::getPlainTextEdit(currentEditor)->toPlainText());
-    m_liteApp->editorManager()->saveEditor(editor,false);
+    m_liteApp->editorManager()->saveEditor(editor, false);
 }
 
 void GolangPls::editorChanged()
 {
     QObject *source = QObject::sender();
     LiteApi::IEditor *editor = dynamic_cast<LiteApi::IEditor *>(source);
-    if(editor) {
+    if (editor) {
         m_server->documentSymbols(editor->filePath());
     }
 }
@@ -227,9 +236,9 @@ void GolangPls::onLogMessage(const QString &message, bool isError)
 
 void GolangPls::onAutoCompletion(const QString &filename, const QList<AutoCompletionResult> &result)
 {
-    QStandardItem *root= m_completer->findRoot(m_preWord);
-    for(const auto &item: result) {
-        m_completer->appendChildItem(root,item.label,item.type,item.detail,QIcon(),true);
+    QStandardItem *root = m_completer->findRoot(m_preWord);
+    for (const auto &item : result) {
+        m_completer->appendChildItem(root, item.label, item.type, item.detail, QIcon(), true);
     }
     m_completer->updateCompleterModel();
     m_completer->showPopup();
@@ -237,13 +246,13 @@ void GolangPls::onAutoCompletion(const QString &filename, const QList<AutoComple
 
 void GolangPls::onDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions)
 {
-    if(definitions.isEmpty()){
+    if (definitions.isEmpty()) {
         return;
     }
 
     DefinitionResult result = definitions.first();
     QString fileName = result.path;
-    LiteApi::gotoLine(m_liteApp,fileName,result.line, result.column,true,true);
+    LiteApi::gotoLine(m_liteApp, fileName, result.line, result.column, true, true);
 }
 
 void GolangPls::onFormattingResults(const QString &filename, const QList<TextEditResult> &list)
@@ -256,7 +265,7 @@ void GolangPls::onFormattingResults(const QString &filename, const QList<TextEdi
 
 void GolangPls::onUpdateFile(const QString &filename, const QList<TextEditResult> &list)
 {
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename,true);
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename, true);
     if (!editor) {
         QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(filename);
         editor = m_liteApp->editorManager()->openEditor(filename, mimeType);
@@ -271,17 +280,18 @@ void GolangPls::onUpdateFile(const QString &filename, const QList<TextEditResult
 
 void GolangPls::onHoverResult(const QString &filename, const QList<HoverResult> &result)
 {
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename,true);
-    if(editor) {
-        for(auto &res : result) {
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename, true);
+    if (editor) {
+        for (auto &res : result) {
             m_lastLink.showTip = true;
             m_lastLink.targetInfo = res.info;
             fromLineAndColumnToPos(editor, res.startLine, res.startColumn, m_lastLink.linkTextStart);
             fromLineAndColumnToPos(editor, res.endLine, res.endColumn, m_lastLink.linkTextEnd);
 
             auto liteEditor = LiteApi::getLiteEditor(editor);
-            if(liteEditor)
+            if (liteEditor) {
                 liteEditor->showLink(m_lastLink);
+            }
             break;
         }
     }
@@ -289,17 +299,18 @@ void GolangPls::onHoverResult(const QString &filename, const QList<HoverResult> 
 
 void GolangPls::onHoverDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions)
 {
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename,true);
-    if(editor) {
-        for(auto def : definitions) {
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(filename, true);
+    if (editor) {
+        for (auto def : definitions) {
             m_lastLink.targetFileName = def.path;
             m_lastLink.targetLine = def.line;
             m_lastLink.targetColumn = def.column;
             m_lastLink.showNav = true;
 
             auto liteEditor = LiteApi::getLiteEditor(editor);
-            if(liteEditor)
+            if (liteEditor) {
                 liteEditor->showLink(m_lastLink);
+            }
             break;
         }
     }
@@ -307,20 +318,22 @@ void GolangPls::onHoverDefinitionResult(const QString &filename, const QList<Def
 
 void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics)
 {
-    auto editor = m_liteApp->editorManager()->findEditor(filename, false);
-    if(editor) {
+    auto editor = m_liteApp->editorManager()->findEditor(filename, true);
+
+    if (editor) {
         auto liteEditor = LiteApi::getLiteEditor(editor);
-        if(liteEditor) {
+        if (liteEditor) {
             liteEditor->clearAnnotations("staticcheck");
-            for(auto diag : diagnostics) {
+            for (const auto &diag : diagnostics) {
                 bool disabled = true;
-                for(auto check : m_staticcheckEnables) {
-                    if(diag.code.startsWith(check)) {
+                for (const auto &check : qAsConst(m_staticcheckEnables)) {
+                    if (diag.code.startsWith(check)) {
                         disabled = false;
                         break;
                     }
                 }
-                if(disabled) {
+                qDebug() << "DIAGNOSTIC(enabled:" << !disabled << "):" << filename << ": [" << diag.code << "]" << diag.line << ": " << diag.message;
+                if (disabled) {
                     continue;
                 }
                 LiteApi::Annotation annotation;
@@ -336,17 +349,29 @@ void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<Diagnosti
 void GolangPls::onDocumentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols)
 {
     auto editor = m_liteApp->editorManager()->findEditor(filename, false);
-    if(editor) {
+    if (editor) {
         auto liteEditor = LiteApi::getLiteEditor(editor);
-        if(liteEditor) {
+        if (liteEditor) {
             liteEditor->loadSymbols(symbols);
+        }
+    }
+}
+
+void GolangPls::onSemanticTokensResult(const QString &filename, const QVariantList &list)
+{
+    auto editor = m_liteApp->editorManager()->findEditor(filename, false);
+    qDebug() << "EDITOR=" << editor << ", factory=" << m_highlightFactory;
+    if (editor && m_highlightFactory) {
+        auto highlighter = m_highlightFactory->getHighlighter(editor);
+        if (highlighter) {
+            highlighter->onHighlightResults(list);
         }
     }
 }
 
 void GolangPls::editorJumpToDecl()
 {
-    if(!m_editor) {
+    if (!m_editor) {
         return;
     }
 
@@ -368,7 +393,7 @@ void GolangPls::findUsage()
 {
     m_fileSearch->start();
     auto cursor = m_editor->textCursor();
-    m_server->askFindUsage(m_editor->filePath(), cursor.blockNumber(), cursor.position()-cursor.block().position());
+    m_server->askFindUsage(m_editor->filePath(), cursor.blockNumber(), cursor.position() - cursor.block().position());
 }
 
 void GolangPls::editorFindUsages()
@@ -383,7 +408,7 @@ void GolangPls::editText(LiteApi::IEditor *liteEditor, const QList<TextEditResul
     auto cursor = editor->textCursor();
     QString text = editor->toPlainText();
     QList<TextEditResult> edits;
-    for(auto it = list.crbegin(); it != list.crend(); ++it) {
+    for (auto it = list.crbegin(); it != list.crend(); ++it) {
         auto changes = *it;
         int startPos;
         fromLineAndColumnToPos(liteEditor, changes.startLine, changes.startColumn, startPos);
@@ -400,8 +425,8 @@ void GolangPls::editText(LiteApi::IEditor *liteEditor, const QList<TextEditResul
 
 void GolangPls::onUpdateLink(const QTextCursor &cursor, const QPoint &curPos, bool nav)
 {
-    auto editor = dynamic_cast<LiteApi::IEditor*>(sender());
-    if(!editor) {
+    auto editor = dynamic_cast<LiteApi::IEditor *>(sender());
+    if (!editor) {
         return;
     }
 
@@ -421,55 +446,55 @@ void GolangPls::computeModifications(const QString &original, const QString &cur
     int start = 0;
     int end = 0;
     content = "";
-    while(true) {
-        if(start < original.length() && start < current.length()) {
-            if(original.at(start) != current.at(start)) {
+    while (true) {
+        if (start < original.length() && start < current.length()) {
+            if (original.at(start) != current.at(start)) {
                 break;
             }
             start++;
-        }else{
+        } else {
             break;
         }
     }
     int fromEnd = 0;
-    while(true) {
-        if(original.length() - fromEnd > start && current.length() - fromEnd > start) {
-            if(original.at(original.length()-fromEnd-1) != current.at(current.length()-fromEnd-1)) {
+    while (true) {
+        if (original.length() - fromEnd > start && current.length() - fromEnd > start) {
+            if (original.at(original.length() - fromEnd - 1) != current.at(current.length() - fromEnd - 1)) {
                 break;
             }
             fromEnd++;
-        }else{
+        } else {
             break;
         }
     }
-    end = original.length()-fromEnd;
-    content = current.mid(start, current.length()-fromEnd-start);
+    end = original.length() - fromEnd;
+    content = current.mid(start, current.length() - fromEnd - start);
     const QString startString = original.left(start);
     const QString endString = original.left(end);
     startLine = startString.count("\n");
-    startPos = start-startString.lastIndexOf("\n")-1;
+    startPos = start - startString.lastIndexOf("\n") - 1;
     endLine = endString.count("\n");
-    endPos = end-endString.lastIndexOf("\n")-1;
+    endPos = end - endString.lastIndexOf("\n") - 1;
 }
 
-void GolangPls::fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos) const
+void GolangPls::fromLineAndColumnToPos(LiteApi::IEditor *editor, int line, int column, int &pos)
 {
     auto liteEditor = LiteApi::getLiteEditor(editor);
-    if(liteEditor) {
+    if (liteEditor) {
         auto doc = liteEditor->document();
         auto block = doc->findBlockByLineNumber(line);
-        pos = block.position()+column;
+        pos = block.position() + column;
     }
 }
 
-void GolangPls::fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column) const
+void GolangPls::fromPosToLineAndColumn(LiteApi::IEditor *editor, int pos, int &line, int &column)
 {
     auto liteEditor = LiteApi::getLiteEditor(editor);
-    if(liteEditor) {
+    if (liteEditor) {
         auto doc = liteEditor->document();
         auto block = doc->findBlock(pos);
         line = block.blockNumber();
-        column = pos-block.position();
+        column = pos - block.position();
     }
 }
 
@@ -479,57 +504,70 @@ void GolangPls::applyOption(QString id)
         return;
     }
 
-    bool sa1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA1,true).toBool();
-    bool sa2 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA2,true).toBool();
-    bool sa3 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA3,true).toBool();
-    bool sa4 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA4,true).toBool();
-    bool sa5 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA5,true).toBool();
-    bool sa6 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA6,true).toBool();
-    bool sa9 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA9,true).toBool();
-    bool s1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_S1,true).toBool();
-    bool st1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_ST1,true).toBool();
-    bool qf1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_QF1,true).toBool();
-    bool unreachable = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_UNREACHABLE,true).toBool();
+    bool sa1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA1, true).toBool();
+    bool sa2 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA2, true).toBool();
+    bool sa3 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA3, true).toBool();
+    bool sa4 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA4, true).toBool();
+    bool sa5 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA5, true).toBool();
+    bool sa6 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA6, true).toBool();
+    bool sa9 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SA9, true).toBool();
+    bool s1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_S1, true).toBool();
+    bool st1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_ST1, true).toBool();
+    bool qf1 = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_QF1, true).toBool();
+    bool unreachable = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_UNREACHABLE, true).toBool();
+    bool compiler = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_COMPILER, true).toBool();
+    bool shadow = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SHADOW, true).toBool();
+    bool syntax = m_liteApp->settings()->value(GOLANGPLS_STATICCHECK_SYNTAX, true).toBool();
 
     m_staticcheckEnables.clear();
-    if(sa1) {
+    if (sa1) {
         m_staticcheckEnables << "SA1";
     }
-    if(sa2) {
+    if (sa2) {
         m_staticcheckEnables << "SA2";
     }
-    if(sa3) {
+    if (sa3) {
         m_staticcheckEnables << "SA3";
     }
-    if(sa4) {
+    if (sa4) {
         m_staticcheckEnables << "SA4";
     }
-    if(sa5) {
+    if (sa5) {
         m_staticcheckEnables << "SA5";
     }
-    if(sa6) {
+    if (sa6) {
         m_staticcheckEnables << "SA6";
     }
-    if(sa9) {
+    if (sa9) {
         m_staticcheckEnables << "SA9";
     }
-    if(s1) {
+    if (s1) {
         m_staticcheckEnables << "S1";
     }
-    if(st1) {
+    if (st1) {
         m_staticcheckEnables << "ST1";
     }
-    if(qf1) {
+    if (qf1) {
         m_staticcheckEnables << "QF1";
     }
-    if(unreachable) {
+    if (unreachable) {
         m_staticcheckEnables << "unreachable";
     }
+    if (compiler) {
+        m_staticcheckEnables << "compiler";
+    }
+    if (shadow) {
+        m_staticcheckEnables << "shadow";
+    }
+    if (syntax) {
+        m_staticcheckEnables << "syntax";
+    }
+    qDebug() << "STATIC CHECK ENABLED" << m_staticcheckEnables;
 }
 
 void GolangPls::appLoaded()
 {
-    for(auto folder : activeWorkspaces()) {
+    for (auto folder : activeWorkspaces()) {
         m_opendWorkspace[folder] = true;
     }
 
@@ -539,8 +577,8 @@ void GolangPls::appLoaded()
 QString GolangPls::findModulePath(const QString &filepath) const
 {
     QString workspaceDirectory = QFileInfo(filepath).absoluteDir().absolutePath();
-    while(workspaceDirectory != "/") {
-        if(QFile::exists(workspaceDirectory+"/go.mod")) {
+    while (workspaceDirectory != "/") {
+        if (QFile::exists(workspaceDirectory + "/go.mod")) {
             break;
         }
         workspaceDirectory = QFileInfo(workspaceDirectory).absoluteDir().absolutePath();
@@ -551,9 +589,9 @@ QString GolangPls::findModulePath(const QString &filepath) const
 QStringList GolangPls::activeWorkspaces() const
 {
     QHash<QString, bool> folders;
-    for(auto editor: m_liteApp->editorManager()->editorList()) {
+    for (auto editor : m_liteApp->editorManager()->editorList()) {
         auto path = findModulePath(editor->filePath());
-        if(path == "/") {
+        if (path == "/") {
             continue;
         }
         folders[path] = true;
@@ -568,15 +606,15 @@ QPoint GolangPls::cursorPosition(QTextCursor cur) const
     cur.movePosition(QTextCursor::StartOfLine);
 
     int lines = 1;
-    while(cur.positionInBlock()>0) {
+    while (cur.positionInBlock() > 0) {
         cur.movePosition(QTextCursor::Up);
         lines++;
     }
     QTextBlock block = cur.block().previous();
 
-    while(block.isValid()) {
+    while (block.isValid()) {
         lines += block.lineCount();
         block = block.previous();
     }
-    return QPoint(column, lines-1);
+    return QPoint(column, lines - 1);
 }

@@ -52,7 +52,7 @@ func init() {
 public:
 	{{.Name}}() = default;
 	virtual ~{{.Name}}() {
-{{range .Attributes }}		if(m_{{.Name}}) { delete m_{{.Name}}; }
+{{range .Attributes }}		if(m_{{.Name}}) { {{ .Type.Deleter .Name}} }
 {{end}}	}
 {{range .Attributes }}
 	void set{{ ucfirst .Name}}({{.Type}} *{{.Name}}) { m_{{.Name}} = {{.Name}}; }
@@ -222,6 +222,10 @@ func (def *ListType) FromJson(json string, varname string) string {
 	return res
 }
 
+func (def *ListType) Deleter(varname string) string {
+	return fmt.Sprintf("qDeleteAll(*m_%s); delete m_%s;", varname, varname)
+}
+
 func (def *ListType) ComputeOrder() {
 	computeOrder(def.Type)
 }
@@ -264,6 +268,10 @@ func (def *HashType) FromJson(json string, varname string) string {
 	return res
 }
 
+func (def *HashType) Deleter(varname string) string {
+	return fmt.Sprintf("qDeleteAll(m_%s->values()); delete m_%s;", varname, varname)
+}
+
 func (def *HashType) ComputeOrder() {
 	computeOrder(def.Key)
 	computeOrder(def.Value)
@@ -302,6 +310,10 @@ func (def *BasicType) ToJson(varname string) string {
 		return st.ToJson(varname)
 	}
 	return fmt.Sprintf("QJsonObject %s = m_%s->toJson();", varname, varname)
+}
+
+func (def *BasicType) Deleter(varname string) string {
+	return fmt.Sprintf("delete m_%s;", varname);
 }
 
 func (def *BasicType) FromJson(json string, varname string) string {
@@ -348,6 +360,7 @@ type IType interface {
 	ComputeOrder()
 	ToJson(varname string) string
 	FromJson(json string, varname string) string
+	Deleter(varname string) string
 }
 
 //var constants = []ConstantDef{}

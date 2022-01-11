@@ -13,11 +13,16 @@ include (../../api/litefindapi/litefindapi.pri)
 include (../../api/liteeditorapi/liteeditorapi.pri)
 include (../../api/litebuildapi/litebuildapi.pri)
 include(../../utils/processex/processex.pri)
+include (../../3rdparty/qtc_texteditor/qtc_texteditor.pri)
+include (../../utils/colorstyle/colorstyle.pri)
+
 # Directories
 DEFINES += GOLANGPLS_LIBRARY
 
 SOURCES += \
     golangpls.cpp \
+    golangplshighlighter.cpp \
+    golangplshighlighterfactory.cpp \
     golangplsoption.cpp \
     golangplsoptionfactory.cpp \
     ../liteeditor/faketooltip.cpp \
@@ -30,6 +35,8 @@ HEADERS += \
     generated.h \
     golangpls.h \
     golangpls_global.h \
+    golangplshighlighter.h \
+    golangplshighlighterfactory.h \
     golangplsoption.h \
     golangplsoptionfactory.h \
     ../liteeditor/faketooltip.h \

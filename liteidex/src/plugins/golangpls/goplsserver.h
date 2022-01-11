@@ -8,7 +8,8 @@
 #include "liteapi/liteapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 
-namespace GoPlsTypes {
+namespace GoPlsTypes
+{
 class TextDocumentIdentifier;
 class Range;
 class Position;
@@ -35,12 +36,13 @@ signals:
     void diagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
     void documentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
     void findUsageResult(const QString &file, const QList<UsageResult> &list);
+    void semanticTokensResult(const QString &file, const QVariantList &list);
     void exited();
 
 protected slots:
     void onReadyRead();
     void onStarted();
-    void currentEnvChanged(LiteApi::IEnv*);
+    void currentEnvChanged(LiteApi::IEnv *);
 
 public:
     explicit GoPlsServer(LiteApi::IApplication *app, QObject *parent = nullptr);
@@ -93,6 +95,7 @@ protected:
     void decodeCurrentEnvChanged(const CommandData &data, const QJsonObject &response);
     void decodeSignatureHelp(const CommandData &data, const QJsonObject &response);
     void decodeFindUsage(const CommandData &data, const QJsonObject &response);
+    void decodeSemanticTokens(const CommandData &data, const QJsonObject &response);
     void printResponse(const CommandData &data, const QJsonObject &response);
 
 private:

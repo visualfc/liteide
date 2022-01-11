@@ -32,11 +32,11 @@
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+#define new DEBUG_NEW
 #endif
 //lite_memory_check_end
 
@@ -58,7 +58,7 @@ enum FuncState {
 /** Checks the "function()" formats. */
 bool maybeIsFunctionCall(const QList<Token> &tks, int idx)
 {
-    const Token& tk = tks[idx];
+    const Token &tk = tks[idx];
     if (!tk.isGoBuiltin() && !tk.is(T_IDENTIFIER)) {
         return false;
     }
@@ -78,34 +78,34 @@ FuncState updateFuncState(const Token &tk, FuncState funcState)
     if (tk.isComment()) {
         return funcState;
     }
-    switch(funcState) {
-    case FUNC_STATE_NORMAL: // fall through.
-    case FUNC_STATE_FUNC_DECL:
-        if (tk.is(T_GO_FUNC)) {
-            return FUNC_STATE_FUNC;
-        } else {
-            return FUNC_STATE_NORMAL;
-        }
-    case FUNC_STATE_FUNC:
-        if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
-            return FUNC_STATE_FUNC_DECL;
-        } else if (tk.is(T_LPAREN)) {
-            return FUNC_STATE_LPAREN;
-        } else {
-            return FUNC_STATE_NORMAL;
-        }
-    case FUNC_STATE_LPAREN:
-        if (tk.is(T_RPAREN)) {
-            return FUNC_STATE_RPAREN;
-        } else {
-            return FUNC_STATE_LPAREN;
-        }
-    case FUNC_STATE_RPAREN:
-        if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
-            return FUNC_STATE_FUNC_DECL;
-        } else {
-            return FUNC_STATE_NORMAL;
-        }
+    switch (funcState) {
+        case FUNC_STATE_NORMAL: // fall through.
+        case FUNC_STATE_FUNC_DECL:
+            if (tk.is(T_GO_FUNC)) {
+                return FUNC_STATE_FUNC;
+            } else {
+                return FUNC_STATE_NORMAL;
+            }
+        case FUNC_STATE_FUNC:
+            if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
+                return FUNC_STATE_FUNC_DECL;
+            } else if (tk.is(T_LPAREN)) {
+                return FUNC_STATE_LPAREN;
+            } else {
+                return FUNC_STATE_NORMAL;
+            }
+        case FUNC_STATE_LPAREN:
+            if (tk.is(T_RPAREN)) {
+                return FUNC_STATE_RPAREN;
+            } else {
+                return FUNC_STATE_LPAREN;
+            }
+        case FUNC_STATE_RPAREN:
+            if (tk.is(T_IDENTIFIER) || tk.isGoBuiltin()) {
+                return FUNC_STATE_FUNC_DECL;
+            } else {
+                return FUNC_STATE_NORMAL;
+            }
     }
     return funcState;
 }
@@ -131,8 +131,9 @@ GolangHighlighter::~GolangHighlighter()
 {
 }
 
-void GolangHighlighter::highlightBlock(const QString &text)
+void GolangHighlighter::highlightBlock(const QTextBlock &block)
 {
+    const QString text = block.text();
     int blockNumber = this->currentBlock().blockNumber();
     m_currentTodo.clear();
     highlightBlockHelper(text);
@@ -141,7 +142,7 @@ void GolangHighlighter::highlightBlock(const QString &text)
         if (m_currentTodo.isEmpty()) {
             m_todoInfoMap.remove(blockNumber);
         } else {
-            m_todoInfoMap.insert(blockNumber,m_currentTodo);
+            m_todoInfoMap.insert(blockNumber, m_currentTodo);
         }
     }
 }
@@ -194,15 +195,13 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
         if (text.length())  {// the empty line can still contain whitespace
             if (initialLexerState == T_COMMENT) {
                 highlightLine(text, 0, text.length(), m_creatorFormats[SyntaxHighlighter::Comment]);
-            }
-            else if (initialLexerState == T_DOXY_COMMENT) {
+            } else if (initialLexerState == T_DOXY_COMMENT) {
                 highlightLine(text, 0, text.length(), m_creatorFormats[SyntaxHighlighter::Comment]);
-            }
-            else if (initialLexerState == T_RAW_STRING_LITERAL) {
+            } else if (initialLexerState == T_RAW_STRING_LITERAL) {
                 highlightLine(text, 0, text.length(), m_creatorFormats[SyntaxHighlighter::String]);
-            }
-            else
+            } else {
                 setFormat(0, text.length(), m_creatorFormats[SyntaxHighlighter::VisualWhitespace]);
+            }
         }
         //BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
         setFoldingIndent(currentBlock(), foldingIndent);
@@ -227,8 +226,9 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
                                tokens.at(i - 1).length();
         }
 
-        if (previousTokenEnd != tk.begin())
+        if (previousTokenEnd != tk.begin()) {
             setFormat(previousTokenEnd, tk.begin() - previousTokenEnd, m_creatorFormats[SyntaxHighlighter::VisualWhitespace]);
+        }
 
         if (tk.is(T_LPAREN) || tk.is(T_LBRACE) || tk.is(T_LBRACKET)) {
             const QChar c = text.at(tk.begin());
@@ -295,10 +295,11 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
             if (initialLexerState && i == 0 && (tokens.size() > 1 || !lexerState)) {
                 --braceDepth;
                 // unless we are at the end of the block, we reduce the folding indent
-                if (i == tokens.size()-1)
+                if (i == tokens.size() - 1) {
                     BaseTextDocumentLayout::userData(currentBlock())->setFoldingEndIncluded(true);
-                else
+                } else {
                     foldingIndent = qMin(braceDepth, foldingIndent);
+                }
                 const int tokenEnd = tk.begin() + tk.length() - 1;
                 parentheses.append(Parenthesis(Parenthesis::Closed, QLatin1Char('-'), tokenEnd));
                 // clear the initial state.
@@ -320,10 +321,11 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
             if (initialLexerState && i == 0 && (tokens.size() > 1 || !lexerState)) {
                 --braceDepth;
                 // unless we are at the end of the block, we reduce the folding indent
-                if (i == tokens.size()-1)
+                if (i == tokens.size() - 1) {
                     BaseTextDocumentLayout::userData(currentBlock())->setFoldingEndIncluded(true);
-                else
+                } else {
                     foldingIndent = qMin(braceDepth, foldingIndent);
+                }
                 const int tokenEnd = tk.begin() + tk.length() - 1;
                 parentheses.append(Parenthesis(Parenthesis::Closed, QLatin1Char('-'), tokenEnd));
 
@@ -334,13 +336,13 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
         } else if (tk.isGoKeyword()) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Keyword]);
             if (tk.is(T_GO_PACKAGE)) {
-                int n = i+1;
+                int n = i + 1;
                 if (n < tokens.size() && tokens[n].is(T_IDENTIFIER)) {
-                    setContextData("go.package",text.mid(tokens[n].begin(),tokens[n].length()));
+                    setContextData("go.package", text.mid(tokens[n].begin(), tokens[n].length()));
                 }
             } else if (tk.is(T_GO_TYPE)) {
-                int size = tokens.size()-1;
-                int n = i+1;
+                int size = tokens.size() - 1;
+                int n = i + 1;
                 if (n < size && tokens[n].is(T_IDENTIFIER)) {
                     setFormat(tokens[n].begin(), tokens[n].length(), m_creatorFormats[SyntaxHighlighter::DataType]);
                 }
@@ -348,7 +350,7 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
 
             }
         } else if (tk.isGoTyped()) {
-            if ((i+1 == tokens.size()) || !tokens[i+1].is(T_DOT)) {
+            if ((i + 1 == tokens.size()) || !tokens[i + 1].is(T_DOT)) {
                 setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::DataType]);
             }
         } else if (tk.isGoBuiltin()) {
@@ -360,7 +362,7 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
         } else if (maybeIsFunctionCall(tokens, i)) {
             setFormat(tk.begin(), tk.length(), m_creatorFormats[SyntaxHighlighter::Function]);
         } else if (tk.is(T_IDENTIFIER)) {
-           // highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
+            // highlightWord(text.midRef(tk.begin(), tk.length()), tk.begin(), tk.length());
         }
 
         funcState = updateFuncState(tk, funcState);
@@ -371,8 +373,9 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
 
     // mark the trailing white spaces
     const int lastTokenEnd = tokens.last().end();
-    if (text.length() > lastTokenEnd)
+    if (text.length() > lastTokenEnd) {
         highlightLine(text, lastTokenEnd, text.length() - lastTokenEnd, m_creatorFormats[SyntaxHighlighter::VisualWhitespace]);
+    }
 
     if (!initialLexerState && lexerState && !tokens.isEmpty()) {
         const Token &lastToken = tokens.last();
@@ -392,30 +395,30 @@ void GolangHighlighter::highlightBlockHelper(const QString &text)
         braceDepth = initialBraceDepth;
         foldingIndent = initialBraceDepth;
     }
-   // qDebug() << text << foldingIndent;
+    // qDebug() << text << foldingIndent;
     //BaseTextDocumentLayout::setFoldingIndent(currentBlock(), foldingIndent);
     setFoldingIndent(currentBlock(), foldingIndent);
 
     // optimization: if only the brace depth changes, we adjust subsequent blocks
     // to have QSyntaxHighlighter stop the rehighlighting
-//    int currentState = currentBlockState();
-//    if (currentState != -1) {
-//        int oldState = currentState & 0xff;
-//        int oldBraceDepth = currentState >> 8;
-//        if (oldState == tokenize.state() && oldBraceDepth != braceDepth) {
-//            BaseTextDocumentLayout::FoldValidator foldValidor;
-//            foldValidor.setup(qobject_cast<BaseTextDocumentLayout *>(document()->documentLayout()));
-//            int delta = braceDepth - oldBraceDepth;
-//            QTextBlock block = currentBlock().next();
-//            while (block.isValid() && block.userState() != -1) {
-//                BaseTextDocumentLayout::changeBraceDepth(block, delta);
-//                BaseTextDocumentLayout::changeFoldingIndent(block, delta);
-//                foldValidor.process(block);
-//                block = block.next();
-//            }
-//            foldValidor.finalize();
-//        }
-//    }
+    //    int currentState = currentBlockState();
+    //    if (currentState != -1) {
+    //        int oldState = currentState & 0xff;
+    //        int oldBraceDepth = currentState >> 8;
+    //        if (oldState == tokenize.state() && oldBraceDepth != braceDepth) {
+    //            BaseTextDocumentLayout::FoldValidator foldValidor;
+    //            foldValidor.setup(qobject_cast<BaseTextDocumentLayout *>(document()->documentLayout()));
+    //            int delta = braceDepth - oldBraceDepth;
+    //            QTextBlock block = currentBlock().next();
+    //            while (block.isValid() && block.userState() != -1) {
+    //                BaseTextDocumentLayout::changeBraceDepth(block, delta);
+    //                BaseTextDocumentLayout::changeFoldingIndent(block, delta);
+    //                foldValidor.process(block);
+    //                block = block.next();
+    //            }
+    //            foldValidor.finalize();
+    //        }
+    //    }
 
     setCurrentBlockState((braceDepth << 8) | tokenize.state());
 }
@@ -425,86 +428,96 @@ void GolangHighlighter::setFoldingIndent(const QTextBlock &block, int indent)
     TextBlockUserData *userData = BaseTextDocumentLayout::userData(block);
     if (userData->foldingIndent() != indent) {
         emit foldIndentChanged(block);
-        userData->setFoldingIndent(qMax(0,indent));
+        userData->setFoldingIndent(qMax(0, indent));
     }
 }
 
 bool GolangHighlighter::isPPKeyword(const QStringRef &text) const
 {
-    switch (text.length())
-    {
-    case 2:
-        if (text.at(0) == QLatin1Char('i') && text.at(1) == QLatin1Char('f'))
-            return true;
-        break;
+    switch (text.length()) {
+        case 2:
+            if (text.at(0) == QLatin1Char('i') && text.at(1) == QLatin1Char('f')) {
+                return true;
+            }
+            break;
 
-    case 4:
-        if (text.at(0) == QLatin1Char('e')
-            && (text == QLatin1String("elif") || text == QLatin1String("else")))
-            return true;
-        break;
+        case 4:
+            if (text.at(0) == QLatin1Char('e')
+                    && (text == QLatin1String("elif") || text == QLatin1String("else"))) {
+                return true;
+            }
+            break;
 
-    case 5:
-        switch (text.at(0).toLatin1()) {
-        case 'i':
-            if (text == QLatin1String("ifdef"))
-                return true;
+        case 5:
+            switch (text.at(0).toLatin1()) {
+                case 'i':
+                    if (text == QLatin1String("ifdef")) {
+                        return true;
+                    }
+                    break;
+                case 'u':
+                    if (text == QLatin1String("undef")) {
+                        return true;
+                    }
+                    break;
+                case 'e':
+                    if (text == QLatin1String("endif") || text == QLatin1String("error")) {
+                        return true;
+                    }
+                    break;
+            }
             break;
-          case 'u':
-            if (text == QLatin1String("undef"))
-                return true;
-            break;
-        case 'e':
-            if (text == QLatin1String("endif") || text == QLatin1String("error"))
-                return true;
-            break;
-        }
-        break;
 
-    case 6:
-        switch (text.at(0).toLatin1()) {
-        case 'i':
-            if (text == QLatin1String("ifndef") || text == QLatin1String("import"))
-                return true;
+        case 6:
+            switch (text.at(0).toLatin1()) {
+                case 'i':
+                    if (text == QLatin1String("ifndef") || text == QLatin1String("import")) {
+                        return true;
+                    }
+                    break;
+                case 'd':
+                    if (text == QLatin1String("define")) {
+                        return true;
+                    }
+                    break;
+                case 'p':
+                    if (text == QLatin1String("pragma")) {
+                        return true;
+                    }
+                    break;
+            }
             break;
-        case 'd':
-            if (text == QLatin1String("define"))
-                return true;
-            break;
-        case 'p':
-            if (text == QLatin1String("pragma"))
-                return true;
-            break;
-        }
-        break;
 
-    case 7:
-        switch (text.at(0).toLatin1()) {
-        case 'i':
-            if (text == QLatin1String("include"))
-                return true;
+        case 7:
+            switch (text.at(0).toLatin1()) {
+                case 'i':
+                    if (text == QLatin1String("include")) {
+                        return true;
+                    }
+                    break;
+                case 'w':
+                    if (text == QLatin1String("warning")) {
+                        return true;
+                    }
+                    break;
+            }
             break;
-        case 'w':
-            if (text == QLatin1String("warning"))
+
+        case 12:
+            if (text.at(0) == QLatin1Char('i') && text == QLatin1String("include_next")) {
                 return true;
+            }
             break;
-        }
-        break;
 
-    case 12:
-        if (text.at(0) == QLatin1Char('i') && text == QLatin1String("include_next"))
-            return true;
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 
     return false;
 }
 
 void GolangHighlighter::highlightLine(const QString &text, int position, int length,
-                                   const QTextCharFormat &format)
+                                      const QTextCharFormat &format)
 {
     QTextCharFormat visualSpaceFormat = m_creatorFormats[SyntaxHighlighter::VisualWhitespace];
     visualSpaceFormat.setBackground(format.background());
@@ -516,14 +529,16 @@ void GolangHighlighter::highlightLine(const QString &text, int position, int len
         const bool isSpace = text.at(index).isSpace();
         const int start = index;
 
-        do { ++index; }
-        while (index != end && text.at(index).isSpace() == isSpace);
+        do {
+            ++index;
+        } while (index != end && text.at(index).isSpace() == isSpace);
 
         const int tokenLength = index - start;
-        if (isSpace)
+        if (isSpace) {
             setFormat(start, tokenLength, visualSpaceFormat);
-        else if (format.isValid())
+        } else if (format.isValid()) {
             setFormat(start, tokenLength, format);
+        }
     }
 }
 
@@ -547,8 +562,9 @@ void GolangHighlighter::highlightCommentLine(const QString &text, int position, 
         const bool isSpace = text.at(index).isSpace();
         const int start = index;
 
-        do { ++index; }
-        while (index != end && text.at(index).isSpace() == isSpace);
+        do {
+            ++index;
+        } while (index != end && text.at(index).isSpace() == isSpace);
 
         const int tokenLength = index - start;
         if (isSpace) {
@@ -556,26 +572,26 @@ void GolangHighlighter::highlightCommentLine(const QString &text, int position, 
         } else if (format.isValid()) {
             if (first) {
                 first = false;
-                int index = m_todoRegexp.indexIn(text.mid(start,tokenLength));
+                int index = m_todoRegexp.indexIn(text.mid(start, tokenLength));
                 if (index == 0) {
                     int todoLen = m_todoRegexp.cap(1).length();
-                    setFormat(start,todoLen,todoFormat);
+                    setFormat(start, todoLen, todoFormat);
                     if (todoLen < length) {
-                        setFormat(start+todoLen,length-todoLen, format);
+                        setFormat(start + todoLen, length - todoLen, format);
                     }
                     m_currentTodo = text.mid(start);
                     break;
                 }
-                if (m_gotagList.contains(text.mid(start,tokenLength))) {
-                    setFormat(position,length,todoFormat);
+                if (m_gotagList.contains(text.mid(start, tokenLength))) {
+                    setFormat(position, length, todoFormat);
                     break;
                 }
                 if (text.mid(start).startsWith("import") && text.startsWith("package")) {
-                    setFormat(position,length,todoFormat);
+                    setFormat(position, length, todoFormat);
                     break;
                 }
                 if (text.mid(start).startsWith("go:")) {
-                    setFormat(position,length,todoFormat);
+                    setFormat(position, length, todoFormat);
                     break;
                 }
             }
@@ -590,11 +606,12 @@ void GolangHighlighter::highlightWord(QStringRef word, int position, int length)
 
     if (word.length() > 2 && word.at(0) == QLatin1Char('Q')) {
         if (word.at(1) == QLatin1Char('_') // Q_
-            || (word.at(1) == QLatin1Char('T') && word.at(2) == QLatin1Char('_'))) { // QT_
+                || (word.at(1) == QLatin1Char('T') && word.at(2) == QLatin1Char('_'))) { // QT_
             for (int i = 1; i < word.length(); ++i) {
                 const QChar &ch = word.at(i);
-                if (!(ch.isUpper() || ch == QLatin1Char('_')))
+                if (!(ch.isUpper() || ch == QLatin1Char('_'))) {
                     return;
+                }
             }
 
             setFormat(position, length, m_creatorFormats[SyntaxHighlighter::DataType]);

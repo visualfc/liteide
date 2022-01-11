@@ -78,6 +78,9 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     DidChangeConfigurationWorkspaceClientCapabilities *changeWorkspaceCapabilites = new DidChangeConfigurationWorkspaceClientCapabilities;
     changeWorkspaceCapabilites->setDynamicRegistration(new bool(true));
     workspaceCapabilities->setDidChangeConfiguration(changeWorkspaceCapabilites);
+    SemanticTokensWorkspaceClientCapabilities *workspaceSemanticTokens = new SemanticTokensWorkspaceClientCapabilities;
+    workspaceSemanticTokens->setRefreshSupport(new bool(true));
+    workspaceCapabilities->setSemanticTokens(workspaceSemanticTokens);
     clientCapabilites->setWorkspace(workspaceCapabilities);
     PublishDiagnosticsClientCapabilities *diagnostics = new PublishDiagnosticsClientCapabilities();
     diagnostics->setCodeDescriptionSupport(new bool(true));
@@ -85,21 +88,73 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     diagnostics->setRelatedInformation(new bool(true));
     diagnostics->setVersionSupport(new bool(true));
     documentCapabilities->setPublishDiagnostics(diagnostics);
-    QList<WorkspaceFolder*> * folders = new QList<WorkspaceFolder*>();
-    for(auto &f : _folders) {
+    QList<WorkspaceFolder *> *folders = new QList<WorkspaceFolder *>();
+    for (auto &f : _folders) {
         auto folder = new WorkspaceFolder();
-        folder->setUri(new DocumentURI("file://"+f));
+        folder->setUri(new DocumentURI("file://" + f));
         folders->append(folder);
     }
     //params->setRootUri(new DocumentURI("file://"+wFolder));
     params->setWorkspaceFolders(folders);
 
+    SemanticTokensClientCapabilities *semanticTokens = new SemanticTokensClientCapabilities;
+    documentCapabilities->setSemanticTokens(semanticTokens);
+    //semanticTokens->setDynamicRegistration(new bool(true));
+    semanticTokens->setMultilineTokenSupport(new bool(false));
+    semanticTokens->setOverlappingTokenSupport(new bool(false));
+    QList<QString *> *tokenTypes = new QList<QString *>();
+    *tokenTypes << new QString("type")
+                << new QString("class")
+                << new QString("enum")
+                << new QString("interface")
+                << new QString("struct")
+                << new QString("typeParameter")
+                << new QString("parameter")
+                << new QString("variable")
+                << new QString("property")
+                << new QString("enumMember")
+                << new QString("event")
+                << new QString("function")
+                << new QString("method")
+                << new QString("macro")
+                << new QString("keyword")
+                << new QString("modifier")
+                << new QString("comment")
+                << new QString("string")
+                << new QString("number")
+                << new QString("regexp")
+                << new QString("operator")
+                ;
+    semanticTokens->setTokenTypes(tokenTypes);
+
+
+    QList<QString *> *tokenModifiers = new QList<QString *>();
+    *tokenModifiers << new QString("declaration")
+                    << new QString("definition")
+                    << new QString("readonly")
+                    << new QString("static")
+                    << new QString("deprecated")
+                    << new QString("abstract")
+                    << new QString("async")
+                    << new QString("modification")
+                    << new QString("documentation")
+                    << new QString("defaultLibrary");
+    semanticTokens->setTokenModifiers(tokenModifiers);
+
+    QList<TokenFormat *> *tokenFormats = new QList<TokenFormat *>();
+    *tokenFormats << new TokenFormat(TokenFormatRelative);
+    semanticTokens->setFormats(tokenFormats);
+
+    SemanticTokensWorkspaceClientCapabilitiesRequests *semanticCapabilities = new SemanticTokensWorkspaceClientCapabilitiesRequests;
+    semanticCapabilities->setRange(new bool(false));
+    semanticTokens->setRequests(semanticCapabilities);
+
     auto list = m_envManager->currentEnvironment().toStringList();
     QJsonObject env;
-    for(const QString &var : list) {
+    for (const QString &var : list) {
         auto pos = var.indexOf("=");
         const QString name = var.left(pos);
-        const QString value = var.mid(pos+1);
+        const QString value = var.mid(pos + 1);
         env.insert(name, value);
     }
 
@@ -110,8 +165,10 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     settings.insert("allowModfileModifications", true);
     settings.insert("allowImplicitNetworkAccess", true);
     settings.insert("staticcheck", true);
+    settings.insert("semanticTokens", true);
     settings.insert("linksInHover", false);
     settings.insert("completeUnimported", true);
+    settings.insert("ui.semanticTokens", true);
     QJsonObject analyses;
     analyses.insert("nilness", true);
     analyses.insert("shadow", true);
@@ -125,7 +182,7 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     CodeActionClientCapabilities *codeAction = new CodeActionClientCapabilities;
     CodeActionClientCapabilitiesLiteralSupport *codeActionLiteral = new CodeActionClientCapabilitiesLiteralSupport;
     CodeActionClientCapabilitiesKind *codeActionLiteralKind = new CodeActionClientCapabilitiesKind;
-    QList<CodeActionKind*> *actions = new QList<CodeActionKind*>();
+    QList<CodeActionKind *> *actions = new QList<CodeActionKind *>();
     *actions << new CodeActionKind(SourceOrganizeImports);
     *actions << new CodeActionKind(RefactorRewrite);
     *actions << new CodeActionKind(RefactorExtract);
@@ -133,7 +190,7 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     codeActionLiteral->setCodeActionKind(codeActionLiteralKind);
     codeAction->setCodeActionLiteralSupport(codeActionLiteral);
     documentCapabilities->setCodeAction(codeAction);
-
+    qDebug().noquote() << params->toJson();
     sendCommand(MethodInitialize, params, DECODE_CALLBACK(&GoPlsServer::decodeInitialize), "", true);
 }
 
@@ -185,20 +242,20 @@ void GoPlsServer::updateWorkspaceFolders(const QStringList &add, const QStringLi
     m_init = false;
     QSharedPointer<DidChangeWorkspaceFoldersParams> params(new DidChangeWorkspaceFoldersParams);
     WorkspaceFoldersChangeEvent *event = new WorkspaceFoldersChangeEvent();
-    QList<WorkspaceFolder*> *adds = new QList<WorkspaceFolder*>();
-    for(auto &folder : add) {
+    QList<WorkspaceFolder *> *adds = new QList<WorkspaceFolder *>();
+    for (auto &folder : add) {
         WorkspaceFolder *wFolder = new WorkspaceFolder();
         wFolder->setName(new QString(QFileInfo(folder).baseName()));
-        wFolder->setUri(new QString("file://"+folder));
+        wFolder->setUri(new QString("file://" + folder));
         adds->append(wFolder);
     }
     event->setAdded(adds);
 
-    QList<WorkspaceFolder*> *removes = new QList<WorkspaceFolder*>();
-    for(auto &folder : remove) {
+    QList<WorkspaceFolder *> *removes = new QList<WorkspaceFolder *>();
+    for (auto &folder : remove) {
         WorkspaceFolder *wFolder = new WorkspaceFolder();
         wFolder->setName(new QString(QFileInfo(folder).baseName()));
-        wFolder->setUri(new QString("file://"+folder));
+        wFolder->setUri(new QString("file://" + folder));
         removes->append(wFolder);
     }
     event->setRemoved(removes);
@@ -211,9 +268,9 @@ void GoPlsServer::askDefinitions(const QString &file, bool hover, unsigned int l
     QSharedPointer<DefinitionParams> params(new DefinitionParams());
     params->setTextDocument(documentIdentifier(file));
     params->setPosition(position(line, column));
-    if(hover) {
+    if (hover) {
         sendCommand(MethodTextDocumentDefinition, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentDefinitionHover), file);
-    }else{
+    } else {
         sendCommand(MethodTextDocumentDefinition, params, DECODE_CALLBACK(&GoPlsServer::decodeDocumentDefinitionGoTo), file);
     }
 }
@@ -230,7 +287,7 @@ void GoPlsServer::organizeImports(const QString &file)
     QSharedPointer<CodeActionParams> params(new CodeActionParams());
     params->setTextDocument(documentIdentifier(file));
     CodeActionContext *context = new CodeActionContext;
-    QList<CodeActionKind*> *actions = new QList<CodeActionKind*>();
+    QList<CodeActionKind *> *actions = new QList<CodeActionKind *>();
     *actions << new CodeActionKind(SourceOrganizeImports);
     *actions << new CodeActionKind(RefactorRewrite);
     context->setOnly(actions);
@@ -250,7 +307,7 @@ void GoPlsServer::fileOpened(const QString &file, const QString &content)
     m_openedFiles.insert(file, true);
     QSharedPointer<DidOpenTextDocumentParams> params(new DidOpenTextDocumentParams());
     TextDocumentItem *item = new TextDocumentItem();
-    item->setUri(new DocumentURI("file://"+file));
+    item->setUri(new DocumentURI("file://" + file));
     item->setLanguageId(new LanguageIdentifier(GoLanguage));
     item->setText(new QString(content));
     params->setTextDocument(item);
@@ -313,7 +370,7 @@ void GoPlsServer::decodeInitialized(const CommandData &data, const QJsonObject &
 {
     printResponse(data, resp);
     m_init = true;
-    if(!m_waitingCommands.isEmpty()) {
+    if (!m_waitingCommands.isEmpty()) {
         executeCommand(m_waitingCommands.takeFirst());
     }
 }
@@ -322,7 +379,7 @@ QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const CommandData 
 {
     QJsonArray locations = jsonObject.value("result").toArray();
     QList<DefinitionResult> list;
-    for(const QJsonValue &value : locations) {
+    for (const QJsonValue &value : locations) {
         Location *location = new Location();
         location->fromJson(value.toObject());
         DefinitionResult result;
@@ -352,40 +409,40 @@ void GoPlsServer::decodeDocumentCompletion(const CommandData &data, const QJsonO
     CompletionList list;
     list.fromJson(jsonObject.value("result").toObject());
     QList<AutoCompletionResult> completions;
-    if(list.getItems()) {
-        for(auto it = list.getItems()->cbegin(); it != list.getItems()->cend(); ++it) {
+    if (list.getItems()) {
+        for (auto it = list.getItems()->cbegin(); it != list.getItems()->cend(); ++it) {
             AutoCompletionResult result;
             auto label = (*it)->getLabel();
             auto detail = (*it)->getDetail();
             auto kind = (*it)->getKind();
-            if(label) {
+            if (label) {
                 result.label = *label;
             }
-            if(detail) {
+            if (detail) {
                 result.detail = *detail;
             }
-            if(kind) {
+            if (kind) {
                 switch (int(*kind)) {
-                case CompletionItemKindValue:
-                case CompletionItemKindConstant:
-                    result.type = "const";
-                    break;
-                case CompletionItemKindFunction:
-                    result.type = "func";
-                    break;
-                case CompletionItemKindInterface:
-                case CompletionItemKindStruct:
-                    result.type = "struct";
-                    break;
-                case CompletionItemKindVariable:
-                    result.type = "var";
-                    break;
-                case CompletionItemKindModule:
-                    result.type = "package";
-                    break;
-                default:
-                    result.type = "type";
-                    break;
+                    case CompletionItemKindValue:
+                    case CompletionItemKindConstant:
+                        result.type = "const";
+                        break;
+                    case CompletionItemKindFunction:
+                        result.type = "func";
+                        break;
+                    case CompletionItemKindInterface:
+                    case CompletionItemKindStruct:
+                        result.type = "struct";
+                        break;
+                    case CompletionItemKindVariable:
+                        result.type = "var";
+                        break;
+                    case CompletionItemKindModule:
+                        result.type = "package";
+                        break;
+                    default:
+                        result.type = "type";
+                        break;
                 }
             }
             completions << result;
@@ -394,9 +451,10 @@ void GoPlsServer::decodeDocumentCompletion(const CommandData &data, const QJsonO
     emit autocompleteResult(data.filepath, completions);
 }
 
-QList<TextEditResult> convertTextEditResult(QJsonArray array) {
+QList<TextEditResult> convertTextEditResult(QJsonArray array)
+{
     QList<TextEditResult> list;
-    for(const auto it : array) {
+    for (const auto it : array) {
         TextEdit edit;
         edit.fromJson(it.toObject());
         TextEditResult result;
@@ -419,9 +477,9 @@ void GoPlsServer::decodeDocumentFormatting(const CommandData &data, const QJsonO
 void GoPlsServer::decodeOrganizeImport(const CommandData &data, const QJsonObject &jsonObject)
 {
     QJsonArray results = jsonObject.value("result").toArray();
-    for(const auto &result : results) {
+    for (const auto &result : results) {
         QJsonArray edits = result.toObject().value("edit").toObject().value("documentChanges").toArray();
-        for(const auto &edit : edits) {
+        for (const auto &edit : edits) {
             const QJsonObject obj = edit.toObject();
             const QString filename = obj.value("textDocument").toObject().value("uri").toString().mid(7);
             const QList<TextEditResult> modifications(convertTextEditResult(obj.value("edits").toArray()));
@@ -432,11 +490,11 @@ void GoPlsServer::decodeOrganizeImport(const CommandData &data, const QJsonObjec
 
 void GoPlsServer::decodeHover(const CommandData &data, const QJsonObject &response)
 {
-    if(response.value("result").isNull()){
+    if (response.value("result").isNull()) {
         return;
     }
     auto contents = response.value("result");
-    if(contents.isArray()) {
+    if (contents.isArray()) {
 
     } else {
         Hover hover;
@@ -458,13 +516,13 @@ void GoPlsServer::decodeDiagnostics(const CommandData &data, const QJsonObject &
     result.fromJson(response.value("params").toObject());
     QList<DiagnosticResult> list;
     auto diags = *result.getDiagnostics();
-    for(auto it : diags) {
+    for (auto it : diags) {
         DiagnosticResult diag;
         diag.message = *it->getMessage();
-        if(it->getSource()) {
+        if (it->getSource()) {
             diag.code = *it->getSource();
         }
-        diag.line = *it->getRange()->getStart()->getLine()+1;
+        diag.line = *it->getRange()->getStart()->getLine() + 1;
 
         /*
         DiagnosticSeverityError DiagnosticSeverity = 1
@@ -479,18 +537,18 @@ void GoPlsServer::decodeDiagnostics(const CommandData &data, const QJsonObject &
         DiagnosticSeverityHint DiagnosticSeverity = 4
          */
         switch (int(*it->getSeverity())) {
-        case 1:
-            diag.level = "error";
-            break;
-        case 2:
-            diag.level = "warning";
-            break;
-        case 3:
-            diag.level = "info";
-            break;
-        case 4:
-            diag.level = "hint";
-            break;
+            case 1:
+                diag.level = "error";
+                break;
+            case 2:
+                diag.level = "warning";
+                break;
+            case 3:
+                diag.level = "info";
+                break;
+            case 4:
+                diag.level = "hint";
+                break;
         }
         list << diag;
     }
@@ -501,7 +559,7 @@ void GoPlsServer::decodeDocumentSymbols(const CommandData &data, const QJsonObje
 {
     const auto symbols = response.value("result").toArray();
     QHash<QString, QList<LiteApi::Symbol>> result;
-    for(auto it : symbols) {
+    for (auto it : symbols) {
         SymbolInformation symbol;
         symbol.fromJson(it.toObject());
         LiteApi::Symbol res;
@@ -514,7 +572,7 @@ void GoPlsServer::decodeDocumentSymbols(const CommandData &data, const QJsonObje
         list << res;
         result[filename] = list;
     }
-    for(auto it = result.cbegin(); it != result.cend(); ++it){
+    for (auto it = result.cbegin(); it != result.cend(); ++it) {
         emit documentSymbolsResult(it.key(), it.value());
     }
 }
@@ -540,7 +598,7 @@ void GoPlsServer::decodeExit(const CommandData &data, const QJsonObject &respons
 void GoPlsServer::decodeAddWorkspaceFolder(const CommandData &data, const QJsonObject &response)
 {
     m_init = true;
-    if(!m_waitingCommands.isEmpty()) {
+    if (!m_waitingCommands.isEmpty()) {
         executeCommand(m_waitingCommands.takeFirst());
     }
 }
@@ -551,13 +609,12 @@ void GoPlsServer::decodeCurrentEnvChanged(const CommandData &data, const QJsonOb
 
 void GoPlsServer::decodeSignatureHelp(const CommandData &data, const QJsonObject &response)
 {
-    printResponse(data, response);
 }
 
 void GoPlsServer::decodeFindUsage(const CommandData &data, const QJsonObject &response)
 {
     QList<UsageResult> result;
-    for(auto it : response.value("result").toArray()) {
+    for (auto it : response.value("result").toArray()) {
         Location item;
         item.fromJson(it.toObject());
         UsageResult res;
@@ -571,6 +628,12 @@ void GoPlsServer::decodeFindUsage(const CommandData &data, const QJsonObject &re
     emit findUsageResult(data.filepath, result);
 }
 
+void GoPlsServer::decodeSemanticTokens(const CommandData &data, const QJsonObject &response)
+{
+    printResponse(data, response);
+    emit semanticTokensResult(data.filepath, response.value("result").toObject().value("data").toArray().toVariantList());
+}
+
 void GoPlsServer::printResponse(const CommandData &data, const QJsonObject &response)
 {
     qDebug().noquote() << response;
@@ -578,10 +641,14 @@ void GoPlsServer::printResponse(const CommandData &data, const QJsonObject &resp
 
 void GoPlsServer::decodeDidOpened(const CommandData &data, const QJsonObject &response)
 {
+    QSharedPointer<SemanticTokensParams> params(new SemanticTokensParams);
+    params->setTextDocument(documentIdentifier(data.filepath));
+    sendCommand(MethodSemanticTokensFull, params, DECODE_CALLBACK(&GoPlsServer::decodeSemanticTokens), data.filepath);
 }
 
 void GoPlsServer::decodeDidClosed(const CommandData &data, const QJsonObject &response)
 {
+    documentSymbols(data.filepath);
 }
 
 void GoPlsServer::fileSaved(const QString &file, const QString &content)
@@ -596,9 +663,9 @@ void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, 
 {
     QSharedPointer<DidChangeTextDocumentParams> params(new DidChangeTextDocumentParams());
     VersionedTextDocumentIdentifier *item = new VersionedTextDocumentIdentifier();
-    item->setUri(new DocumentURI("file://"+file));
+    item->setUri(new DocumentURI("file://" + file));
     const int version = m_filesVersions.value(file);
-    m_filesVersions[file] = version+1;
+    m_filesVersions[file] = version + 1;
     item->setVersion(new int(version));
     params->setTextDocument(item);
     QList<TextDocumentContentChangeEvent *> *list = new QList<TextDocumentContentChangeEvent *>();
@@ -613,7 +680,7 @@ void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, 
 TextDocumentIdentifier *GoPlsServer::documentIdentifier(const QString &path) const
 {
     TextDocumentIdentifier *identifier = new TextDocumentIdentifier();
-    identifier->setUri(new DocumentURI("file://"+path));
+    identifier->setUri(new DocumentURI("file://" + path));
     return identifier;
 }
 
@@ -635,7 +702,7 @@ GoPlsTypes::Range *GoPlsServer::range(GoPlsTypes::Position *start, GoPlsTypes::P
 
 void GoPlsServer::decodeResponse(const QByteArray &payload)
 {
-    if(payload.isEmpty()) {
+    if (payload.isEmpty()) {
         return;
     }
     QJsonObject jsonObject = QJsonDocument::fromJson(payload).object();
@@ -644,29 +711,29 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
     auto data = m_idToData.take(commandID);
     auto callback = m_idToCallback.take(commandID);
 
-    if (commandID == 0 ){
+    if (commandID == 0) {
         const QString method = jsonObject.value("method").toString();
-        if(method == MethodWindowLogMessage || method == MethodWindowShowMessage){
+        if (method == MethodWindowLogMessage || method == MethodWindowShowMessage) {
             LogMessageParams message;
             message.fromJson(jsonObject.value("params").toObject());
-            if(message.getMessage()) {
+            if (message.getMessage()) {
                 bool isError = message.getType() && *message.getType() == MessageTypeError;
                 emit logMessage(*message.getMessage(), isError);
             }
-        }else if(method == MethodTextDocumentPublishDiagnostics) {
+        } else if (method == MethodTextDocumentPublishDiagnostics) {
             decodeDiagnostics(data, QJsonDocument::fromJson(payload).object());
-        }else if(!payload.isEmpty()){
+        } else if (!payload.isEmpty()) {
             qDebug().noquote() << payload;
         }
-    }else{
+    } else {
         const QString requested = data.command;
-        if(callback) {
+        if (callback) {
             callback(data, jsonObject);
-        }else{
+        } else {
             qDebug().noquote() << requested << payload;
         }
     }
-    if(!m_waitingCommands.empty() && m_init) {
+    if (!m_waitingCommands.empty() && m_init) {
         executeCommand(m_waitingCommands.takeFirst());
     }
 }
@@ -674,9 +741,9 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
 void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPlsParams> &params, const DecodeFunc &responseFunc, const QString &filepath, bool force)
 {
     GoPlsCommand cmd(command, params, responseFunc, filepath);
-    if(!m_init && !force) {
+    if (!m_init && !force) {
         m_waitingCommands << cmd;
-    }else{
+    } else {
         executeCommand(cmd);
     }
 }
@@ -689,7 +756,7 @@ void GoPlsServer::executeCommand(const GoPlsCommand &cmd)
     data.filepath = cmd.filepath();
     m_idToData.insert(cmdID, data);
     m_idToCallback.insert(cmdID, cmd.decodeFunc());
-    QTimer::singleShot(1000, [this, cmdID]{
+    QTimer::singleShot(10000, [this, cmdID] {
         m_idToData.take(cmdID);
         m_idToCallback.take(cmdID);
     });
@@ -701,35 +768,37 @@ void GoPlsServer::executeCommand(const GoPlsCommand &cmd)
 void GoPlsServer::onReadyRead()
 {
     const QByteArray payload = m_process->readAll();
-    if(payload.isEmpty()) {
+    if (payload.isEmpty()) {
         return;
     }
     int contentLength = 0;
     int offset = 0;
-    if(payload.length() == 0) {
+    if (payload.length() == 0) {
         return;
     }
-    if(payload.indexOf("\r\n") < 0) {
+    if (payload.indexOf("\r\n") < 0) {
         decodeResponse(payload);
         return;
     }
-    while(true) {
+    int i = 0;
+    while (true && i < 10) {
         const int next = payload.indexOf("\r\n", offset);
         if (next != offset) {
-            QString header = payload.mid(offset, next-offset);
-            if(header.startsWith("Content-Length:", Qt::CaseInsensitive)) {
+            QString header = payload.mid(offset, next - offset);
+            if (header.startsWith("Content-Length:", Qt::CaseInsensitive)) {
                 QString size = header.remove("Content-Length:", Qt::CaseInsensitive).trimmed();
                 contentLength = size.toInt();
             }
-            offset = next+2;
-        }else{
-            const QByteArray body = payload.mid(offset+2, contentLength);
+            offset = next + 2;
+        } else {
+            const QByteArray body = payload.mid(offset + 2, contentLength);
             decodeResponse(body);
-            offset += contentLength+2;
+            offset += contentLength + 2;
         }
-        if(offset >= payload.length()) {
+        if (offset >= payload.length()) {
             break;
         }
+        i++;
     }
 }
 
@@ -739,14 +808,14 @@ void GoPlsServer::onStarted()
 
 void GoPlsServer::currentEnvChanged(LiteApi::IEnv *env)
 {
-    if(env) {
+    if (env) {
         auto list = env->environment().toStringList();
         QJsonObject obj;
 
-        for(const QString &var : list) {
+        for (const QString &var : list) {
             auto pos = var.indexOf("=");
             const QString name = var.left(pos);
-            const QString value = var.mid(pos+1);
+            const QString value = var.mid(pos + 1);
             obj.insert(name, value);
         }
 

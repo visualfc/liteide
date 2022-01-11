@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -60,6 +60,27 @@
        <string>Staticcheck</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QCheckBox" name="compilerCheckBox">
+         <property name="text">
+          <string>Compiler</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="shadowCheckBox">
+         <property name="text">
+          <string>Shadow</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="syntaxCheckBox">
+         <property name="text">
+          <string>Syntax</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QCheckBox" name="unreachableCheckBox">
          <property name="text">
