@@ -41,6 +41,54 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     QSharedPointer<InitializeParams> params(new InitializeParams());
     ClientCapabilities *clientCapabilites = new ClientCapabilities();
     TextDocumentClientCapabilities *documentCapabilities = new TextDocumentClientCapabilities();
+    FoldingRangeClientCapabilities *foldingCapabilities = new FoldingRangeClientCapabilities;
+    foldingCapabilities->setDynamicRegistration(new bool(true));
+    foldingCapabilities->setLineFoldingOnly(new bool(true));
+    foldingCapabilities->setRangeLimit(new unsigned int(5000));
+    documentCapabilities->setFoldingRange(foldingCapabilities);
+    DocumentHighlightClientCapabilities *highlightCapabilities = new DocumentHighlightClientCapabilities;
+    highlightCapabilities->setDynamicRegistration(new bool(true));
+    documentCapabilities->setDocumentHighlight(highlightCapabilities);
+    DocumentSymbolClientCapabilities *symbolCapabilities = new DocumentSymbolClientCapabilities;
+    symbolCapabilities->setDynamicRegistration(new bool(true));
+    symbolCapabilities->setHierarchicalDocumentSymbolSupport(new bool(true));
+    symbolCapabilities->setLabelSupport(new bool(true));
+    SymbolKindCapabilities *symbolKind = new SymbolKindCapabilities;
+    QList<SymbolKind*> *symbolValueSet = new QList<SymbolKind*>();
+    *symbolValueSet << new SymbolKind(1)
+                    << new SymbolKind(2)
+                    << new SymbolKind(3)
+                    << new SymbolKind(4)
+                    << new SymbolKind(5)
+                    << new SymbolKind(6)
+                    << new SymbolKind(7)
+                    << new SymbolKind(8)
+                    << new SymbolKind(9)
+                    << new SymbolKind(10)
+                    << new SymbolKind(11)
+                    << new SymbolKind(12)
+                    << new SymbolKind(13)
+                    << new SymbolKind(14)
+                    << new SymbolKind(15)
+                    << new SymbolKind(16)
+                    << new SymbolKind(17)
+                    << new SymbolKind(18)
+                    << new SymbolKind(19)
+                    << new SymbolKind(20)
+                    << new SymbolKind(21)
+                    << new SymbolKind(22)
+                    << new SymbolKind(23)
+                    << new SymbolKind(24)
+                    << new SymbolKind(25)
+                    << new SymbolKind(26);
+    symbolKind->setValueSet(symbolValueSet);
+    symbolCapabilities->setSymbolKind(symbolKind);
+    DocumentSymbolClientCapabilitiesTagSupport *tagSupport = new DocumentSymbolClientCapabilitiesTagSupport;
+    QList<SymbolTag*> *tagValueSet = new QList<SymbolTag*>();
+    *tagValueSet << new SymbolTag(1);
+    tagSupport->setValueSet(tagValueSet);
+    symbolCapabilities->setTagSupport(tagSupport);
+    documentCapabilities->setDocumentSymbol(symbolCapabilities);
     PublishDiagnosticsClientCapabilities *publishCapabilities = new PublishDiagnosticsClientCapabilities();
     publishCapabilities->setCodeDescriptionSupport(new bool(true));
     publishCapabilities->setDataSupport(new bool(true));
@@ -100,10 +148,11 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     SemanticTokensClientCapabilities *semanticTokens = new SemanticTokensClientCapabilities;
     documentCapabilities->setSemanticTokens(semanticTokens);
     //semanticTokens->setDynamicRegistration(new bool(true));
-    semanticTokens->setMultilineTokenSupport(new bool(false));
-    semanticTokens->setOverlappingTokenSupport(new bool(false));
+    //semanticTokens->setMultilineTokenSupport(new bool(true));
+    //semanticTokens->setOverlappingTokenSupport(new bool(true));
     QList<QString *> *tokenTypes = new QList<QString *>();
-    *tokenTypes << new QString("type")
+    *tokenTypes << new QString("namespace")
+                << new QString("type")
                 << new QString("class")
                 << new QString("enum")
                 << new QString("interface")
@@ -146,7 +195,10 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     semanticTokens->setFormats(tokenFormats);
 
     SemanticTokensWorkspaceClientCapabilitiesRequests *semanticCapabilities = new SemanticTokensWorkspaceClientCapabilitiesRequests;
-    semanticCapabilities->setRange(new bool(false));
+    semanticCapabilities->setRange(new bool(true));
+    QVariantHash semanticTokensFull;
+    semanticTokensFull["delta"] = true;
+    semanticCapabilities->setFull(new QJsonValue(QJsonValue::fromVariant(semanticTokensFull)));
     semanticTokens->setRequests(semanticCapabilities);
 
     auto list = m_envManager->currentEnvironment().toStringList();
@@ -349,6 +401,20 @@ void GoPlsServer::enableStaticcheck(bool v)
     sendCommand(MethodWorkspaceDidChangeConfiguration, params, DECODE_CALLBACK(&GoPlsServer::decodeCurrentEnvChanged), "");
 }
 
+void GoPlsServer::semanticTokensFull(const QString &file)
+{
+    {
+        QSharedPointer<SemanticTokensParams> params(new SemanticTokensParams);
+        params->setTextDocument(documentIdentifier(file));
+        sendCommand(MethodSemanticTokensFull, params, DECODE_CALLBACK(&GoPlsServer::decodeSemanticTokens), file);
+    }
+    {
+        QSharedPointer<FoldingRangeParams> params(new FoldingRangeParams);
+        params->setTextDocument(documentIdentifier(file));
+        sendCommand(MethodTextDocumentFoldingRange, params, DECODE_CALLBACK(&GoPlsServer::decodeFoldingRange), file);
+    }
+}
+
 void GoPlsServer::shutdown()
 {
     sendCommand(MethodShutdown, nullptr, DECODE_CALLBACK(&GoPlsServer::decodeShutdown), "");
@@ -371,8 +437,9 @@ void GoPlsServer::decodeInitialized(const CommandData &data, const QJsonObject &
     printResponse(data, resp);
     m_init = true;
     if (!m_waitingCommands.isEmpty()) {
-        executeCommand(m_waitingCommands.takeFirst());
+       executeCommand(m_waitingCommands.takeFirst());
     }
+    emit workspaceInitialized();
 }
 
 QList<DefinitionResult> GoPlsServer::decodeDocumentDefinition(const CommandData &data, const QJsonObject &jsonObject)
@@ -563,6 +630,9 @@ void GoPlsServer::decodeDocumentSymbols(const CommandData &data, const QJsonObje
         SymbolInformation symbol;
         symbol.fromJson(it.toObject());
         LiteApi::Symbol res;
+        if(!symbol.getLocation() || !symbol.getLocation()->getRange()) {
+            continue;
+        }
         res.startLine = *symbol.getLocation()->getRange()->getStart()->getLine();
         res.endLine = *symbol.getLocation()->getRange()->getEnd()->getLine();
         res.name = *symbol.getName();
@@ -630,8 +700,23 @@ void GoPlsServer::decodeFindUsage(const CommandData &data, const QJsonObject &re
 
 void GoPlsServer::decodeSemanticTokens(const CommandData &data, const QJsonObject &response)
 {
-    printResponse(data, response);
     emit semanticTokensResult(data.filepath, response.value("result").toObject().value("data").toArray().toVariantList());
+}
+
+void GoPlsServer::decodeFoldingRange(const CommandData &data, const QJsonObject &response)
+{
+    QList<FoldingRangeResult> list;
+    for(const auto &item : response.value("result").toArray()) {
+        FoldingRange range;
+        range.fromJson(item.toObject());
+        FoldingRangeResult res;
+        res.startLine = *range.getStartLine()+1;
+        res.startColumn = *range.getStartCharacter();
+        res.endLine = *range.getEndLine()+1;
+        res.endColumn = *range.getEndCharacter();
+        list << res;
+    }
+    emit foldingRangeResult(data.filepath, list);
 }
 
 void GoPlsServer::printResponse(const CommandData &data, const QJsonObject &response)
@@ -641,14 +726,11 @@ void GoPlsServer::printResponse(const CommandData &data, const QJsonObject &resp
 
 void GoPlsServer::decodeDidOpened(const CommandData &data, const QJsonObject &response)
 {
-    QSharedPointer<SemanticTokensParams> params(new SemanticTokensParams);
-    params->setTextDocument(documentIdentifier(data.filepath));
-    sendCommand(MethodSemanticTokensFull, params, DECODE_CALLBACK(&GoPlsServer::decodeSemanticTokens), data.filepath);
+    semanticTokensFull(data.filepath);
 }
 
 void GoPlsServer::decodeDidClosed(const CommandData &data, const QJsonObject &response)
 {
-    documentSymbols(data.filepath);
 }
 
 void GoPlsServer::fileSaved(const QString &file, const QString &content)
@@ -675,6 +757,7 @@ void GoPlsServer::fileChanged(const QString &file, int startLine, int startPos, 
     list->append(text);
     params->setContentChanges(list);
     sendCommand(MethodTextDocumentDidChange, params, DECODE_CALLBACK(&GoPlsServer::decodeDidChanged), file);
+    semanticTokensFull(file);
 }
 
 TextDocumentIdentifier *GoPlsServer::documentIdentifier(const QString &path) const
@@ -711,8 +794,8 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
     auto data = m_idToData.take(commandID);
     auto callback = m_idToCallback.take(commandID);
 
-    if (commandID == 0) {
-        const QString method = jsonObject.value("method").toString();
+    const QString method = jsonObject.value("method").toString();
+    if (commandID == 0 || method != "") {
         if (method == MethodWindowLogMessage || method == MethodWindowShowMessage) {
             LogMessageParams message;
             message.fromJson(jsonObject.value("params").toObject());
@@ -722,15 +805,26 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
             }
         } else if (method == MethodTextDocumentPublishDiagnostics) {
             decodeDiagnostics(data, QJsonDocument::fromJson(payload).object());
+        } else if (method == MethodClientRegisterCapability) {
+            qDebug() << "SEND EVENT!";
+            emit workspaceInitialized();
+            m_init = true;
+            if (!m_waitingCommands.isEmpty()) {
+               executeCommand(m_waitingCommands.takeFirst());
+            }
         } else if (!payload.isEmpty()) {
             qDebug().noquote() << payload;
         }
     } else {
         const QString requested = data.command;
-        if (callback) {
-            callback(data, jsonObject);
+        if(jsonObject.contains("error")) {
+            qDebug().noquote() << "ERROR:" << requested << payload;
         } else {
-            qDebug().noquote() << requested << payload;
+            if (callback) {
+                callback(data, jsonObject);
+            } else {
+                qDebug().noquote() << requested << payload;
+            }
         }
     }
     if (!m_waitingCommands.empty() && m_init) {
@@ -751,6 +845,7 @@ void GoPlsServer::sendCommand(const QString &command, const QSharedPointer<GoPls
 void GoPlsServer::executeCommand(const GoPlsCommand &cmd)
 {
     auto cmdID = cmd.commandID();
+    qDebug() << "******" << cmd.method() << cmdID;
     CommandData data;
     data.command = cmd.method();
     data.filepath = cmd.filepath();

@@ -25,6 +25,7 @@ protected:
     void executeCommand(const GoPlsCommand &cmd);
 
 signals:
+    void workspaceInitialized();
     void responseReceived(int commandID, const QByteArray &response);
     void autocompleteResult(const QString &file, const QList<AutoCompletionResult> &);
     void definitionsResult(const QString &file, const QList<DefinitionResult> &definitions);
@@ -37,6 +38,7 @@ signals:
     void documentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
     void findUsageResult(const QString &file, const QList<UsageResult> &list);
     void semanticTokensResult(const QString &file, const QVariantList &list);
+    void foldingRangeResult(const QString &file, const QList<FoldingRangeResult> &list);
     void exited();
 
 protected slots:
@@ -68,6 +70,7 @@ public:
     void hover(const QString &filename, int line, int column);
     void documentSymbols(const QString &filename);
     void enableStaticcheck(bool v);
+    void semanticTokensFull(const QString &file);
 
 
     void shutdown();
@@ -96,6 +99,7 @@ protected:
     void decodeSignatureHelp(const CommandData &data, const QJsonObject &response);
     void decodeFindUsage(const CommandData &data, const QJsonObject &response);
     void decodeSemanticTokens(const CommandData &data, const QJsonObject &response);
+    void decodeFoldingRange(const CommandData &data, const QJsonObject &response);
     void printResponse(const CommandData &data, const QJsonObject &response);
 
 private:

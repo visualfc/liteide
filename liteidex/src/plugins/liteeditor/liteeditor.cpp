@@ -202,7 +202,6 @@ void LiteEditor::setTextLexer(LiteApi::ITextLexer *lexer)
 
 void LiteEditor::setSyntaxHighlighter(TextEditor::SyntaxHighlighter *syntax)
 {
-    qDebug() << "LITEEDITOR HIGHLIGHTER" << syntax;
     m_syntax = syntax;
     m_extension->addObject("TextEditor::SyntaxHighlighter", syntax);
     m_commentAct->setVisible(m_syntax && !m_syntax->comment().isEmpty());

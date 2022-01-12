@@ -13,6 +13,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     , m_liteApp(app)
     , m_completer(nullptr)
     , m_server(new GoPlsServer(app))
+    , m_isWorkspaceInitialized(false)
 {
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this, "GolangPls");
 
@@ -29,6 +30,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_usageAct, &QAction::triggered, this, &GolangPls::findUsage);
 
     connect(m_liteApp, &LiteApi::IApplication::sessionListChanged, this, &GolangPls::appLoaded);
+    connect(m_server, &GoPlsServer::workspaceInitialized, this, &GolangPls::onWorkspaceInitialized);
     connect(m_server, &GoPlsServer::logMessage, this, &GolangPls::onLogMessage);
     connect(m_server, &GoPlsServer::autocompleteResult, this, &GolangPls::onAutoCompletion);
     connect(m_server, &GoPlsServer::definitionsResult, this, &GolangPls::onDefinitionResult);
@@ -39,6 +41,7 @@ GolangPls::GolangPls(LiteApi::IApplication *app, QObject *parent)
     connect(m_server, &GoPlsServer::diagnosticsInfo, this, &GolangPls::onDiagnosticsInfo);
     connect(m_server, &GoPlsServer::documentSymbolsResult, this, &GolangPls::onDocumentSymbolsResult);
     connect(m_server, &GoPlsServer::semanticTokensResult, this, &GolangPls::onSemanticTokensResult);
+    connect(m_server, &GoPlsServer::foldingRangeResult, this, &GolangPls::onFoldingRangeResult);
 
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::currentEditorChanged, this, &GolangPls::currentEditorChanged);
     connect(m_liteApp->editorManager(), &LiteApi::IEditorManager::editorCreated, this, &GolangPls::editorCreated);
@@ -151,24 +154,30 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     if (filePath.isEmpty()) {
         return;
     }
-    auto workspaceDirectory = findModulePath(filePath);
-    if (!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
-        m_server->updateWorkspaceFolders({workspaceDirectory}, {});
-        m_opendWorkspace.insert(workspaceDirectory, true);
-    }
     connect(editor, &LiteApi::IEditor::contentsChanged, this, &GolangPls::editorChanged);
     connect(editor, SIGNAL(updateLink(QTextCursor, QPoint, bool)), this, SLOT(onUpdateLink(QTextCursor, QPoint, bool)));
 
     QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(editor);
-    m_server->fileOpened(editor->filePath(), plainTextEditor->toPlainText());
-    m_server->documentSymbols(editor->filePath());
+    if(m_isWorkspaceInitialized) {
+        auto workspaceDirectory = findModulePath(filePath);
+        if (!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
+            m_server->updateWorkspaceFolders({workspaceDirectory}, {});
+            m_opendWorkspace.insert(workspaceDirectory, true);
+        }
+        m_server->fileOpened(editor->filePath(), plainTextEditor->toPlainText());
+        m_server->documentSymbols(editor->filePath());
+    }
 
     const QString filepath = editor->filePath();
     m_plainText = plainTextEditor->toPlainText();
     connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, filepath, plainTextEditor]() {
+        if(m_plainText == plainTextEditor->toPlainText()){
+            return;
+        }
         int startLine, startPos, endLine, endPos;
         QString content;
         computeModifications(m_plainText, plainTextEditor->toPlainText(), startLine, startPos, endLine, endPos, content);
+        qDebug() << startLine << endLine;
         m_server->fileChanged(filepath, startLine, startPos, endLine, endPos, content);
         m_plainText = plainTextEditor->toPlainText();
     });
@@ -227,6 +236,18 @@ void GolangPls::prefixChanged(QTextCursor cur, QString pre, bool force)
 void GolangPls::wordCompleted(QString, QString, QString)
 {
     m_preWord.clear();
+}
+
+void GolangPls::onWorkspaceInitialized()
+{
+    qDebug() << "EVENT RECEIVED!";
+    m_isWorkspaceInitialized = true;
+
+    for (auto editor : m_liteApp->editorManager()->editorList()) {
+        QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(editor);
+        m_server->fileOpened(editor->filePath(), plainTextEditor->toPlainText());
+        m_server->documentSymbols(editor->filePath());
+    }
 }
 
 void GolangPls::onLogMessage(const QString &message, bool isError)
@@ -365,6 +386,18 @@ void GolangPls::onSemanticTokensResult(const QString &filename, const QVariantLi
         auto highlighter = m_highlightFactory->getHighlighter(editor);
         if (highlighter) {
             highlighter->onHighlightResults(list);
+        }
+    }
+}
+
+void GolangPls::onFoldingRangeResult(const QString &filename, const QList<FoldingRangeResult> &list)
+{
+    auto editor = m_liteApp->editorManager()->findEditor(filename, false);
+    qDebug() << "EDITOR=" << editor << ", factory=" << m_highlightFactory;
+    if (editor && m_highlightFactory) {
+        auto highlighter = m_highlightFactory->getHighlighter(editor);
+        if (highlighter) {
+            highlighter->onFoldingResults(list);
         }
     }
 }
@@ -567,6 +600,7 @@ void GolangPls::applyOption(QString id)
 
 void GolangPls::appLoaded()
 {
+    qDebug() << "APP LOADED!!!!";
     for (auto folder : activeWorkspaces()) {
         m_opendWorkspace[folder] = true;
     }

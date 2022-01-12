@@ -32,6 +32,7 @@ public slots:
     void prefixChanged(QTextCursor, QString, bool force);
     void wordCompleted(QString, QString, QString);
 
+    void onWorkspaceInitialized();
     void onLogMessage(const QString &message, bool isError);
     void onAutoCompletion(const QString &filename, const QList<AutoCompletionResult> &result);
     void onDefinitionResult(const QString &filename, const QList<DefinitionResult> &definitions);
@@ -42,6 +43,7 @@ public slots:
     void onDiagnosticsInfo(const QString &filename, const QList<DiagnosticResult> &diagnostics);
     void onDocumentSymbolsResult(const QString &filename, const QList<LiteApi::Symbol> &symbols);
     void onSemanticTokensResult(const QString &filename, const QVariantList &list);
+    void onFoldingRangeResult(const QString &filename, const QList<FoldingRangeResult> &list);
 
     void editorJumpToDecl();
     void renameSymbol();
@@ -85,6 +87,7 @@ private:
     GolangPlsUsage *m_fileSearch;
 
     GolangPlsHighlighterFactory *m_highlightFactory;
+    bool m_isWorkspaceInitialized;
 };
 
 #endif // GOLANGPLS_H

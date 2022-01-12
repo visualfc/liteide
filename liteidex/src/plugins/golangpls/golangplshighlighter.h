@@ -3,6 +3,7 @@
 
 #include "qtc_texteditor/syntaxhighlighter.h"
 #include "liteapi/liteapi.h"
+#include "goplstypes.h"
 
 class GolangPlsHighlighter: public TextEditor::SyntaxHighlighter
 {
@@ -17,6 +18,7 @@ protected:
 
 public slots:
     void onHighlightResults(const QVariantList &list);
+    void onFoldingResults(const QList<FoldingRangeResult> &list);
 
 protected:
     LiteApi::ITextEditor *m_editor;
