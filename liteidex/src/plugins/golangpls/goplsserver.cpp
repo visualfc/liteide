@@ -49,12 +49,13 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     DocumentHighlightClientCapabilities *highlightCapabilities = new DocumentHighlightClientCapabilities;
     highlightCapabilities->setDynamicRegistration(new bool(true));
     documentCapabilities->setDocumentHighlight(highlightCapabilities);
+    /*
     DocumentSymbolClientCapabilities *symbolCapabilities = new DocumentSymbolClientCapabilities;
     symbolCapabilities->setDynamicRegistration(new bool(true));
     symbolCapabilities->setHierarchicalDocumentSymbolSupport(new bool(true));
     symbolCapabilities->setLabelSupport(new bool(true));
     SymbolKindCapabilities *symbolKind = new SymbolKindCapabilities;
-    QList<SymbolKind*> *symbolValueSet = new QList<SymbolKind*>();
+    QList<SymbolKind *> *symbolValueSet = new QList<SymbolKind *>();
     *symbolValueSet << new SymbolKind(1)
                     << new SymbolKind(2)
                     << new SymbolKind(3)
@@ -84,11 +85,12 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     symbolKind->setValueSet(symbolValueSet);
     symbolCapabilities->setSymbolKind(symbolKind);
     DocumentSymbolClientCapabilitiesTagSupport *tagSupport = new DocumentSymbolClientCapabilitiesTagSupport;
-    QList<SymbolTag*> *tagValueSet = new QList<SymbolTag*>();
+    QList<SymbolTag *> *tagValueSet = new QList<SymbolTag *>();
     *tagValueSet << new SymbolTag(1);
     tagSupport->setValueSet(tagValueSet);
     symbolCapabilities->setTagSupport(tagSupport);
     documentCapabilities->setDocumentSymbol(symbolCapabilities);
+    */
     PublishDiagnosticsClientCapabilities *publishCapabilities = new PublishDiagnosticsClientCapabilities();
     publishCapabilities->setCodeDescriptionSupport(new bool(true));
     publishCapabilities->setDataSupport(new bool(true));
@@ -437,7 +439,7 @@ void GoPlsServer::decodeInitialized(const CommandData &data, const QJsonObject &
     printResponse(data, resp);
     m_init = true;
     if (!m_waitingCommands.isEmpty()) {
-       executeCommand(m_waitingCommands.takeFirst());
+        executeCommand(m_waitingCommands.takeFirst());
     }
     emit workspaceInitialized();
 }
@@ -624,13 +626,14 @@ void GoPlsServer::decodeDiagnostics(const CommandData &data, const QJsonObject &
 
 void GoPlsServer::decodeDocumentSymbols(const CommandData &data, const QJsonObject &response)
 {
+    printResponse(data, response);
     const auto symbols = response.value("result").toArray();
     QHash<QString, QList<LiteApi::Symbol>> result;
     for (auto it : symbols) {
         SymbolInformation symbol;
         symbol.fromJson(it.toObject());
         LiteApi::Symbol res;
-        if(!symbol.getLocation() || !symbol.getLocation()->getRange()) {
+        if (!symbol.getLocation() || !symbol.getLocation()->getRange()) {
             continue;
         }
         res.startLine = *symbol.getLocation()->getRange()->getStart()->getLine();
@@ -706,13 +709,13 @@ void GoPlsServer::decodeSemanticTokens(const CommandData &data, const QJsonObjec
 void GoPlsServer::decodeFoldingRange(const CommandData &data, const QJsonObject &response)
 {
     QList<FoldingRangeResult> list;
-    for(const auto &item : response.value("result").toArray()) {
+    for (const auto &item : response.value("result").toArray()) {
         FoldingRange range;
         range.fromJson(item.toObject());
         FoldingRangeResult res;
-        res.startLine = *range.getStartLine()+1;
+        res.startLine = *range.getStartLine() + 1;
         res.startColumn = *range.getStartCharacter();
-        res.endLine = *range.getEndLine()+1;
+        res.endLine = *range.getEndLine() + 1;
         res.endColumn = *range.getEndCharacter();
         list << res;
     }
@@ -810,14 +813,14 @@ void GoPlsServer::decodeResponse(const QByteArray &payload)
             emit workspaceInitialized();
             m_init = true;
             if (!m_waitingCommands.isEmpty()) {
-               executeCommand(m_waitingCommands.takeFirst());
+                executeCommand(m_waitingCommands.takeFirst());
             }
         } else if (!payload.isEmpty()) {
             qDebug().noquote() << payload;
         }
     } else {
         const QString requested = data.command;
-        if(jsonObject.contains("error")) {
+        if (jsonObject.contains("error")) {
             qDebug().noquote() << "ERROR:" << requested << payload;
         } else {
             if (callback) {
