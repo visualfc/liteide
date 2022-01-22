@@ -103,6 +103,10 @@ void SearchResultTreeItemDelegate::paint(QPainter *painter, const QStyleOptionVi
     painter->restore();
 }
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
+typedef QStyleOptionViewItem QStyleOptionViewItemV3;
+#endif
+
 // returns the width of the line number area
 int SearchResultTreeItemDelegate::drawLineNumber(QPainter *painter, const QStyleOptionViewItemV3 &option,
                                                  const QRect &rect,
