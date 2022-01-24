@@ -5,6 +5,8 @@
 #include "liteapi/liteapi.h"
 #include "goplstypes.h"
 
+#include <QMutex>
+
 class GolangPlsHighlighter: public TextEditor::SyntaxHighlighter
 {
     Q_OBJECT
@@ -29,6 +31,8 @@ protected:
     };
     // line -> formats
     QHash<int, QList<Highlight>> m_highlights;
+
+    QMutex m_foldingMutex;
 };
 
 #endif // GOLANGPLSHIGHLIGHTER_H

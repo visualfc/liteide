@@ -223,6 +223,7 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
     settings.insert("linksInHover", false);
     settings.insert("completeUnimported", true);
     settings.insert("ui.semanticTokens", true);
+    settings.insert("memoryMode", "DegradeClosed");
     QJsonObject analyses;
     analyses.insert("nilness", true);
     analyses.insert("shadow", true);

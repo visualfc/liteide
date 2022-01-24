@@ -158,7 +158,7 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     connect(editor, SIGNAL(updateLink(QTextCursor, QPoint, bool)), this, SLOT(onUpdateLink(QTextCursor, QPoint, bool)));
 
     QPlainTextEdit *plainTextEditor = LiteApi::getPlainTextEdit(editor);
-    if(m_isWorkspaceInitialized) {
+    if (m_isWorkspaceInitialized) {
         auto workspaceDirectory = findModulePath(filePath);
         if (!m_opendWorkspace.contains(workspaceDirectory) && workspaceDirectory != "/") {
             m_server->updateWorkspaceFolders({workspaceDirectory}, {});
@@ -171,7 +171,7 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
     const QString filepath = editor->filePath();
     m_plainText = plainTextEditor->toPlainText();
     connect(plainTextEditor, &QPlainTextEdit::textChanged, [this, filepath, plainTextEditor]() {
-        if(m_plainText == plainTextEditor->toPlainText()){
+        if (m_plainText == plainTextEditor->toPlainText()) {
             return;
         }
         int startLine, startPos, endLine, endPos;
@@ -415,9 +415,7 @@ void GolangPls::editorJumpToDecl()
 void GolangPls::renameSymbol()
 {
     auto cursor = m_editor->textCursor();
-    int start = cursor.position();
-    int line, column;
-    auto block = cursor.block();
+    int line = 0, column = 0;
     fromPosToLineAndColumn(m_editor, m_editor->textCursor().position(), line, column);
     m_server->prepareRenameSymbol(m_editor->filePath(), line, column);
 }

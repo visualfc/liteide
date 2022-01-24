@@ -1,4 +1,5 @@
 #include "golangplshighlighter.h"
+#include <QMutexLocker>
 #include <golangpls.h>
 #include <qtc_texteditor/basetextdocumentlayout.h>
 
@@ -13,52 +14,52 @@ GolangPlsHighlighter::GolangPlsHighlighter(LiteApi::ITextEditor *editor, QTextDo
 TextEditor::SyntaxHighlighter::TextFormatId GolangPlsHighlighter::plsToFormat(unsigned int tokenType)
 {
     switch (tokenType) {
-    case 0: //namespace = 'namespace',
-        return DataType;
-    case 1: //type = 'type',
-        return DataType;
-    case 2: //class = 'class',
-        return DataType;
-    case 3: //enum = 'enum',
-        return DataType;
-    case 4: //interface = 'interface',
-        return DataType;
-    case 5: //struct = 'struct',
-        return DataType;
-    case 6: //typeParameter = 'typeParameter',
-        return DataType;
-    case 7: //parameter = 'parameter',
-        return Normal;
-    case 8: //variable = 'variable',
-        return Normal;
-    case 9: //property = 'property',
-        return Normal;
-    case 10: //enumMember = 'enumMember',
-        return Symbol;
-    case 11: //event = 'event',
-        return Normal;
-    case 12: //function = 'function',
-        return Function;
-    case 13: //method = 'method',
-        return Function;
-    case 14: //macro = 'macro',
-        return Keyword;
-    case 15: //keyword = 'keyword',
-        return Keyword;
-    case 16: //modifier = 'modifier',
-        return String;
-    case 17: //comment = 'comment',
-        return Comment;
-    case 18: //string = 'string',
-        return String;
-    case 19: //number = 'number',
-        return Float;
-    case 20: //regexp = 'regexp',
-        return Normal;
-    case 21: //operator = 'operator'
-        return RegionMarker;
-    default:
-        return Normal;
+        case 0: //namespace = 'namespace',
+            return DataType;
+        case 1: //type = 'type',
+            return DataType;
+        case 2: //class = 'class',
+            return DataType;
+        case 3: //enum = 'enum',
+            return DataType;
+        case 4: //interface = 'interface',
+            return DataType;
+        case 5: //struct = 'struct',
+            return DataType;
+        case 6: //typeParameter = 'typeParameter',
+            return DataType;
+        case 7: //parameter = 'parameter',
+            return Normal;
+        case 8: //variable = 'variable',
+            return Normal;
+        case 9: //property = 'property',
+            return Symbol;
+        case 10: //enumMember = 'enumMember',
+            return Symbol;
+        case 11: //event = 'event',
+            return Normal;
+        case 12: //function = 'function',
+            return Function;
+        case 13: //method = 'method',
+            return Function;
+        case 14: //macro = 'macro',
+            return Keyword;
+        case 15: //keyword = 'keyword',
+            return Keyword;
+        case 16: //modifier = 'modifier',
+            return String;
+        case 17: //comment = 'comment',
+            return Comment;
+        case 18: //string = 'string',
+            return String;
+        case 19: //number = 'number',
+            return Float;
+        case 20: //regexp = 'regexp',
+            return Normal;
+        case 21: //operator = 'operator'
+            return RegionMarker;
+        default:
+            return Normal;
     }
 }
 
@@ -104,18 +105,32 @@ void GolangPlsHighlighter::onHighlightResults(const QVariantList &list)
 
 void GolangPlsHighlighter::onFoldingResults(const QList<FoldingRangeResult> &list)
 {
-    for(int i = 0; i < m_editor->document()->blockCount(); i++) {
+    QMutexLocker locker(&m_foldingMutex);
+    for (int i = 0; i < m_editor->document()->blockCount(); i++) {
         auto block = m_editor->document()->findBlockByNumber(i);
+        if (!block.isValid()) {
+            continue;
+        }
         TextEditor::TextBlockUserData *userData = TextEditor::BaseTextDocumentLayout::userData(block);
-        emit foldIndentChanged(block);
         userData->setFoldingIndent(0);
     }
-    for(const auto &range : list) {
-        for(unsigned int line = range.startLine; line <= range.endLine; line++) {
+    for (const auto &range : list) {
+        for (unsigned int line = range.startLine; line <= range.endLine && int(line) < m_editor->document()->blockCount(); line++) {
             auto block = m_editor->document()->findBlockByLineNumber(line);
+            if (!block.isValid()) {
+                continue;
+            }
             TextEditor::TextBlockUserData *userData = TextEditor::BaseTextDocumentLayout::userData(block);
-            emit foldIndentChanged(block);
-            userData->setFoldingIndent(userData->foldingIndent()+1);
+            if (userData) {
+                userData->setFoldingIndent(userData->foldingIndent() + 1);
+            }
         }
+    }
+    for (int i = 0; i < m_editor->document()->blockCount(); i++) {
+        auto block = m_editor->document()->findBlockByLineNumber(i);
+        if (!block.isValid()) {
+            continue;
+        }
+        emit foldIndentChanged(block);
     }
 }
