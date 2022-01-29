@@ -361,6 +361,8 @@ void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<Diagnosti
                 annotation.content = diag.message;
                 annotation.level = diag.level;
                 annotation.from = "staticcheck";
+
+                LiteApi::getEditorMark(m_editor)->addMark(diag.line-1, 1000);
                 liteEditor->addAnnotation(diag.line, annotation);
             }
         }

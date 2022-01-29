@@ -133,4 +133,5 @@ void GolangPlsHighlighter::onFoldingResults(const QList<FoldingRangeResult> &lis
         }
         emit foldIndentChanged(block);
     }
+    rehighlight();
 }
