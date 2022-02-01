@@ -345,6 +345,8 @@ void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<Diagnosti
         auto liteEditor = LiteApi::getLiteEditor(editor);
         if (liteEditor) {
             liteEditor->clearAnnotations("staticcheck");
+            liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateNormal, "staticcheck");
+            liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateError, "staticcheck");
             for (const auto &diag : diagnostics) {
                 bool disabled = true;
                 for (const auto &check : qAsConst(m_staticcheckEnables)) {
@@ -362,8 +364,15 @@ void GolangPls::onDiagnosticsInfo(const QString &filename, const QList<Diagnosti
                 annotation.level = diag.level;
                 annotation.from = "staticcheck";
 
-                LiteApi::getEditorMark(m_editor)->addMark(diag.line-1, 1000);
+                //LiteApi::getEditorMark(m_editor)->addMark(diag.line-1, 1000);
                 liteEditor->addAnnotation(diag.line, annotation);
+
+                auto type = LiteApi::EditorNavigateNormal;
+                if (annotation.level == "error") {
+                    type = LiteApi::EditorNavigateError;
+                }
+
+                liteEditor->insertNavigateMark(diag.line, type, annotation.content, "staticcheck");
             }
         }
     }
@@ -436,6 +445,9 @@ void GolangPls::editorFindUsages()
 
 void GolangPls::editText(LiteApi::IEditor *liteEditor, const QList<TextEditResult> &list, bool reverse)
 {
+    if (!liteEditor) {
+        return;
+    }
     QByteArray state = liteEditor->saveState();
     auto editor = LiteApi::getPlainTextEdit(liteEditor);
     auto cursor = editor->textCursor();
