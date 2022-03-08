@@ -91,6 +91,9 @@ void GolangPls::setHighlightFactory(GolangPlsHighlighterFactory *factory)
 
 void GolangPls::currentEditorChanged(LiteApi::IEditor *editor)
 {
+    if (editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
     if (!editor) {
         this->setCompleter(0);
         return;
@@ -185,6 +188,9 @@ void GolangPls::editorCreated(LiteApi::IEditor *editor)
 
 void GolangPls::editorClosed(LiteApi::IEditor *editor)
 {
+    if (editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
     auto folders = activeWorkspaces();
     QStringList remove;
     for (const auto &folder : m_opendWorkspace.keys()) {
@@ -203,6 +209,9 @@ void GolangPls::editorClosed(LiteApi::IEditor *editor)
 
 void GolangPls::editorSaved(LiteApi::IEditor *editor)
 {
+    if (editor->mimeType() != "text/x-gosrc") {
+        return;
+    }
     LiteApi::ITextEditor *currentEditor = LiteApi::getTextEditor(editor);
     //    m_server->organizeImports(currentEditor->filePath());
     m_server->formatDocument(currentEditor->filePath());
@@ -446,6 +455,9 @@ void GolangPls::editorFindUsages()
 void GolangPls::editText(LiteApi::IEditor *liteEditor, const QList<TextEditResult> &list, bool reverse)
 {
     if (!liteEditor) {
+        return;
+    }
+    if (liteEditor->mimeType() != "text/x-gosrc") {
         return;
     }
     QByteArray state = liteEditor->saveState();

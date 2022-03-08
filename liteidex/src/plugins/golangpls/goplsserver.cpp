@@ -175,7 +175,7 @@ void GoPlsServer::initWorkspace(const QStringList &_folders)
                 << new QString("number")
                 << new QString("regexp")
                 << new QString("operator")
-                   ;
+                ;
     semanticTokens->setTokenTypes(tokenTypes);
 
 
@@ -493,30 +493,30 @@ void GoPlsServer::decodeDocumentCompletion(const CommandData &data, const QJsonO
             }
             if (kind) {
                 switch (int(*kind)) {
-                case CompletionItemKindValue:
-                case CompletionItemKindConstant:
-                    result.type = "const";
-                    break;
-                case CompletionItemKindMethod:
-                case CompletionItemKindFunction:
-                    result.type = "func";
-                    break;
-                case CompletionItemKindInterface:
-                case CompletionItemKindStruct:
-                    result.type = "struct";
-                    break;
-                case CompletionItemKindVariable:
-                    result.type = "var";
-                    break;
-                case CompletionItemKindModule:
-                    result.type = "package";
-                    break;
-                case CompletionItemKindSnippet:
-                    result.type = "snippet";
-                    break;
-                default:
-                    result.type = "type";
-                    break;
+                    case CompletionItemKindValue:
+                    case CompletionItemKindConstant:
+                        result.type = "const";
+                        break;
+                    case CompletionItemKindMethod:
+                    case CompletionItemKindFunction:
+                        result.type = "func";
+                        break;
+                    case CompletionItemKindInterface:
+                    case CompletionItemKindStruct:
+                        result.type = "struct";
+                        break;
+                    case CompletionItemKindVariable:
+                        result.type = "var";
+                        break;
+                    case CompletionItemKindModule:
+                        result.type = "package";
+                        break;
+                    case CompletionItemKindSnippet:
+                        result.type = "snippet";
+                        break;
+                    default:
+                        result.type = "type";
+                        break;
                 }
             }
             completions << result;
@@ -611,18 +611,18 @@ void GoPlsServer::decodeDiagnostics(const CommandData &data, const QJsonObject &
         DiagnosticSeverityHint DiagnosticSeverity = 4
          */
         switch (int(*it->getSeverity())) {
-        case 1:
-            diag.level = "error";
-            break;
-        case 2:
-            diag.level = "warning";
-            break;
-        case 3:
-            diag.level = "info";
-            break;
-        case 4:
-            diag.level = "hint";
-            break;
+            case 1:
+                diag.level = "error";
+                break;
+            case 2:
+                diag.level = "warning";
+                break;
+            case 3:
+                diag.level = "info";
+                break;
+            case 4:
+                diag.level = "hint";
+                break;
         }
         list << diag;
     }
@@ -718,10 +718,10 @@ void GoPlsServer::decodeFoldingRange(const CommandData &data, const QJsonObject 
         FoldingRange range;
         range.fromJson(item.toObject());
         FoldingRangeResult res;
-        res.startLine = *range.getStartLine() + 1;
-        res.startColumn = *range.getStartCharacter();
-        res.endLine = *range.getEndLine() + 1;
-        res.endColumn = *range.getEndCharacter();
+        res.startLine = (range.getStartLine()) ? *range.getStartLine() + 1 : 0;
+        res.startColumn = (range.getStartCharacter()) ? *range.getStartCharacter() : 0;
+        res.endLine = range.getEndLine() ? *range.getEndLine() + 1 : 0;
+        res.endColumn = range.getEndCharacter() ? *range.getEndCharacter() : 0;
         list << res;
     }
     emit foldingRangeResult(data.filepath, list);
