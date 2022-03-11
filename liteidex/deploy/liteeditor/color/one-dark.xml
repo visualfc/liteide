@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="One Dark">
+  <!--
+  <    One Dark - https://github.com/atom/one-dark-ui
+  <
+  <    Author: Lofanmi - https://github.com/Lofanmi
+  <    MIT License
+  -->
+  <style name="Text" foreground="#B9B9B9" background="#282C34" />
+  <style name="Extra" foreground="#495162" background="#282C34" />
+  <style name="Selection" background="#404859" />
+  <style name="CurrentLine" background="#495162" />
+  <style name="MatchBrackets" background="#495162" />
+  <style name="IndentLine" foreground="#495162" />
+  <style name="VisualWhitespace" foreground="#495162" />
+  <style name="Keyword" foreground="#C678DD" />
+  <style name="DataType" foreground="#E5C07B" />
+  <style name="Decimal" foreground="#CD9765" />
+  <style name="BaseN" foreground="#CD9765" />
+  <style name="Float" foreground="#CD9765" />
+  <style name="Char" foreground="#98C379" />
+  <style name="String" foreground="#98C379" />
+  <style name="Comment" foreground="#555C69" />
+  <style name="Alert" foreground="#E5C07B" />
+  <style name="Error" foreground="#E06C75" />
+  <style name="Function" foreground="#61AFEF" />
+  <style name="RegionMarker" foreground="#B9B9B9" />
+  <style name="Symbol" foreground="#DCCBF6" />
+  <style name="BuiltinFunc" foreground="#61AFEF" />
+  <style name="Predeclared" foreground="#E5C07B" />
+  <style name="FuncDecl" foreground="#61AFEF" />
+  <style name="Placeholder" foreground="#555C69" />
+  <style name="ToDo" foreground="#FE8C00" bold="true" />
+</style-scheme>
