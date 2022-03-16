@@ -25,11 +25,11 @@
 #include "golanghighlighter.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
-     #define _CRTDBG_MAP_ALLOC
-     #include <stdlib.h>
-     #include <crtdbg.h>
-     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
-     #define new DEBUG_NEW
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+#define new DEBUG_NEW
 #endif
 //lite_memory_check_end
 
@@ -46,5 +46,5 @@ QStringList GolangHighlighterFactory::mimeTypes() const
 
 TextEditor::SyntaxHighlighter *GolangHighlighterFactory::create(LiteApi::ITextEditor *editor, QTextDocument *doc, const QString &/*mimeType*/)
 {
-    return new GolangHighlighter(editor,doc);
+    return new GolangHighlighter(editor, doc);
 }

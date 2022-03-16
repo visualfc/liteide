@@ -47,11 +47,13 @@
 #include <QtGui/QSyntaxHighlighter>
 #include <QtGui/QTextCharFormat>
 
-namespace TextEditor {
+namespace TextEditor
+{
 
 class TabSettings;
 
-namespace Internal {
+namespace Internal
+{
 
 class Rule;
 class Context;
@@ -70,7 +72,7 @@ public:
     virtual void setTabSize(int tabSize);
     void setDefaultContext(const QSharedPointer<Context> &defaultContext);
 protected:
-    virtual void highlightBlock(const QString &text);
+    virtual void highlightBlock(const QTextBlock &block);
 
 private:
 
@@ -115,8 +117,7 @@ private:
     int neighbouringNonEmptyBlockIndent(QTextBlock block, const bool previous) const;
     // Mapping from Kate format strings to format ids.
 public:
-    struct BlockData : TextBlockUserData
-    {
+    struct BlockData : TextBlockUserData {
         BlockData();
         virtual ~BlockData();
 

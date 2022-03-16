@@ -24,6 +24,7 @@
 #include "optionmanager.h"
 #include "optionsbrowser.h"
 #include <QAction>
+#include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
 //lite_memory_check_begin
@@ -116,6 +117,7 @@ void OptionManager::loadOption(const QString &opt)
     foreach (IOptionFactory *f, m_factoryList) {
         QStringList mimeTypes = f->mimeTypes();
         foreach (QString mimeType, mimeTypes) {
+            qDebug() << "MIME TYPE" << mimeType;
             if (opt == mimeType) {
                 emit applyOption(mimeType);
             }

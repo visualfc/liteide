@@ -16,7 +16,7 @@ export PATH=$QTDIR/bin:$PATH
 
 echo qmake liteide ...
 echo .
-qtchooser -qt=qt5 -run-tool=qmake $LITEIDE_ROOT -spec linux-g++ "CONFIG+=release"
+/home/jeremy/Qt/5.15.2/gcc_64/bin/qmake  $LITEIDE_ROOT -spec linux-g++ "CONFIG+=release"
 
 if [ $? -ge 1 ]; then
 	echo 'error, qmake fail'
@@ -25,7 +25,7 @@ fi
 
 echo make liteide ...
 echo .
-make
+make -j6
 
 if [ $? -ge 1 ]; then
 	echo 'error, make fail'
@@ -47,9 +47,9 @@ else
 	export GOPATH=$PWD:$GOPATH
 fi
 
-(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
-(cd "$PWD/src/github.com/visualfc/gocode" && go install -ldflags "-s" -v)
-(cd "$PWD/src/github.com/fatih/gomodifytags" && go install -ldflags "-s" -v)
+#(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
+#(cd "$PWD/src/github.com/visualfc/gocode" && go install -ldflags "-s" -v)
+#(cd "$PWD/src/github.com/fatih/gomodifytags" && go install -ldflags "-s" -v)
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'

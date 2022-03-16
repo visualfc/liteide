@@ -48,11 +48,12 @@
 using namespace TextEditor;
 using namespace Internal;
 
-namespace {
-    static const QLatin1String kStay("#stay");
-    static const QLatin1String kPop("#pop");
-    static const QLatin1Char kBackSlash('\\');
-    static const QLatin1Char kHash('#');
+namespace
+{
+static const QLatin1String kStay("#stay");
+static const QLatin1String kPop("#pop");
+static const QLatin1Char kBackSlash('\\');
+static const QLatin1Char kHash('#');
 }
 
 Highlighter::Highlighter(QTextDocument *parent) :
@@ -93,12 +94,14 @@ void Highlighter::setTabSize(int tabSize)
     m_tabSize = tabSize;
 }
 
-void Highlighter::highlightBlock(const QString &text)
+void Highlighter::highlightBlock(const QTextBlock &block)
 {
+    const QString text = block.text();
     if (!m_defaultContext.isNull() && !m_isBroken) {
         try {
-            if (!currentBlockUserData())
+            if (!currentBlockUserData()) {
                 initializeBlockData();
+            }
             setupDataForBlock(text);
 
             handleContextChange(m_currentContext->lineBeginContext(),
@@ -107,8 +110,9 @@ void Highlighter::highlightBlock(const QString &text)
             ProgressData progress;
             const int length = text.length();
             m_lastRegionChanged = -1;
-            while (progress.offset() < length)
+            while (progress.offset() < length) {
                 iterateThroughRules(text, length, &progress, false, m_currentContext->rules());
+            }
 
             handleContextChange(m_currentContext->lineEndContext(),
                                 m_currentContext->definition(),
@@ -133,8 +137,9 @@ void Highlighter::highlightBlock(const QString &text)
 
 void Highlighter::setupDataForBlock(const QString &text)
 {
-    if (extractObservableState(currentBlockState()) == WillContinue)
+    if (extractObservableState(currentBlockState()) == WillContinue) {
         analyseConsistencyOfWillContinueBlock(text);
+    }
 
     if (previousBlockState() == -1) {
         m_regionDepth = 0;
@@ -144,14 +149,15 @@ void Highlighter::setupDataForBlock(const QString &text)
         m_regionDepth = extractRegionDepth(previousBlockState());
         m_lastRegionDepth = m_regionDepth;
         const int observablePreviousState = extractObservableState(previousBlockState());
-        if (observablePreviousState == Default)
+        if (observablePreviousState == Default) {
             setupDefault();
-        else if (observablePreviousState == WillContinue)
+        } else if (observablePreviousState == WillContinue) {
             setupFromWillContinue();
-        else if (observablePreviousState == Continued)
+        } else if (observablePreviousState == Continued) {
             setupFromContinued();
-        else
+        } else {
             setupFromPersistent();
+        }
 
         blockData(currentBlockUserData())->m_foldingRegions =
             blockData(currentBlock().previous().userData())->m_foldingRegions;
@@ -177,8 +183,9 @@ void Highlighter::setupFromWillContinue()
     BlockData *data = blockData(currentBlock().userData());
     data->m_originalObservableState = previousData->m_originalObservableState;
 
-    if (currentBlockState() == -1 || extractObservableState(currentBlockState()) == Default)
+    if (currentBlockState() == -1 || extractObservableState(currentBlockState()) == Default) {
         setCurrentBlockState(computeState(Continued));
+    }
 }
 
 void Highlighter::setupFromContinued()
@@ -189,7 +196,7 @@ void Highlighter::setupFromContinued()
              previousData->m_originalObservableState != Continued);
 
     if (previousData->m_originalObservableState == Default ||
-        previousData->m_originalObservableState == -1) {
+            previousData->m_originalObservableState == -1) {
         m_contexts.push_back(m_defaultContext);
     } else {
         pushContextSequence(previousData->m_originalObservableState);
@@ -235,14 +242,14 @@ void Highlighter::iterateThroughRules(const QString &text,
             if (!m_stringOrComment) {
                 if (!rule->beginRegion().isEmpty()) {
                     QChar ch = text.at(startOffset);
-                    if (ch == '{' || ch == '(' || ch == '[' ) {
-                        blockData(currentBlockUserData())->appendParenthese(Parenthesis(Parenthesis::Opened,ch,startOffset));
+                    if (ch == '{' || ch == '(' || ch == '[') {
+                        blockData(currentBlockUserData())->appendParenthese(Parenthesis(Parenthesis::Opened, ch, startOffset));
                     }
                 }
                 if (!rule->endRegion().isEmpty()) {
                     QChar ch = text.at(startOffset);
-                    if (ch == '}' || ch == ')' || ch == ']' ) {
-                        blockData(currentBlockUserData())->appendParenthese(Parenthesis(Parenthesis::Closed,ch,startOffset));
+                    if (ch == '}' || ch == ')' || ch == ']') {
+                        blockData(currentBlockUserData())->appendParenthese(Parenthesis(Parenthesis::Closed, ch, startOffset));
                     }
                 }
             }
@@ -257,17 +264,17 @@ void Highlighter::iterateThroughRules(const QString &text,
                         if (m_lastRegionDepth > m_regionDepth) {
                             detlaDeptn = true;
                         }
-//                        if (!m_stringOrComment && progress->isClosingBraceMatchAtNonEnd()) {
-//                            --blockData(currentBlockUserData())->m_foldingIndentDelta;
-//                        }
+                        //                        if (!m_stringOrComment && progress->isClosingBraceMatchAtNonEnd()) {
+                        //                            --blockData(currentBlockUserData())->m_foldingIndentDelta;
+                        //                        }
                     }
                 }
                 if (!rule->beginRegion().isEmpty()) {
                     blockData(currentBlockUserData())->m_foldingRegions.push(rule->beginRegion());
-                    ++m_regionDepth;                    
-//                    if (!m_stringOrComment && progress->isOpeningBraceMatchAtFirstNonSpace()) {
-//                        ++blockData(currentBlockUserData())->m_foldingIndentDelta;
-//                    }
+                    ++m_regionDepth;
+                    //                    if (!m_stringOrComment && progress->isOpeningBraceMatchAtFirstNonSpace()) {
+                    //                        ++blockData(currentBlockUserData())->m_foldingIndentDelta;
+                    //                    }
                 }
                 progress->clearBracesMatches();
             }
@@ -276,8 +283,9 @@ void Highlighter::iterateThroughRules(const QString &text,
                 createWillContinueBlock();
                 progress->setWillContinueLine(false);
             } else {
-                if (rule->hasChildren())
+                if (rule->hasChildren()) {
                     iterateThroughRules(text, length, progress, true, rule->children());
+                }
 
                 if (!rule->context().isEmpty() && contextChangeRequired(rule->context())) {
                     m_currentCaptures = progress->captures();
@@ -317,32 +325,34 @@ void Highlighter::iterateThroughRules(const QString &text,
         } else {
             applyFormat(progress->offset(), 1, m_currentContext->itemData(),
                         m_currentContext->definition());
-            if (progress->isOnlySpacesSoFar() && !text.at(progress->offset()).isSpace())
+            if (progress->isOnlySpacesSoFar() && !text.at(progress->offset()).isSpace()) {
                 progress->setOnlySpacesSoFar(false);
+            }
             progress->incrementOffset();
         }
     }
 
     if (m_lastRegionDepth == m_regionDepth &&
-        m_lastRegionChanged != m_lastRegionDepth) {
+            m_lastRegionChanged != m_lastRegionDepth) {
         m_lastRegionChanged = m_lastRegionDepth;
         if (detlaDeptn || (
                     blockData(currentBlockUserData())->hasParentheses() &&
-                    ( blockData(currentBlockUserData())->parentheses().last().type == Parenthesis::Opened)
-                    ) ) {
+                    (blockData(currentBlockUserData())->parentheses().last().type == Parenthesis::Opened)
+                )) {
             blockData(currentBlockUserData())->m_foldingIndentDelta--;
         }
     }
 
-//    if (detlaDeptn && (m_lastRegionDepth == m_regionDepth)) {
-//        blockData(currentBlockUserData())->m_foldingIndentDelta--;
-//    }
+    //    if (detlaDeptn && (m_lastRegionDepth == m_regionDepth)) {
+    //        blockData(currentBlockUserData())->m_foldingIndentDelta--;
+    //    }
 }
 
 bool Highlighter::contextChangeRequired(const QString &contextName) const
 {
-    if (contextName == kStay)
+    if (contextName == kStay) {
         return false;
+    }
     return true;
 }
 
@@ -352,8 +362,9 @@ void Highlighter::changeContext(const QString &contextName,
 {
     if (contextName.startsWith(kPop)) {
         QStringList list = contextName.split(kHash, QString::SkipEmptyParts);
-        for (int i = 0; i < list.size(); ++i)
+        for (int i = 0; i < list.size(); ++i) {
             m_contexts.pop_back();
+        }
 
         if (extractObservableState(currentBlockState()) >= PersistentsStart) {
             // One or more contexts were popped during during a persistent state.
@@ -368,13 +379,14 @@ void Highlighter::changeContext(const QString &contextName,
     } else {
         const QSharedPointer<Context> &context = definition->context(contextName);
 
-        if (context->isDynamic())
+        if (context->isDynamic()) {
             pushDynamicContext(context);
-        else
+        } else {
             m_contexts.push_back(context);
+        }
 
         if (m_contexts.back()->lineEndContext() == kStay ||
-            extractObservableState(currentBlockState()) >= PersistentsStart) {
+                extractObservableState(currentBlockState()) >= PersistentsStart) {
             const QString &currentSequence = currentContextSequence();
             mapLeadingSequence(currentSequence);
             if (m_contexts.back()->lineEndContext() == kStay) {
@@ -386,16 +398,18 @@ void Highlighter::changeContext(const QString &contextName,
         }
     }
 
-    if (assignCurrent)
+    if (assignCurrent) {
         assignCurrentContext();
+    }
 }
 
 void Highlighter::handleContextChange(const QString &contextName,
                                       const QSharedPointer<HighlightDefinition> &definition,
                                       const bool setCurrent)
 {
-    if (!contextName.isEmpty() && contextChangeRequired(contextName))
+    if (!contextName.isEmpty() && contextChangeRequired(contextName)) {
         changeContext(contextName, definition, setCurrent);
+    }
 }
 
 void Highlighter::applyFormat(int offset,
@@ -403,8 +417,9 @@ void Highlighter::applyFormat(int offset,
                               const QString &itemDataName,
                               const QSharedPointer<HighlightDefinition> &definition)
 {
-    if (count == 0)
+    if (count == 0) {
         return;
+    }
 
     QSharedPointer<ItemData> itemData;
     try {
@@ -421,33 +436,38 @@ void Highlighter::applyFormat(int offset,
     if (formatId == Normal && !itemData->isCustomized()) {
         return;
     }
-//    if (formatId != Normal) {
-//        QHash<TextFormatId, QTextCharFormat>::const_iterator cit =
-//            m_creatorFormats.constFind(formatId);
-//        if (cit != m_creatorFormats.constEnd()) {
-//            QTextCharFormat format = cit.value();
-            QTextCharFormat format = m_creatorFormats[formatId];
-            //if (itemData->isCustomized()) {
-                // Please notice that the following are applied every time for item datas which have
-                // customizations. The configureFormats method could be used to provide a "one time"
-                // configuration, but it would probably require to traverse all item datas from all
-                // definitions available/loaded (either to set the values or for some "notifying"
-                // strategy). This is because the highlighter does not really know on which
-                // definition(s) it is working. Since not many item datas specify customizations I
-                // think this approach would fit better. If there are other ideas...
-                if (itemData->color().isValid())
-                    format.setForeground(itemData->color());
-                if (itemData->isItalicSpecified())
-                    format.setFontItalic(itemData->isItalic());
-                if (itemData->isBoldSpecified())
-                    format.setFontWeight(toFontWeight(itemData->isBold()));
-                if (itemData->isUnderlinedSpecified())
-                    format.setFontUnderline(itemData->isUnderlined());
-                if (itemData->isStrikeOutSpecified())
-                    format.setFontStrikeOut(itemData->isStrikeOut());
-            //}
-            setFormat(offset, count, format, formatId);
-        //}
+    //    if (formatId != Normal) {
+    //        QHash<TextFormatId, QTextCharFormat>::const_iterator cit =
+    //            m_creatorFormats.constFind(formatId);
+    //        if (cit != m_creatorFormats.constEnd()) {
+    //            QTextCharFormat format = cit.value();
+    QTextCharFormat format = m_creatorFormats[formatId];
+    //if (itemData->isCustomized()) {
+    // Please notice that the following are applied every time for item datas which have
+    // customizations. The configureFormats method could be used to provide a "one time"
+    // configuration, but it would probably require to traverse all item datas from all
+    // definitions available/loaded (either to set the values or for some "notifying"
+    // strategy). This is because the highlighter does not really know on which
+    // definition(s) it is working. Since not many item datas specify customizations I
+    // think this approach would fit better. If there are other ideas...
+    if (itemData->color().isValid()) {
+        format.setForeground(itemData->color());
+    }
+    if (itemData->isItalicSpecified()) {
+        format.setFontItalic(itemData->isItalic());
+    }
+    if (itemData->isBoldSpecified()) {
+        format.setFontWeight(toFontWeight(itemData->isBold()));
+    }
+    if (itemData->isUnderlinedSpecified()) {
+        format.setFontUnderline(itemData->isUnderlined());
+    }
+    if (itemData->isStrikeOutSpecified()) {
+        format.setFontStrikeOut(itemData->isStrikeOut());
+    }
+    //}
+    setFormat(offset, count, format, formatId);
+    //}
     //}
 }
 
@@ -469,8 +489,8 @@ void Highlighter::createWillContinueBlock()
 void Highlighter::analyseConsistencyOfWillContinueBlock(const QString &text)
 {
     if (currentBlock().next().isValid() && (
-        text.length() == 0 || text.at(text.length() - 1) != kBackSlash) &&
-        extractObservableState(currentBlock().next().userState()) != Continued) {
+                text.length() == 0 || text.at(text.length() - 1) != kBackSlash) &&
+            extractObservableState(currentBlock().next().userState()) != Continued) {
         currentBlock().next().setUserState(computeState(Continued));
     }
 
@@ -501,15 +521,17 @@ void Highlighter::mapLeadingSequence(const QString &contextSequence)
 void Highlighter::pushContextSequence(int state)
 {
     const QVector<QSharedPointer<Context> > &contexts = m_persistentContexts.value(state);
-    for (int i = 0; i < contexts.size(); ++i)
+    for (int i = 0; i < contexts.size(); ++i) {
         m_contexts.push_back(contexts.at(i));
+    }
 }
 
 QString Highlighter::currentContextSequence() const
 {
     QString sequence;
-    for (int i = 0; i < m_contexts.size(); ++i)
+    for (int i = 0; i < m_contexts.size(); ++i) {
         sequence.append(m_contexts.at(i)->id());
+    }
 
     return sequence;
 }
@@ -568,8 +590,9 @@ int Highlighter::firstNonSpace(const QString &text) const
 {
     int i = 0;
     while (i < text.size()) {
-        if (!text.at(i).isSpace())
+        if (!text.at(i).isSpace()) {
             return i;
+        }
         ++i;
     }
     return i;
@@ -584,10 +607,11 @@ int Highlighter::tabColumnAt(const QString &text, int position) const
 {
     int column = 0;
     for (int i = 0; i < position; ++i) {
-        if (text.at(i) == QLatin1Char('\t'))
+        if (text.at(i) == QLatin1Char('\t')) {
             column = column - (column % m_tabSize) + m_tabSize;
-        else
+        } else {
             ++column;
+        }
     }
     return column;
 }
@@ -609,16 +633,17 @@ void Highlighter::applyRegionBasedFolding()
         folding = extractRegionDepth(previousBlockState());
         if (data->m_foldingIndentDelta != 0) {
             folding += data->m_foldingIndentDelta;
-            if (data->m_foldingIndentDelta > 0)
+            if (data->m_foldingIndentDelta > 0) {
                 data->setFoldingStartIncluded(true);
-            else
+            } else {
                 previousData->setFoldingEndIncluded(false);
+            }
             data->m_foldingIndentDelta = 0;
         }
     }
     data->setFoldingEndIncluded(true);
     //data->setFoldingIndent(folding);
-    setFoldIndent(data,folding,currentBlock());
+    setFoldIndent(data, folding, currentBlock());
 }
 
 void Highlighter::applyIndentationBasedFolding(const QString &text)
@@ -629,31 +654,33 @@ void Highlighter::applyIndentationBasedFolding(const QString &text)
     // If this line is empty, check its neighbours. They all might be part of the same block.
     if (text.trimmed().isEmpty()) {
         //data->setFoldingIndent(0);
-        setFoldIndent(data,0,currentBlock());
+        setFoldIndent(data, 0, currentBlock());
         const int previousIndent = neighbouringNonEmptyBlockIndent(currentBlock().previous(), true);
         if (previousIndent > 0) {
             const int nextIndent = neighbouringNonEmptyBlockIndent(currentBlock().next(), false);
             if (previousIndent == nextIndent) {
                 //data->setFoldingIndent(previousIndent);
-                setFoldIndent(data,0,currentBlock());
+                setFoldIndent(data, 0, currentBlock());
             }
         }
     } else {
         //data->setFoldingIndent(m_tabSettings->indentationColumn(text));
-        setFoldIndent(data,tabIndentationColumn(text),currentBlock());
+        setFoldIndent(data, tabIndentationColumn(text), currentBlock());
     }
 }
 
 int Highlighter::neighbouringNonEmptyBlockIndent(QTextBlock block, const bool previous) const
 {
     while (true) {
-        if (!block.isValid())
+        if (!block.isValid()) {
             return 0;
+        }
         if (block.text().trimmed().isEmpty()) {
-            if (previous)
+            if (previous) {
                 block = block.previous();
-            else
+            } else {
                 block = block.next();
+            }
         } else {
             return tabIndentationColumn(block.text());
         }

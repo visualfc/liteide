@@ -249,10 +249,29 @@ public:
     bool indentLineVisible() const {
         return m_indentLineVisible;
     }
+    void setAnnotationsVisible(bool b) {
+        m_annotationsVisible = b;
+    }
+    bool annotationsVisible() const {
+        return m_annotationsVisible;
+    }
+
+    bool hideAnnotationsCurrentLine() const{
+        return m_hideAnnotationsCurrentLine;
+    }
+
+    void setHideAnnotationsCurrentLine(bool hideAnnotationsCurrentLine){
+        m_hideAnnotationsCurrentLine = hideAnnotationsCurrentLine;
+    }
+
     void setAllowVscrollLastLine(bool b);
     bool allowVscrollLastLine() const {
         return m_allowVscrollLastLine;
     }
+
+    void addAnnotation(int line, const LiteApi::Annotation &annotation);
+    void clearAnnotations(const QString &from);
+
     bool isLineWrap() const;
     void setLineWrap(bool wrap);
     void maybeSelectLine();
@@ -276,6 +295,7 @@ public:
     void transformBlockSelection(TransformationMethod method);
     int verticalBlockSelectionFirstColumn() const;
     int verticalBlockSelectionLastColumn() const;
+
 protected:
     void drawFoldingMarker(QPainter *painter, const QPalette &pal,
                            const QRect &rect,
@@ -296,6 +316,7 @@ protected:
     void indentEnter(QTextCursor cur);
     QString tabText(int n = 1) const;
     QTextBlock foldedBlockAt(const QPoint &pos, QRect *box = 0) const;
+    QTextBlock findBlockAt(const QPoint &pos, QPointF &offset) const;
     void moveLineUpDown(bool up);
     void copyLineUpDown(bool up);
     const TextEditor::TabSettings &tabSettings() const;
@@ -304,6 +325,7 @@ protected:
     void removeBlockSelection(const QString &text = QString());
     bool selectionVisible(int blockNumber) const;
     void handleBlockSelection(int diff_row, int diff_col);
+    QRectF computeAnnotationBoundingRect(QTextBlock block) const;
 public slots:
     virtual void copy();
     virtual void paste();
@@ -350,6 +372,8 @@ protected:
     int  m_maxTipInfoLines;
     int  m_inputCursorOffset;
     bool m_indentLineVisible;
+    bool m_annotationsVisible;
+    bool m_hideAnnotationsCurrentLine;
     bool m_autoIndent;
     bool m_autoBraces0; //{
     bool m_autoBraces1; //(
@@ -381,6 +405,7 @@ protected:
     bool m_visualizeWhitespace;
     NavigateManager *m_navigateManager;
     bool m_inBlockSelectionMode;
+    QHash<int, QList<LiteApi::Annotation>> m_annotations;
     TextEditor::BaseTextBlockSelection m_blockSelection;
     void showTipText(const QPoint &pos, const QString &text, QWidget *widget);
     void hideTipText();

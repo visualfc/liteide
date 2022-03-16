@@ -50,6 +50,7 @@ class QToolButton;
 class LiteCompleter;
 class ColorStyleScheme;
 class FunctionTooltip;
+class QComboBox;
 
 class QLabelEx : public QLabel
 {
@@ -127,6 +128,9 @@ public:
     virtual void loadTextUseDiff(const QString &text);
     virtual QMenu *editorMenu() const;
     virtual bool enableSyntax() const;
+    virtual void addAnnotation(int line, const LiteApi::Annotation &annotation);
+    virtual void clearAnnotations(const QString &from);
+    virtual void loadSymbols(const QList<LiteApi::Symbol> &symbols);
 signals:
     void colorStyleChanged();
     void tabSettingChanged(int);
@@ -160,6 +164,8 @@ public slots:
     void toggledLineWrapMode(bool b);
     void triggeredLineEnding(QAction *action);
     void broadcast(const QString &module, const QString &id, const QVariant &param);
+    void onSymbolIndexChanged(int idx);
+    void updateSymbolListItem();
 public:
     void updateFont();
     void sendUpdateFont();
@@ -172,6 +178,7 @@ protected:
     Extension   *m_extension;
     QWidget *m_widget;
     QToolBar *m_editToolBar;
+    QComboBox *m_symbolsList;
     NavigateBar *m_navBar;
     LiteEditorWidget    *m_editorWidget;
     QTextDocument       *m_document;

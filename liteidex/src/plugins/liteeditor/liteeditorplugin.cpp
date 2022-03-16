@@ -25,6 +25,7 @@
 #include "liteeditorfilefactory.h"
 #include "liteeditoroptionfactory.h"
 #include "liteeditor_global.h"
+#include "liteeditorplugin.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -80,6 +81,12 @@ bool LiteEditorPlugin::load(LiteApi::IApplication *app)
     app->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_navBarAct);
     connect(m_navBarAct,SIGNAL(triggered(bool)),this,SLOT(editorNavigateVisibleChanged(bool)));
 
+    m_symbolsListAct = new QAction(tr("Symbols list"),this);
+    m_symbolsListAct->setCheckable(true);
+    m_symbolsListAct->setChecked(m_liteApp->settings()->value(EDITOR_SYMBOLS_VISIBLE,true).toBool());
+    app->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_symbolsListAct);
+    connect(m_symbolsListAct,SIGNAL(triggered(bool)),this,SLOT(editorSymbolsListVisibleChanged(bool)));
+
     return true;
 }
 
@@ -93,6 +100,12 @@ void LiteEditorPlugin::editorNavigateVisibleChanged(bool b)
 {
     m_liteApp->settings()->setValue(EDITOR_NAVBAR_VISIBLE,b);
     m_liteApp->sendBroadcast("liteeditor",EDITOR_NAVBAR_VISIBLE,b);
+}
+
+void LiteEditorPlugin::editorSymbolsListVisibleChanged(bool b)
+{
+    m_liteApp->settings()->setValue(EDITOR_SYMBOLS_VISIBLE,b);
+    m_liteApp->sendBroadcast("liteeditor",EDITOR_SYMBOLS_VISIBLE,b);
 }
 
 #if QT_VERSION < 0x050000

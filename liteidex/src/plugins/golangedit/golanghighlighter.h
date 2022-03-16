@@ -37,7 +37,7 @@ class GolangHighlighter : public TextEditor::SyntaxHighlighter
 public:
     GolangHighlighter(LiteApi::ITextEditor *editor, QTextDocument *document = 0);
     virtual ~GolangHighlighter();
-    virtual void highlightBlock(const QString &text);
+    virtual void highlightBlock(const QTextBlock &text);
 private:
     void highlightBlockHelper(const QString &text);
     void setFoldingIndent(const QTextBlock &block, int indent);
@@ -52,7 +52,7 @@ protected:
     QStringList m_gotagList;
     QRegExp     m_todoRegexp;
     QString     m_currentTodo;
-    QMap<int,QString> m_todoInfoMap;
+    QMap<int, QString> m_todoInfoMap;
 };
 
 #endif // GOLANGHIGHLIGHTER_H

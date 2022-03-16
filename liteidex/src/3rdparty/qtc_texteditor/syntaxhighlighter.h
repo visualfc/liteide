@@ -57,17 +57,19 @@ class QTextBlockUserData;
 class QTextEdit;
 QT_END_NAMESPACE
 
-namespace TextEditor {
+namespace TextEditor
+{
 
 class SyntaxHighlighterPrivate;
 
 struct SyntaxComment {
-    SyntaxComment() : isCommentAfterWhiteSpaces(true), isCommentAfterWhiteSpacesAddSpace (true)
+    SyntaxComment() : isCommentAfterWhiteSpaces(true), isCommentAfterWhiteSpacesAddSpace(true)
     {}
-    bool isEmpty() const {
+    bool isEmpty() const
+    {
         return singleLineComment.isEmpty() &&
-                multiLineCommentStart.isEmpty() &&
-                multiLineCommentEnd.isEmpty();
+               multiLineCommentStart.isEmpty() &&
+               multiLineCommentEnd.isEmpty();
     }
     QString singleLineComment;
     QString multiLineCommentStart;
@@ -115,14 +117,16 @@ public:
     void setDocument(QTextDocument *doc);
     QTextDocument *document() const;
 
-    void setContextData(const QString &id, const QString &value) {
+    void setContextData(const QString &id, const QString &value)
+    {
         m_contextMap[id] = value;
     }
-    QString contextData(const QString &id) {
+    QString contextData(const QString &id)
+    {
         return m_contextMap[id];
     }
 
-    void setExtraAdditionalFormats(const QTextBlock& block, const QList<QTextLayout::FormatRange> &formats);
+    void setExtraAdditionalFormats(const QTextBlock &block, const QList<QTextLayout::FormatRange> &formats);
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
     virtual void setTabSize(int tabSize);
 public:
@@ -135,7 +139,7 @@ public Q_SLOTS:
     void rehighlightBlock(const QTextBlock &block);
 
 protected:
-    virtual void highlightBlock(const QString &text) = 0;
+    virtual void highlightBlock(const QTextBlock &text) = 0;
 
     void setFormat(int start, int count, const QTextCharFormat &format, int id = 0);
     //void setFormat(int start, int count, const QColor &color);
@@ -152,10 +156,9 @@ protected:
     QTextBlockUserData *currentBlockUserData() const;
 
     QTextBlock currentBlock() const;
-    QMap<QString,QString> m_contextMap;
+    QMap<QString, QString> m_contextMap;
 protected:
-    struct KateFormatMap
-    {
+    struct KateFormatMap {
         KateFormatMap();
         QHash<QString, TextFormatId> m_ids;
     };

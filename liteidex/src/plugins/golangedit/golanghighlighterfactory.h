@@ -32,7 +32,7 @@ class GolangHighlighterFactory : public LiteApi::IHighlighterFactory
 public:
     explicit GolangHighlighterFactory(QObject *parent = 0);
     virtual QStringList mimeTypes() const;
-    virtual TextEditor::SyntaxHighlighter* create(LiteApi::ITextEditor *editor, QTextDocument *doc, const QString &mimeType);
+    virtual TextEditor::SyntaxHighlighter *create(LiteApi::ITextEditor *editor, QTextDocument *doc, const QString &mimeType);
 };
 
 #endif // GOLANGHIGHLIGHTERFACTORY_H
