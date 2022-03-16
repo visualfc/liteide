@@ -6,7 +6,8 @@
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_@\-\\\/\.]+):(\d+)\b"/>
 		<action id="Run" img="run.png" key="Ctrl+R" cmd="$(GOP)" args="run ." output="true" codec="utf-8" save="all" readline="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="FileRun" img="filerun.png" key="Shift+Alt+R" cmd="$(GOP)" args="run $(EDITOR_FILE_NAME)" save="all" output="true" codec="utf-8" readline="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="Build" img="build.png" key="Ctrl+B" cmd="$(GOP)" args="build ." output="true" codec="utf-8" save="all" readline="true" work="$(EDITOR_DIR_PATH)"/>
 		<action id="GenGo" menu="" img="get.png" cmd="$(GOP)" args="go ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
-		<action id="Format" menu="" img="fmt.png" cmd="$(GOP)" args="fmt -w ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
+		<action id="Format" menu="" img="fmt.png" cmd="$(GOP)" args="fmt ." save="all" output="true" regex="$(ERRREGEX)" navigate="true" work="$(EDITOR_DIR_PATH)"/>
 	</mime-type>
 </mime-info>
