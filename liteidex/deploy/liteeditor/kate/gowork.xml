@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="GoMod" section="Sources"
+<language name="GoWork" section="Sources"
           version="1.00" kateversion="2.4"
           indenter="cstyle"
-          extensions="go.mod"
-          mimetype="text/x-gomod"
+          extensions="go.work"
+          mimetype="text/x-gowork"
           priority="5"
           author="visualfc"
           license="BSD">
   <highlighting>
     <list name="keywords">
       <item> go </item>
-      <item> module </item>
-      <item> require </item>
+      <item> use </item>
       <item> replace </item>
-      <item> exclude </item>
-      <item> retract </item>
     </list>
   <contexts>
       <context name="Normal"        attribute="Normal Text" lineEndContext="#stay">
