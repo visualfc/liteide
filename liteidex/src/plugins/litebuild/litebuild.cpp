@@ -1474,6 +1474,11 @@ void LiteBuild::extFinish(bool error,int exitCode, QString msg)
 {
     m_output->setReadOnly(true);
 
+    if (m_process->userData(ID_ACTIVATEOUTPUT_CHECK).toBool()) {
+        m_outputAct->setChecked(true);
+    }
+
+
     bool isCommand = m_process->userData(ID_INPUTTYPE).toInt() == INPUT_COMMAND;
 
     if (!isCommand && exitCode != 0) {
