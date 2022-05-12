@@ -131,6 +131,7 @@ LiteBuild::LiteBuild(LiteApi::IApplication *app, QObject *parent) :
 {
     m_bDynamicBuild = true;
     m_bLockBuildRoot = false;
+    m_bFirstRunOutput = false;
     m_nullMenu = new QMenu;
     if (m_buildManager->initWithApp(m_liteApp)) {
         m_buildManager->load(m_liteApp->resourcePath()+"/litebuild");
@@ -1402,9 +1403,10 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
         return;
     }
     //m_liteApp->outputManager()->setCurrentOutput(m_output);
-    if (m_process->userData(ID_ACTIVATEOUTPUT_CHECK).toBool()) {
+    if (m_bFirstRunOutput && m_process->userData(ID_ACTIVATEOUTPUT_CHECK).toBool()) {
         m_outputAct->setChecked(true);
     }
+    m_bFirstRunOutput = false;
 
     QString codecName = m_process->userData(2).toString();
     QTextCodec *codec = QTextCodec::codecForLocale();
@@ -1558,6 +1560,7 @@ void LiteBuild::execCommand(const QString &cmd1, const QString &args, const QStr
     m_process->setWorkingDirectory(workDir);
     m_output->appendTag(QString("%1 %2 [%3]\n")
                          .arg(cmd).arg(args).arg(workDir));
+    m_bFirstRunOutput = true;
     m_process->startEx(cmd,args);
 }
 
@@ -1803,6 +1806,7 @@ void LiteBuild::execAction(const QString &mime, const QString &id)
                             .arg(QDir::cleanPath(cmd))
                             .arg(args)
                             .arg(m_workDir));
+        m_bFirstRunOutput = true;
         m_process->startEx(cmd,args);
     }
 }

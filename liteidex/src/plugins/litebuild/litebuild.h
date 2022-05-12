@@ -160,6 +160,7 @@ protected:
     bool        m_bLockBuildRoot;
     bool        m_bDynamicBuild;
     bool        m_bProjectBuild;
+    bool        m_bFirstRunOutput;
     QMap<QString,QString> m_liteAppInfo;
     QMap<QString,QString> m_editorInfo;
     QMap<QString,QString> m_buildInfo;
