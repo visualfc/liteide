@@ -129,17 +129,17 @@ QMap<QString,QStringList> FileUtil::readFileContext(QIODevice *dev)
     foreach (QString line, list) {
         if (line.size() >= 1 && line.at(0) == '#')
             continue;
-        QStringList v = line.split(QRegExp("\\+="),QString::SkipEmptyParts);
+        QStringList v = line.split(QRegExp("\\+="),qtSkipEmptyParts);
         if (v.count() == 1) {
-            v = line.split(QRegExp("="),QString::SkipEmptyParts);
+            v = line.split(QRegExp("="),qtSkipEmptyParts);
             if (v.count() == 2) {
-                QStringList v2 = v.at(1).split(" ",QString::SkipEmptyParts);
+                QStringList v2 = v.at(1).split(" ",qtSkipEmptyParts);
                 if (!v2.isEmpty()) {
                     contextMap[v.at(0).trimmed()] = v2;
                 }
             }
         } else if (v.count() == 2) {
-            QStringList v2 = v.at(1).split(" ",QString::SkipEmptyParts);
+            QStringList v2 = v.at(1).split(" ",qtSkipEmptyParts);
             if (!v2.isEmpty())
                 contextMap[v.at(0).trimmed()].append(v2);
         }
@@ -175,7 +175,7 @@ QString FileUtil::lookPath(const QString &file, const QProcessEnvironment &env, 
     QStringList exts;
     QString extenv = env.value("PATHEXT");
     if (!extenv.isEmpty()) {
-        foreach(QString ext, extenv.split(';',QString::SkipEmptyParts)) {
+        foreach(QString ext, extenv.split(';',qtSkipEmptyParts)) {
             if (ext.isEmpty()) {
                 continue;
             }
@@ -207,7 +207,7 @@ QString FileUtil::lookPath(const QString &file, const QProcessEnvironment &env, 
             return exec;
         }
     } else {
-        foreach(QString dir,pathenv.split(';',QString::SkipEmptyParts)) {
+        foreach(QString dir,pathenv.split(';',qtSkipEmptyParts)) {
             QFileInfo info(QDir(dir),fileName);
             QString exec = canExec(info.filePath(),exts);
             if (!exec.isEmpty()) {
@@ -224,7 +224,7 @@ QString FileUtil::lookPathInDir(const QString &file, const QString &dir)
     QStringList exts;
     QString extenv =  QProcessEnvironment::systemEnvironment().value("PATHEXT");
     if (!extenv.isEmpty()) {
-        foreach(QString ext, extenv.split(';',QString::SkipEmptyParts)) {
+        foreach(QString ext, extenv.split(';',qtSkipEmptyParts)) {
             if (ext.isEmpty()) {
                 continue;
             }
@@ -276,7 +276,7 @@ QString FileUtil::lookPath(const QString &file, const QProcessEnvironment &env, 
         }
     }
     QString pathenv = env.value("PATH");
-    foreach(QString dir,pathenv.split(':',QString::KeepEmptyParts)) {
+    foreach(QString dir,pathenv.split(':',qtKeepEmptyParts)) {
         if (dir == "") {
             dir = ".";
         }
@@ -388,7 +388,7 @@ QString FileUtil::lookupGoBin(const QString &bin, LiteApi::IApplication *app, co
 //        goroot = LiteApi::getDefaultGOROOT();
 //    }
     QStringList pathList;
-    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+    foreach (QString path, env.value("GOPATH").split(sep,qtSkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
 //    foreach (QString path, app->settings()->value("liteide/gopath").toStringList()) {
@@ -557,8 +557,8 @@ void FileUtil::openInShell(const QProcessEnvironment &env, const QString &file)
     }
 #endif
     if (!shell.isEmpty()) {
-        foreach (QString info, shell.split(";",QString::SkipEmptyParts)) {
-            QStringList ar = info.split(" ",QString::SkipEmptyParts);
+        foreach (QString info, shell.split(";",qtSkipEmptyParts)) {
+            QStringList ar = info.split(" ",qtSkipEmptyParts);
             if (ar.size() >= 1) {
                 QString cmd = FileUtil::lookPath(ar[0],env,false);
                 if (!cmd.isEmpty()) {
@@ -581,7 +581,7 @@ void FileUtil::openInShell(const QProcessEnvironment &env, const QString &file)
     }
     //check LITEIDE_TERM
     QString cmd = env.value("LITEIDE_TERM");
-    QStringList args = env.value("LITEIDE_TERMARGS").split(" ",QString::SkipEmptyParts);
+    QStringList args = env.value("LITEIDE_TERMARGS").split(" ",qtSkipEmptyParts);
 #ifdef Q_OS_MAC
     if (cmd.isEmpty()) {
         cmd = "/usr/bin/open";

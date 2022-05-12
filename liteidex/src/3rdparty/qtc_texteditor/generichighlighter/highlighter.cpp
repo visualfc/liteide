@@ -351,7 +351,7 @@ void Highlighter::changeContext(const QString &contextName,
                                 const bool assignCurrent)
 {
     if (contextName.startsWith(kPop)) {
-        QStringList list = contextName.split(kHash, QString::SkipEmptyParts);
+        QStringList list = contextName.split(kHash, qtSkipEmptyParts);
         for (int i = 0; i < list.size(); ++i)
             m_contexts.pop_back();
 

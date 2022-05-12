@@ -54,7 +54,7 @@ inline QStringList sysGopath(LiteApi::IApplication *app)
 #else
     QString sep = ":";
 #endif
-    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+    foreach (QString path, env.value("GOPATH").split(sep,qtSkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.removeDuplicates();

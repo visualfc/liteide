@@ -24,6 +24,7 @@
 #ifndef LITEAPI_H
 #define LITEAPI_H
 
+#include "liteqt.h"
 #include "liteobj.h"
 #include "litehtml.h"
 

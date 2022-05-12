@@ -72,7 +72,7 @@ public:
     {
         m_cmd = cmd;
         m_cookie.insert("cmd",m_cmd);
-        m_cookie.insert("cmdList",cmd.split(" ",QString::SkipEmptyParts));
+        m_cookie.insert("cmdList",cmd.split(" ",qtSkipEmptyParts));
     }
     void setCmd(const QStringList &cmd)
     {

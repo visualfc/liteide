@@ -1425,7 +1425,7 @@ void LiteBuild::extOutput(const QByteArray &data, bool bError)
             return;
         }
         QRegExp re(regexp);
-        foreach (QString info, msg.split("\n",QString::SkipEmptyParts)) {
+        foreach (QString info, msg.split("\n",qtSkipEmptyParts)) {
             if (re.indexIn(info) >= 0 && re.captureCount() >= 2) {
                 QString fileName = re.cap(1);
                 QString fileLine = re.cap(2);

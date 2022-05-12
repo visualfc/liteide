@@ -173,7 +173,7 @@ void RustEdit::finished(int code, QProcess::ExitStatus)
     int count = 0;
     foreach (QString line, QString::fromUtf8(data).split("\n")) {
         if (line.startsWith("MATCH")) {
-            QStringList array = line.mid(5).split(",",QString::SkipEmptyParts);
+            QStringList array = line.mid(5).split(",",qtSkipEmptyParts);
             if (array.size() > 0) {
                 count++;
                 m_completer->appendItem(m_prefix+array[0].trimmed(),QIcon(),true);

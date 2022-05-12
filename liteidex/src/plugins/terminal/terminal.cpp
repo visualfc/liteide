@@ -270,7 +270,7 @@ static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
         return kv;
     }
     QByteArray ar = p.readAllStandardOutput();
-    QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
+    QStringList lines = QString::fromUtf8(ar).split("\n",qtSkipEmptyParts);
 //    p4153
 //    fcwd
 //    n/Users/vfc
@@ -318,9 +318,9 @@ static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
             return kv;
         }
         QByteArray ar = p.readAllStandardOutput();
-        QStringList lines = QString::fromUtf8(ar).split("\n",QString::SkipEmptyParts);
+        QStringList lines = QString::fromUtf8(ar).split("\n",qtSkipEmptyParts);
         foreach (QString line, lines) {
-            QStringList ar = line.split(":",QString::SkipEmptyParts);
+            QStringList ar = line.split(":",qtSkipEmptyParts);
             QString path = ar[1].trimmed();
             if (ar.size() == 2 && path.startsWith("/")) {
                 kv[ar[0].trimmed()] = path;

@@ -132,7 +132,7 @@ void GoEnvManager::updateGoEnv()
 #endif
     QStringList pathList;
     QString goroot = QDir::toNativeSeparators(env.value("GOROOT"));
-    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+    foreach (QString path, env.value("GOPATH").split(sep,qtSkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.removeAll(goroot);

@@ -64,13 +64,13 @@ ImageEditorFactory::ImageEditorFactory(IApplication *app, QObject *parent)
 #else
     QString mimeTypeList = "image/bmp:bmp;image/gif:gif;image/jpeg:jpg,jpeg;image/png:png;image/x-portable-bitmap:pbm;image/x-portable-graymap:pgm;image/x-portable-pixmap:ppm;image/x-xbitmap:xbm;image/x-xpixmap:xpm;image/svg+xml:svg;";
     QList<QByteArray> supportFormats = QImageReader::supportedImageFormats();
-    foreach (QString mtype, mimeTypeList.split(";",QString::SkipEmptyParts)) {
-        QStringList ar = mtype.split(":",QString::SkipEmptyParts);
+    foreach (QString mtype, mimeTypeList.split(";",qtSkipEmptyParts)) {
+        QStringList ar = mtype.split(":",qtSkipEmptyParts);
         if (ar.size() != 2) {
             continue;
         }
         QString type = ar[0];
-        QStringList fmts = ar[1].split(",",QString::SkipEmptyParts);
+        QStringList fmts = ar[1].split(",",qtSkipEmptyParts);
         QStringList patterns;
         foreach (QString fmt, fmts) {
             if (supportFormats.contains(fmt.toUtf8())) {

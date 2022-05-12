@@ -63,7 +63,7 @@ static QString formatInfo(const QString &info)
     if (re.indexIn(info) == 0) {
         if (re.matchedLength() == info.length()) {
             QString str = re.cap(1)+" {\n";
-            foreach (QString item, re.cap(2).split(";",QString::SkipEmptyParts)) {
+            foreach (QString item, re.cap(2).split(";",qtSkipEmptyParts)) {
                 str += "\t"+item.trimmed()+"\n";
             }
             str += "}";
@@ -806,7 +806,7 @@ void GolangEdit::findDefFinish(int code,QProcess::ExitStatus status)
     if (pos >= 0) {
         //:fname:fpath:dir
         if(info.length() > (pos+reg.matchedLength()) ) {
-            QStringList extra = info.mid(pos+reg.matchedLength()).split("::",QString::SkipEmptyParts);
+            QStringList extra = info.mid(pos+reg.matchedLength()).split("::",qtSkipEmptyParts);
             if (extra.size() == 3) {
                 QString targetOpenDir = extra[2];
                 QString targetOpenDirInfo = QString(tr("Below files in package %1").arg(extra[1]));
@@ -985,7 +985,7 @@ void GolangEdit::findLinkFinish(int code,QProcess::ExitStatus)
                         bool importExtra = false;
                         //parser import line extra info
                         if(fileInfo.length() > (pos+reg.matchedLength()) ) {
-                            QStringList extra = fileInfo.mid(pos+reg.matchedLength()).split("::",QString::SkipEmptyParts);
+                            QStringList extra = fileInfo.mid(pos+reg.matchedLength()).split("::",qtSkipEmptyParts);
                             //:fname:fpath:dir
                             if (extra.size() == 3) {
                                 importExtra = true;

@@ -109,7 +109,7 @@ inline QProcessEnvironment getCurrentEnvironment(LiteApi::IApplication *app)
     QString sep = ":";
 #endif
     QStringList pathList;
-    foreach (QString path, e.value("PATH").split(sep,QString::SkipEmptyParts)) {
+    foreach (QString path, e.value("PATH").split(sep,qtSkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.append(app->applicationPath());
@@ -244,7 +244,7 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
 
     QStringList pathList;
     if (app->settings()->value("liteide/usesysgopath",true).toBool()) {
-        foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+        foreach (QString path, env.value("GOPATH").split(sep,qtSkipEmptyParts)) {
             pathList.append(QDir::toNativeSeparators(path));
         }
     }
@@ -287,7 +287,7 @@ inline QStringList getGOPATH(LiteApi::IApplication *app, bool includeGoroot)
     if (includeGoroot) {
         pathList.append(goroot);
     }
-    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+    foreach (QString path, env.value("GOPATH").split(sep,qtSkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
     if (!includeGoroot) {
@@ -398,7 +398,7 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
     bool custom_gopath = app->settings()->value(customKey+"#custom_gopath",false).toBool();
 
     if (inherit_sys_gopath) {
-        foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+        foreach (QString path, env.value("GOPATH").split(sep,qtSkipEmptyParts)) {
             pathList.append(QDir::toNativeSeparators(path));
         }
     }

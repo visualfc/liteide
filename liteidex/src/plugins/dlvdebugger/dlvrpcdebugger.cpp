@@ -252,7 +252,7 @@ bool DlvRpcDebugger::start(const QString &cmd, const QString &arguments)
 
     QStringList argsList;
     argsList << "--headless" << "--api-version=2" << "--accept-multiclient";
-    QStringList flags = m_liteApp->settings()->value(DLVDEBUGGER_EXTFLAGS).toString().split(" ",QString::SkipEmptyParts);
+    QStringList flags = m_liteApp->settings()->value(DLVDEBUGGER_EXTFLAGS).toString().split(" ",qtSkipEmptyParts);
     if (!flags.isEmpty()) {
         foreach(QString flag, flags) {
             if (flag.startsWith("--")) {
@@ -538,7 +538,7 @@ void DlvRpcDebugger::readStdError()
    // qDebug() << data << m_processId;
     //QRegExp reg;
     emit debugLog(LiteApi::DebugConsoleLog,data);
-    foreach (QString line, data.split("\n",QString::SkipEmptyParts)) {
+    foreach (QString line, data.split("\n",qtSkipEmptyParts)) {
         if (line.startsWith("Process "+m_processId)) {
             m_processId.clear();
             this->stop();
@@ -797,14 +797,14 @@ void DlvRpcDebugger::readStdOutput()
 //               at c:/go/go1.6/src/runtime/asm_amd64.s:1998
              m_framesModel->removeRows(0,m_framesModel->rowCount());
              QString data = QString::fromUtf8(m_inbuffer);
-             QStringList dataList = data.split("\n",QString::SkipEmptyParts);
+             QStringList dataList = data.split("\n",qtSkipEmptyParts);
              bool head = true;
              QList<QStandardItem*> items;
              foreach (QString data, dataList) {
                  if (head) {
                     // data.
                      items.clear();
-                     QStringList ar = data.split(" ",QString::SkipEmptyParts);
+                     QStringList ar = data.split(" ",qtSkipEmptyParts);
                      if (ar.size() == 4) {
                          items << new QStandardItem(ar[0]);
                          items << new QStandardItem(ar[1]);
@@ -835,7 +835,7 @@ void DlvRpcDebugger::readStdOutput()
             // args = []string len: 1, cap: 1, ["H:\\goproj\\src\\hello\\debug"]
             m_varsModel->removeRows(0,m_varsModel->rowCount());
             QString data = QString::fromUtf8(m_inbuffer);
-            QStringList dataList = data.split("\n",QString::SkipEmptyParts);
+            QStringList dataList = data.split("\n",qtSkipEmptyParts);
             QMap<QString,QString> nameMap;
             foreach(QString text, dataList) {
                 int n = text.indexOf("=");
@@ -864,7 +864,7 @@ void DlvRpcDebugger::readStdOutput()
             }
             m_checkVarsMap = nameMap;
         } else if (cmdHistroy.startsWith("vars ")) {
-            foreach (QString data, QString::fromUtf8(m_inbuffer).split("\n",QString::SkipEmptyParts)) {
+            foreach (QString data, QString::fromUtf8(m_inbuffer).split("\n",qtSkipEmptyParts)) {
                 int n = data.indexOf("=");
                 if (n >= 0) {
                     QString name = data.left(n-1);

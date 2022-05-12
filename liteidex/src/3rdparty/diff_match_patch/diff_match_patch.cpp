@@ -21,6 +21,7 @@
 
 // Code known to compile and run with Qt 4.3.3 and Qt 4.4.0.
 #include <QtCore>
+#include "liteapi/liteqt.h"
 #include "diff_match_patch.h"
 
 
@@ -1963,7 +1964,7 @@ QList<Patch> diff_match_patch::patch_fromText(const QString &textline) {
   if (textline.isEmpty()) {
     return patches;
   }
-  QStringList text = textline.split("\n", QString::SkipEmptyParts);
+  QStringList text = textline.split("\n", qtSkipEmptyParts);
   Patch patch;
   QRegExp patchHeader("^@@ -(\\d+),?(\\d*) \\+(\\d+),?(\\d*) @@$");
   char sign;

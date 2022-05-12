@@ -77,5 +77,5 @@ void FileBrowserOption::save()
     QString cmd = ui->cmdLineEdit->text().trimmed();
     QString args = ui->argsLineEdit->text().trimmed();
     m_liteApp->settings()->setValue("filebrowser/shell_cmd",cmd);
-    m_liteApp->settings()->setValue("filebrowser/shell_args",args.split(" ",QString::SkipEmptyParts));
+    m_liteApp->settings()->setValue("filebrowser/shell_args",args.split(" ",qtSkipEmptyParts));
 }

@@ -23,6 +23,7 @@
 
 #include "goremovetagsdialog.h"
 #include "ui_goremovetagsdialog.h"
+#include "liteapi/liteqt.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -95,7 +96,7 @@ void GoRemoveTagsDialog::updateArguments()
             args = "-remove-tags "+tag;
         }
     } else if (ui->removeJsonOptionRadioButton->isChecked()) {
-        QStringList optList = ui->jsonOptionLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
+        QStringList optList = ui->jsonOptionLineEdit->text().trimmed().split(",",qtSkipEmptyParts);
         QStringList options;
         foreach (QString opt, optList) {
             options << "json="+opt;
@@ -104,7 +105,7 @@ void GoRemoveTagsDialog::updateArguments()
             args = "-remove-options "+options.join(",");
         }
     } else if (ui->removeXmlOptionRadioButton->isChecked()) {
-        QStringList optList = ui->xmlOptionLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
+        QStringList optList = ui->xmlOptionLineEdit->text().trimmed().split(",",qtSkipEmptyParts);
         QStringList options;
         foreach (QString opt, optList) {
             options << "xml="+opt;

@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "filepathmodel.h"
-
+#include "liteapi/liteqt.h"
 #include <QFileInfo>
 #include <QDir>
 #include <QIcon>
@@ -174,7 +174,7 @@ PathNode *PathNode::findPath(const QString &path)
     if (path == m_path) {
         return this;
     }
-    QStringList nameList = path.right(path.length()-m_path.length()).split("/",QString::SkipEmptyParts);
+    QStringList nameList = path.right(path.length()-m_path.length()).split("/",qtSkipEmptyParts);
     PathNode *parent = this;
     bool find = false;
     foreach (QString name,nameList) {
@@ -318,7 +318,7 @@ QModelIndex FilePathModel::findPathHelper(const QString &path, const QModelIndex
     if (path == node->path()) {
         return parentIndex;
     }
-    QStringList nameList = path.right(path.length()-node->path().length()).split("/",QString::SkipEmptyParts);
+    QStringList nameList = path.right(path.length()-node->path().length()).split("/",qtSkipEmptyParts);
     QModelIndex parent = parentIndex;
     bool find = false;
     int count = nameList.count();

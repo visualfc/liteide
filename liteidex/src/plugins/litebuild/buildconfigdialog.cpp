@@ -185,7 +185,7 @@ void BuildConfigDialog::setBuild(LiteApi::IBuild *build, const QString &buildPat
 #endif
 
     QStringList pathList;
-    foreach (QString path, env.value("GOPATH").split(sep,QString::SkipEmptyParts)) {
+    foreach (QString path, env.value("GOPATH").split(sep,qtSkipEmptyParts)) {
         pathList.append(QDir::toNativeSeparators(path));
     }
     pathList.removeDuplicates();

@@ -77,10 +77,10 @@ QSharedPointer<HighlightDefinitionMetaData> Manager2::parseMetadata(const QFileI
             metaData->setPriority(atts.value(HighlightDefinitionMetaData::kPriority).toString()
                                   .toInt());
             metaData->setPatterns(atts.value(HighlightDefinitionMetaData::kExtensions)
-                                  .toString().split(kSemiColon, QString::SkipEmptyParts));
+                                  .toString().split(kSemiColon, qtSkipEmptyParts));
 
             QStringList mimeTypes = atts.value(HighlightDefinitionMetaData::kMimeType).
-                                    toString().split(kSemiColon, QString::SkipEmptyParts);
+                                    toString().split(kSemiColon, qtSkipEmptyParts);
             if (mimeTypes.isEmpty()) {
                 // There are definitions which do not specify a MIME type, but specify file
                 // patterns. Creating an artificial MIME type is a workaround.

@@ -23,6 +23,7 @@
 
 #include "goaddtagsdialog.h"
 #include "ui_goaddtagsdialog.h"
+#include "liteapi/liteqt.h"
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -104,7 +105,7 @@ void GoAddTagsDialog::updateaAguments()
     if (ui->jsonCheckBox->isChecked()) {
         tagList << "json";
         if (ui->jsonOptionsCheckBox->isChecked()) {
-            QStringList opt = ui->jsonOptionsLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
+            QStringList opt = ui->jsonOptionsLineEdit->text().trimmed().split(",",qtSkipEmptyParts);
             foreach (QString o, opt) {
                 optList << "json="+o;
             }
@@ -113,7 +114,7 @@ void GoAddTagsDialog::updateaAguments()
     if (ui->xmlCheckBox->isChecked()) {
         tagList << "xml";
         if (ui->xmlOptionsCheckBox->isChecked()) {
-            QStringList opt = ui->xmlOptionsLineEdit->text().trimmed().split(",",QString::SkipEmptyParts);
+            QStringList opt = ui->xmlOptionsLineEdit->text().trimmed().split(",",qtSkipEmptyParts);
             foreach (QString o, opt) {
                 optList << "xml="+o;
             }
@@ -121,9 +122,9 @@ void GoAddTagsDialog::updateaAguments()
     }
     if (ui->customCheckBox->isChecked()) {
         QString tag1 = ui->customTagNameLineEdit1->text().trimmed();
-        QStringList opt1 = ui->customTagOptionLineEdit1->text().trimmed().split(",",QString::SkipEmptyParts);
+        QStringList opt1 = ui->customTagOptionLineEdit1->text().trimmed().split(",",qtSkipEmptyParts);
         QString tag2 = ui->customTagNameLineEdit2->text().trimmed();
-        QStringList opt2 = ui->customTagOptionlineEdit2->text().trimmed().split(",",QString::SkipEmptyParts);
+        QStringList opt2 = ui->customTagOptionlineEdit2->text().trimmed().split(",",qtSkipEmptyParts);
         if (!tag1.isEmpty()) {
             tagList << tag1;
             foreach (QString o, opt1) {

@@ -43,4 +43,5 @@ inline void updateAppSetting(LiteApi::IApplication *app, const QString &key, con
 
 }
 
+
 #endif // LITEUTIL_H

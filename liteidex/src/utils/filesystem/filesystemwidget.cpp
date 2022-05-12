@@ -481,8 +481,8 @@ void FileSystemWidget::openShell()
     QProcessEnvironment env = LiteApi::getCurrentEnvironment(m_liteApp);
     QString shell = env.value("LITEIDE_SHELL");
     if (!shell.isEmpty()) {
-        foreach (QString info, shell.split(";",QString::SkipEmptyParts)) {
-            QStringList ar = info.split(" ",QString::SkipEmptyParts);
+        foreach (QString info, shell.split(";",qtSkipEmptyParts)) {
+            QStringList ar = info.split(" ",qtSkipEmptyParts);
             if (ar.size() >= 1) {
                 QString cmd = FileUtil::lookPath(ar[0],LiteApi::getCurrentEnvironment(m_liteApp),false);
                 if (!cmd.isEmpty()) {
@@ -504,7 +504,7 @@ void FileSystemWidget::openShell()
         return;
     }
     QString cmd = env.value("LITEIDE_TERM");
-    QStringList args = env.value("LITEIDE_TERMARGS").split(" ",QString::SkipEmptyParts);
+    QStringList args = env.value("LITEIDE_TERMARGS").split(" ",qtSkipEmptyParts);
     //qDebug() << cmd;
     QString path = dir.path();
 #ifdef Q_OS_MAC

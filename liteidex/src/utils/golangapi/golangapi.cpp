@@ -377,7 +377,7 @@ QString GolangApi::findDocInfo(const QString &tag) const
 {
     int pos = tag.lastIndexOf("/");
     QString pkgName = tag.left(pos+1);
-    QStringList all = tag.mid(pos+1).split(".",QString::SkipEmptyParts);
+    QStringList all = tag.mid(pos+1).split(".",qtSkipEmptyParts);
     if (all.size() >= 1) {
         pkgName += all.at(0);
         Package *pkg = m_pkgs.findPackage(pkgName);
@@ -421,7 +421,7 @@ QStringList GolangApi::findDocUrl(const QString &tag) const
 {
     int pos = tag.lastIndexOf("/");
     QString pkgName = tag.left(pos+1);
-    QStringList all = tag.mid(pos+1).split(".",QString::SkipEmptyParts);
+    QStringList all = tag.mid(pos+1).split(".",qtSkipEmptyParts);
     if (all.size() >= 1) {
         pkgName += all.at(0);
         Package *pkg = m_pkgs.findPackage(pkgName);

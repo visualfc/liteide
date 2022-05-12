@@ -104,7 +104,7 @@ void LiteCompleter::setEditor(QPlainTextEdit *editor)
 
 QStandardItem *LiteCompleter::findRoot(const QString &name)
 {
-    QStringList words = name.split(m_completer->separator(),QString::SkipEmptyParts);
+    QStringList words = name.split(m_completer->separator(),qtSkipEmptyParts);
     WordItem *root = 0;
     WordItem *item = 0;
     foreach (QString word, words) {
@@ -412,7 +412,7 @@ bool LiteCompleter::appendItem(const QString &name, const QIcon &icon, bool temp
 
 void LiteCompleter::clearItemChilds(const QString &name)
 {
-    QStringList words = name.split(m_completer->separator(),QString::SkipEmptyParts);
+    QStringList words = name.split(m_completer->separator(),qtSkipEmptyParts);
     WordItem *root = 0;
     WordItem *item = 0;
     foreach (QString word, words) {
@@ -436,7 +436,7 @@ void LiteCompleter::clearItemChilds(const QString &name)
 
 bool LiteCompleter::appendItemEx(const QString &name,const QString &kind, const QString &info, const QIcon &icon, bool temp)
 {
-    QStringList words = name.split(m_completer->separator(),QString::SkipEmptyParts);
+    QStringList words = name.split(m_completer->separator(),qtSkipEmptyParts);
 
     WordItem *root = 0;
     WordItem *item = 0;

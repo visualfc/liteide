@@ -74,7 +74,7 @@ void FakeVimEditOption::load()
 void FakeVimEditOption::save()
 {
     //bool useFakeVim = ui->enableUseFakeVimCheckBox->isChecked();
-    QStringList cmds = ui->textInitCommands->toPlainText().split("\n",QString::SkipEmptyParts);
+    QStringList cmds = ui->textInitCommands->toPlainText().split("\n",qtSkipEmptyParts);
     m_liteApp->settings()->setValue(FAKEVIMEDIT_INITCOMMANDS,cmds);
 }
 

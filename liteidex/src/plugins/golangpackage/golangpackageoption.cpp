@@ -145,7 +145,7 @@ QString GolangPackageOption::go111Module() const
 
 QStringList GolangPackageOption::litePathList() const
 {
-    return ui->litePathTextEdit->toPlainText().split("\n",QString::SkipEmptyParts);
+    return ui->litePathTextEdit->toPlainText().split("\n",qtSkipEmptyParts);
 }
 
 void GolangPackageOption::setUseGoProxy(bool b)

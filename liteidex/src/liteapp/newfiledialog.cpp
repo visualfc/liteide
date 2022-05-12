@@ -23,6 +23,7 @@
 
 #include "newfiledialog.h"
 #include "ui_newfiledialog.h"
+#include "liteapi/liteqt.h"
 
 #include <QStandardItemModel>
 #include <QStandardItem>
@@ -264,8 +265,8 @@ void  NewFileDialog::activeTemplate(QModelIndex index)
         m_cur.author = set.value("SETUP/AUTHOR").toString();
         m_cur.info = set.value("SETUP/INFO").toString();
         m_cur.type = set.value("SETUP/TYPE").toString().toLower();
-        m_cur.files = set.value("SETUP/FILES").toString().trimmed().split(" ",QString::SkipEmptyParts);
-        m_cur.open = set.value("SETUP/OPEN").toString().trimmed().split(" ",QString::SkipEmptyParts);
+        m_cur.files = set.value("SETUP/FILES").toString().trimmed().split(" ",qtSkipEmptyParts);
+        m_cur.open = set.value("SETUP/OPEN").toString().trimmed().split(" ",qtSkipEmptyParts);
         m_cur.scheme = set.value("SETUP/SCHEME").toString().toLower();
         if (m_cur.open.isEmpty() && m_cur.files.count() > 0) {
             m_cur.open.append(m_cur.files.at(0));

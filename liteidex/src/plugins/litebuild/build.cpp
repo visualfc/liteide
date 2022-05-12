@@ -351,7 +351,7 @@ bool Build::loadBuild(LiteApi::IBuildManager *manager, QIODevice *dev, const QSt
                 }
                 QString task = attrs.value("task").toString();
                 if (!task.isEmpty()) {
-                    act->setTask(task.split(";",QString::SkipEmptyParts));
+                    act->setTask(task.split(";",qtSkipEmptyParts));
                 }
             } else if (reader.name() == "config" && config == 0 && build != 0) {
                 config = new BuildConfig;
