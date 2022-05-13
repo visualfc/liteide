@@ -11,3 +11,5 @@ imag(c ComplexType) FloatType
 close(c chan<- Type)
 panic(v interface{})
 recover() interface{}
+print(args ...Type)
+println(args ...Type)

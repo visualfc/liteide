@@ -3,6 +3,29 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2022.05.12 Ver X38.0
+* LiteIDE
+    * support Go1.18 go.work
+    * support Go1.18 format/types/gocode
+* LiteApp & LiteEditor
+    * add 'Detroit Future' theme (thanks donuts-are-good)
+* LiteEditor
+    * add go.work syntax
+    * add color/dart-blue.xml (thanks qAison)
+* LiteBuild
+    * only check first run action and output
+    * update GoPlus config
+* Terminal
+    * fix copy text containing tab in terminal
+* gotools
+    * support Go1.18 format
+    * support Go1.18 types
+    * support go.work
+* gocode
+    * support Go1.18 code completer
+    * support go.work
+    * update unsafe pkg
+
 ### 2021.03.02 Ver X37.4
 * LiteIDE
     * move to trash use api on macos
