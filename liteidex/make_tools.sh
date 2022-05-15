@@ -7,6 +7,9 @@ else
 fi
 
 
-(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
-(cd "$PWD/src/github.com/visualfc/gocode" && go install -ldflags "-s" -v)
-(cd "$PWD/src/github.com/fatih/gomodifytags" && go install -ldflags "-s" -v)
+echo get gocode ...
+go install -v github.com/visualfc/gocode@latest
+echo get gotools ...
+go install -v github.com/visualfc/gotools@latest
+echo get gomodifytags ...
+go install -v github.com/fatih/gomodifytags@latest
