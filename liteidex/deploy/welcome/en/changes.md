@@ -3,7 +3,7 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2022.05.12 Ver X38.0
+### 2022.05.22 Ver X38.0
 * LiteIDE
     * support Go1.18 go.work
     * support Go1.18 format/types/gocode
@@ -15,6 +15,8 @@
 * LiteBuild
     * only check first run action and output
     * update GoPlus config
+* LiteEnv
+    * windows env use %PROGRAMFILES%\Go
 * Terminal
     * fix copy text containing tab in terminal
     * add context menu copy/paste/selectall

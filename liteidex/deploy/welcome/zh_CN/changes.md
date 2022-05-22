@@ -15,6 +15,8 @@
 * LiteBuild
     * only check first run action and output
     * update GoPlus config
+* LiteEnv
+    * windows env use %PROGRAMFILES%\Go
 * Terminal
     * fix copy text containing tab in terminal
     * add context menu copy/paste/selectall
