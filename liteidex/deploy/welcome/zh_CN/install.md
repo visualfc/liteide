@@ -27,7 +27,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	> set QTDIR=c:\Qt\Qt4.8.5
 	> set MINGWDIR=c:\Qt\MinGW
 	> cd liteide/build
-	> update_pkg.cmd
+	> install_pkg.cmd
 	> build_windows_mingw.cmd
 	> deploy_windows_qt4.8_webkit.cmd
 
@@ -37,7 +37,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	> set QTDIR=C:\Qt\Qt5.6.2\5.6\mingw49_32
 	> set MINGWDIR=C:\Qt\Qt5.6.2\Tools\mingw492_32
 	> cd liteide/build
-	> update_pkg.cmd
+	> install_pkg.cmd
 	> build_windows_mingw.cmd
 	> deploy_windows_qt5.6.cmd
 	
@@ -49,7 +49,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	## Git clone and build liteide ##
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_linux_qt4.sh
 	
 	## Run it: ##
@@ -70,7 +70,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	## Git clone and build liteide ##
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_linux_qt5.sh
 	
 	## Run it: ##
@@ -88,7 +88,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ sudo apt-get update
 	$ sudo apt-get install qt4-dev-tools libqt4-dev libqt4-core libqt4-gui libqtwebkit-dev g++
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ QTDIR=/usr ./build_linux.sh
 	
 	## Run it: ##
@@ -99,7 +99,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_linux.sh
 	$ ./deploy_linux_qt4.8_webkit.sh
 
@@ -110,7 +110,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc #如果Qt是通过brew安装，输入: export QTDIR=/usr/local/Cellar/qt/4.8.6
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_maoos_qt4.sh
 	$ ./deploy_macos_qt4.sh
 	$ open liteide/LiteIDE.app
@@ -122,7 +122,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/Qt5.6.2/Qt5.6/clang_64
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_macos_qt5.sh
 	$ ./deploy_macos_qt5.sh
 	$ open liteide/LiteIDE.app
@@ -134,7 +134,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=/usr/local/Cellar/qt/5.8.0_2 # or modify accordingly for qt@5.5 and qt@5.7
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_macos_qt5.sh
 	$ open liteide/LiteIDE.app
 
@@ -144,7 +144,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=/usr/local/lib/qt4
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_openbsd.sh
 
 	## Run it: ##
@@ -157,7 +157,7 @@ LiteIDE源码位于<https://github.com/visualfc/liteide>上。需要使用Qt4/Qt
 	$ sudo apt-get install qt5-default xterm
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ QTDIR=/usr ./build_linux.sh
 	The build process from a µSD card takes approx. 105 minutes on a RPi 2.
 	

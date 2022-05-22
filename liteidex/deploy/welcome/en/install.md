@@ -27,7 +27,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	> set QTDIR=c:\Qt\Qt4.8.5
 	> set MINGWDIR=c:\Qt\MinGW
 	> cd liteide/build
-	> update_pkg.cmd
+	> install_pkg.cmd
 	> build_windows_mingw.cmd
 	> deploy_windows_qt4.8_webkit.cmd
 
@@ -37,7 +37,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	> set QTDIR=C:\Qt\Qt5.6.2\5.6\mingw49_32
 	> set MINGWDIR=C:\Qt\Qt5.6.2\Tools\mingw492_32
 	> cd liteide/build
-	> update_pkg.cmd
+	> install_pkg.cmd
 	> build_windows_mingw.cmd
 	> deploy_windows_qt5.6.cmd
 	
@@ -49,7 +49,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	## Git clone and build liteide ##
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_linux_qt4.sh
 	
 	## Run it: ##
@@ -70,7 +70,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	## Git clone and build liteide ##
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_linux_qt5.sh
 	
 	## Run it: ##
@@ -89,7 +89,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ QTDIR=/usr ./build_linux.sh
 	
 	## Run it: ##
@@ -100,7 +100,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_linux.sh
 	$ ./deploy_linux_qt4.8_webkit.sh
 
@@ -111,7 +111,7 @@ Source code for LiteIDE can be found at <https://github.com/visualfc/liteide>.  
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/QtSDK/Desktop/Qt/484/gcc #If QT is installed with brew, input: export QTDIR=/usr/local/Cellar/qt/4.8.6
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_macos_qt4.sh
 	$ ./deploy_macos_qt4.sh
 	$ open liteide/LiteIDE.app
@@ -123,7 +123,7 @@ Download Qt from http://www.qt.io/download and install. (Qt5.6.2/Qt5.7.1/Qt5.8)
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=$HOME/Qt5.6.2/Qt5.6/clang_64
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_macos_qt5.sh
 	$ ./deploy_macos_qt5.sh
 	$ open liteide/LiteIDE.app
@@ -135,7 +135,7 @@ Use brew install qt (eg brew install qt. Other versions of qt@5.5 and qt@5.7 wor
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=/usr/local/Cellar/qt/5.8.0_2 # or modify accordingly for qt@5.5 and qt@5.7
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_macos_qt5.sh
 	$ open liteide/LiteIDE.app
 
@@ -145,7 +145,7 @@ Warning! brew install qt rpath incorrect do not use deploy script.
 	$ git clone https://github.com/visualfc/liteide.git
 	$ export QTDIR=/usr/local/lib/qt4
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ ./build_openbsd.sh
 
 	## Run it: ##
@@ -158,7 +158,7 @@ Warning! brew install qt rpath incorrect do not use deploy script.
 	$ sudo apt-get install qt5-default xterm
 	$ git clone https://github.com/visualfc/liteide.git
 	$ cd liteide/build
-	$ ./update_pkg.sh
+	$ ./install_pkg.sh
 	$ QTDIR=/usr ./build_linux.sh
 	The build process from a µSD card takes approx. 105 minutes on a RPi 2.
 	
@@ -181,7 +181,7 @@ i.e. liteidex/src/github.com/visualfc/gotools/README.md
 * https://github.com/fatih/gomodifytags
 
         $ cd liteide/build
-        $ ./update_pkg.sh
+        $ ./install_pkg.sh
         $ export QTDIR=/usr/bin
         $ ./build_linux_fedora27_x64.sh
 
