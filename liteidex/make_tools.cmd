@@ -6,6 +6,9 @@ if defined %GOPATH (
 	set GOPATH=%CD%
 )
 
-(cd "%CD%/src/github.com/visualfc/gotools" & go install -ldflags "-s" -v & cd %CD%)
-(cd "%CD%/src/github.com/visualfc/gocode" & go install -ldflags "-s" -v & cd %CD%)
-(cd "%CD%/src/github.com/fatih/gomodifytags" & go install -ldflags "-s" -v & cd %CD%)
+echo get gocode ...
+go install -v github.com/visualfc/gocode@latest
+echo get gotools ...
+go install -v github.com/visualfc/gotools@latest
+echo get gomodifytags ...
+go install -v github.com/fatih/gomodifytags@latest
