@@ -3499,141 +3499,141 @@ Success: %2.</oldsource>
 <context>
     <name>LiteBuild</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="141"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="142"/>
         <source>Build Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="149"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="150"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation>ビルドの設定</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="167"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="168"/>
         <source>Stop Action</source>
         <translation>アクションを停止</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="171"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="172"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation>全てクリア</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="175"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="176"/>
         <source>Execute File</source>
         <translation>ファイルを実行</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="178"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
         <source>Debug File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="181"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="182"/>
         <source>Lock Build Path</source>
         <oldsource>Lock Go Build Path</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="183"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="184"/>
         <source>Build Path Configuration</source>
         <oldsource>Go Build Configuration</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="229"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="230"/>
         <source>Use godoc View</source>
         <translation type="unfinished">ここでGodocを見る</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="286"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="287"/>
         <source>Line Wrap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="290"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="291"/>
         <source>Auto Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="294"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="295"/>
         <source>Automatic positioning cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="309"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="310"/>
         <source>Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="317"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="318"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation>ビルドオプション</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="730"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="731"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation>現在の環境は id &quot;%1&quot; を変更します</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1144"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1145"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1482"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1489"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation>エラー: %1</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1485"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1492"/>
         <source>Command exited with code %1.</source>
         <translation>コマンドはコード %1 で終了しました</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1487"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1494"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation>成功: %1</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1536"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1588"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1543"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1596"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation>プロセスが実行中です。まずアクションを停止して下さい。</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1574"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1582"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation>このプロセスを強制終了する...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1584"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1592"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation>起動中プロセスの停止に失敗しました</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1794"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1802"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation>プロセスの起動に成功しました</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1794"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1802"/>
         <source>Failed to start process</source>
         <translation>プロセスの起動に失敗しました</translation>
     </message>
@@ -4753,34 +4753,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="298"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="305"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="299"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="306"/>
         <source>Delete Folder</source>
         <translation type="unfinished">フォルダを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="299"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="300"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation type="unfinished">このフォルダと全てのコンテンツを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="306"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="307"/>
         <source>Failed to delete the folder!</source>
         <translation type="unfinished">フォルダの削除に失敗しました!</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="319"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="326"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="320"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="327"/>
         <source>Delete File</source>
         <translation type="unfinished">ファイルを削除</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="320"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="321"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation type="unfinished">このファイルを完全に削除しますか?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="327"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="328"/>
         <source>Failed to delete the file!</source>
         <translation type="unfinished">ファイルの削除に失敗しました!</translation>
     </message>
@@ -4838,58 +4838,58 @@ Success: %2.</oldsource>
         <translation>位置:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
-        <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="127"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="185"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="127"/>
         <source>Could not create the target directory: %1</source>
         <translation>ターゲットディレクトリが作成出来ませんでした: %1</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="132"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="132"/>
         <source>Location %1 is not empty.
 Use the target directory anyway?</source>
         <translation>場所 %1 は空です。
 それでもこのディレクトリを使用しますか?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="169"/>
         <source>Overwrite File</source>
         <translation>ファイルの上書き</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="169"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 は既に存在しています。
 置き換えますか?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="185"/>
         <source>No files could be created.</source>
         <translation>ファイルが作成出来ませんでした</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="279"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="280"/>
         <source>File template details:</source>
         <translation>ファイルテンプレートの詳細:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="281"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="282"/>
         <source>Project template details:</source>
         <oldsource>New project wizard:</oldsource>
         <translation>新規プロジェクトウィザード:</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="361"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="362"/>
         <source>Choose a directory for the new content:</source>
         <translation>新しいコンテンツを置くディレクトリ選択:</translation>
     </message>
@@ -5840,6 +5840,24 @@ Do you want to replace it?</source>
         <location filename="src/3rdparty/qtc_editutil/filterlineedit.cpp" line="52"/>
         <source>Clear text</source>
         <translation>テキストをクリア</translation>
+    </message>
+</context>
+<context>
+    <name>VTermWidget</name>
+    <message>
+        <location filename="src/utils/vterm/vtermwidget.cpp" line="50"/>
+        <source>Copy</source>
+        <translation type="unfinished">コピー</translation>
+    </message>
+    <message>
+        <location filename="src/utils/vterm/vtermwidget.cpp" line="54"/>
+        <source>Paste</source>
+        <translation type="unfinished">貼り付け</translation>
+    </message>
+    <message>
+        <location filename="src/utils/vterm/vtermwidget.cpp" line="58"/>
+        <source>Select All</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

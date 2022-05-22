@@ -4721,6 +4721,21 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>VTermWidget</name>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Копировать</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Вставить</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">Выбрать всё</translation>
+    </message>
+</context>
+<context>
     <name>WebKitBrowser</name>
     <message>
         <source>Navigation</source>

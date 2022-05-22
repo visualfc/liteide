@@ -3525,141 +3525,141 @@ Success: %2.</oldsource>
 <context>
     <name>LiteBuild</name>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="141"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="142"/>
         <source>Build Toolbar</source>
         <translation>Barre d&apos;outils de compilation</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="149"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="150"/>
         <source>Build Configuration...</source>
         <oldsource>Build Config</oldsource>
         <translation>Configuration de la compilation...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="167"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="168"/>
         <source>Stop Action</source>
         <translation>Arrêter l&apos;action</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="171"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="172"/>
         <source>Clear Output</source>
         <oldsource>Clear All</oldsource>
         <translation>Tout effacer</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="175"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="176"/>
         <source>Execute File</source>
         <translation>Exécuter le fichier</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="178"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="179"/>
         <source>Debug File</source>
         <translation>Déboguer le fichier</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="181"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="182"/>
         <source>Lock Build Path</source>
         <oldsource>Lock Go Build Path</oldsource>
         <translation>Verrouiller le chemin de compilation Go</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="183"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="184"/>
         <source>Build Path Configuration</source>
         <oldsource>Go Build Configuration</oldsource>
         <translation>Configuration de la compilation Go</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="229"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="230"/>
         <source>Use godoc View</source>
         <translation>Utiliser la vue godoc</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="286"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="287"/>
         <source>Line Wrap</source>
         <translation>Retour à la ligne</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="290"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="291"/>
         <source>Auto Clear</source>
         <translation>Emplacement automatique</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="294"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="295"/>
         <source>Automatic positioning cursor</source>
         <translation>Positionnement automatique du curseur</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="309"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="310"/>
         <source>Setup</source>
         <translation>Lancement</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="317"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="318"/>
         <source>Build Output</source>
         <oldsource>Build</oldsource>
         <translation>Sortie de la compilation</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="730"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="731"/>
         <source>Current environment change id &quot;%1&quot;</source>
         <translation>ID du changement courant d&apos;environement &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1144"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1145"/>
         <source>Lock Build</source>
         <oldsource>Lock Build: %1</oldsource>
         <translation>Verrou de compilation</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1482"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1489"/>
         <source>Error: %1.</source>
         <oldsource>Error: %1.
 </oldsource>
         <translation>Erreur : %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1485"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1492"/>
         <source>Command exited with code %1.</source>
         <translation>La commande s&apos;est terminée avec le code %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1487"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1494"/>
         <source>Success: %1.</source>
         <oldsource>Success: %1.
 </oldsource>
         <translation>Succès : %1.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1536"/>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1588"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1543"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1596"/>
         <source>A process is currently running.  Stop the current action first.</source>
         <oldsource>A process is currently running.  Stop the current action first.
 </oldsource>
         <translation>Un processus est en fonctionnement. Arrêter l&apos;action courante d&apos;abord.</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1574"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1582"/>
         <source>Killing current process...</source>
         <oldsource>Killing current process...
 </oldsource>
         <translation>Arrêt du processus courant...</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1584"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1592"/>
         <source>Failed to terminate the existing process!</source>
         <oldsource>Failed to terminate the existing process!
 </oldsource>
         <translation>Terminaison du processus existant échouée !</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1794"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1802"/>
         <source>Started process successfully</source>
         <oldsource>Started process successfully
 </oldsource>
         <translation>Démarrage du processus avec succès</translation>
     </message>
     <message>
-        <location filename="src/plugins/litebuild/litebuild.cpp" line="1794"/>
+        <location filename="src/plugins/litebuild/litebuild.cpp" line="1802"/>
         <source>Failed to start process</source>
         <translation>Impossible de démarrer le processus</translation>
     </message>
@@ -4779,34 +4779,34 @@ Success: %2.</oldsource>
 <context>
     <name>MultiFolderView</name>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="298"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="305"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="299"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="306"/>
         <source>Delete Folder</source>
         <translation>Supprimer le répertoire</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="299"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="300"/>
         <source>Are you sure that you want to permanently delete this folder and all of its contents?</source>
         <translation>Êtes-vous certain de supprimer ce répertoire et son contenu définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="306"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="307"/>
         <source>Failed to delete the folder!</source>
         <translation>Impossible de supprimer le répertoire !</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="319"/>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="326"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="320"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="327"/>
         <source>Delete File</source>
         <translation>Supprimer le fichier</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="320"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="321"/>
         <source>Are you sure that you want to permanently delete this file?</source>
         <translation>Êtes-vous certain de supprimer ce fichier définitivement ?</translation>
     </message>
     <message>
-        <location filename="src/utils/folderview/multifolderview.cpp" line="327"/>
+        <location filename="src/utils/folderview/multifolderview.cpp" line="328"/>
         <source>Failed to delete the file!</source>
         <translation>Impossible de supprimer le fichier !</translation>
     </message>
@@ -4864,58 +4864,58 @@ Success: %2.</oldsource>
         <translation>Emplacement :</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
-        <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="127"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="185"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="126"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="127"/>
         <source>Could not create the target directory: %1</source>
         <translation>Impossible de créer le répertoire de destination : %1</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="132"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="131"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="132"/>
         <source>Location %1 is not empty.
 Use the target directory anyway?</source>
         <translation>L&apos;emplacement %1 n&apos;est pas vide.
 Utiliser cet emplacement malgré tout ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="169"/>
         <source>Overwrite File</source>
         <translation>Ecraser le fichier</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="168"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="169"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 existe déjà.
 Voulez-vous le remplacer ?</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="184"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="185"/>
         <source>No files could be created.</source>
         <translation>Aucun fichier à créer.</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="279"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="280"/>
         <source>File template details:</source>
         <translation>Détails du canevas de fichier :</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="281"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="282"/>
         <source>Project template details:</source>
         <oldsource>New project wizard:</oldsource>
         <translation>Dialogue de nouveau projet :</translation>
     </message>
     <message>
-        <location filename="src/liteapp/newfiledialog.cpp" line="361"/>
+        <location filename="src/liteapp/newfiledialog.cpp" line="362"/>
         <source>Choose a directory for the new content:</source>
         <translation>Choisir un répertoire pour le nouveau contenu :</translation>
     </message>
@@ -5866,6 +5866,24 @@ Voulez-vous le remplacer ?</translation>
         <location filename="src/3rdparty/qtc_editutil/filterlineedit.cpp" line="52"/>
         <source>Clear text</source>
         <translation>Effacer le texte</translation>
+    </message>
+</context>
+<context>
+    <name>VTermWidget</name>
+    <message>
+        <location filename="src/utils/vterm/vtermwidget.cpp" line="50"/>
+        <source>Copy</source>
+        <translation type="unfinished">Copier</translation>
+    </message>
+    <message>
+        <location filename="src/utils/vterm/vtermwidget.cpp" line="54"/>
+        <source>Paste</source>
+        <translation type="unfinished">Coller</translation>
+    </message>
+    <message>
+        <location filename="src/utils/vterm/vtermwidget.cpp" line="58"/>
+        <source>Select All</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
