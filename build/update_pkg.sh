@@ -27,11 +27,11 @@ else
 fi
 
 echo get gocode ...
-go get -v -u "github.com/visualfc/gocode"
+go install -v github.com/visualfc/gocode@latest
 echo get gotools ...
-go get -v -u "github.com/visualfc/gotools"
+go install -v github.com/visualfc/gotools@latest
 echo get gomodifytags ...
-go get -v -u "github.com/fatih/gomodifytags"
+go install -v github.com/fatih/gomodifytags@latest
 
 
 if [ $? -ge 1 ]; then
