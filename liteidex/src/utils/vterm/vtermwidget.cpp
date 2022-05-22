@@ -30,6 +30,8 @@
 #include <QKeySequence>
 #include <QClipboard>
 #include <QApplication>
+#include <QMenu>
+#include <QAction>
 
 #if defined(Q_OS_MAC)
 # define TermControlModifier Qt::MetaModifier
@@ -40,10 +42,34 @@
 
 VTermWidget::VTermWidget(QWidget *parent) : VTermWidgetBase(24,80,parent)
 {
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
     m_process = PtyQt::createPtyProcess(IPtyProcess::AutoPty);
+    m_contextMenu = new QMenu(this);
     m_bStarted = false;
+
+    m_copy = new QAction(tr("Copy"),this);
+    m_copy->setShortcut(QKeySequence::Copy);
+    m_copy->setShortcutContext(Qt::WidgetShortcut);
+
+    m_paste = new QAction(tr("Paste"),this);
+    m_paste->setShortcut(QKeySequence::Paste);
+    m_paste->setShortcutContext(Qt::WidgetShortcut);
+
+    m_selectAll = new QAction(tr("Select All"),this);
+    m_selectAll->setShortcut(QKeySequence::SelectAll);
+    m_selectAll->setShortcutContext(Qt::WidgetShortcut);
+
+    m_contextMenu->addAction(m_copy);
+    m_contextMenu->addAction(m_paste);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(m_selectAll);
+
     connect(m_process,SIGNAL(started()),this,SIGNAL(started()));
     connect(m_process,SIGNAL(exited()),this,SIGNAL(exited()));
+    connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
+    connect(m_copy,SIGNAL(triggered()),this,SLOT(copy()));
+    connect(m_paste,SIGNAL(triggered()),this,SLOT(paste()));
+    connect(m_selectAll,SIGNAL(triggered()),this,SLOT(selectAll()));
 }
 
 VTermWidget::~VTermWidget()
@@ -81,6 +107,22 @@ bool VTermWidget::isStarted() const
 IPtyProcess *VTermWidget::process() const
 {
     return m_process;
+}
+
+void VTermWidget::copy()
+{
+    QString text = selectedText();
+    if (!text.isEmpty()) {
+        qApp->clipboard()->setText(text);
+    }
+}
+
+void VTermWidget::paste()
+{
+    QString text = qApp->clipboard()->text();
+    if (!text.isEmpty()) {
+        m_process->write(text.toUtf8());
+    }
 }
 
 void VTermWidget::readyRead()
@@ -150,6 +192,14 @@ void VTermWidget::resizePty(int rows, int cols)
         return;
     }
     m_process->resize(cols,rows);
+}
+
+void VTermWidget::contextMenuRequested(const QPoint &pt)
+{
+    m_copy->setEnabled(this->hasSelection());
+    m_paste->setEnabled(!qApp->clipboard()->text().isEmpty());
+    QPoint globalPos = this->mapToGlobal(pt);
+    m_contextMenu->popup(globalPos);
 }
 
 void VTermWidget::write_data(const char *buf, int len)

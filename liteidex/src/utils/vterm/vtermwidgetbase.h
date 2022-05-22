@@ -86,13 +86,14 @@ public:
     void setSelection(QPoint cellStart, QPoint cellEnd);
     void setSelectionByRow(int row);
     void setSelectionUnderWord(int row, int col);
-    void selectAll();
-    void clearSelection();
     bool hasSelection() const;
     bool isSelection(int row, int col) const;
     bool adjustFetchCell(int row, int *col, VTermScreenCell *cell);
     QString getLineText(int row, int start_col, int end_col) const;
     size_t _get_chars(const VTermScreen *screen, const int utf8, void *buffer, size_t len, const VTermRect rect) const;
+public slots:
+    void selectAll();
+    void clearSelection();
 protected:
     void updateSelection(QPoint scenePos);
 protected:
@@ -126,6 +127,7 @@ protected:
     bool m_altScreen;
     bool m_ignoreScroll;
     bool m_darkMode;
+    bool m_leftButtonPress;
     char textbuf[0x1fff];
     std::vector<uint32_t> m_lineBuf;
     VTerm       *m_vt;
@@ -140,7 +142,6 @@ protected:
     QList<ScrollbackLine*> m_sbList;
     VTermScreenCell m_empytCell;
     VTermRect       m_selected;
-    Qt::MouseButton  m_mouseButton;
     QRect m_selection;
     QPoint m_ptOrg;
     QPoint  m_ptOffset;

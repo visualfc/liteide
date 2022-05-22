@@ -124,6 +124,7 @@ VTermWidgetBase::VTermWidgetBase(int rows, int cols, QWidget *parent)
     m_cursor.visible = false;
     m_ignoreScroll = false;
     m_darkMode = false;
+    m_leftButtonPress = false;
 
     m_vt = vterm_new(rows,cols);
     m_screen = vterm_obtain_screen(m_vt);
@@ -697,26 +698,28 @@ void VTermWidgetBase::mouseMoveEvent(QMouseEvent *e)
 {
 //    vterm_mouse_move(m_vt,row,col,qt_to_vtermModifier(e->modifiers()));
 //    this->viewport()->update();
-    if (e->button() == Qt::LeftButton) {
+    if (m_leftButtonPress) {
+        updateSelection(e->pos());
+        viewport()->update();
     }
-    updateSelection(e->pos());
-    viewport()->update();
 }
 
 void VTermWidgetBase::mousePressEvent(QMouseEvent *e)
 {
 //    vterm_mouse_button(m_vt,e->button(),true,qt_to_vtermModifier(e->modifiers()));
 //    this->viewport()->update();
-    if (m_trippleClickTimer.isActive()
+    if (e->button() == Qt::LeftButton) {
+        if (m_trippleClickTimer.isActive()
                 && ( (e->pos() - m_trippleClickPoint).manhattanLength() < QApplication::startDragDistance())) {
-        QPoint cell = mapPointToCell(e->pos());
-        setSelectionByRow(cell.y());
-        m_trippleClickTimer.stop();
-    } else {
-        this->clearSelection();
+            QPoint cell = mapPointToCell(e->pos());
+            setSelectionByRow(cell.y());
+            m_trippleClickTimer.stop();
+        } else {
+            this->clearSelection();
+        }
+        m_ptOrg = e->pos();
+        m_leftButtonPress = true;
     }
-    m_mouseButton = e->button();
-    m_ptOrg = e->pos();
 }
 
 void VTermWidgetBase::updateSelection(QPoint scenePos)
@@ -732,18 +735,20 @@ void VTermWidgetBase::mouseReleaseEvent(QMouseEvent *e)
 {
  //   vterm_mouse_button(m_vt,e->button(),false,qt_to_vtermModifier(e->modifiers()));
 //    this->viewport()->update();
-    if (m_mouseButton == e->button()) {
+    if (e->button() == Qt::LeftButton) {
+        this->updateSelection(e->pos());
+        m_leftButtonPress = false;
     }
-    m_mouseButton = Qt::NoButton;
-    this->updateSelection(e->pos());
 }
 
 void VTermWidgetBase::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    m_trippleClickPoint = e->pos();
-    m_trippleClickTimer.start(QApplication::doubleClickInterval(),this);
-    QPoint cell = mapPointToCell(e->pos());
-    setSelectionUnderWord(cell.y(),cell.x());
+    if (e->button() == Qt::LeftButton) {
+        m_trippleClickPoint = e->pos();
+        m_trippleClickTimer.start(QApplication::doubleClickInterval(),this);
+        QPoint cell = mapPointToCell(e->pos());
+        setSelectionUnderWord(cell.y(),cell.x());
+    }
 }
 
 void VTermWidgetBase::timerEvent(QTimerEvent *e)

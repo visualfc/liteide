@@ -28,6 +28,8 @@
 #include "ptyqt/core/ptyqt.h"
 
 class QProcess;
+class QMenu;
+class QAction;
 class VTermWidget : public VTermWidgetBase
 {
     Q_OBJECT
@@ -42,15 +44,22 @@ signals:
     void started();
     void exited();
 public slots:
+    void copy();
+    void paste();
     void readyRead();
     void resizePty(int rows,int cols);
+    void contextMenuRequested(const QPoint &pt);
 protected:
     virtual void write_data(const char *buf, int len);
     virtual void resizeEvent(QResizeEvent *e);
     virtual void keyPressEvent(QKeyEvent *e);
 protected:
     IPtyProcess *m_process;
+    QMenu *m_contextMenu;
     bool m_bStarted;
+    QAction *m_copy;
+    QAction *m_paste;
+    QAction *m_selectAll;
 };
 
 #endif // VTERMWIDGET_H
