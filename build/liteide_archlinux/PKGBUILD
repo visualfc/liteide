@@ -5,7 +5,7 @@
 # Contributor: Matthew Zimmerman <mzimmerman@gmail.com>
 
 pkgname=liteide
-pkgver=37.4
+pkgver=38.0
 pkgrel=1
 pkgdesc='IDE for editing and building projects written in the Go programming language'
 license=('LGPL')
@@ -42,9 +42,6 @@ build() {
   ./update_pkg.sh
   ./build_linux.sh
 
-  # https://github.com/visualfc/liteide/issues/633
-  #go get -u github.com/visualfc/gotools
-  #go get -u github.com/visualfc/gocode
 }
 
 package() {
