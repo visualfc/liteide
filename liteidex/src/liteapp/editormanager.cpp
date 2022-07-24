@@ -147,7 +147,7 @@ bool EditorManager::initWithApp(IApplication *app)
     QAction *copyPathToClipboard = new QAction(tr("Copy Full Path to Clipboard"),this);
 
 #if defined(Q_OS_WIN)
-    QAction *showInExplorer = new QAction(tr("Show in Explorer"),this);    
+    QAction *showInExplorer = new QAction(tr("Show in Explorer"),this);
 #elif defined(Q_OS_MAC)
     QAction *showInExplorer = new QAction(tr("Show in Finder"),this);
 #else
@@ -223,19 +223,22 @@ void EditorManager::createActions()
 
     m_goBackAct = new QAction(tr("Navigate Backward"),this);
     m_goBackAct->setIcon(QIcon("icon:images/backward.png"));
+    m_goForwardAct = new QAction(tr("Navigate Forward"),this);
+    m_goForwardAct->setIcon(QIcon("icon:images/forward.png"));
+    m_gotoNextTab = new QAction(tr("Go to next tab"),this);
+    m_gotoPrevTab = new QAction(tr("Go to previous tab"),this);
+
     IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
 #ifdef Q_OS_MAC
     actionContext->regAction(m_goBackAct,"Backward","Ctrl+Alt+Left");
+    actionContext->regAction(m_goForwardAct,"Forward","Ctrl+Alt+Right");
+    actionContext->regAction(m_gotoNextTab,"GotoNextTab","Alt+Tab");
+    actionContext->regAction(m_gotoPrevTab,"GotoPreviusTab","Alt+Shift+Tab");
 #else
     actionContext->regAction(m_goBackAct,"Backward","Alt+Left");
-#endif
-
-    m_goForwardAct = new QAction(tr("Navigate Forward"),this);
-    m_goForwardAct->setIcon(QIcon("icon:images/forward.png"));
-#ifdef Q_OS_MAC
-    actionContext->regAction(m_goForwardAct,"Forward","Ctrl+Alt+Right");
-#else
     actionContext->regAction(m_goForwardAct,"Forward","Alt+Right");
+    actionContext->regAction(m_gotoNextTab,"GotoNextTab","Ctrl+Tab");
+    actionContext->regAction(m_gotoPrevTab,"GotoPreviusTab","Ctrl+Shift+Tab");
 #endif
 
     m_liteApp->actionManager()->setViewMenuSeparator("sep/nav",true);
@@ -247,9 +250,13 @@ void EditorManager::createActions()
     toolBar->addSeparator();
     toolBar->addAction(m_goBackAct);
     toolBar->addAction(m_goForwardAct);
+    m_widget->addAction(m_gotoNextTab);
+    m_widget->addAction(m_gotoPrevTab);
 
     connect(m_goBackAct,SIGNAL(triggered()),this,SLOT(goBack()));
     connect(m_goForwardAct,SIGNAL(triggered()),this,SLOT(goForward()));
+    connect(m_gotoNextTab,SIGNAL(triggered()),this,SLOT(gotoNextTab()));
+    connect(m_gotoPrevTab,SIGNAL(triggered()),this,SLOT(gotoPrevTab()));
 }
 
 QWidget *EditorManager::widget()
@@ -317,32 +324,31 @@ void EditorManager::addEditor(IEditor *editor)
     }
 }
 
+void EditorManager::gotoNextTab()
+{
+    int index = m_editorTabWidget->tabBar()->currentIndex();
+    index++;
+    if (index >= m_editorTabWidget->tabBar()->count()) {
+        index = 0;
+    }
+    m_editorTabWidget->setCurrentIndex(index);
+    qDebug() << "Changing to next tab:" << index;
+}
+
+void EditorManager::gotoPrevTab()
+{
+    int index = m_editorTabWidget->tabBar()->currentIndex();
+    index--;
+    if (index < 0) {
+        index = m_editorTabWidget->tabBar()->count()-1;
+    }
+    m_editorTabWidget->setCurrentIndex(index);
+    qDebug() << "Changing to previous tab:" << index;
+}
+
 bool EditorManager::eventFilter(QObject *target, QEvent *event)
 {
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = static_cast<QKeyEvent*>(event);
-#ifdef Q_OS_MAC
-        if ( (e->modifiers() & Qt::ALT) &&
-#else
-        if ( (e->modifiers() & Qt::CTRL) &&
-#endif
-             ( e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab) ) {
-            int index = m_editorTabWidget->tabBar()->currentIndex();
-            if (e->key() == Qt::Key_Tab) {
-                index++;
-                if (index >= m_editorTabWidget->tabBar()->count()) {
-                    index = 0;
-                }
-            } else {
-                index--;
-                if (index < 0) {
-                    index = m_editorTabWidget->tabBar()->count()-1;
-                }
-            }
-            m_editorTabWidget->setCurrentIndex(index);
-            return true;
-        }
-    } else if (event->type() == QEvent::MouseButtonDblClick && target == m_editorTabWidget->tabBar()) {
+    if (event->type() == QEvent::MouseButtonDblClick && target == m_editorTabWidget->tabBar()) {
         QMouseEvent *ev = (QMouseEvent*)event;
         if (ev->button() == Qt::LeftButton) {
             emit doubleClickedTab();
@@ -687,7 +693,7 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
                 }
             }
         }
-    }   
+    }
     if (editor) {
         addEditor(editor);
         ITextEditor *textEditor = getTextEditor(editor);
@@ -777,7 +783,7 @@ void EditorManager::modificationChanged(bool b)
                 break;
             }
         }
-        emit editorModifyChanged(editor,b);        
+        emit editorModifyChanged(editor,b);
     }
 }
 
@@ -804,7 +810,7 @@ void EditorManager::addNavigationHistory(IEditor *editor,const QByteArray &saveS
         state = saveState;
     }
 
-    m_currentNavigationHistoryPosition = qMin(m_currentNavigationHistoryPosition, m_navigationHistory.size()); // paranoia    
+    m_currentNavigationHistoryPosition = qMin(m_currentNavigationHistoryPosition, m_navigationHistory.size()); // paranoia
     if (m_currentNavigationHistoryPosition > 0 && m_currentNavigationHistoryPosition <= m_navigationHistory.size()) {
         EditLocation &prev = m_navigationHistory[m_currentNavigationHistoryPosition-1];
         if (prev.filePath == filePath && prev.state == state) {
@@ -1212,7 +1218,7 @@ void EditorManager::applyOption(QString id)
 }
 
 void EditorManager::appIdle(int sec)
-{    
+{
     if (m_isAutoIdleSaveDocuments) {
         if (sec == m_autoIdleSaveDocumentsTime) {
             this->saveAllEditors(false);
