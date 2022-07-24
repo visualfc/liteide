@@ -62,6 +62,7 @@ protected:
     QString           m_dataPath;
     QString           m_playFile;
     QString           m_editFile;
+    QAction           *m_runGoPlay;
 };
 
 #endif // GOPLAYBROWSER_H
