@@ -103,10 +103,7 @@ GoplayBrowser::GoplayBrowser(LiteApi::IApplication *app, QObject *parent)
     m_codec = QTextCodec::codecForName("utf-8");
 
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
-    m_runGoPlay = new QAction(QIcon("icon:images/gopher.png"),tr("Run GoPlay"),this);
-    actionContext->regAction(m_runGoPlay,"GoplayRun","Ctrl+Alt+R");
-    connect(m_runGoPlay,SIGNAL(triggered()),this,SLOT(run()));
-    m_widget->addAction(m_runGoPlay);
+    actionContext->regAction(run,"GoplayRun","Ctrl+R");
 
     connect(run,SIGNAL(triggered()),this,SLOT(run()));
     connect(stop,SIGNAL(triggered()),this,SLOT(stop()));
