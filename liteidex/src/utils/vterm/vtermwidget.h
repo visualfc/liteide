@@ -24,6 +24,7 @@
 #ifndef VTERMWIDGET_H
 #define VTERMWIDGET_H
 
+#include "liteapi/liteapi.h"
 #include "vtermwidgetbase.h"
 #include "ptyqt/core/ptyqt.h"
 
@@ -34,7 +35,7 @@ class VTermWidget : public VTermWidgetBase
 {
     Q_OBJECT
 public:
-    explicit VTermWidget(QWidget *parent);
+    explicit VTermWidget(LiteApi::IApplication *app,QWidget *parent);
     virtual ~VTermWidget();
     bool isAvailable() const;
     void start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env);
@@ -57,6 +58,7 @@ protected:
     IPtyProcess *m_process;
     QMenu *m_contextMenu;
     bool m_bStarted;
+    LiteApi::IApplication *m_liteApp;
     QAction *m_copy;
     QAction *m_paste;
     QAction *m_selectAll;

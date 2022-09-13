@@ -28,6 +28,8 @@ extern "C" {
 #include "libvterm/include/vterm.h"
 }
 
+#include "liteapi/liteapi.h"
+
 #include <QAbstractScrollArea>
 #include <QBasicTimer>
 #include <QDebug>
@@ -52,7 +54,7 @@ class VTermWidgetBase : public QAbstractScrollArea
 {
     Q_OBJECT
 public:
-    VTermWidgetBase(int rows, int cols, QWidget *parent);
+    VTermWidgetBase(LiteApi::IApplication *app,int rows, int cols, QWidget *parent);
     virtual ~VTermWidgetBase();
     void setFont(const QFont &fnt);
     void setTermSize(int rows, int cols);
@@ -120,6 +122,7 @@ signals:
     void output(char *buf, int len);
     void selectionChanged();
 protected:
+    LiteApi::IApplication *m_liteApp;
     int m_rows;
     int m_cols;
     int  m_propMouse;
