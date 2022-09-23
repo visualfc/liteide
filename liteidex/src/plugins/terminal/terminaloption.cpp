@@ -10,10 +10,6 @@ TerminalOption::TerminalOption(LiteApi::IApplication *app,QObject *parent) :
     ui(new Ui::TermianlOption)
 {
     ui->setupUi(m_widget);
-
-    QFontDatabase db;
-    m_familyList = db.families();
-    ui->familyComboBox->addItems(m_familyList);
 }
 
 TerminalOption::~TerminalOption()
@@ -39,7 +35,7 @@ QString TerminalOption::mimeType() const
 
 void TerminalOption::save()
 {
-    m_fontFamily = ui->familyComboBox->currentText();
+    m_fontFamily = ui->fontComboBox->currentText();
     if (ui->sizeComboBox->count()) {
         const QString curSize = ui->sizeComboBox->currentText();
         bool ok = true;
@@ -70,8 +66,11 @@ void TerminalOption::load()
 
     ui->antialiasCheckBox->setChecked(antialias);
 
-    const int idx = m_familyList.indexOf(m_fontFamily);
-    ui->familyComboBox->setCurrentIndex(idx);
+    int index = ui->fontComboBox->findText(m_fontFamily);
+    if (index >= 0) {
+        ui->fontComboBox->setCurrentIndex(index);
+    }
+    ui->fontComboBox->setCurrentText(m_fontFamily);
 
     updatePointSizes();
 
@@ -100,7 +99,7 @@ void TerminalOption::updatePointSizes()
 QList<int> TerminalOption::pointSizesForSelectedFont() const
 {
     QFontDatabase db;
-    const QString familyName = ui->familyComboBox->currentText();
+    const QString familyName = ui->fontComboBox->currentText();
     QList<int> sizeLst = db.pointSizes(familyName);
     if (!sizeLst.isEmpty())
         return sizeLst;

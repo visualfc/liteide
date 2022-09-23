@@ -25,7 +25,6 @@ private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;
     Ui::TermianlOption *ui;
-    QStringList m_familyList;
     QString m_fontFamily;
     int     m_fontSize;
 };

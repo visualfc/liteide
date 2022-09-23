@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>137</height>
+    <width>645</width>
+    <height>138</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,12 +28,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="familyComboBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QFontComboBox" name="fontComboBox">
+        <property name="fontFilters">
+         <set>QFontComboBox::MonospacedFonts</set>
         </property>
        </widget>
       </item>
