@@ -19,10 +19,15 @@ public:
     virtual QString mimeType() const;
     virtual void load();
     virtual void save();
+    void updatePointSizes();
+    QList<int> pointSizesForSelectedFont() const;
 private:
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;
     Ui::TermianlOption *ui;
+    QStringList m_familyList;
+    QString m_fontFamily;
+    int     m_fontSize;
 };
 
 #endif // TERMINALOPTION_H
