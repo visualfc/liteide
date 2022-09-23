@@ -1,7 +1,7 @@
 /**************************************************************************
 ** This file is part of LiteIDE
 **
-** Copyright (c) 2011-2020 LiteIDE. All rights reserved.
+** Copyright (c) 2011-2022 LiteIDE. All rights reserved.
 **
 ** This library is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,7 @@
 
 #include "terminalplugin.h"
 #include "terminal.h"
+#include "terminaloptionfactory.h"
 #include <QtPlugin>
 
 TerminalPlugin::TerminalPlugin()
@@ -32,6 +33,7 @@ TerminalPlugin::TerminalPlugin()
 bool TerminalPlugin::load(LiteApi::IApplication *app)
 {
     new Terminal(app,this);
+    app->optionManager()->addFactory(new TerminalOptionFactory(app,this));
     return true;
 }
 

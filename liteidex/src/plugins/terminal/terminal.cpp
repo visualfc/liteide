@@ -226,7 +226,6 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     actions << m_loadEnvAct;
 #endif
 
-
     m_listMenu = new QMenu;
     m_listGroup = new QActionGroup(this);
     m_tab->setListMenu(m_listMenu);

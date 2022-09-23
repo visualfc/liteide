@@ -36,5 +36,13 @@
 #define TERMINAL_DARKMODE "terminal/darkmode"
 #define TERMINAL_LOGINSHELL "terminal/loginshell"
 
+#define OPTION_TERMIANL "option/terminal"
+
+#define TERMINAL_FAMILY "terminal/family"
+#define TERMINAL_FONTSIZE "terminal/fontsize"
+#define TERMINAL_FONTZOOM "terminal/fontzoom"
+#define TERMINAL_ANTIALIAS "terminal/antialias"
+
+
 
 #endif // TERMINAL_GLOBAL_H

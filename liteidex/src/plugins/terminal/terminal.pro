@@ -13,8 +13,15 @@ win32 {
 }
 
 SOURCES += terminalplugin.cpp \
-    terminal.cpp
+    terminal.cpp \
+    terminaloption.cpp \
+    terminaloptionfactory.cpp
 
 HEADERS += terminalplugin.h\
         terminal.h \
-        terminal_global.h
+        terminal_global.h \
+        terminaloption.h \
+        terminaloptionfactory.h
+
+FORMS += \
+    terminaloption.ui
