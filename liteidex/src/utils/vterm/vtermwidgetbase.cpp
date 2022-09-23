@@ -22,7 +22,6 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "vtermwidgetbase.h"
-#include "../liteapp/liteapp_global.h"
 #include <QFontMetrics>
 #include <QPainter>
 #include <QScrollBar>
@@ -104,16 +103,12 @@ static VTermScreenCallbacks vterm_screen_callbacks = {
 };
 
 
-VTermWidgetBase::VTermWidgetBase(LiteApi::IApplication *app,int rows, int cols, QWidget *parent)
+VTermWidgetBase::VTermWidgetBase(LiteApi::IApplication *app, int rows, int cols, const QFont &font, QWidget *parent)
     : QAbstractScrollArea(parent),
     m_liteApp(app)
 {
     this->setAttribute(Qt::WA_InputMethodEnabled,true);
-
-    int fontSize = m_liteApp->settings()->value(OUTPUT_FONTSIZE,11).toInt();
-    QString fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY).toString();
-    QFont font = QFont(fontFamily,fontSize);
-    setFont(font);
+    this->setFont(font);
 
     m_sbListCapacity = 10000;
     m_rows = rows;

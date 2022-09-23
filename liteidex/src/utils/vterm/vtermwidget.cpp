@@ -40,7 +40,7 @@
 #endif
 
 
-VTermWidget::VTermWidget(LiteApi::IApplication *app,QWidget *parent) : VTermWidgetBase(app,24,80,parent),m_liteApp(app)
+VTermWidget::VTermWidget(LiteApi::IApplication *app, const QFont &font, QWidget *parent) : VTermWidgetBase(app,24,80,font,parent),m_liteApp(app)
 {
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     m_process = PtyQt::createPtyProcess(IPtyProcess::AutoPty);

@@ -109,6 +109,7 @@ public slots:
     void triggeredListAction(QAction* act);
     void aboutToShowFolderContextMenu(QMenu* menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info, const QString &context);
     void fmctxOpenTerminal();
+    void updateFont();
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;
@@ -130,6 +131,7 @@ protected:
     bool m_darkMode;
     bool m_loginMode;
     int m_indexId;
+    QFont m_terminalFont;
 };
 
 #endif // TERMINAL_H

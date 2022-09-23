@@ -54,7 +54,7 @@ class VTermWidgetBase : public QAbstractScrollArea
 {
     Q_OBJECT
 public:
-    VTermWidgetBase(LiteApi::IApplication *app,int rows, int cols, QWidget *parent);
+    VTermWidgetBase(LiteApi::IApplication *app,int rows, int cols, const QFont &font, QWidget *parent);
     virtual ~VTermWidgetBase();
     void setFont(const QFont &fnt);
     void setTermSize(int rows, int cols);

@@ -238,6 +238,8 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     connect(m_tab,SIGNAL(tabCloseRequested(int)),this,SLOT(tabCloseRequested(int)));
     connect(m_tab,SIGNAL(currentChanged(int)),this,SLOT(tabCurrentChanged(int)));
 
+    applyOption(OPTION_TERMIANL);
+
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 #if QT_VERSION >= 0x050000
@@ -252,6 +254,7 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
     //connect(m_liteApp->fileManager(),SIGNAL(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)),this,SLOT(aboutToShowFolderContextMenu(QMenu*,LiteApi::FILESYSTEM_CONTEXT_FLAG,QFileInfo,QString)));
 
     qApp->installEventFilter(this);
+
 }
 
 #ifdef Q_OS_MAC
@@ -395,7 +398,8 @@ void Terminal::openDefaultTerminal(const QString &workDir)
     //QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
     dir = QDir::toNativeSeparators(workDir);
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
-    VTermWidget *term = new VTermWidget(m_liteApp, m_widget);
+    VTermWidget *term = new VTermWidget(m_liteApp, m_terminalFont, m_widget);
+
     QString title = makeTitle(QFileInfo(dir).fileName());
     int index = m_tab->addTab(term,title,dir);
     m_tab->setCurrentIndex(index);
@@ -409,7 +413,7 @@ void Terminal::appLoaded()
     foreach(QString key,m_liteApp->settings()->childKeys()) {
         TabInfoData data = m_liteApp->settings()->value(key).value<TabInfoData>();
         if (!data.cmd.isEmpty() && !data.title.isEmpty()) {
-            VTermWidget *widget = new VTermWidget(m_liteApp, m_widget);
+            VTermWidget *widget = new VTermWidget(m_liteApp,m_terminalFont, m_widget);
             int index = m_tab->addTab(widget,data.title,QDir::toNativeSeparators(data.dir));
             data.open = false;
             m_tab->setTabData(index,QVariant::fromValue(data));
@@ -469,6 +473,29 @@ void Terminal::fmctxOpenTerminal()
         dir = m_fmctxFileInfo.path();
     }
     openDefaultTerminal(dir);
+}
+
+void Terminal::updateFont()
+{
+#if defined(Q_OS_WIN)
+    QString fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"Courier").toString();
+#elif defined(Q_OS_LINUX)
+    QString fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"DejaVu Sans Mono").toString();
+#elif defined(Q_OS_MAC)
+    QString fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"Menlo").toString();
+#else
+    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
+#endif
+    int fontSize = m_liteApp->settings()->value(TERMINAL_FONTSIZE,12).toInt();
+    int fontZoom = m_liteApp->settings()->value(TERMINAL_FONTZOOM,100).toInt();
+    bool antialias = m_liteApp->settings()->value(TERMINAL_ANTIALIAS,true).toBool();
+    m_terminalFont.setFamily(fontFamily);
+    m_terminalFont.setPointSize(fontSize*fontZoom/100.0);
+    if (antialias) {
+        m_terminalFont.setStyleStrategy(QFont::PreferAntialias);
+    } else {
+        m_terminalFont.setStyleStrategy(QFont::NoAntialias);
+    }
 }
 
 
@@ -613,7 +640,7 @@ void Terminal::newTerminal()
     dir = QDir::toNativeSeparators(dir);
     QString title = makeTitle(QFileInfo(dir).fileName());
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
-    VTermWidget *term = new VTermWidget(m_liteApp, m_widget);
+    VTermWidget *term = new VTermWidget(m_liteApp, m_terminalFont, m_widget);
     int index = m_tab->addTab(term,title,QDir::toNativeSeparators(dir));
 
     m_tab->setCurrentIndex(index);
@@ -786,7 +813,9 @@ void Terminal::toggledLoginMode(bool checked)
 
 void Terminal::applyOption(const QString &opt)
 {
-    if (opt == OPTION_LITEAPP) {
+    if (opt == OPTION_TERMIANL) {
+        updateFont();
+    } else if (opt == OPTION_LITEAPP) {
 #ifdef Q_OS_MAC
 #if QT_VERSION >= 0x050900
     QString qss = m_liteApp->settings()->value(LITEAPP_QSS,"default.qss").toString();

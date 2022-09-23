@@ -35,7 +35,7 @@ class VTermWidget : public VTermWidgetBase
 {
     Q_OBJECT
 public:
-    explicit VTermWidget(LiteApi::IApplication *app,QWidget *parent);
+    explicit VTermWidget(LiteApi::IApplication *app, const QFont &font, QWidget *parent);
     virtual ~VTermWidget();
     bool isAvailable() const;
     void start(const QString &program, const QStringList &arguments, const QString &workingDirectory, QStringList env);
