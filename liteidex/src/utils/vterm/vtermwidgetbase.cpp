@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "vtermwidgetbase.h"
+#include "../liteapp/liteapp_global.h"
 #include <QFontMetrics>
 #include <QPainter>
 #include <QScrollBar>
@@ -103,17 +104,17 @@ static VTermScreenCallbacks vterm_screen_callbacks = {
 };
 
 
-VTermWidgetBase::VTermWidgetBase(int rows, int cols, QWidget *parent)
-    : QAbstractScrollArea(parent)
+VTermWidgetBase::VTermWidgetBase(LiteApi::IApplication *app,int rows, int cols, QWidget *parent)
+    : QAbstractScrollArea(parent),
+    m_liteApp(app)
 {
     this->setAttribute(Qt::WA_InputMethodEnabled,true);
-#ifdef Q_OS_LINUX
-    setFont(QFont("DejaVu Sans Mono",11));
-#elif defined(Q_OS_WIN)
-    setFont(QFont("Courier",11));
-#else
-    setFont(QFont("Menlo",12));
-#endif
+
+    int fontSize = m_liteApp->settings()->value(OUTPUT_FONTSIZE,11).toInt();
+    QString fontFamily = m_liteApp->settings()->value(OUTPUT_FAMILY).toString();
+    QFont font = QFont(fontFamily,fontSize);
+    setFont(font);
+
     m_sbListCapacity = 10000;
     m_rows = rows;
     m_cols = cols;

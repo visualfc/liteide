@@ -396,7 +396,7 @@ void Terminal::openDefaultTerminal(const QString &workDir)
     //QString title = QString("%1 %2").arg(m_curName).arg(++m_indexId);
     dir = QDir::toNativeSeparators(workDir);
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
-    VTermWidget *term = new VTermWidget(m_widget);
+    VTermWidget *term = new VTermWidget(m_liteApp, m_widget);
     QString title = makeTitle(QFileInfo(dir).fileName());
     int index = m_tab->addTab(term,title,dir);
     m_tab->setCurrentIndex(index);
@@ -410,7 +410,7 @@ void Terminal::appLoaded()
     foreach(QString key,m_liteApp->settings()->childKeys()) {
         TabInfoData data = m_liteApp->settings()->value(key).value<TabInfoData>();
         if (!data.cmd.isEmpty() && !data.title.isEmpty()) {
-            VTermWidget *widget = new VTermWidget(m_widget);
+            VTermWidget *widget = new VTermWidget(m_liteApp, m_widget);
             int index = m_tab->addTab(widget,data.title,QDir::toNativeSeparators(data.dir));
             data.open = false;
             m_tab->setTabData(index,QVariant::fromValue(data));
@@ -614,7 +614,7 @@ void Terminal::newTerminal()
     dir = QDir::toNativeSeparators(dir);
     QString title = makeTitle(QFileInfo(dir).fileName());
     //openNewTerminal(cmdName,m_loginMode,title,dir,env);
-    VTermWidget *term = new VTermWidget(m_widget);
+    VTermWidget *term = new VTermWidget(m_liteApp, m_widget);
     int index = m_tab->addTab(term,title,QDir::toNativeSeparators(dir));
 
     m_tab->setCurrentIndex(index);
