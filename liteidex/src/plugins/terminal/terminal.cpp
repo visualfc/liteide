@@ -477,15 +477,7 @@ void Terminal::fmctxOpenTerminal()
 
 void Terminal::updateFont()
 {
-#if defined(Q_OS_WIN)
-    QString fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"Courier").toString();
-#elif defined(Q_OS_LINUX)
-    QString fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"DejaVu Sans Mono").toString();
-#elif defined(Q_OS_MAC)
-    QString fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"Menlo").toString();
-#else
-    QString fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
-#endif
+    QString fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,TERMINAL_FAMILY_DEFAULT).toString();
     int fontSize = m_liteApp->settings()->value(TERMINAL_FONTSIZE,12).toInt();
     int fontZoom = m_liteApp->settings()->value(TERMINAL_FONTZOOM,100).toInt();
     bool antialias = m_liteApp->settings()->value(TERMINAL_ANTIALIAS,true).toBool();

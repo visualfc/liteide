@@ -63,20 +63,11 @@ void TerminalOption::save()
 
 void TerminalOption::load()
 {
-#if defined(Q_OS_WIN)
-    m_fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"Courier").toString();
-#elif defined(Q_OS_LINUX)
-    m_fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"DejaVu Sans Mono").toString();
-#elif defined(Q_OS_MAC)
-    m_fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,"Menlo").toString();
-#else
-    m_fontFamily = m_liteApp->settings()->value(EDITOR_FAMILY,"Monospace").toString();
-#endif
+    m_fontFamily = m_liteApp->settings()->value(TERMINAL_FAMILY,TERMINAL_FAMILY_DEFAULT).toString();
     m_fontSize = m_liteApp->settings()->value(TERMINAL_FONTSIZE,12).toInt();
-
     int fontZoom = m_liteApp->settings()->value(TERMINAL_FONTZOOM,100).toInt();
-
     bool antialias = m_liteApp->settings()->value(TERMINAL_ANTIALIAS,true).toBool();
+
     ui->antialiasCheckBox->setChecked(antialias);
 
     const int idx = m_familyList.indexOf(m_fontFamily);

@@ -43,6 +43,17 @@
 #define TERMINAL_FONTZOOM "terminal/fontzoom"
 #define TERMINAL_ANTIALIAS "terminal/antialias"
 
+#if defined(Q_OS_WIN)
+    #define TERMINAL_FAMILY_DEFAULT "Courier"
+#elif defined(Q_OS_LINUX)
+    #define TERMINAL_FAMILY_DEFAULT "DejaVu Sans Mono"
+#elif defined(Q_OS_MAC)
+    #define TERMINAL_FAMILY_DEFAULT "Menlo"
+#else
+    #define TERMINAL_FAMILY_DEFAULT "Monospace"
+#endif
+
+
 
 
 #endif // TERMINAL_GLOBAL_H
