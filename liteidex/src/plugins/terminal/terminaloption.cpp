@@ -66,11 +66,14 @@ void TerminalOption::load()
 
     ui->antialiasCheckBox->setChecked(antialias);
 
+    if (!QFontDatabase().hasFamily(m_fontFamily)) {
+        m_fontFamily = QFontDatabase::systemFont(QFontDatabase::FixedFont).family();
+    }
+    ui->fontComboBox->setCurrentText(m_fontFamily);
     int index = ui->fontComboBox->findText(m_fontFamily);
     if (index >= 0) {
         ui->fontComboBox->setCurrentIndex(index);
     }
-    ui->fontComboBox->setCurrentText(m_fontFamily);
 
     updatePointSizes();
 

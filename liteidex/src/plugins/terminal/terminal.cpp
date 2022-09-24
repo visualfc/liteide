@@ -481,6 +481,10 @@ void Terminal::updateFont()
     int fontSize = m_liteApp->settings()->value(TERMINAL_FONTSIZE,12).toInt();
     int fontZoom = m_liteApp->settings()->value(TERMINAL_FONTZOOM,100).toInt();
     bool antialias = m_liteApp->settings()->value(TERMINAL_ANTIALIAS,true).toBool();
+
+    if (!QFontDatabase().hasFamily(fontFamily)) {
+        fontFamily = QFontDatabase::systemFont(QFontDatabase::FixedFont).family();
+    }
     m_terminalFont.setFamily(fontFamily);
     m_terminalFont.setPointSize(fontSize*fontZoom/100.0);
     if (antialias) {
