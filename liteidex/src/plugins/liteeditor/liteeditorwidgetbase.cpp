@@ -1404,6 +1404,7 @@ void LiteEditorWidgetBase::slotSelectionChanged()
     QTextCursor cur = this->textCursor();
 
     if (cur.hasSelection()) {
+        m_lastCursorChangeWasInteresting = false;
         QString text = cur.selectedText();
         cur.setPosition(cur.selectionStart());
         cur.select(QTextCursor::WordUnderCursor);
