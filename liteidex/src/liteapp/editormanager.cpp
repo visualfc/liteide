@@ -332,7 +332,7 @@ void EditorManager::gotoNextTab()
         index = 0;
     }
     m_editorTabWidget->setCurrentIndex(index);
-    qDebug() << "Changing to next tab:" << index;
+//    qDebug() << "Changing to next tab:" << index;
 }
 
 void EditorManager::gotoPrevTab()
@@ -343,7 +343,7 @@ void EditorManager::gotoPrevTab()
         index = m_editorTabWidget->tabBar()->count()-1;
     }
     m_editorTabWidget->setCurrentIndex(index);
-    qDebug() << "Changing to previous tab:" << index;
+//    qDebug() << "Changing to previous tab:" << index;
 }
 
 bool EditorManager::eventFilter(QObject *target, QEvent *event)
