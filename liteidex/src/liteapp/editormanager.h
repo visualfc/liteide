@@ -116,6 +116,8 @@ protected slots:
     void editorTabCloseRequested(int);
     void modificationChanged(bool);
     void toggleBrowserAction(bool);
+    void gotoNextTab();
+    void gotoPrevTab();
 protected:
     QMenu *m_nullMenu;
     QList<EditLocation> m_navigationHistory;
@@ -131,6 +133,8 @@ protected:
     QMap<QWidget*,IEditContext*> m_editContextMap;
     QAction     *m_goBackAct;
     QAction     *m_goForwardAct;
+    QAction     *m_gotoNextTab;
+    QAction     *m_gotoPrevTab;
     QMenu       *m_listMenu;
     QActionGroup *m_listGroup;
     QMenu       *m_editMenu;
