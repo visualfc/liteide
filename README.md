@@ -84,8 +84,8 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 	
 ### Update liteide tools for support new Golang Version	
 
-	go get -u github.com/visualfc/gotools
-	go get -u github.com/visualfc/gocode
+	go install github.com/visualfc/gotools@latest
+	go install github.com/visualfc/gocode@latest
 	
 	Windows/Linux: copy GOPATH/bin gotools and gocode to liteide/bin
 	MacOS: copy GOPATH/bin gotools and gocode to LiteIDE.app/Contents/MacOS
