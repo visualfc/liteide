@@ -2,6 +2,7 @@
 #include "ui_terminaloption.h"
 #include "terminal_global.h"
 #include <QFontDatabase>
+#include <QApplication>
 
 TerminalOption::TerminalOption(LiteApi::IApplication *app,QObject *parent) :
     LiteApi::IOption(parent),
@@ -67,9 +68,13 @@ void TerminalOption::load()
     ui->antialiasCheckBox->setChecked(antialias);
 
     if (!QFontDatabase().hasFamily(m_fontFamily)) {
+#if QT_VERSION >= 0x050200
         m_fontFamily = QFontDatabase::systemFont(QFontDatabase::FixedFont).family();
+#else
+        m_fontFamily = QApplication::font().family();
+#endif
     }
-    ui->fontComboBox->setCurrentText(m_fontFamily);
+    ui->fontComboBox->setEditText(m_fontFamily);
     int index = ui->fontComboBox->findText(m_fontFamily);
     if (index >= 0) {
         ui->fontComboBox->setCurrentIndex(index);
