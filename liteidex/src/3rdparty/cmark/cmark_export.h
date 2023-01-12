@@ -2,6 +2,8 @@
 #ifndef CMARK_EXPORT_H
 #define CMARK_EXPORT_H
 
+#define CMARK_EXPORT
+
 #ifdef CMARK_STATIC_DEFINE
 #  define CMARK_EXPORT
 #  define CMARK_NO_EXPORT
