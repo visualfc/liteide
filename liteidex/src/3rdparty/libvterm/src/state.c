@@ -242,7 +242,11 @@ static int on_text(const char bytes[], size_t len, void *user)
   VTermPos oldpos = state->pos;
 
   // We'll have at most len codepoints
+#ifdef _MSC_VER
+  uint32_t *codepoints = malloc(len*sizeof(uint32_t)); // len
+#else
   uint32_t codepoints[len];
+#endif
   int npoints = 0;
   size_t eaten = 0;
 
@@ -259,8 +263,13 @@ static int on_text(const char bytes[], size_t len, void *user)
   /* There's a chance an encoding (e.g. UTF-8) hasn't found enough bytes yet
    * for even a single codepoint
    */
-  if(!npoints)
+  if(!npoints) {
+#ifdef _MSC_VER
+    free(codepoints);
+    codepoints = NULL;
+#endif
     return eaten;
+  }
 
   if(state->gsingle_set && npoints)
     state->gsingle_set = 0;
@@ -319,7 +328,11 @@ static int on_text(const char bytes[], size_t len, void *user)
 
     int width = 0;
 
+#ifdef _MSC_VER
+    uint32_t *chars = malloc((glyph_ends - glyph_starts + 1)*sizeof(uint32_t)); //glyph_ends - glyph_starts + 1];
+#else
     uint32_t chars[glyph_ends - glyph_starts + 1];
+#endif
 
     for( ; i < glyph_ends; i++) {
       chars[i - glyph_starts] = codepoints[i];
@@ -332,6 +345,10 @@ static int on_text(const char bytes[], size_t len, void *user)
 #endif
       width += this_width;
     }
+#ifdef _MSC_VER
+    free(codepoints);
+    codepoints = NULL;
+#endif
 
     chars[glyph_ends - glyph_starts] = 0;
     i--;
@@ -381,6 +398,11 @@ static int on_text(const char bytes[], size_t len, void *user)
       state->combine_width = width;
       state->combine_pos = state->pos;
     }
+
+#ifdef _MSC_VER
+    free(chars);
+    chars = NULL;
+#endif
 
     if(state->pos.col + width >= THISROWWIDTH(state)) {
       if(state->mode.autowrap)
@@ -518,12 +540,21 @@ static int settermprop_int(VTermState *state, VTermProp prop, int v)
 
 static int settermprop_string(VTermState *state, VTermProp prop, const char *str, size_t len)
 {
-  char strvalue[len+1];
+#ifdef _MSC_VER
+  char *strvalue = malloc(len+1);// [len+1];
+#else
+    char strvalue[len+1];
+#endif
   strncpy(strvalue, str, len);
   strvalue[len] = 0;
 
   VTermValue val = { .string = strvalue };
-  return vterm_state_set_termprop(state, prop, &val);
+  int n = vterm_state_set_termprop(state, prop, &val);
+#ifdef _MSC_VER
+  free(strvalue);
+  strvalue = NULL;
+#endif
+  return n;
 }
 
 static void savecursor(VTermState *state, int save)
