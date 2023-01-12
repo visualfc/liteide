@@ -89,7 +89,7 @@ void VTermWidget::start(const QString &program, const QStringList &arguments, co
         qDebug() << "pty process invalid";
         return;
     }
-    bool b = m_process->startProcess(program,arguments,workingDirectory,env,qint16(m_rows),qint16(m_cols));
+    bool b = m_process->startProcess(program,arguments,workingDirectory,env,qint16(m_cols),qint16(m_rows));
     if (!b) {
         qDebug() << m_process->lastError();
         return;

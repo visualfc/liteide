@@ -345,10 +345,6 @@ static int on_text(const char bytes[], size_t len, void *user)
 #endif
       width += this_width;
     }
-#ifdef _MSC_VER
-    free(codepoints);
-    codepoints = NULL;
-#endif
 
     chars[glyph_ends - glyph_starts] = 0;
     i--;
@@ -412,6 +408,11 @@ static int on_text(const char bytes[], size_t len, void *user)
       state->pos.col += width;
     }
   }
+
+#ifdef _MSC_VER
+    free(codepoints);
+    codepoints = NULL;
+#endif
 
   updatecursor(state, &oldpos, 0);
 
