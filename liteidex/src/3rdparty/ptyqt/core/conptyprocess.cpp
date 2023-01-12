@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QMutexLocker>
 #include <QCoreApplication>
+#include <QDebug>
 
 #define READ_INTERVAL_MSEC 500
 
@@ -43,6 +44,8 @@ HRESULT ConPtyProcess::initializeStartupInfoAttachedToPseudoConsole(STARTUPINFOE
         SIZE_T attrListSize{};
 
         pStartupInfo->StartupInfo.cb = sizeof(STARTUPINFOEX);
+        pStartupInfo->StartupInfo.dwFlags = STARTF_USESTDHANDLES;
+
 
         // Get the size of the thread attribute list.
         InitializeProcThreadAttributeList(NULL, 1, 0, &attrListSize);
@@ -87,10 +90,16 @@ ConPtyProcess::ConPtyProcess()
 
 ConPtyProcess::~ConPtyProcess()
 {
+    qDebug() << "~ConPtyProcess";
     kill();
 }
 
-bool ConPtyProcess::startProcess(const QString &shellPath, QStringList environment, qint16 cols, qint16 rows)
+VOID NTAPI waitForExit(PVOID p, BOOLEAN b) {
+    ConPtyProcess *pThis = (ConPtyProcess*)(p);
+    emit pThis->exited();
+}
+
+bool ConPtyProcess::startProcess(const QString &shellPath,const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 cols, qint16 rows)
 {
     if (!isAvailable())
     {
@@ -114,19 +123,19 @@ bool ConPtyProcess::startProcess(const QString &shellPath, QStringList environme
     m_size = QPair<qint16, qint16>(cols, rows);
 
     //env
-    std::stringstream envBlock;
+    std::wstringstream envBlock;
     foreach (QString line, environment)
     {
-        envBlock << line.toStdString() << '\0';
+        envBlock << line.toStdWString() << '\0';
     }
     envBlock << '\0';
-    std::string env = envBlock.str();
+    std::wstring env = envBlock.str();
     auto envV = vectorFromString(env);
-    LPSTR envArg = envV.empty() ? nullptr : envV.data();
+    LPWSTR envArg = envV.empty() ? nullptr : envV.data();
 
-    LPSTR cmdArg = new char[m_shellPath.toStdString().length() + 1];
-    std::strcpy(cmdArg, m_shellPath.toStdString().c_str());
-    //qDebug() << "m_shellPath" << m_shellPath << cmdArg << m_shellPath.toStdString().c_str();
+    LPWSTR cmdArg = new wchar_t[m_shellPath.toStdWString().length() + 1];
+    std::wcscpy(cmdArg, m_shellPath.toStdWString().c_str());
+    qDebug() << "m_shellPath" << m_shellPath << cols << rows;
 
     HRESULT hr{ E_UNEXPECTED };
 
@@ -155,20 +164,33 @@ bool ConPtyProcess::startProcess(const QString &shellPath, QStringList environme
                 NULL,                           // Process handle not inheritable
                 NULL,                           // Thread handle not inheritable
                 FALSE,                          // Inherit handles
-                EXTENDED_STARTUPINFO_PRESENT,   // Creation flags
+                EXTENDED_STARTUPINFO_PRESENT | CREATE_UNICODE_ENVIRONMENT,   // Creation flags
                 envArg, //NULL,                           // Use parent's environment block
-                NULL,                           // Use parent's starting directory
+                (LPCWSTR)(workingDirectory.toStdWString().c_str()),                           // Use parent's starting directory
                 &startupInfo.StartupInfo,       // Pointer to STARTUPINFO
                 &piClient)                      // Pointer to PROCESS_INFORMATION
             ? S_OK
             : GetLastError();
 
-    if (S_OK != hr)
+    if (hr != S_OK)
     {
         m_lastError = QString("ConPty Error: Cannot create process -> %1").arg(hr);
         return false;
     }
     m_pid = piClient.dwProcessId;
+
+    HANDLE hWait = NULL;
+    RegisterWaitForSingleObject(&hWait,piClient.hThread,waitForExit,this,INFINITE,WT_EXECUTEONLYONCE);
+
+//    QThread::create([this,&piClient,&startupInfo]()
+//    {
+//        qDebug() << "wait";
+//         WaitForSingleObject(piClient.hProcess, INFINITE);
+//         qDebug() << "end wait";
+////         CloseHandle(piClient.hThread);
+////         CloseHandle(piClient.hProcess);
+////         emit exited();
+//    })->start();
 
     //this code runned in separate thread
     m_readThread = QThread::create([this, &piClient, &startupInfo]()
@@ -185,7 +207,6 @@ bool ConPtyProcess::startProcess(const QString &shellPath, QStringList environme
 
             // Read from the pipe
             fRead = ReadFile(m_hPipeIn, szBuffer, BUFF_SIZE, &dwBytesRead, NULL);
-
             {
                 QMutexLocker locker(&m_bufferMutex);
                 m_buffer.m_readBuffer.append(szBuffer, dwBytesRead);
@@ -310,4 +331,9 @@ bool ConPtyProcess::isAvailable()
 void ConPtyProcess::moveToThread(QThread *targetThread)
 {
     //nothing for now...
+}
+
+bool ConPtyProcess::hasProcessList() const
+{
+    return true;
 }

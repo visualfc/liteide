@@ -43,7 +43,7 @@ UnixPtyProcess::~UnixPtyProcess()
     kill();
 }
 
-bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 rows, qint16 cols)
+bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 cols, qint16 rows)
 {
     if (m_shellProcess.state() == QProcess::Running)
         return false;
