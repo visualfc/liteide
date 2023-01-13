@@ -39,6 +39,15 @@
 #include <QActionGroup>
 #include <QTemporaryFile>
 #include <QApplication>
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 
 #ifdef Q_OS_WIN
 static Command makeCommand(const QString &name, const QString &path, const QStringList &args = QStringList(), const QStringList &loginArgs = QStringList())
@@ -367,6 +376,7 @@ Terminal::~Terminal()
     delete m_listMenu;
     qDeleteAll(m_listGroup->actions());
     delete m_listGroup;
+    delete m_widget;
 }
 
 void Terminal::openDefaultTerminal(const QString &workDir)
