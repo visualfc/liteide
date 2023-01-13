@@ -133,10 +133,6 @@ bool ConPtyProcess::startProcess(const QString &shellPath,const QStringList &arg
     auto envV = vectorFromString(env);
     LPWSTR envArg = envV.empty() ? nullptr : envV.data();
 
-    LPWSTR cmdArg = new wchar_t[m_shellPath.toStdWString().length() + 1];
-    std::wcscpy(cmdArg, m_shellPath.toStdWString().c_str());
-    qDebug() << "m_shellPath" << m_shellPath << cols << rows;
-
     HRESULT hr{ E_UNEXPECTED };
 
     //  Create the Pseudo Console and pipes to it
@@ -160,7 +156,7 @@ bool ConPtyProcess::startProcess(const QString &shellPath,const QStringList &arg
     PROCESS_INFORMATION piClient{};
     hr = CreateProcess(
                 NULL,                           // No module name - use Command Line
-                cmdArg,                         // Command Line
+                (LPWSTR)m_shellPath.toStdWString().c_str(),                         // Command Line
                 NULL,                           // Process handle not inheritable
                 NULL,                           // Thread handle not inheritable
                 FALSE,                          // Inherit handles
