@@ -374,8 +374,10 @@ Terminal::~Terminal()
 
     m_listMenu->clear();
     delete m_listMenu;
+    delete m_filterMenu;
     qDeleteAll(m_listGroup->actions());
     delete m_listGroup;
+    delete m_tab;
     delete m_widget;
 }
 
