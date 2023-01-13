@@ -381,6 +381,7 @@ LiteBuild::~LiteBuild()
         delete m_nullMenu;
     }
     delete m_fmctxGoToolMenu;
+    delete m_fmctxNoGoToolMenu;
 }
 
 bool LiteBuild::execGoCommand(const QStringList &args, const QString &workDir, bool waitFinish)
