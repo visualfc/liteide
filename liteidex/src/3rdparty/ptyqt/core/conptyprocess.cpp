@@ -90,7 +90,6 @@ ConPtyProcess::ConPtyProcess()
 
 ConPtyProcess::~ConPtyProcess()
 {
-    qDebug() << "~ConPtyProcess";
     kill();
 }
 
