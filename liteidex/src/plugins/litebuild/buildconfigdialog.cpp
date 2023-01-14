@@ -90,7 +90,9 @@ BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent
 
     connect(ui->customTableView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(editCustomeTabView(QModelIndex)));
 
+    ui->tabWidget->setFocus();
     ui->tabWidget->setCurrentIndex(s_lastViewIndex);
+    ui->customTableView->setFocus();
 
     connect(ui->buttonBox,SIGNAL(clicked(QAbstractButton*)),this,SLOT(buttonBoxClicked(QAbstractButton*)));
 }
