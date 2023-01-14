@@ -278,6 +278,7 @@ EnvManager::~EnvManager()
     if (m_curEnv) {
         m_liteApp->settings()->setValue(LITEENV_CURRENTENV,m_curEnv->id());
     }
+    delete m_selectMenu;
 }
 
 void EnvManager::addEnv(LiteApi::IEnv *env)
@@ -448,10 +449,10 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
     m_toolBar->addAction(reloadAct);
     m_toolBar->addAction(editAct);
 
-    QMenu *selectMenu = new QMenu(tr("Select Environment"));
+    m_selectMenu = new QMenu(tr("Select Environment"));
 
     m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/env",true,
-                                                  QList<QAction*>() << reloadAct << editAct << selectMenu->menuAction());
+                                                  QList<QAction*>() << reloadAct << editAct << m_selectMenu->menuAction());
 
     m_selectActionGroup = new QActionGroup(this);
 
@@ -461,7 +462,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
         act->setCheckable(true);
         m_selectActionGroup->addAction(act);
     }
-    selectMenu->addActions(m_selectActionGroup->actions());
+    m_selectMenu->addActions(m_selectActionGroup->actions());
 
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 

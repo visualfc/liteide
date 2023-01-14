@@ -713,6 +713,9 @@ void GolangCode::finished(int code,QProcess::ExitStatus)
     }
     if (n == 0 && m_lastPrefix.endsWith(".")) {
         QString id = m_lastPrefix.left(m_lastPrefix.length()-1);
+        if (id.length() < 2) {
+            return;
+        }
         QStringList pkgs = m_pkgListMap.values(id);
         pkgs.sort();
         if (m_allImportHint) {

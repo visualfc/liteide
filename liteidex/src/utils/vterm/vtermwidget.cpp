@@ -32,6 +32,15 @@
 #include <QApplication>
 #include <QMenu>
 #include <QAction>
+//lite_memory_check_begin
+#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
+     #define _CRTDBG_MAP_ALLOC
+     #include <stdlib.h>
+     #include <crtdbg.h>
+     #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__ )
+     #define new DEBUG_NEW
+#endif
+//lite_memory_check_end
 
 #if defined(Q_OS_MAC)
 # define TermControlModifier Qt::MetaModifier
@@ -89,7 +98,7 @@ void VTermWidget::start(const QString &program, const QStringList &arguments, co
         qDebug() << "pty process invalid";
         return;
     }
-    bool b = m_process->startProcess(program,arguments,workingDirectory,env,qint16(m_rows),qint16(m_cols));
+    bool b = m_process->startProcess(program,arguments,workingDirectory,env,qint16(m_cols),qint16(m_rows));
     if (!b) {
         qDebug() << m_process->lastError();
         return;

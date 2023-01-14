@@ -103,6 +103,7 @@ protected:
     bool             m_appLoaded;
     GoEnvManager     *m_goEnvManager;
     QActionGroup     *m_selectActionGroup;
+    QMenu            *m_selectMenu;
 };
 
 #endif // ENVMANAGER_H

@@ -51,6 +51,7 @@ public:
         m_info->setVer("X32");
         m_info->setInfo("Golang Playground");
         m_info->appendDepend("plugin/liteeditor");
+        m_info->appendDepend("plugin/golangedit");
     }
 };
 

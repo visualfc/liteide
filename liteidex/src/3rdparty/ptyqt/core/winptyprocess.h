@@ -14,7 +14,7 @@ public:
     WinPtyProcess();
     virtual ~WinPtyProcess();
 
-    virtual bool startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 rows, qint16 cols);
+    virtual bool startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 cols, qint16 rows);
     virtual bool resize(qint16 cols, qint16 rows);
     virtual bool kill();
     virtual PtyType type();

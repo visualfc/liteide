@@ -13,15 +13,25 @@ SOURCES += \
 
 win32 {
 HEADERS += \
-    core/winptyprocess.h \
     core/winpty.h \
-    core/winpty_constants.h \
+    core/winpty_constants.h
+QT += network
+}
+
+win32-g++ {
+HEADERS += \
     core/winptyprocess.h
 
 SOURCES += \
     core/winptyprocess.cpp
+}
 
-QT += network
+win32-msvc* {
+HEADERS += \
+    core/conptyprocess.h
+
+SOURCES += \
+    core/conptyprocess.cpp
 }
 
 unix {
