@@ -41,7 +41,7 @@
 #endif
 //lite_memory_check_end
 
-int BuildConfigDialog::s_lastViewIndex = 0;
+int BuildConfigDialog::s_lastViewIndex = 4;
 
 BuildConfigDialog::BuildConfigDialog(LiteApi::IApplication *app, QWidget *parent) :
     QDialog(parent),
@@ -116,7 +116,6 @@ void BuildConfigDialog::buttonBoxClicked(QAbstractButton *button)
     QDialogButtonBox::ButtonRole role = ui->buttonBox->buttonRole(button);
     if (role == QDialogButtonBox::AcceptRole) {
         this->saveBuild();
-        this->accept();
     } else if (role == QDialogButtonBox::RejectRole) {
         this->reject();
     } else if (role == QDialogButtonBox::ApplyRole) {
