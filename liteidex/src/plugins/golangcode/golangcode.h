@@ -115,7 +115,6 @@ protected:
     QString     m_gocodeCmd;
     QString     m_lastGopathEnv;
     bool        m_closeOnExit;
-    bool        m_autoUpdatePkg;
     bool        m_allImportHint;
 };
 

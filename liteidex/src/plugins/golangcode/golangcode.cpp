@@ -55,7 +55,6 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_editor(0),
     m_completer(0),
     m_closeOnExit(true),
-    m_autoUpdatePkg(false),
     m_allImportHint(true)
 {
     g_gocodeInstCount++;
@@ -82,26 +81,14 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_liteApp,SIGNAL(loaded()),this,SLOT(appLoaded()));
-    applyOption("option/golangcode");
+    //applyOption("option/golangcode");
 }
 
 void GolangCode::applyOption(QString id)
 {
     if (id != "option/golangcode") return;
     m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    m_autoUpdatePkg = m_liteApp->settings()->value(GOLANGCODE_AUTOBUILD,false).toBool();
     m_allImportHint = m_liteApp->settings()->value(GOLANGCODE_IMPORTHINT_GOPATH,true).toBool();
-    QStringList args;
-    args << "set" << "autobuild";
-    if (m_autoUpdatePkg) {
-        args << "true";
-    } else {
-        args << "false";
-    }
-    if (!m_gocodeSetProcess->isStop()) {
-        m_gocodeSetProcess->stopAndWait(100,2000);
-    }
-    m_gocodeSetProcess->startEx(m_gocodeCmd,args);
 }
 
 void GolangCode::appLoaded()

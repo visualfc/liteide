@@ -67,10 +67,8 @@ QString GolangCodeOption::mimeType() const
 void GolangCodeOption::load()
 {
     bool close = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    bool uppkg = m_liteApp->settings()->value(GOLANGCODE_AUTOBUILD,false).toBool();
     bool allpkg = m_liteApp->settings()->value(GOLANGCODE_IMPORTHINT_GOPATH,true).toBool();
     ui->exitCloseCheckBox->setChecked(close);
-    ui->autoUpPkgCheckBox->setChecked(uppkg);
     ui->pkgHintGopathRadioButton->setChecked(allpkg);
     ui->pkgHintStdRadioButton->setChecked(!allpkg);
 }
@@ -78,9 +76,7 @@ void GolangCodeOption::load()
 void GolangCodeOption::save()
 {
     bool close = ui->exitCloseCheckBox->isChecked();
-    bool uppkg = ui->autoUpPkgCheckBox->isChecked();
     bool allpkg = ui->pkgHintGopathRadioButton->isChecked();
     m_liteApp->settings()->setValue(GOLANGCODE_EXITCLOSE,close);
-    m_liteApp->settings()->setValue(GOLANGCODE_AUTOBUILD,uppkg);
     m_liteApp->settings()->setValue(GOLANGCODE_IMPORTHINT_GOPATH,allpkg);
 }

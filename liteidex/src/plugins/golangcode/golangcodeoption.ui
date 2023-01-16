@@ -23,7 +23,7 @@
       <item>
        <widget class="QRadioButton" name="pkgHintGopathRadioButton">
         <property name="text">
-         <string>PKG automatic import hints for all packages (GOPATH)</string>
+         <string>PKG automatic import hints for all packages (Module/GOPATH)</string>
         </property>
        </widget>
       </item>
@@ -47,13 +47,6 @@
        <widget class="QCheckBox" name="exitCloseCheckBox">
         <property name="text">
          <string>Close gocode when exiting</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="autoUpPkgCheckBox">
-        <property name="text">
-         <string>Auto update depends package when it's source changed.</string>
         </property>
        </widget>
       </item>
