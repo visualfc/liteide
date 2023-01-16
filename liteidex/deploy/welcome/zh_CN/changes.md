@@ -3,6 +3,36 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2023.01.16 Ver X38.1
+* LiteIDE
+    * gotools & gocode support Go1.18 generics
+    * fix memory leak
+    * support build for windows vs2019
+* GolangCode
+    * support Go1.18 generics
+    * remove options and default set
+    * uncheck GOPATH for set-lib
+* LiteEnv
+    * fix memory leak
+    * filter go env
+* LiteBuild
+    * fix memory leak
+    * fix buildconfigdialog twice accept
+* LiteEditor
+    * fix selection navigation saved
+* GolangPlay
+    * load depends
+* Bookmarks
+    * fix memory leak
+* Terminal
+    * libterm fix build for vs2019
+    * ptyqt use conptyprocess for vs2019
+    * add option for set font
+* gotools
+    * types support generics method lookup
+* gocode
+    * support generics type autocomplete
+
 ### 2022.05.22 Ver X38.0
 * LiteIDE
     * support Go1.18 go.work
