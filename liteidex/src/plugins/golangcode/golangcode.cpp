@@ -84,11 +84,11 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     //applyOption("option/golangcode");
 }
 
-void GolangCode::applyOption(QString id)
+void GolangCode::applyOption(QString /*id*/)
 {
-    if (id != "option/golangcode") return;
-    m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
-    m_allImportHint = m_liteApp->settings()->value(GOLANGCODE_IMPORTHINT_GOPATH,true).toBool();
+//    if (id != "option/golangcode") return;
+//    m_closeOnExit = m_liteApp->settings()->value(GOLANGCODE_EXITCLOSE,true).toBool();
+//    m_allImportHint = m_liteApp->settings()->value(GOLANGCODE_IMPORTHINT_GOPATH,true).toBool();
 }
 
 void GolangCode::appLoaded()
