@@ -45,7 +45,7 @@ class PluginFactory : public LiteApi::PluginFactoryT<BookmarksPlugin>
 public:
     PluginFactory() {
         m_info->setId("plugin/Bookmarks");
-        m_info->setVer("X35.2");
+        m_info->setVer("X38.1");
         m_info->setName("Bookmarks");
         m_info->setAuthor("visualfc");
         m_info->setInfo("Bookmarks");

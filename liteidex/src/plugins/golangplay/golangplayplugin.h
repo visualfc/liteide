@@ -48,7 +48,7 @@ public:
         m_info->setId("plugin/golangplay");
         m_info->setName("GolangPlay");
         m_info->setAuthor("visualfc");
-        m_info->setVer("X32");
+        m_info->setVer("X38.1");
         m_info->setInfo("Golang Playground");
         m_info->appendDepend("plugin/liteeditor");
         m_info->appendDepend("plugin/golangedit");
