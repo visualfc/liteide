@@ -37,6 +37,9 @@
 #include <QTimer>
 #include <QScrollBar>
 #include <QDebug>
+
+//#define GOCODE_CHECKGOPATH
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -61,7 +64,7 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_gocodeProcess = new Process(this);
     m_gocodeSetProcess = new Process(this);
     m_gocodeImportProcess = new Process(this);
-    m_importProcess = new Process(this);
+//    m_importProcess = new Process(this);
     m_gocodeProcess->setWorkingDirectory(m_liteApp->applicationPath());
     m_gocodeSetProcess->setWorkingDirectory(m_liteApp->applicationPath());
     m_gocodeImportProcess->setWorkingDirectory(m_liteApp->applicationPath());
@@ -69,7 +72,7 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     connect(m_gocodeProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
     connect(m_gocodeImportProcess,SIGNAL(started()),this,SLOT(gocodeImportStarted()));
     connect(m_gocodeImportProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(gocodeImportFinished(int,QProcess::ExitStatus)));
-    connect(m_importProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(importFinished(int,QProcess::ExitStatus)));
+//    connect(m_importProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(importFinished(int,QProcess::ExitStatus)));
     m_envManager = LiteApi::getEnvManager(m_liteApp);
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
@@ -94,11 +97,13 @@ void GolangCode::applyOption(QString /*id*/)
 void GolangCode::appLoaded()
 {
     loadPkgList();
+#ifdef GOCODE_CHECKGOPATH
     LiteApi::IGoEnvManger *goEnv = LiteApi::getGoEnvManager(m_liteApp);
     if (goEnv) {
         connect(goEnv,SIGNAL(customGOPATHChanged(QString)),this,SLOT(customGOPATHChanged(QString)));
         connect(goEnv,SIGNAL(globalGOPATHChanged()),this,SLOT(globalGOPATHChanged()));
     }
+#endif
 }
 
 void GolangCode::import(const QString &import, int startPos)
@@ -271,14 +276,18 @@ void GolangCode::updateEditorGOPATH()
     if (m_gocodeCmd.isEmpty()) {
         return;
     }
+ #ifdef GOCODE_CHECKGOPATH
     QProcessEnvironment env = LiteApi::getCustomGoEnvironment(m_liteApp,m_liteApp->editorManager()->currentEditor());
     QString gopathenv = env.value("GOPATH");
     if (gopathenv != m_lastGopathEnv) {
         m_lastGopathEnv = gopathenv;
         gocodeUpdataLibpath(env);
-        //loadImportsList(env);
+        loadImportsList(env);
         m_liteApp->appendLog("GolangCode",QString("gocode set lib-path \"%1\"").arg(gopathenv),false);
     }
+#else
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+#endif
     if (!m_gocodeImportProcess->isStop()) {
         m_gocodeImportProcess->stop(10);
     }
@@ -310,7 +319,7 @@ GolangCode::~GolangCode()
 {
     delete m_gocodeProcess;
     delete m_gocodeSetProcess;
-    delete m_importProcess;
+//    delete m_importProcess;
     delete m_gocodeImportProcess;
     g_gocodeInstCount--;
     if (g_gocodeInstCount == 0 && m_closeOnExit && !m_gocodeCmd.isEmpty()) {
@@ -338,10 +347,12 @@ void GolangCode::gocodeReset(const QProcessEnvironment &env)
     }
     m_gocodeProcess->setProcessEnvironment(env);
     m_gocodeSetProcess->setProcessEnvironment(env);
-    if (!m_gocodeSetProcess->isStop()) {
-        m_gocodeSetProcess->stopAndWait(100,1000);
+    if (g_gocodeInstCount > 1) {
+        if (!m_gocodeSetProcess->isStop()) {
+            m_gocodeSetProcess->stopAndWait(100,1000);
+        }
+        m_gocodeSetProcess->startEx(m_gocodeCmd,QStringList() << "close");
     }
-    m_gocodeSetProcess->startEx(m_gocodeCmd,QStringList() << "close");
 }
 
 
@@ -440,23 +451,23 @@ void GolangCode::loadPkgList()
     m_allImportList = m_importList;
 }
 
-void GolangCode::loadImportsList(const QProcessEnvironment &env)
-{
-    if (!m_importProcess->isStop()) {
-        m_importProcess->stopAndWait(100,1000);
-    }
+//void GolangCode::loadImportsList(const QProcessEnvironment &env)
+//{
+//    if (!m_importProcess->isStop()) {
+//        m_importProcess->stopAndWait(100,1000);
+//    }
 
-    QString cmd = LiteApi::getGotools(m_liteApp);
-    if (cmd.isEmpty()) {
-        return;
-    }
-    QStringList args;
-    args << "pkgs" << "-list" << "-pkg" << "-skip_goroot";
+//    QString cmd = LiteApi::getGotools(m_liteApp);
+//    if (cmd.isEmpty()) {
+//        return;
+//    }
+//    QStringList args;
+//    args << "pkgs" << "-list" << "-pkg" << "-skip_goroot";
 
-    m_importProcess->setProcessEnvironment(env);
+//    m_importProcess->setProcessEnvironment(env);
 
-    m_importProcess->startEx(cmd,args);
-}
+//    m_importProcess->startEx(cmd,args);
+//}
 
 void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 {    
@@ -474,7 +485,7 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
          m_liteApp->appendLog("GolangCode",QString("Found gocode at %1").arg(m_gocodeCmd));
     }
     m_gocodeProcess->setProcessEnvironment(env);
-    m_importProcess->setProcessEnvironment(env);
+//    m_importProcess->setProcessEnvironment(env);
     m_gocodeSetProcess->setProcessEnvironment(env);
 
     gocodeReset(env);
@@ -760,32 +771,32 @@ void GolangCode::gocodeImportFinished(int code, QProcess::ExitStatus)
     }
 }
 
-void GolangCode::importFinished(int code,QProcess::ExitStatus)
-{
-    if (code != 0) {
-        return;
-    }
-    return;
-    QByteArray read = m_importProcess->readAllStandardOutput();
-    QString data = QString::fromUtf8(read);
-    QStringList importList = data.split('\n');
-    importList.removeDuplicates();
-    importList.sort();
+//void GolangCode::importFinished(int code,QProcess::ExitStatus)
+//{
+//    if (code != 0) {
+//        return;
+//    }
+//    return;
+//    QByteArray read = m_importProcess->readAllStandardOutput();
+//    QString data = QString::fromUtf8(read);
+//    QStringList importList = data.split('\n');
+//    importList.removeDuplicates();
+//    importList.sort();
 
-    m_extraPkgListMap.clear();
-    foreach (QString line, importList) {
-        QStringList pathList = line.split("/");
-        m_extraPkgListMap.insert(pathList.last(),line);
-    }
+//    m_extraPkgListMap.clear();
+//    foreach (QString line, importList) {
+//        QStringList pathList = line.split("/");
+//        m_extraPkgListMap.insert(pathList.last(),line);
+//    }
 
-    m_allImportList = m_importList;
-    m_allImportList.append(importList);
-    m_allImportList.removeDuplicates();
+//    m_allImportList = m_importList;
+//    m_allImportList.append(importList);
+//    m_allImportList.removeDuplicates();
 
-    if (m_completer) {
-        m_completer->setImportList(m_allImportList);
-    }
-}
+//    if (m_completer) {
+//        m_completer->setImportList(m_allImportList);
+//    }
+//}
 
 ImportPkgTip::ImportPkgTip(LiteApi::IApplication *app, QObject *parent)
     : QObject(parent), m_liteApp(app)

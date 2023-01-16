@@ -69,7 +69,7 @@ public:
     void gocodeReset(const QProcessEnvironment &env);
     void cgoComplete();
     void loadPkgList();
-    void loadImportsList(const QProcessEnvironment &env);
+//    void loadImportsList(const QProcessEnvironment &env);
 public slots:
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
@@ -79,7 +79,7 @@ public slots:
     void finished(int,QProcess::ExitStatus);
     void gocodeImportStarted();
     void gocodeImportFinished(int,QProcess::ExitStatus);
-    void importFinished(int,QProcess::ExitStatus);
+//    void importFinished(int,QProcess::ExitStatus);
     void broadcast(QString,QString,QString);
     void applyOption(QString);
     void appLoaded();
@@ -108,7 +108,7 @@ protected:
     Process   *m_gocodeProcess;
     Process   *m_gocodeSetProcess;
     Process   *m_gocodeImportProcess;
-    Process   *m_importProcess;
+//    Process   *m_importProcess;
     QByteArray  m_writeData;
     LiteApi::IEnvManager *m_envManager;
     LiteApi::IGolangAst *m_golangAst;
