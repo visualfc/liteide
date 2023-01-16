@@ -1055,6 +1055,11 @@ void LiteEditorWidgetBase::extraAreaLeaveEvent(QEvent *)
 int LiteEditorWidgetBase::navigateAreaWidth()
 {
     return 16;
+#ifdef Q_OS_MAC
+    return qApp->style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+#else
+    return 16;
+#endif
 }
 
 void LiteEditorWidgetBase::navigateAreaPaintEvent(QPaintEvent *e)
