@@ -39,6 +39,7 @@
 #include <QActionGroup>
 #include <QSysInfo>
 #include <QProcess>
+#include <QStringList>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -208,6 +209,8 @@ void Env::loadEnv(EnvManager *manager, const QString &filePath)
     manager->addEnv(env);
 }
 
+static QStringList envFilter = QString("GOROOT;GOPATH;GOEXE;GOOS;GOARCH;GOBIN;GOVERSION").split(";");
+
 void Env::readStdout()
 {
     QByteArray data = m_process->readAllStandardOutput();
@@ -222,6 +225,9 @@ void Env::readStdout()
         int index = info.indexOf("=");
         if (index > 0) {
             QString key = info.left(index);
+            if (!envFilter.contains(key)) {
+                continue;
+            }
             QString value = info.right(info.length()-index-1);
             if (value.startsWith("\"") && value.endsWith("\"")) {
                 value = value.mid(1,value.length()-2);
