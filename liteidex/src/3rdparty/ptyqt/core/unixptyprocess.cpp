@@ -3,7 +3,9 @@
 
 #include <termios.h>
 #include <errno.h>
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_FREEBSD)
 #include <utmpx.h>
+#endif
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -11,12 +13,6 @@
 #include <QFileInfo>
 #include <QCoreApplication>
 #include <signal.h>
-
-// support for build with MUSL on Alpine Linux
-#ifndef _PATH_UTMPX
-#include <sys/time.h>
-# define _PATH_UTMPX	"/var/log/utmp"
-#endif
 
 /* for pty_getproc */
 #if defined(__linux__)
@@ -29,11 +25,12 @@
 
 static char *pty_getproc(int fd, char *tty);
 
+
 UnixPtyProcess::UnixPtyProcess()
     : IPtyProcess()
     , m_readMasterNotify(0)
 {
-    //m_shellProcess.setWorkingDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+//    m_shellProcess.setWorkingDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
     connect(&m_shellProcess,SIGNAL(finished(int, QProcess::ExitStatus)),this,SLOT(finished(int, QProcess::ExitStatus)));
     connect(&m_shellProcess,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(stateChanged(QProcess::ProcessState)));
 }
@@ -45,6 +42,12 @@ UnixPtyProcess::~UnixPtyProcess()
 
 bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &arguments, const QString &workingDirectory, QStringList environment, qint16 cols, qint16 rows)
 {
+//    if (!isAvailable())
+//    {
+//        m_lastError = QString("UnixPty Error: unavailable");
+//        return false;
+//    }
+
     if (m_shellProcess.state() == QProcess::Running)
         return false;
 
@@ -52,7 +55,7 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
     if (fi.isRelative() || !QFile::exists(shellPath))
     {
         //todo add auto-find executable in PATH env var
-        m_lastError = QString("Error: shell file path must be absolute");
+        m_lastError = QString("UnixPty Error: shell file path must be absolute");
         return false;
     }
 #ifdef Q_OS_MAC
@@ -128,6 +131,7 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
     fcntl(m_shellProcess.m_handleMaster, F_SETFL, fcntl(m_shellProcess.m_handleMaster, F_GETFL) | O_NONBLOCK);
     fcntl(m_shellProcess.m_handleSlave, F_SETFL, fcntl(m_shellProcess.m_handleSlave, F_GETFL) | O_NONBLOCK);
 #endif
+
     struct ::termios ttmode;
     rc = tcgetattr(m_shellProcess.m_handleMaster, &ttmode);
     if (rc != 0)
@@ -183,6 +187,25 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
     m_readMasterNotify->setEnabled(true);
     m_readMasterNotify->moveToThread(m_shellProcess.thread());
     connect(m_readMasterNotify,SIGNAL(activated(int)),this,SLOT(readActivated(int)));
+//    QObject::connect(m_readMasterNotify, &QSocketNotifier::activated, [this](int socket)
+//    {
+//        Q_UNUSED(socket)
+
+//        QByteArray buffer;
+//        int size = 1025;
+//        int readSize = 1024;
+//        QByteArray data;
+//        do
+//        {
+//            char nativeBuffer[size];
+//            int len = ::read(m_shellProcess.m_handleMaster, nativeBuffer, readSize);
+//            data = QByteArray(nativeBuffer, len);
+//            buffer.append(data);
+//        } while (data.size() == readSize); //last data block always < readSize
+
+//        m_shellReadBuffer.append(buffer);
+//        m_shellProcess.emitReadyRead();
+//    });
 
     QStringList defaultVars;
 
@@ -236,7 +259,8 @@ bool UnixPtyProcess::resize(qint16 cols, qint16 rows)
     winp.ws_xpixel = 0;
     winp.ws_ypixel = 0;
 
-    bool res =  ((ioctl(m_shellProcess.m_handleMaster, TIOCSWINSZ, &winp) != -1)  && (ioctl(m_shellProcess.m_handleSlave, TIOCSWINSZ, &winp) != -1) );
+    bool res =  ((ioctl(m_shellProcess.m_handleMaster, TIOCSWINSZ, &winp) != -1) && (ioctl(m_shellProcess.m_handleSlave, TIOCSWINSZ, &winp) != -1) );
+
     if (res)
     {
         m_size = QPair<qint16, qint16>(cols, rows);
@@ -245,17 +269,17 @@ bool UnixPtyProcess::resize(qint16 cols, qint16 rows)
     return res;
 }
 
-bool tty_kill(int fd, int signal)
-{
-#if defined(TIOCSIG)
-    if (ioctl(fd, TIOCSIG, signal) == -1)
-        return false;
-#elif defined(TIOCSIGNAL)
-    if (ioctl(fd, TIOCSIGNAL, signal) == -1)
-        return false;
-#endif
-    return  true;
-}
+//bool tty_kill(int fd, int signal)
+//{
+//#if defined(TIOCSIG)
+//    if (ioctl(fd, TIOCSIG, signal) == -1)
+//        return false;
+//#elif defined(TIOCSIGNAL)
+//    if (ioctl(fd, TIOCSIGNAL, signal) == -1)
+//        return false;
+//#endif
+//    return  true;
+//}
 
 bool UnixPtyProcess::kill()
 {
@@ -271,9 +295,8 @@ bool UnixPtyProcess::kill()
         m_shellProcess.m_handleMaster = -1;
     }
     if (!m_readMasterNotify) {
-        return false;
+       return false;
     }
-
     if (m_shellProcess.state() == QProcess::Running)
     {
         m_readMasterNotify->disconnect();
@@ -333,6 +356,7 @@ qint64 UnixPtyProcess::write(const QByteArray &byteArray)
 
 bool UnixPtyProcess::isAvailable()
 {
+    //todo check something more if required
     return true;
 }
 
@@ -359,11 +383,6 @@ void UnixPtyProcess::stateChanged(QProcess::ProcessState newState)
     }
 }
 
-void UnixPtyProcess::moveToThread(QThread *targetThread)
-{
-    m_shellProcess.moveToThread(targetThread);
-}
-
 void UnixPtyProcess::finished(int /*exitCode*/, QProcess::ExitStatus /*exitStatus*/)
 {
     emit exited();
@@ -388,17 +407,24 @@ void UnixPtyProcess::readActivated(int socket)
     m_shellProcess.emitReadyRead();
 }
 
+
+void UnixPtyProcess::moveToThread(QThread *targetThread)
+{
+    m_shellProcess.moveToThread(targetThread);
+}
+
 void ShellProcess::setupChildProcess()
 {
     dup2(m_handleSlave, STDIN_FILENO);
     dup2(m_handleSlave, STDOUT_FILENO);
     dup2(m_handleSlave, STDERR_FILENO);
 
-
     pid_t sid = setsid();
     ioctl(m_handleSlave, TIOCSCTTY, 0);
     tcsetpgrp(m_handleSlave, sid);
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_FREEBSD)
+    // on Android imposible to put record to the 'utmp' file
     struct utmpx utmpxInfo;
     memset(&utmpxInfo, 0, sizeof(utmpxInfo));
 
@@ -431,16 +457,8 @@ void ShellProcess::setupChildProcess()
     updwtmpx(_PATH_UTMPX, &loginInfo);
 #endif
 
-
-    struct sigaction action;
-    sigemptyset(&action.sa_mask);
-    action.sa_handler = SIG_DFL;
-    action.sa_flags = 0;
-    for (int signal = 1; signal < NSIG; signal++) {
-        sigaction(signal, &action, 0);
-    }
+#endif
 }
-
 
 /**
  * pty_getproc
