@@ -372,6 +372,8 @@ Terminal::~Terminal()
 
     m_liteApp->settings()->endGroup();
 
+    closeAllTab();
+
     m_listMenu->clear();
     delete m_listMenu;
     delete m_filterMenu;
@@ -748,6 +750,7 @@ void Terminal::tabCloseRequested(int index)
     VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(index));
     m_tab->removeTab(index);
     if (widget) {
+        this->disconnect(widget,0,this,0);
         widget->deleteLater();
     }
 }
@@ -800,6 +803,7 @@ void Terminal::closeAllTab()
         VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(i));
         m_tab->removeTab(i);
         if (widget) {
+            disconnect(widget,0,this,0);
             widget->deleteLater();
         }
     }
