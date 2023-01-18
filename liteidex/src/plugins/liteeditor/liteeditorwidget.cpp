@@ -277,6 +277,9 @@ void LiteEditorWidget::keyPressEvent(QKeyEvent *e)
                 }
             }
         }
+        if (e->key() == Qt::Key_Backspace && completionPrefix.isEmpty()) {
+            m_completer->setCompletionPrefix("$");
+        }
         return;
     }
     m_completer->setCompletionContext(LiteApi::CompleterCodeContext);
