@@ -20,19 +20,14 @@ fi
 echo update liteide tools ...
 cd $LITEIDE_ROOT
 
-if [ -z $GOPATH ]; then
-	export GOPATH=$PWD
-else
-	export GOPATH=$PWD:$GOPATH
-fi
+export GOBIN=$PWD/bin
 
-echo get gocode ...
+echo install gocode ...
 go install -v github.com/visualfc/gocode@latest
-echo get gotools ...
+echo install gotools ...
 go install -v github.com/visualfc/gotools@latest
-echo get gomodifytags ...
+echo install gomodifytags ...
 go install -v github.com/fatih/gomodifytags@latest
-
 
 if [ $? -ge 1 ]; then
 	echo 'error, go install fail'
