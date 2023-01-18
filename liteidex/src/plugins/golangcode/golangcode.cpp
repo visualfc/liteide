@@ -564,7 +564,7 @@ void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
 //       // return;
 //    }
     if (!m_gocodeProcess->isStop()) {
-        return;
+        m_gocodeProcess->stopAndWait(30,100);
     }
     int offset = -1;
     if (pre.endsWith('.')) {
