@@ -83,7 +83,7 @@ static QString getGocode(LiteApi::IApplication *app)
 }
 
 GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
-    QObject(parent), m_liteApp(app), m_gorootSourceReadOnly(false)
+    QObject(parent), m_liteApp(app), m_gorootSourceReadOnly(false), m_useGoModule(false)
 {
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangEdit");
 
@@ -122,6 +122,10 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     if (manager) {
         manager->addFileSearch(m_fileSearch);
     }
+    m_envManager = LiteApi::getEnvManager(m_liteApp);
+    if (m_envManager) {
+        connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
+    }
 
     m_findDefProcess = new Process(this);
     m_findInfoProcess = new Process(this);
@@ -130,6 +134,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
     m_useGocodeInfo = true;
+
 
     connect(m_liteApp->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
@@ -241,6 +246,8 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_removeTagsDlg = 0;
 
     this->applyOption(OPTION_GOLANGEDIT);
+
+    currentEnvChanged(NULL);
 }
 
 GolangEdit::~GolangEdit()
@@ -286,6 +293,34 @@ QTextCursor GolangEdit::textCursorForPos(const QPoint &globalPos)
         return cur;
     }
     return m_plainTextEdit->cursorForPosition(pos);
+}
+
+void GolangEdit::currentEnvChanged(LiteApi::IEnv *)
+{
+    QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
+    if (!env.contains("GO111MODULE")) {
+        return;
+    }
+    QString value = env.value("GO111MODULE");
+    bool b = value.toLower() != "off";
+    if (b == m_useGoModule) {
+        return;
+    }
+    m_useGoModule = b;
+    if (!m_useGoModule) {
+        m_findAllUseSkipGorootAct->setText(QString("%1 (Module/GOPATH)").arg(tr("Find Usages")));
+        m_findAllUseSkipTestsAct->setText(QString("%1 (Module/GOPATH) skip tests").arg(tr("Find Usages")));
+        m_findAllUseWithGorootAct->setText(QString(tr("%1 (Module/GOPATH) with GOROOT")).arg(tr("Find Usages")));
+        m_renameAllSymbolWithGorootAct->setText(QString(tr("%1 (Module/GOPATH) with GOROOT")).arg(tr("Rename Symbol Under Cursor")));
+        m_renameAllSymbolSkipGorootAct->setText(QString("%1 (Module/GOPATH)").arg(tr("Rename Symbol Under Cursor")));
+    } else {
+        m_findAllUseSkipGorootAct->setText(QString("%1 (Module)").arg(tr("Find Usages")));
+        m_findAllUseSkipTestsAct->setText(QString("%1 (Module) skip tests").arg(tr("Find Usages")));
+        m_findAllUseWithGorootAct->setText(QString(tr("%1 (Module) and GOROOT")).arg(tr("Find Usages")));
+        m_renameAllSymbolWithGorootAct->setText(QString(tr("%1 (Module) and GOROOT")).arg(tr("Rename Symbol Under Cursor")));
+        m_renameAllSymbolSkipGorootAct->setText(QString("%1 (Module)").arg(tr("Rename Symbol Under Cursor")));
+    }
+    m_renameAllSymbolWithGorootAct->setVisible(!m_useGoModule);
 }
 
 void GolangEdit::applyOption(const QString &option)

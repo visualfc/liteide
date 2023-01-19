@@ -2,6 +2,7 @@ TARGET = golangedit
 TEMPLATE = lib
 
 include (../../liteideplugin.pri)
+include (../../api/liteenvapi/liteenvapi.pri)
 include (../../api/litefindapi/litefindapi.pri)
 include (../../api/liteeditorapi/liteeditorapi.pri)
 include (../../api/litebuildapi/litebuildapi.pri)

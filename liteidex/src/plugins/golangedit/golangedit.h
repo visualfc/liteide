@@ -71,6 +71,7 @@ public:
     virtual ~GolangEdit();
     QTextCursor textCursorForPos(const QPoint &globalPos);
 public slots:
+    void currentEnvChanged(LiteApi::IEnv*);
     void applyOption(const QString &option);
     void editorCreated(LiteApi::IEditor*);
     void currentEditorChanged(LiteApi::IEditor*);
@@ -123,6 +124,7 @@ public slots:
     int byteOffsetToColumn(const QString &fileName, int line, int col);
 protected:
     LiteApi::IApplication *m_liteApp;
+    LiteApi::IEnvManager  *m_envManager;
     LiteApi::ILiteEditor  *m_editor;
     QPlainTextEdit        *m_plainTextEdit;
     TextOutput            *m_sourceQueryOutput;
@@ -132,6 +134,7 @@ protected:
     bool m_enableMouseNavigation;
     bool m_gorootSourceReadOnly;
     bool m_useGocodeInfo;
+    bool m_useGoModule;
     QTextCursor m_linkCursor;
     LiteApi::Link m_lastLink;
     QAction *m_findInfoAct;

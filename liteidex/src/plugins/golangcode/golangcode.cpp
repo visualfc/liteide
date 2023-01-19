@@ -77,7 +77,6 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     if (m_envManager) {
         connect(m_envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(currentEnvChanged(LiteApi::IEnv*)));
     }
-    m_envManager = LiteApi::findExtensionObject<LiteApi::IEnvManager*>(m_liteApp,"LiteApi.IEnvManager");
     m_golangAst = LiteApi::findExtensionObject<LiteApi::IGolangAst*>(m_liteApp,"LiteApi.IGolangAst");
     m_pkgImportTip = new ImportPkgTip(m_liteApp,this);
     connect(m_pkgImportTip,SIGNAL(import(QString,int)),this,SLOT(import(QString,int)));
