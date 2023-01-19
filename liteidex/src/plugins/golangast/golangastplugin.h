@@ -52,6 +52,7 @@ public:
         m_info->setVer("X35");
         m_info->setInfo("Golang Ast View");
         m_info->appendDepend("plugin/quickopen");
+        m_info->appendDepend("plugin/liteenv");
     }
 };
 

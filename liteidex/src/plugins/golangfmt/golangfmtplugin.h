@@ -65,6 +65,7 @@ public:
         m_info->setAuthor("visualfc");
         m_info->setVer("X33.1");
         m_info->setInfo("Golang Format Support");
+        m_info->appendDepend("plugin/liteenv");
     }
 };
 

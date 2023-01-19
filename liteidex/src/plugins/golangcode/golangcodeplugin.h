@@ -60,6 +60,7 @@ public:
         m_info->setAuthor("visualfc");
         m_info->setVer("X38.1");
         m_info->setInfo("Golang Gocode Support");
+        m_info->appendDepend("plugin/liteenv");
     }
 };
 
