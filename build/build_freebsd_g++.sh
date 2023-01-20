@@ -12,9 +12,9 @@ echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
 echo .
 
-echo qmake-qt5 liteide ...
+echo qmake liteide ...
 echo .
-qmake-qt5 $LITEIDE_ROOT "CONFIG+=release"
+qmake $LITEIDE_ROOT -spec freebsd-g++ "CONFIG+=release"
 
 if [ $? -ge 1 ]; then
 	echo 'error, qmake fail'

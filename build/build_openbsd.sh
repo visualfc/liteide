@@ -7,22 +7,14 @@ if [ -z $LITEIDE_ROOT ]; then
 fi
 
 echo build liteide
-echo QTDIR=$QTDIR
 echo GOROOT=$GOROOT
 echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
 echo .
 
-if [ -z $QTDIR ]; then
-	echo 'error, QTDIR is null'
-	exit 1
-fi
-
-export PATH=$QTDIR/bin:$PATH
-
-echo qmake liteide ...
+echo qmake-qt5 liteide ...
 echo .
-qmake $LITEIDE_ROOT -spec openbsd-g++ "CONFIG+=release"
+qmake-qt5 $LITEIDE_ROOT "CONFIG+=release"
 
 if [ $? -ge 1 ]; then
 	echo 'error, qmake fail'
