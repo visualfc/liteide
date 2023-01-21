@@ -24,7 +24,7 @@ macx {
     LIBS += -L$$IDE_APP_PATH
 }
 
-linux-* {
+linux-*|openbsd-*|freebsd-* {
     #do the rpath by hand since it's not possible to use ORIGIN in QMAKE_RPATHDIR
     # this expands to $ORIGIN (after qmake and make), it does NOT read a qmake var
     QMAKE_RPATHDIR += \$\$ORIGIN
