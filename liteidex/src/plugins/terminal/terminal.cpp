@@ -398,7 +398,7 @@ void Terminal::openDefaultTerminal(const QString &workDir)
                 return;
             } else {
                 VTermWidget *widget = (VTermWidget*)m_tab->widget(i);
-                if (widget && !widget->process()->hasProcessList()) {
+                if (widget && widget->process()->processList() == 1) {
                     m_tab->setCurrentIndex(i);
                     widget->setFocus();
                     return;
@@ -708,7 +708,7 @@ void Terminal::termStarted()
 void Terminal::loadEnv(int index)
 {
     VTermWidget *widget = static_cast<VTermWidget*>(m_tab->widget(index));
-    if (widget->process()->hasProcessList()) {
+    if (widget->process()->processList() > 1) {
         return;
     }
     TabInfoData data = m_tab->tabData(index).value<TabInfoData>();

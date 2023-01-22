@@ -380,14 +380,14 @@ void WinPtyProcess::moveToThread(QThread *targetThread)
     m_outSocket->moveToThread(targetThread);
 }
 
-bool WinPtyProcess::hasProcessList() const
+int WinPtyProcess::processList() const
 {
-    int list[64];
     if (winpty_get_console_process_list) {
+        int list[64];
         int n = winpty_get_console_process_list(m_ptyHandler,list,64,0);
-        return n >= 1;
+        return n;
     }
-    return true;
+    return 0;
 }
 
 void WinPtyProcess::disconnected()

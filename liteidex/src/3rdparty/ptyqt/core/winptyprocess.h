@@ -24,7 +24,7 @@ public:
     virtual qint64 write(const QByteArray &byteArray);
     virtual bool isAvailable();
     virtual void moveToThread(QThread *targetThread);
-    virtual bool hasProcessList() const;
+    virtual int processList() const;
 public slots:
     void disconnected();
 private:
