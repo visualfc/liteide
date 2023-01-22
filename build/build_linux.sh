@@ -7,18 +7,10 @@ if [ -z $LITEIDE_ROOT ]; then
 fi
 
 echo build liteide
-echo QTDIR=$QTDIR
 echo GOROOT=$GOROOT
 echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
 echo .
-
-if [ -z $QTDIR ]; then
-	echo 'error, QTDIR is null'
-	exit 1
-fi
-
-export PATH=$QTDIR/bin:$PATH
 
 echo qmake liteide ...
 echo .
@@ -87,7 +79,7 @@ cp -a -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 cp -a -v $LITEIDE_ROOT/liteide.desktop liteide
 cp -a -v $LITEIDE_ROOT/install_icon.sh liteide
 
-cp -a -v $LITEIDE_ROOT/liteide/bin/* liteide/bin
+cp -a -v $LITEIDE_ROOT/liteide/bin/liteide liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gotools liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gocode liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gomodifytags liteide/bin

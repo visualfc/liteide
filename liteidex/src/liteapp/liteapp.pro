@@ -36,8 +36,8 @@ contains(DEFINES, LITEAPP_LIBRARY) {
         DESTDIR = $$IDE_APP_PATH
     } else:macx {
         DESTDIR = $$IDE_BIN_PATH
-    } else:linux-* {
-            DESTDIR = $$IDE_LIBRARY_PATH
+    } else {
+        DESTDIR = $$IDE_LIBRARY_PATH
     }
 }
 

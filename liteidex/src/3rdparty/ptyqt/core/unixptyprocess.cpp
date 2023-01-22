@@ -360,9 +360,16 @@ bool UnixPtyProcess::isAvailable()
     return true;
 }
 
-bool UnixPtyProcess::hasProcessList() const
+int UnixPtyProcess::processList() const
 {
-    return getUnixProc() != m_shellName;
+    QString proc = getUnixProc();
+    if (proc.isEmpty()) {
+        return 0;
+    }
+    if (proc == m_shellName) {
+        return 1;
+    }
+    return 2;
 }
 
 QString UnixPtyProcess::getUnixProc() const

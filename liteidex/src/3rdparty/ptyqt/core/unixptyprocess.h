@@ -47,7 +47,7 @@ public:
     virtual QByteArray readAll();
     virtual qint64 write(const QByteArray &byteArray);
     virtual bool isAvailable();
-    virtual bool hasProcessList() const;
+    virtual int processList() const;
     void moveToThread(QThread *targetThread);
     QString getUnixProc() const;
 public slots:

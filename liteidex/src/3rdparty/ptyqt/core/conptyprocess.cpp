@@ -328,7 +328,7 @@ void ConPtyProcess::moveToThread(QThread *targetThread)
     //nothing for now...
 }
 
-bool ConPtyProcess::hasProcessList() const
+int ConPtyProcess::processList() const
 {
-    return true;
+    return 0;
 }
