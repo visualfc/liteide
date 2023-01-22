@@ -3,11 +3,11 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2023.01.18 Ver X38.1
+### 2023.01.22 Ver X38.1
 * LiteIDE
     * gotools & gocode support Go1.18 generics
     * support build for windows vs2019
-    * support build for freebsd
+    * support build for freebsd/openbsd
     * fix memory leak
 * GolangCode
     * support Go1.18 generics
@@ -29,11 +29,13 @@
     * libterm fix build for vs2019
     * add option for set font
     * ptyqt use conptyprocess for vs2019
-    * ptyqt fix unixptyprocess for freebsd
+    * ptyqt fix unixptyprocess for freebsd/openbsd
 * gotools
     * types support generics method lookup
 * gocode
     * support generics type autocomplete
+    * support incomplete dep autocomplete
+
 
 ### 2022.05.22 Ver X38.0
 * LiteIDE
