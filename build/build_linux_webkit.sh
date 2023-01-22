@@ -86,7 +86,7 @@ cp -a -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
 cp -a -v $LITEIDE_ROOT/../README.md liteide
 cp -a -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 
-cp -a -v $LITEIDE_ROOT/liteide/bin/* liteide/bin
+cp -a -v $LITEIDE_ROOT/liteide/bin/liteide liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gotools liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gocode liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gomodifytags liteide/bin
