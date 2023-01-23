@@ -21,6 +21,9 @@
     * fix buildconfigdialog twice accept
 * LiteEditor
     * fix selection navigation saved
+    * check backspace empty completion unpopup
+* GolangEdit
+    * update actions for GO111MODULE
 * GolangPlay
     * load depends
 * Bookmarks
@@ -35,7 +38,6 @@
 * gocode
     * support generics type autocomplete
     * support incomplete dep autocomplete
-
 
 ### 2022.05.22 Ver X38.0
 * LiteIDE

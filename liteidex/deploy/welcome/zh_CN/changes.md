@@ -21,6 +21,9 @@
     * fix buildconfigdialog twice accept
 * LiteEditor
     * fix selection navigation saved
+    * check backspace empty completion unpopup
+* GolangEdit
+    * update actions for GO111MODULE
 * GolangPlay
     * load depends
 * Bookmarks
