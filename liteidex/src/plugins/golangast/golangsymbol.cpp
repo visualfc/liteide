@@ -50,6 +50,7 @@ GolangSymbol::GolangSymbol(LiteApi::IApplication *app, QObject *parent)
     connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
     m_matchCase = Qt::CaseInsensitive;
     m_importPath = true;
+    m_astviewSep = ",,,";
 }
 
 QString GolangSymbol::id() const
@@ -103,6 +104,9 @@ void GolangSymbol::updateModel()
     QString cmd = LiteApi::getGotools(m_liteApp);
     QStringList args;
     args << "astview";
+    args << "-outline";
+    args << "-sep" << m_astviewSep;
+    args << "-tp";
     args << info.fileName();
     m_process->setWorkingDirectory(info.path());
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
@@ -158,7 +162,7 @@ void GolangSymbol::finished(int code, QProcess::ExitStatus status)
 {
     if (code == 0 && status == QProcess::NormalExit) {
         QByteArray ar = m_process->readAll();
-        AstWidget::parserModel(m_model,ar,true,!m_importPath);
+        AstWidget::parserModel(m_model,ar,m_astviewSep,true,!m_importPath);
         LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
         if (mgr) {
             mgr->modelView()->expandAll();

@@ -50,11 +50,11 @@
 #endif
 //lite_memory_check_end
 
-
 GolangAst::GolangAst(LiteApi::IApplication *app, QObject *parent) :
     LiteApi::IGolangAst(parent),
     m_liteApp(app)
 {
+    m_astviewSep = ",,,";
     m_currentEditor = 0;
     m_currentPlainTextEditor = 0;
     m_blankWidget = new QLabel(tr("No outline available"));
@@ -363,6 +363,8 @@ void GolangAst::updateAstNow()
     QStringList args;
     args << "astview" << "-end";
     args << "-todo";
+    args << "-sep" << m_astviewSep;
+    args << "-tp";
     args << m_updateFileNames;
     m_process->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_process->start(cmd,args);
@@ -385,6 +387,9 @@ void GolangAst::updateAstNowFile()
     QStringList args;
     args << "astview" << "-end";
     args << "-todo";
+    args << "-outline";
+    args << "-sep" << m_astviewSep;
+    args << "-tp";
     args << m_editorFileName;
     m_processFile->setEnvironment(LiteApi::getGoEnvironment(m_liteApp).toStringList());
     m_processFile->start(cmd,args);
@@ -423,7 +428,7 @@ void GolangAst::finishedProcess(int code,QProcess::ExitStatus status)
 {
     if (code == 0 && status == QProcess::NormalExit) {
        // if (m_liteApp->projectManager()->currentProject()) {
-        m_projectAstWidget->updateModel(m_process->readAllStandardOutput());
+        m_projectAstWidget->updateModel(m_process->readAllStandardOutput(),m_astviewSep);
         if (m_isSyncClassView && m_currentPlainTextEditor) {
             QTextCursor cursor = m_currentPlainTextEditor->textCursor();
             m_projectAstWidget->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());
@@ -440,7 +445,7 @@ void GolangAst::finishedProcessFile(int code,QProcess::ExitStatus status)
         if (m_currentEditor) {
             AstWidget *w = m_editorAstWidgetMap.value(m_currentEditor);
             if (w) {
-                w->updateModel(m_processFile->readAllStandardOutput());
+                w->updateModel(m_processFile->readAllStandardOutput(),m_astviewSep);
                 if (m_isSyncOutline && m_currentPlainTextEditor) {
                     QTextCursor cursor = m_currentPlainTextEditor->textCursor();
                     w->trySyncIndex(m_currentEditor->filePath(),cursor.blockNumber(),cursor.positionInBlock());

@@ -86,6 +86,7 @@ protected:
     QAction *m_syncOutlineAct;
     bool    m_isSyncClassView;
     bool    m_isSyncOutline;
+    QByteArray m_astviewSep;
     QAction *m_classViewToolAct;
     QAction *m_outlineToolAct;
 };

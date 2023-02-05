@@ -396,7 +396,7 @@ static LiteApi::ASTTAG_ENUM toTagFlag(const QString &tag)
     return LiteApi::TagNone;
 }
 
-void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, bool flatMode, bool skipimport)
+void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, const QByteArray &sep, bool flatMode, bool skipimport)
 {
     QList<QString> array = QString::fromUtf8(data).split('\n');
     QMap<int,QStandardItem*> items;
@@ -415,7 +415,7 @@ void AstWidget::parserModel(QStandardItemModel *model, const QByteArray &data, b
             line = line.left(pos);
         }
         line = line.trimmed();
-        QList<QString> info = line.split(',');
+        QList<QString> info = line.split(sep);
         if (info.size() < 3) {
             continue;
         }
@@ -566,7 +566,7 @@ void AstWidget::findModelIndex(const QModelIndex &parent, const QString &fileNam
 }
 
 // level,tag,name,pos,@info
-void AstWidget::updateModel(const QByteArray &data)
+void AstWidget::updateModel(const QByteArray &data, const QByteArray &sep)
 {
     //save state
     SymbolTreeState state;
@@ -574,7 +574,7 @@ void AstWidget::updateModel(const QByteArray &data)
 
     m_model->clear();
 
-    parserModel(m_model,data,false,false);
+    parserModel(m_model,data,sep,false,false);
 
     //load state
     if (!m_tree->isExpanded(m_tree->rootIndex())) {

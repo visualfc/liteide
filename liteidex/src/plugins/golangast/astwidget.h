@@ -39,7 +39,7 @@ public:
     explicit AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent = 0);
 public:
     void clear();
-    void updateModel(const QByteArray &data);
+    void updateModel(const QByteArray &data, const QByteArray &sep);
     void setWorkPath(const QString &path) {
         m_workPath = path;
     }
@@ -48,7 +48,7 @@ public:
     }
     GolangAstItem *astItemFromIndex(QModelIndex index);
     SymbolTreeView *tree() { return m_tree; }
-    static void parserModel(QStandardItemModel *model, const QByteArray &data, bool flatMode, bool skipimport);
+    static void parserModel(QStandardItemModel *model, const QByteArray &data, const QByteArray &sep, bool flatMode, bool skipimport);
     bool trySyncIndex(const QString &filePath, int line, int column);
     void findModelIndex(const QModelIndex &parent, const QString &fileName, int line, int column, QModelIndexList &finds);
 public slots:

@@ -55,6 +55,7 @@ protected:
     QSortFilterProxyModel *m_proxy;
     QProcess              *m_process;
     Qt::CaseSensitivity    m_matchCase;
+    QByteArray             m_astviewSep;
     bool                   m_importPath;
 };
 
