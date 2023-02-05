@@ -55,7 +55,8 @@ AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) 
     layout->setMargin(0);
     layout->setSpacing(0);
 
-    m_tree = new SymbolTreeView;    
+    m_tree = new SymbolTreeView;
+    m_tree->setExpandsOnDoubleClick(false);
     m_filterEdit = new Utils::FilterLineEdit(200);
 
     m_model = new QStandardItemModel(this);
@@ -251,8 +252,13 @@ void AstWidget::viewImportDoc()
 void AstWidget::doubleClicked(QModelIndex index)
 {
     GolangAstItem *item = astItemFromIndex(index);
-    if (item && !item->isFolder()) {
+    if (!item) {
+        return;
+    }
+    if (!item->isFolder()) {
         gotoItemDefinition(item);
+    } else {
+        m_tree->setExpanded(index,!m_tree->isExpanded(index));
     }
 }
 
