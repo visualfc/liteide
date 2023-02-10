@@ -7,7 +7,7 @@
 		<config id="GoTools" name="GOTOOLS" value="$(LITEIDE_TOOL_PATH)/gotools"/>
 		<config id="ErrRegex" name="ERRREGEX" value="((?:[a-zA-Z]:)?[\w\d_@\-\\\/\.]+):(\d+)\b"/>
 		<custom id="TargetBaseName" name="TARGETBASENAME" value="$(BUILD_DIR_NAME)"/>
-		<custom id="TargetName" name = "TARGETNAME" value="$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="TargetName" name = "TARGETNAME" value="$(BUILD_DIR_PATH)/$(TARGETBASENAME)$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="TargetArgs" name="TARGETARGS" value=""/>
 		<custom id="TargetWorkDir" name = "TARGTWORKDIR" value="$(BUILD_DIR_PATH)"/>
 		<custom id="BuildFlags" name="BUILDFLAGS" value=""/>
@@ -27,8 +27,8 @@
 		<custom id="ToolVetArgs" name="TOOLVETARGS" value="-all -v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GenerateArgs" name="GENERATEARGS" value="-v" shared-value="$(BUILDFLAGS)"/>
 		<custom id="GolintArgs" name="GOLINTARGS" value="-min_confidence=0.8"/>
-		<custom id="DebugName" name = "DEBUGNAME" value="$(TARGETBASENAME).debug$(GOEXE)" escaped="true"/>
-		<custom id="DebugTestName" name = "DEBUGTESTNAME" value="$(TARGETBASENAME).test$(GOEXE)" escaped="true"/>
+		<custom id="DebugName" name = "DEBUGNAME" value="$(BUILD_DIR_PATH)/$(TARGETBASENAME).debug$(GOEXE)" readonly="true" escaped="true"/>
+		<custom id="DebugTestName" name = "DEBUGTESTNAME" value="$(BUILD_DIR_PATH)/$(TARGETBASENAME).test$(GOEXE)" readonly="true" escaped="true"/>
 		<custom id="DebugWorkDir" name = "DEBUGWORKDIR" value="$(TARGTWORKDIR)"/>
 		<custom id="DebugBuildArgs" name = "DEBUGBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -v -o $(DEBUGNAME)"/>
 		<custom id="DebugTestBuildArgs" name="DEBUGTESTBUILDARGS" value="$(LITEIDE_DEBUG_GCFLAGS) -c -o $(DEBUGTESTNAME)"/>
