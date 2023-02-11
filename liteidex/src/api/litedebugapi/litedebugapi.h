@@ -33,7 +33,7 @@ enum DEBUG_MODEL_TYPE{
     ASYNC_MODEL = 1,
     VARS_MODEL,
     WATCHES_MODEL,
-    CALLSTACK_MODEL,
+    FRAMES_MODEL,
     BREAKPOINTS_MODEL,
     THREADS_MODEL,
     LIBRARY_MODEL,
@@ -83,7 +83,6 @@ public:
     virtual void createWatch(const QString &var) = 0;
     virtual void removeWatch(const QString &var) = 0;
     virtual void removeAllWatch() = 0;
-    virtual void showFrame(QModelIndex index) = 0;
     virtual void dbclickItem(QModelIndex index, DEBUG_MODEL_TYPE type) = 0;
 signals:
     void debugStarted();

@@ -60,7 +60,7 @@ public slots:
     void setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded);
     void watchCreated(QString,QString);
     void watchRemoved(QString);
-    void doubleClickedStack(QModelIndex);
+    void dbclickView(QModelIndex);
     void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
     void endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
 protected:
@@ -71,7 +71,7 @@ protected:
     QTreeView *m_asyncView;
     SymbolTreeView *m_varsView;
     SymbolTreeView *m_watchView;
-    QTreeView *m_statckView;
+    QTreeView *m_framesView;
     QTreeView *m_libraryView;
     QTreeView *m_threadsView;
     QTreeView *m_regsView;

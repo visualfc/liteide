@@ -198,7 +198,7 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_varsModel;
     } else if (type == LiteApi::WATCHES_MODEL) {
         return m_watchModel;
-    }else if (type == LiteApi::CALLSTACK_MODEL) {
+    }else if (type == LiteApi::FRAMES_MODEL) {
         return m_framesModel;
     } else if (type == LiteApi::GOROUTINES_MODEL) {
         return m_goroutinesModel;
@@ -405,7 +405,13 @@ void DlvRpcDebugger::showFrame(QModelIndex index)
 
 void DlvRpcDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
 {
-
+    switch (type) {
+    case LiteApi::FRAMES_MODEL:
+        showFrame(index);
+        break;
+    default:
+        break;
+    }
 }
 
 void DlvRpcDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
@@ -1006,7 +1012,7 @@ void DlvRpcDebugger::updateVariable(int id)
 void DlvRpcDebugger::updateStackframe(int id)
 {
     QList<Stackframe> frames = m_dlvClient->Stacktrace(id,128,LoadConfig::Long128(3));
-    emit beginUpdateModel(LiteApi::CALLSTACK_MODEL);
+    emit beginUpdateModel(LiteApi::FRAMES_MODEL);
     m_framesModel->removeRows(0,m_framesModel->rowCount());
     int index = 0;
     foreach(Stackframe f, frames) {
@@ -1023,7 +1029,7 @@ void DlvRpcDebugger::updateStackframe(int id)
         m_framesModel->appendRow(items);
         index++;
     }
-    emit endUpdateModel(LiteApi::CALLSTACK_MODEL);
+    emit endUpdateModel(LiteApi::FRAMES_MODEL);
 }
 
 static bool threadIdThan(const Thread &s1, const Thread &s2)
