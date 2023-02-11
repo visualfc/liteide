@@ -142,6 +142,7 @@ public:
     virtual void removeWatch(const QString &name);
     virtual void removeAllWatch();
     virtual void showFrame(QModelIndex index);
+    virtual void dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type);
 protected:
     void createWatchHelp(const QString &var, bool floating, bool watchModel);
     void removeWatchHelp(const QString &var, bool byName, bool children);

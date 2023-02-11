@@ -400,7 +400,12 @@ void DlvRpcDebugger::showFrame(QModelIndex index)
     if( lineno <= 0 ) {
         return;
     }
-    emit setFrameLine(filename, lineno - 1 );
+    emit gotoLine(filename, lineno - 1 );
+}
+
+void DlvRpcDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
+{
+
 }
 
 void DlvRpcDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)

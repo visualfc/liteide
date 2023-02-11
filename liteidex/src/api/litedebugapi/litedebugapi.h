@@ -84,6 +84,7 @@ public:
     virtual void removeWatch(const QString &var) = 0;
     virtual void removeAllWatch() = 0;
     virtual void showFrame(QModelIndex index) = 0;
+    virtual void dbclickItem(QModelIndex index, DEBUG_MODEL_TYPE type) = 0;
 signals:
     void debugStarted();
     void debugStoped();
@@ -91,7 +92,7 @@ signals:
     void debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log);
     void setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded);
     void setCurrentLine(const QString &fileName, int line);
-    void setFrameLine(const QString &fileName, int line);
+    void gotoLine(const QString &fileName, int line);
     void watchCreated(const QString &watch,const QString &name);
     void watchRemoved(const QString &watch);
     void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);

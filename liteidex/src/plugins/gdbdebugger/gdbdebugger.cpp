@@ -375,7 +375,12 @@ void GdbDebugger::showFrame(QModelIndex index)
     if( lineno <= 0 ) {
         return;
     }
-    emit setFrameLine(filename, lineno - 1 );
+    emit gotoLine(filename, lineno - 1 );
+}
+
+void GdbDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
+{
+
 }
 
 void GdbDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
