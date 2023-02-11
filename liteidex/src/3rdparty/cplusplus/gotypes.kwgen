@@ -31,3 +31,5 @@ uint
 int
 uintptr
 error
+any
+comparable

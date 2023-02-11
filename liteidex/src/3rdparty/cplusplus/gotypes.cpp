@@ -2,41 +2,17 @@
 #include "Lexer.h"
 #include "Token.h"
 
-
-/*
-  T_GO_INT,
-  T_GO_BOOL,
-  T_GO_INT8,
-  T_GO_BYTE,
-  T_GO_RUNE,
-  T_GO_UINT,
-  T_GO_UINT8,
-  T_GO_INT16,
-  T_GO_INT32,
-  T_GO_INT64,
-  T_GO_ERROR,
-  T_GO_UINT16,
-  T_GO_UINT32,
-  T_GO_UINT64,
-  T_GO_STRING,
-  T_GO_FLOAT32,
-  T_GO_FLOAT64,
-  T_GO_UINTPTR,
-  T_GO_COMPLEX64,
-  T_GO_COMPLEX128,
-*/
-
-/*
-("int"),("bool"),("int8"),("byte"),("rune"),("uint"),
-("uint8"),("int16"),("int32"),("int64"),("error"),("uint16"),
-("uint32"),("uint64"),("string"),("float32"),("float64"),("uintptr"),
-("complex64"),("complex128"),
-*/
-
 namespace CPlusPlus {
 
 static inline int golangTypes3(const char *s) {
-  if (s[0] == 'i') {
+  if (s[0] == 'a') {
+    if (s[1] == 'n') {
+      if (s[2] == 'y') {
+        return T_GO_ANY;
+      }
+    }
+  }
+  else if (s[0] == 'i') {
     if (s[1] == 'n') {
       if (s[2] == 't') {
         return T_GO_INT;
@@ -247,7 +223,20 @@ static inline int golangTypes10(const char *s) {
     if (s[1] == 'o') {
       if (s[2] == 'm') {
         if (s[3] == 'p') {
-          if (s[4] == 'l') {
+          if (s[4] == 'a') {
+            if (s[5] == 'r') {
+              if (s[6] == 'a') {
+                if (s[7] == 'b') {
+                  if (s[8] == 'l') {
+                    if (s[9] == 'e') {
+                      return T_GO_COMPARABLE;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          else if (s[4] == 'l') {
             if (s[5] == 'e') {
               if (s[6] == 'x') {
                 if (s[7] == '1') {
@@ -280,5 +269,4 @@ int Lexer::golangTypes(const char *s, int n) {
   } // switch
 }
 
-
-} //namespace CPlusPlus
+}
