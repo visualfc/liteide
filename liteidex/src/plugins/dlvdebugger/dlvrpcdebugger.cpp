@@ -388,10 +388,10 @@ void DlvRpcDebugger::removeAllWatch()
     m_watchModel->removeRows(0,m_watchModel->rowCount());
 }
 
-void DlvRpcDebugger::showFrame(QModelIndex index)
+void DlvRpcDebugger::gotoFileByIndex(const QStandardItemModel *model, QModelIndex index, int ifile, int iline)
 {
-    QStandardItem* file = m_framesModel->item( index.row(), 3 );
-    QStandardItem* line = m_framesModel->item( index.row(), 4 );
+    QStandardItem* file = model->item( index.row(), ifile );
+    QStandardItem* line = model->item( index.row(), iline );
     if( !file || !line ) {
         return;
     }
@@ -407,7 +407,10 @@ void DlvRpcDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE ty
 {
     switch (type) {
     case LiteApi::FRAMES_MODEL:
-        showFrame(index);
+        gotoFileByIndex(m_framesModel,index,3,4);
+        break;
+    case LiteApi::THREADS_MODEL:
+        gotoFileByIndex(m_threadsModel,index,4,5);
         break;
     default:
         break;

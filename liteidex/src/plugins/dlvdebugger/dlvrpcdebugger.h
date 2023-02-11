@@ -114,7 +114,7 @@ public:
     virtual void removeWatch(const QString &value);
     virtual void removeAllWatch();
     virtual void dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type);
-    void showFrame(QModelIndex index);
+    void gotoFileByIndex(const QStandardItemModel *model, QModelIndex index, int file, int line);
 protected:
     void insertBreakPointHelper(const QString &fileName, int line, bool force);
     void removeBreakPointHelper(const QString &fileName, int line, bool force);
