@@ -146,6 +146,14 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
    // m_asynJsonItem->setText("stop");
     //m_libraryModel->appendRow(m_asynJsonItem);
 
+    m_asmModel = new QStandardItemModel(0,6,this);
+    m_asmModel->setHeaderData(0,Qt::Horizontal,"State");
+    m_asmModel->setHeaderData(1,Qt::Horizontal,"Address");
+    m_asmModel->setHeaderData(2,Qt::Horizontal,"Bytes");
+    m_asmModel->setHeaderData(3,Qt::Horizontal,"Text");
+    m_asmModel->setHeaderData(4,Qt::Horizontal,"File");
+    m_asmModel->setHeaderData(5,Qt::Horizontal,"Line");
+
     m_dlvInit = false;
     m_dlvExit = false;
     m_readDataBusy = false;
@@ -209,6 +217,8 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_threadsModel;
     } else if (type == LiteApi::REGS_MODEL) {
         return m_registersModel;
+    } else if (type == LiteApi::ASM_MODEL) {
+        return m_asmModel;
     }
     return 0;
 }
@@ -669,6 +679,7 @@ void DlvRpcDebugger::clear()
     m_goroutinesModel->removeRows(0,m_goroutinesModel->rowCount());
     m_varsModel->removeRows(0,m_varsModel->rowCount());
     m_watchModel->removeRows(0,m_watchModel->rowCount());
+    m_asmModel->removeRows(0,m_asmModel->rowCount());
 }
 
 void DlvRpcDebugger::initDebug()
@@ -953,6 +964,7 @@ void DlvRpcDebugger::readStdOutput()
             updateThreads(state.Threads);
             updateGoroutines();
             updateRegisters(state.pCurrentThread->ID,true);
+            updateAsm(id,state.pCurrentThread->PC);
         }
     }
 
@@ -1138,6 +1150,37 @@ void DlvRpcDebugger::updateGoroutines()
         appendLocationRoot(m_goroutinesModel,item,g.UserCurrentLoc);
     }
     emit endUpdateModel(LiteApi::GOROUTINES_MODEL);
+}
+
+void DlvRpcDebugger::updateAsm(int id, quint64 pc)
+{
+    QList<AsmInstruction> asms = m_dlvClient->DisassemblePC(EvalScope(id),pc,GoFlavour);
+    emit beginUpdateModel(LiteApi::ASM_MODEL);
+    m_asmModel->removeRows(0,m_asmModel->rowCount());
+    QModelIndex at;
+    foreach(AsmInstruction a, asms) {
+        QString head;
+        if (a.AtPC) {
+            head = "=>";
+        }
+        if (a.Breakpoint) {
+            head += "*";
+        }
+        QStandardItem *item = new QStandardItem(head);
+        QStandardItem *file = new QStandardItem(a.Loc.File);
+        QStandardItem *line = new QStandardItem(QString("%1").arg(a.Loc.Line));
+        QStandardItem *pc = new QStandardItem(QString("0x%1").arg(a.Loc.PC,0,16));
+        QStandardItem *inst = new QStandardItem(QString(a.Bytes.toHex()));
+        QStandardItem *text = new QStandardItem(a.Text);
+        m_asmModel->appendRow(QList<QStandardItem*>() << item << pc << inst << text << file << line);
+        if (a.AtPC) {
+            at = m_asmModel->indexFromItem(item);
+        }
+    }
+    emit endUpdateModel(LiteApi::ASM_MODEL);
+    if (at.isValid()) {
+        emit scrollTo(LiteApi::ASM_MODEL, at);
+    }
 }
 
 void DlvRpcDebugger::updateRegisters(int threadid, bool includeFp)

@@ -1839,7 +1839,8 @@ struct FindLocationOut : public JsonDataOut
 enum AssemblyFlavour
 {
     GNUFlavour = 0,
-    IntelFlavour = 1
+    IntelFlavour = 1,
+    GoFlavour = 2
 };
 
 /*

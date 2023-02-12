@@ -37,6 +37,7 @@
 #include <QAction>
 #include <QInputDialog>
 #include <QItemDelegate>
+#include <QDebug>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -96,10 +97,12 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_framesView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_threadsView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_goroutinesView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_asmView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #else
     m_framesView->header()->setResizeMode(QHeaderView::ResizeToContents);
     m_threadsView->header()->setResizeMode(QHeaderView::ResizeToContents);
     m_goroutinesView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_asmView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
 
     m_libraryView->setEditTriggers(0);
@@ -249,6 +252,7 @@ void DebugWidget::setDebugger(LiteApi::IDebugger *debug)
     connect(m_debugger,SIGNAL(watchRemoved(QString)),this,SLOT(watchRemoved(QString)));
     connect(m_debugger,SIGNAL(beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE)),this,SLOT(beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE)));
     connect(m_debugger,SIGNAL(endUpdateModel(LiteApi::DEBUG_MODEL_TYPE)),this,SLOT(endUpdateModel(LiteApi::DEBUG_MODEL_TYPE)));
+    connect(m_debugger,SIGNAL(scrollTo(LiteApi::DEBUG_MODEL_TYPE,QModelIndex)),this,SLOT(scrollTo(LiteApi::DEBUG_MODEL_TYPE,QModelIndex)));
 }
 
 void DebugWidget::expandedVarsView(QModelIndex index)
@@ -261,18 +265,16 @@ void DebugWidget::expandedVarsView(QModelIndex index)
     }
     m_debugger->expandItem(index,LiteApi::VARS_MODEL);
 }
-void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded)
+
+QTreeView* DebugWidget::viewForType(LiteApi::DEBUG_MODEL_TYPE type)
 {
-    if (!index.isValid()) {
-        return;
-    }
-    if (!m_debugger) {
-        return;
-    }
     QTreeView *view = 0;
     switch (type) {
     case LiteApi::VARS_MODEL:
         view = m_varsView;
+        break;
+    case LiteApi::WATCHES_MODEL:
+        view = m_watchView;
         break;
     case LiteApi::ASYNC_MODEL:
         view = m_asyncView;
@@ -295,10 +297,19 @@ void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &i
     case LiteApi::ASM_MODEL:
         view = m_asmView;
         break;
-    default:
-        view = 0;
     }
+    return view;
+}
 
+void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded)
+{
+    if (!index.isValid()) {
+        return;
+    }
+    if (!m_debugger) {
+        return;
+    }
+    QTreeView *view = viewForType(type);
     if (view) {
         view->setExpanded(index,expanded);
     }
@@ -430,5 +441,13 @@ void DebugWidget::endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
         m_watchView->loadState(m_watchView->model(),&m_watchState);
     } else if (type == LiteApi::GOROUTINES_MODEL) {
         m_goroutinesView->loadState(m_goroutinesView->model(),&m_goroutinesState);
+    }
+}
+
+void DebugWidget::scrollTo(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index)
+{
+    QTreeView *view = viewForType(type);
+    if (view) {
+        view->scrollTo(index,QAbstractItemView::EnsureVisible);
     }
 }

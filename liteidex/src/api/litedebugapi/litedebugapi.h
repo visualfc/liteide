@@ -97,6 +97,7 @@ signals:
     void watchRemoved(const QString &watch);
     void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
     void endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
+    void scrollTo(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index);
 };
 
 class IDebuggerManager : public IManager

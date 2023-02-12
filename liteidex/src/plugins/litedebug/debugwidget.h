@@ -42,6 +42,7 @@ public:
     virtual ~DebugWidget();
     virtual QWidget *widget();
     void updateView(QTreeView *view, LiteApi::IDebugger *debug, LiteApi::DEBUG_MODEL_TYPE type, const QString &title);
+    QTreeView *viewForType(LiteApi::DEBUG_MODEL_TYPE type);
 signals:
     void debugCmdInput();
 public slots:
@@ -63,6 +64,7 @@ public slots:
     void dbclickView(QModelIndex);
     void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
     void endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
+    void scrollTo(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index);
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;

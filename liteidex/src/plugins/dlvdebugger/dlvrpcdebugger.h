@@ -124,6 +124,7 @@ protected:
     void updateStackframe(int id);
     void updateThreads(const QList<Thread> &ths);
     void updateGoroutines();
+    void updateAsm(int id, quint64 pc);
     void updateRegisters(int threadid, bool includeFp);
     void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 public slots:
@@ -166,6 +167,7 @@ protected:
     QStandardItemModel *m_threadsModel;
     QStandardItemModel *m_goroutinesModel;
     QStandardItemModel *m_registersModel;
+    QStandardItemModel *m_asmModel;
     QStandardItem   *m_asyncItem;
     QStandardItem   *m_varsItem;
     QMap<QString,QString> m_checkVarsMap;
