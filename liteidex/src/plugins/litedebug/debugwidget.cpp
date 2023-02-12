@@ -93,8 +93,12 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_framesView->setEditTriggers(0);
 #if QT_VERSION >= 0x050000
     m_framesView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_threadsView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_goroutinesView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #else
     m_statckView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_threadsView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_goroutinesView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
 
     m_libraryView->setEditTriggers(0);
