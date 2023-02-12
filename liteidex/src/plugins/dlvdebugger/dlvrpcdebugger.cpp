@@ -132,7 +132,7 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_threadsModel = new QStandardItemModel(0,6,this);
     m_threadsModel->setHeaderData(0,Qt::Horizontal,"Thread");
     m_threadsModel->setHeaderData(1,Qt::Horizontal,"Goroutine");
-    m_threadsModel->setHeaderData(2,Qt::Horizontal,"PC");
+    m_threadsModel->setHeaderData(2,Qt::Horizontal,"Address");
     m_threadsModel->setHeaderData(3,Qt::Horizontal,"Function");
     m_threadsModel->setHeaderData(4,Qt::Horizontal,"File");
     m_threadsModel->setHeaderData(5,Qt::Horizontal,"Line");
@@ -1027,7 +1027,7 @@ void DlvRpcDebugger::updateStackframe(int id)
     foreach(Stackframe f, frames) {
         QList<QStandardItem*> items;
         items << new QStandardItem(QString("%1").arg(index));
-        items << new QStandardItem(QString("0x%1").arg(qulonglong(f.PC),16,16,QLatin1Char('0')));
+        items << new QStandardItem(QString("0x%1").arg(f.PC,0,16));
         if (f.pFunction) {
             items << new QStandardItem(f.pFunction->Name);
         } else {
