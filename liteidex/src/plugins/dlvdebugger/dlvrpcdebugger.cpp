@@ -393,13 +393,13 @@ void DlvRpcDebugger::removeAllWatch()
 
 void DlvRpcDebugger::gotoFileByIndex(const QStandardItemModel *model, QModelIndex index, int ifile, int iline)
 {
-    QStandardItem* file = model->item( index.row(), ifile );
-    QStandardItem* line = model->item( index.row(), iline );
-    if( !file || !line ) {
+    QVariant file = index.siblingAtColumn(ifile).data();
+    QVariant line = index.siblingAtColumn(iline).data();
+    if( !file.isValid() || !line.isValid() ) {
         return;
     }
-    QString filename = file->text();
-    int lineno = line->text().toInt();
+    QString filename = file.toString();
+    int lineno = line.toInt();
     if( lineno <= 0 ) {
         return;
     }
@@ -416,6 +416,7 @@ void DlvRpcDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE ty
         gotoFileByIndex(m_threadsModel,index,4,5);
         break;
     case LiteApi::GOROUTINES_MODEL:
+        gotoFileByIndex(m_goroutinesModel,index,3,4);
         break;
     default:
         break;
