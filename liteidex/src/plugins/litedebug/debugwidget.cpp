@@ -82,6 +82,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_goroutinesView = new SymbolTreeView(false);
     m_threadsView = new QTreeView;
     m_regsView = new QTreeView;
+    m_asmView = new QTreeView;
 
     m_asyncView->setEditTriggers(0);
     m_varsView->setEditTriggers(0);
@@ -105,6 +106,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_threadsView->setEditTriggers(0);
     m_goroutinesView->setEditTriggers(0);
     m_regsView->setEditTriggers(0);
+    m_asmView->setEditTriggers(0);
 
     m_watchView->setEditTriggers(QAbstractItemView::DoubleClicked);
     m_watchView->setItemDelegate(new WatchDelegate(this));
@@ -148,6 +150,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     connect(m_goroutinesView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
     connect(m_regsView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
     connect(m_libraryView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_asmView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
 }
 
 DebugWidget::~DebugWidget()
@@ -160,6 +163,7 @@ DebugWidget::~DebugWidget()
     delete m_goroutinesView;
     delete m_regsView;
     delete m_libraryView;
+    delete m_asmView;
 
     if (m_widget) {
         delete m_widget;
@@ -237,6 +241,7 @@ void DebugWidget::setDebugger(LiteApi::IDebugger *debug)
     updateView(m_goroutinesView,debug,LiteApi::GOROUTINES_MODEL,tr("Goroutines"));
     updateView(m_regsView,debug,LiteApi::REGS_MODEL,tr("Registers"));
     updateView(m_libraryView,debug,LiteApi::LIBRARY_MODEL,tr("Libraries"));
+    updateView(m_asmView,debug,LiteApi::ASM_MODEL,tr("Disassemble"));
     m_tabWidget->addTab(m_debugLogEdit,tr("Console"));
 
     connect(m_debugger,SIGNAL(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)),this,SLOT(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)));
@@ -286,6 +291,9 @@ void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &i
         break;
     case LiteApi::LIBRARY_MODEL:
         view = m_libraryView;
+        break;
+    case LiteApi::ASM_MODEL:
+        view = m_asmView;
         break;
     default:
         view = 0;
@@ -398,6 +406,8 @@ void DebugWidget::dbclickView(QModelIndex index)
         m_debugger->dbclickItem(index,LiteApi::REGS_MODEL);
     } else if (view == m_goroutinesView) {
         m_debugger->dbclickItem(index,LiteApi::GOROUTINES_MODEL);
+    } else if (view == m_asmView) {
+        m_debugger->dbclickItem(index,LiteApi::ASM_MODEL);
     }
 }
 

@@ -75,6 +75,7 @@ protected:
     QTreeView *m_libraryView;
     QTreeView *m_threadsView;
     QTreeView *m_regsView;
+    QTreeView *m_asmView;
     SymbolTreeView *m_goroutinesView;
     SymbolTreeState m_varsState;
     SymbolTreeState m_watchState;
