@@ -3,13 +3,20 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
-### 2023.02.12 Ver X38.2
+### 2023.02.14 Ver X38.2
 * LiteIDE
     * fix and update gotools & gocode
     * refactor astview outline
+    * update debugger plugin
 * GolangAst
     * new outline view by pos
     * support typeparams
+* LiteDebug
+    * add disassemble view
+* DlvDebugger
+    * fix generics func sync
+    * refactor gorountines model
+    * support disassemble model
 * LiteBuild
     * gosrc.xml TARGETNAME use BUILD_DIR_PATH
 * GolangEdit
