@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>462</width>
+    <width>473</width>
     <height>213</height>
    </rect>
   </property>
@@ -17,9 +17,16 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>delve debug pass flags: (example --check-go-version=false)</string>
+      <string>Delve Pass Flags</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>example --check-go-version=false</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLineEdit" name="flagsLineEdit"/>
       </item>

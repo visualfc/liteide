@@ -602,18 +602,20 @@ void DlvRpcDebugger::handleResponse(const QByteArray &buff)
     //> qlang.io/qlang%2espec%2ev1.Import()
     //> main.main() goapi/_test/_testmain.go:50 (hits goroutine(1):1 total:1) (PC: 0x4011ca)
     //> [bk3711824616] main.test[go.shape.int_0]() ./main.go:9 (hits goroutine(1):1 total:1) (PC: 0x10b2be2)
+    //> [bk1584098684] main.(*My[go.shape.int]).Test1() c:/dev/demo/main.go:16 (hits goroutine(1):1 total:1) (PC: 0x4daa88)
     if (buff.contains("> ")) {
         // [bk] main.test[shape]() file:line
-        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\%\\*\\(\\)\\/]+)(\\[[\\w\\d_\\.]+\\])?\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_@\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
+        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\%\\*\\[\\]\\(\\)\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_@\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
+
         int n = reg.indexIn(QString::fromUtf8(buff));
         if (n < 0) {
             return;
         }
-        QString fileName = reg.cap(4);
+        QString fileName = reg.cap(3);
         if (fileName.startsWith("./")) {
             fileName = QDir::cleanPath(m_process->workingDirectory()+"/"+fileName);
         }
-        QString line = reg.cap(5);
+        QString line = reg.cap(4);
 
         if (!fileName.isEmpty() && !line.isEmpty()) {
             bool ok = false;
@@ -629,13 +631,13 @@ void DlvRpcDebugger::handleResponse(const QByteArray &buff)
 
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("stopped");
-        QString func = reg.cap(2).trimmed()+reg.cap(3).trimmed();
+        QString func = reg.cap(2).trimmed();
         //hack
         if (func.contains("%")) {
             func.replace("%2e",".");
         }
-        QString hits = reg.cap(6).trimmed();
-        QString pc = reg.cap(7).trimmed();
+        QString hits = reg.cap(5).trimmed();
+        QString pc = reg.cap(6).trimmed();
         int pos = pc.indexOf('\n');
         if (pos != -1) {
             pc.truncate(pos);
