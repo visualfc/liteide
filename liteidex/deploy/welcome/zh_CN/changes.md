@@ -7,7 +7,7 @@
 * LiteIDE
     * fix and update gotools & gocode
     * refactor astview outline
-    * update debugger plugin
+    * update dlv debugger plugin
 * GolangAst
     * new outline view by pos
     * support typeparams
@@ -15,6 +15,7 @@
     * add disassemble view
 * DlvDebugger
     * fix generics func sync
+    * fix dlv process exit on windows
     * refactor gorountines model
     * support disassemble model
 * LiteBuild
