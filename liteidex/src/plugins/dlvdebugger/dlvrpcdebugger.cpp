@@ -1154,7 +1154,8 @@ void DlvRpcDebugger::updateGoroutines()
 
 void DlvRpcDebugger::updateAsm(int id, quint64 pc)
 {
-    QList<AsmInstruction> asms = m_dlvClient->DisassemblePC(EvalScope(id),pc,GoFlavour);
+    int flag = m_liteApp->settings()->value(DLVDEBUGGER_ASMSYNTAX,2).toInt();
+    QList<AsmInstruction> asms = m_dlvClient->DisassemblePC(EvalScope(id),pc,AssemblyFlavour(flag));
     emit beginUpdateModel(LiteApi::ASM_MODEL);
     m_asmModel->removeRows(0,m_asmModel->rowCount());
     QModelIndex at;

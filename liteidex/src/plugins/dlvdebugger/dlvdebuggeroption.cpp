@@ -67,9 +67,20 @@ QString DlvDebuggerOption::mimeType() const
 void DlvDebuggerOption::load()
 {
     ui->flagsLineEdit->setText(m_liteApp->settings()->value(DLVDEBUGGER_EXTFLAGS,"").toString());
+    int id = m_liteApp->settings()->value(DLVDEBUGGER_ASMSYNTAX,2).toInt();
+    if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
+        ui->buttonGroup->buttons().at(id)->setChecked(true);
+    }
 }
 
 void DlvDebuggerOption::save()
 {
     m_liteApp->settings()->setValue(DLVDEBUGGER_EXTFLAGS,ui->flagsLineEdit->text());
+    int size = ui->buttonGroup->buttons().size();
+    for (int i = 0; i < size; i++) {
+        if (ui->buttonGroup->buttons().at(i)->isChecked()) {
+            m_liteApp->settings()->setValue(DLVDEBUGGER_ASMSYNTAX,i);
+            break;
+        }
+    }
 }

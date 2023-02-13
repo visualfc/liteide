@@ -34,5 +34,6 @@
 
 #define OPTION_DLVDEBUGGER "option/dlvdebugger"
 #define DLVDEBUGGER_EXTFLAGS "dlvdebugger/extflags"
+#define DLVDEBUGGER_ASMSYNTAX "dlvdebugger/asmsyntax"
 
 #endif // DLVDEBUGGER_GLOBAL_H
