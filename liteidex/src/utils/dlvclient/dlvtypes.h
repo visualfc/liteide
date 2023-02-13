@@ -542,6 +542,28 @@ type Goroutine struct {
     ThreadID int `json:"threadID"`
 }
 
+// internal G structure.
+type Goroutine struct {
+    // ID is a unique identifier for the goroutine.
+    ID int64 `json:"id"`
+    // Current location of the goroutine
+    CurrentLoc Location `json:"currentLoc"`
+    // Current location of the goroutine, excluding calls inside runtime
+    UserCurrentLoc Location `json:"userCurrentLoc"`
+    // Location of the go instruction that started this goroutine
+    GoStatementLoc Location `json:"goStatementLoc"`
+    // Location of the starting function
+    StartLoc Location `json:"startLoc"`
+    // ID of the associated thread for running goroutines
+    ThreadID   int    `json:"threadID"`
+    Status     uint64 `json:"status"`
+    WaitSince  int64  `json:"waitSince"`
+    WaitReason int64  `json:"waitReason"`
+    Unreadable string `json:"unreadable"`
+    // Goroutine's pprof labels
+    Labels map[string]string `json:"labels,omitempty"`
+}
+
 
 // Informations about the current breakpoint
 type BreakpointInfo struct {
@@ -566,15 +588,67 @@ struct Goroutine
         CurrentLoc.fromMap(map["currentLoc"].toMap());
         UserCurrentLoc.fromMap(map["userCurrentLoc"].toMap());
         GoStatementLoc.fromMap(map["goStatementLoc"].toMap());
+        StartLoc.fromMap(map["startLoc"].toMap());
         ThreadId = map["threadID"].toInt();
+        Status = map["status"].value<quint64>();
+        WaitSince = map["waitSince"].value<qint64>();
+        WaitReason = map["waitReason"].value<qint64>();
+        Unreadable = map["unreadable"].toString();
+        QVariantMap m = map["labels"].toMap();
+        QMapIterator<QString,QVariant> im(m);
+        while(im.hasNext()) {
+            Labels.insert(im.key(),im.value().toString());
+        }
     }
     int ID;
-    Location CurrentLoc;
-    Location UserCurrentLoc;
-    Location GoStatementLoc;
+    Location CurrentLoc;  // Runtime
+    Location UserCurrentLoc; // User
+    Location GoStatementLoc; // Go
+    Location StartLoc; // Start
     int ThreadId;
+    quint64 Status;
+    qint64 WaitSince;
+    qint64 WaitReason;
+    QString Unreadable;
+    QMap<QString,QString> Labels;
 };
 typedef QSharedPointer<Goroutine> GoroutinePointer;
+
+inline QString waitReason(int reason) {
+    static QString waitReasonStrings[] = {
+        "",
+        "GC assist marking",
+        "IO wait",
+        "chan receive (nil chan)",
+        "chan send (nil chan)",
+        "dumping heap",
+        "garbage collection",
+        "garbage collection scan",
+        "panicwait",
+        "select",
+        "select (no cases)",
+        "GC assist wait",
+        "GC sweep wait",
+        "GC scavenge wait",
+        "chan receive",
+        "chan send",
+        "finalizer wait",
+        "force gc (idle)",
+        "semacquire",
+        "sleep",
+        "sync.Cond.Wait",
+        "timer goroutine (idle)",
+        "trace reader (blocked)",
+        "wait for GC cycle",
+        "GC worker (idle)",
+        "preempted",
+        "debug call",
+    };
+    if (size_t(reason) < sizeof(waitReasonStrings)/sizeof(waitReasonStrings[0])) {
+        return waitReasonStrings[reason];
+    }
+    return QString("unknown wait reason %1").arg(reason);
+}
 
 
 struct BreakpointInfo
@@ -1765,7 +1839,8 @@ struct FindLocationOut : public JsonDataOut
 enum AssemblyFlavour
 {
     GNUFlavour = 0,
-    IntelFlavour = 1
+    IntelFlavour = 1,
+    GoFlavour = 2
 };
 
 /*

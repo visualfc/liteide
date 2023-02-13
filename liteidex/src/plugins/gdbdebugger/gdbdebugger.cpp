@@ -157,7 +157,7 @@ QAbstractItemModel *GdbDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_varsModel;
     } else if (type == LiteApi::WATCHES_MODEL) {
         return m_watchModel;
-    }else if (type == LiteApi::CALLSTACK_MODEL) {
+    }else if (type == LiteApi::FRAMES_MODEL) {
         return m_framesModel;
     } else if (type == LiteApi::LIBRARY_MODEL) {
         return m_libraryModel;
@@ -375,7 +375,12 @@ void GdbDebugger::showFrame(QModelIndex index)
     if( lineno <= 0 ) {
         return;
     }
-    emit setFrameLine(filename, lineno - 1 );
+    emit gotoLine(filename, lineno - 1 );
+}
+
+void GdbDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
+{
+
 }
 
 void GdbDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)

@@ -113,7 +113,8 @@ public:
     virtual void createWatch(const QString &var);
     virtual void removeWatch(const QString &value);
     virtual void removeAllWatch();
-    virtual void showFrame(QModelIndex index);
+    virtual void dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type);
+    void gotoFileByIndex(const QStandardItemModel *model, QModelIndex index, int file, int line);
 protected:
     void insertBreakPointHelper(const QString &fileName, int line, bool force);
     void removeBreakPointHelper(const QString &fileName, int line, bool force);
@@ -123,6 +124,7 @@ protected:
     void updateStackframe(int id);
     void updateThreads(const QList<Thread> &ths);
     void updateGoroutines();
+    void updateAsm(int id, quint64 pc);
     void updateRegisters(int threadid, bool includeFp);
     void updateVariableHelper(const QList<Variable> &vars, QStandardItemModel *model, QStandardItem *parent, const QString &parentName, int flag, QMap<QString,QString> &saveMap, const QMap<QString,QString> &checkMap);
 public slots:
@@ -165,6 +167,7 @@ protected:
     QStandardItemModel *m_threadsModel;
     QStandardItemModel *m_goroutinesModel;
     QStandardItemModel *m_registersModel;
+    QStandardItemModel *m_asmModel;
     QStandardItem   *m_asyncItem;
     QStandardItem   *m_varsItem;
     QMap<QString,QString> m_checkVarsMap;

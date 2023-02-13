@@ -95,7 +95,8 @@ public:
     virtual void createWatch(const QString &var);
     virtual void removeWatch(const QString &value);
     virtual void removeAllWatch();
-    virtual void showFrame(QModelIndex index);
+    virtual void dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type);
+    void showFrame(QModelIndex index);
 protected:
     void insertBreakPointHelper(const QString &fileName, int line, bool force);
     void command_helper(const QByteArray &cmd, bool force);

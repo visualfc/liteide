@@ -42,6 +42,7 @@ public:
     virtual ~DebugWidget();
     virtual QWidget *widget();
     void updateView(QTreeView *view, LiteApi::IDebugger *debug, LiteApi::DEBUG_MODEL_TYPE type, const QString &title);
+    QTreeView *viewForType(LiteApi::DEBUG_MODEL_TYPE type);
 signals:
     void debugCmdInput();
 public slots:
@@ -60,9 +61,10 @@ public slots:
     void setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded);
     void watchCreated(QString,QString);
     void watchRemoved(QString);
-    void doubleClickedStack(QModelIndex);
+    void dbclickView(QModelIndex);
     void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
     void endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
+    void scrollTo(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index);
 protected:
     LiteApi::IApplication *m_liteApp;
     QWidget *m_widget;
@@ -71,10 +73,11 @@ protected:
     QTreeView *m_asyncView;
     SymbolTreeView *m_varsView;
     SymbolTreeView *m_watchView;
-    QTreeView *m_statckView;
+    QTreeView *m_framesView;
     QTreeView *m_libraryView;
     QTreeView *m_threadsView;
     QTreeView *m_regsView;
+    QTreeView *m_asmView;
     SymbolTreeView *m_goroutinesView;
     SymbolTreeState m_varsState;
     SymbolTreeState m_watchState;

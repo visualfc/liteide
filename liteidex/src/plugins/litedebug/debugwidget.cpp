@@ -37,6 +37,7 @@
 #include <QAction>
 #include <QInputDialog>
 #include <QItemDelegate>
+#include <QDebug>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -77,11 +78,12 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_asyncView = new QTreeView;
     m_varsView = new SymbolTreeView(false);
     m_watchView = new SymbolTreeView(false);
-    m_statckView = new QTreeView;
+    m_framesView = new QTreeView;
     m_libraryView = new QTreeView;
     m_goroutinesView = new SymbolTreeView(false);
     m_threadsView = new QTreeView;
     m_regsView = new QTreeView;
+    m_asmView = new QTreeView;
 
     m_asyncView->setEditTriggers(0);
     m_varsView->setEditTriggers(0);
@@ -90,17 +92,24 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_watchView->setEditTriggers(0);
     m_watchView->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    m_statckView->setEditTriggers(0);
+    m_framesView->setEditTriggers(0);
 #if QT_VERSION >= 0x050000
-    m_statckView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_framesView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_threadsView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_goroutinesView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_asmView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #else
-    m_statckView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_framesView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_threadsView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_goroutinesView->header()->setResizeMode(QHeaderView::ResizeToContents);
+    m_asmView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
 
     m_libraryView->setEditTriggers(0);
     m_threadsView->setEditTriggers(0);
     m_goroutinesView->setEditTriggers(0);
     m_regsView->setEditTriggers(0);
+    m_asmView->setEditTriggers(0);
 
     m_watchView->setEditTriggers(QAbstractItemView::DoubleClicked);
     m_watchView->setItemDelegate(new WatchDelegate(this));
@@ -136,7 +145,15 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     //connect(m_addLocalWatchAct,SIGNAL(triggered()),this,SLOT(addLocalWatch()));
     connect(m_removeWatchAct,SIGNAL(triggered()),this,SLOT(removeWatch()));
     connect(m_removeAllWatchAct,SIGNAL(triggered()),this,SLOT(removeAllWatchAct()));
-    connect(m_statckView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedStack(QModelIndex)));
+    connect(m_asyncView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_watchView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_varsView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_framesView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_threadsView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_goroutinesView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_regsView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_libraryView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
+    connect(m_asmView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(dbclickView(QModelIndex)));
 }
 
 DebugWidget::~DebugWidget()
@@ -144,11 +161,12 @@ DebugWidget::~DebugWidget()
     delete m_asyncView;
     delete m_varsView;
     delete m_watchView;
-    delete m_statckView;
+    delete m_framesView;
     delete m_threadsView;
     delete m_goroutinesView;
     delete m_regsView;
     delete m_libraryView;
+    delete m_asmView;
 
     if (m_widget) {
         delete m_widget;
@@ -221,11 +239,12 @@ void DebugWidget::setDebugger(LiteApi::IDebugger *debug)
     updateView(m_asyncView,debug,LiteApi::ASYNC_MODEL,tr("Async Record"));
     updateView(m_varsView,debug,LiteApi::VARS_MODEL,tr("Variables"));
     updateView(m_watchView,debug,LiteApi::WATCHES_MODEL,tr("Watch"));
-    updateView(m_statckView,debug,LiteApi::CALLSTACK_MODEL,tr("Call Stack"));
+    updateView(m_framesView,debug,LiteApi::FRAMES_MODEL,tr("Call Stack"));
     updateView(m_threadsView,debug,LiteApi::THREADS_MODEL,tr("Threads"));
     updateView(m_goroutinesView,debug,LiteApi::GOROUTINES_MODEL,tr("Goroutines"));
     updateView(m_regsView,debug,LiteApi::REGS_MODEL,tr("Registers"));
     updateView(m_libraryView,debug,LiteApi::LIBRARY_MODEL,tr("Libraries"));
+    updateView(m_asmView,debug,LiteApi::ASM_MODEL,tr("Disassemble"));
     m_tabWidget->addTab(m_debugLogEdit,tr("Console"));
 
     connect(m_debugger,SIGNAL(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)),this,SLOT(setExpand(LiteApi::DEBUG_MODEL_TYPE,QModelIndex,bool)));
@@ -233,6 +252,7 @@ void DebugWidget::setDebugger(LiteApi::IDebugger *debug)
     connect(m_debugger,SIGNAL(watchRemoved(QString)),this,SLOT(watchRemoved(QString)));
     connect(m_debugger,SIGNAL(beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE)),this,SLOT(beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE)));
     connect(m_debugger,SIGNAL(endUpdateModel(LiteApi::DEBUG_MODEL_TYPE)),this,SLOT(endUpdateModel(LiteApi::DEBUG_MODEL_TYPE)));
+    connect(m_debugger,SIGNAL(scrollTo(LiteApi::DEBUG_MODEL_TYPE,QModelIndex)),this,SLOT(scrollTo(LiteApi::DEBUG_MODEL_TYPE,QModelIndex)));
 }
 
 void DebugWidget::expandedVarsView(QModelIndex index)
@@ -245,24 +265,22 @@ void DebugWidget::expandedVarsView(QModelIndex index)
     }
     m_debugger->expandItem(index,LiteApi::VARS_MODEL);
 }
-void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded)
+
+QTreeView* DebugWidget::viewForType(LiteApi::DEBUG_MODEL_TYPE type)
 {
-    if (!index.isValid()) {
-        return;
-    }
-    if (!m_debugger) {
-        return;
-    }
     QTreeView *view = 0;
     switch (type) {
     case LiteApi::VARS_MODEL:
         view = m_varsView;
         break;
+    case LiteApi::WATCHES_MODEL:
+        view = m_watchView;
+        break;
     case LiteApi::ASYNC_MODEL:
         view = m_asyncView;
         break;
-    case LiteApi::CALLSTACK_MODEL:
-        view = m_statckView;
+    case LiteApi::FRAMES_MODEL:
+        view = m_framesView;
         break;
     case LiteApi::THREADS_MODEL:
         view = m_threadsView;
@@ -276,10 +294,22 @@ void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &i
     case LiteApi::LIBRARY_MODEL:
         view = m_libraryView;
         break;
-    default:
-        view = 0;
+    case LiteApi::ASM_MODEL:
+        view = m_asmView;
+        break;
     }
+    return view;
+}
 
+void DebugWidget::setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded)
+{
+    if (!index.isValid()) {
+        return;
+    }
+    if (!m_debugger) {
+        return;
+    }
+    QTreeView *view = viewForType(type);
     if (view) {
         view->setExpanded(index,expanded);
     }
@@ -362,7 +392,7 @@ void DebugWidget::setInputFocus()
     m_debugLogEdit->setFocus();
 }
 
-void DebugWidget::doubleClickedStack(QModelIndex index)
+void DebugWidget::dbclickView(QModelIndex index)
 {
     if (!index.isValid()) {
         return;
@@ -370,7 +400,26 @@ void DebugWidget::doubleClickedStack(QModelIndex index)
     if (!m_debugger) {
         return;
     }
-    m_debugger->showFrame(index);
+    QTreeView *view = (QTreeView*)sender();
+    if (view == m_asyncView) {
+        m_debugger->dbclickItem(index,LiteApi::ASYNC_MODEL);
+    } else if (view == m_varsView) {
+        m_debugger->dbclickItem(index,LiteApi::VARS_MODEL);
+    } else if (view == m_watchView) {
+        m_debugger->dbclickItem(index,LiteApi::WATCHES_MODEL);
+    } else if (view == m_framesView) {
+        m_debugger->dbclickItem(index,LiteApi::FRAMES_MODEL);
+    } else if (view == m_threadsView) {
+        m_debugger->dbclickItem(index,LiteApi::THREADS_MODEL);
+    } else if (view == m_libraryView) {
+        m_debugger->dbclickItem(index,LiteApi::LIBRARY_MODEL);
+    } else if (view == m_regsView) {
+        m_debugger->dbclickItem(index,LiteApi::REGS_MODEL);
+    } else if (view == m_goroutinesView) {
+        m_debugger->dbclickItem(index,LiteApi::GOROUTINES_MODEL);
+    } else if (view == m_asmView) {
+        m_debugger->dbclickItem(index,LiteApi::ASM_MODEL);
+    }
 }
 
 void DebugWidget::beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
@@ -392,5 +441,13 @@ void DebugWidget::endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type)
         m_watchView->loadState(m_watchView->model(),&m_watchState);
     } else if (type == LiteApi::GOROUTINES_MODEL) {
         m_goroutinesView->loadState(m_goroutinesView->model(),&m_goroutinesState);
+    }
+}
+
+void DebugWidget::scrollTo(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index)
+{
+    QTreeView *view = viewForType(type);
+    if (view) {
+        view->scrollTo(index,QAbstractItemView::EnsureVisible);
     }
 }

@@ -176,7 +176,7 @@ QAbstractItemModel *DlvDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_varsModel;
     } else if (type == LiteApi::WATCHES_MODEL) {
         return m_watchModel;
-    }else if (type == LiteApi::CALLSTACK_MODEL) {
+    }else if (type == LiteApi::FRAMES_MODEL) {
         return m_framesModel;
     } else if (type == LiteApi::LIBRARY_MODEL) {
         return m_libraryModel;
@@ -396,7 +396,12 @@ void DlvDebugger::showFrame(QModelIndex index)
     if( lineno <= 0 ) {
         return;
     }
-    emit setFrameLine(filename, lineno - 1 );
+    emit gotoLine(filename, lineno - 1 );
+}
+
+void DlvDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
+{
+
 }
 
 void DlvDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)

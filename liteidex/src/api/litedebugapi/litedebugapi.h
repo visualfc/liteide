@@ -33,12 +33,13 @@ enum DEBUG_MODEL_TYPE{
     ASYNC_MODEL = 1,
     VARS_MODEL,
     WATCHES_MODEL,
-    CALLSTACK_MODEL,
+    FRAMES_MODEL,
     BREAKPOINTS_MODEL,
     THREADS_MODEL,
     LIBRARY_MODEL,
     GOROUTINES_MODEL,
-    REGS_MODEL
+    REGS_MODEL,
+    ASM_MODEL
 };
 
 enum DEBUG_LOG_TYPE {
@@ -83,7 +84,7 @@ public:
     virtual void createWatch(const QString &var) = 0;
     virtual void removeWatch(const QString &var) = 0;
     virtual void removeAllWatch() = 0;
-    virtual void showFrame(QModelIndex index) = 0;
+    virtual void dbclickItem(QModelIndex index, DEBUG_MODEL_TYPE type) = 0;
 signals:
     void debugStarted();
     void debugStoped();
@@ -91,11 +92,12 @@ signals:
     void debugLog(LiteApi::DEBUG_LOG_TYPE type, const QString &log);
     void setExpand(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index, bool expanded);
     void setCurrentLine(const QString &fileName, int line);
-    void setFrameLine(const QString &fileName, int line);
+    void gotoLine(const QString &fileName, int line);
     void watchCreated(const QString &watch,const QString &name);
     void watchRemoved(const QString &watch);
     void beginUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
     void endUpdateModel(LiteApi::DEBUG_MODEL_TYPE type);
+    void scrollTo(LiteApi::DEBUG_MODEL_TYPE type, const QModelIndex &index);
 };
 
 class IDebuggerManager : public IManager

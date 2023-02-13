@@ -122,14 +122,17 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_framesModel->setHeaderData(3,Qt::Horizontal,"File");
     m_framesModel->setHeaderData(4,Qt::Horizontal,"Line");
 
-    m_goroutinesModel = new QStandardItemModel(0,2,this);
+    m_goroutinesModel = new QStandardItemModel(0,5,this);
     m_goroutinesModel->setHeaderData(0,Qt::Horizontal,"Goroutine");
-    m_goroutinesModel->setHeaderData(1,Qt::Horizontal,"Value");
+    m_goroutinesModel->setHeaderData(1,Qt::Horizontal,"Address");
+    m_goroutinesModel->setHeaderData(2,Qt::Horizontal,"Function");
+    m_goroutinesModel->setHeaderData(3,Qt::Horizontal,"File");
+    m_goroutinesModel->setHeaderData(4,Qt::Horizontal,"Line");
 
     m_threadsModel = new QStandardItemModel(0,6,this);
     m_threadsModel->setHeaderData(0,Qt::Horizontal,"Thread");
     m_threadsModel->setHeaderData(1,Qt::Horizontal,"Goroutine");
-    m_threadsModel->setHeaderData(2,Qt::Horizontal,"PC");
+    m_threadsModel->setHeaderData(2,Qt::Horizontal,"Address");
     m_threadsModel->setHeaderData(3,Qt::Horizontal,"Function");
     m_threadsModel->setHeaderData(4,Qt::Horizontal,"File");
     m_threadsModel->setHeaderData(5,Qt::Horizontal,"Line");
@@ -142,6 +145,14 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
    // m_asynJsonItem = new QStandardItem(0,2);
    // m_asynJsonItem->setText("stop");
     //m_libraryModel->appendRow(m_asynJsonItem);
+
+    m_asmModel = new QStandardItemModel(0,6,this);
+    m_asmModel->setHeaderData(0,Qt::Horizontal,"State");
+    m_asmModel->setHeaderData(1,Qt::Horizontal,"Address");
+    m_asmModel->setHeaderData(2,Qt::Horizontal,"Bytes");
+    m_asmModel->setHeaderData(3,Qt::Horizontal,"Text");
+    m_asmModel->setHeaderData(4,Qt::Horizontal,"File");
+    m_asmModel->setHeaderData(5,Qt::Horizontal,"Line");
 
     m_dlvInit = false;
     m_dlvExit = false;
@@ -198,7 +209,7 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_varsModel;
     } else if (type == LiteApi::WATCHES_MODEL) {
         return m_watchModel;
-    }else if (type == LiteApi::CALLSTACK_MODEL) {
+    }else if (type == LiteApi::FRAMES_MODEL) {
         return m_framesModel;
     } else if (type == LiteApi::GOROUTINES_MODEL) {
         return m_goroutinesModel;
@@ -206,6 +217,8 @@ QAbstractItemModel *DlvRpcDebugger::debugModel(LiteApi::DEBUG_MODEL_TYPE type)
         return m_threadsModel;
     } else if (type == LiteApi::REGS_MODEL) {
         return m_registersModel;
+    } else if (type == LiteApi::ASM_MODEL) {
+        return m_asmModel;
     }
     return 0;
 }
@@ -388,19 +401,37 @@ void DlvRpcDebugger::removeAllWatch()
     m_watchModel->removeRows(0,m_watchModel->rowCount());
 }
 
-void DlvRpcDebugger::showFrame(QModelIndex index)
+void DlvRpcDebugger::gotoFileByIndex(const QStandardItemModel *model, QModelIndex index, int ifile, int iline)
 {
-    QStandardItem* file = m_framesModel->item( index.row(), 3 );
-    QStandardItem* line = m_framesModel->item( index.row(), 4 );
-    if( !file || !line ) {
+    QVariant file = index.siblingAtColumn(ifile).data();
+    QVariant line = index.siblingAtColumn(iline).data();
+    if( !file.isValid() || !line.isValid() ) {
         return;
     }
-    QString filename = file->text();
-    int lineno = line->text().toInt();
+    QString filename = file.toString();
+    int lineno = line.toInt();
     if( lineno <= 0 ) {
         return;
     }
-    emit setFrameLine(filename, lineno - 1 );
+    emit gotoLine(filename, lineno - 1 );
+}
+
+void DlvRpcDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
+{
+    switch (type) {
+    case LiteApi::FRAMES_MODEL:
+        gotoFileByIndex(m_framesModel,index,3,4);
+        break;
+    case LiteApi::THREADS_MODEL:
+        gotoFileByIndex(m_threadsModel,index,4,5);
+        break;
+    case LiteApi::GOROUTINES_MODEL:
+        gotoFileByIndex(m_goroutinesModel,index,3,4);
+        break;
+    case LiteApi::ASM_MODEL:
+        gotoFileByIndex(m_asmModel,index,4,5);
+        break;
+    }
 }
 
 void DlvRpcDebugger::expandItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE type)
@@ -570,17 +601,19 @@ void DlvRpcDebugger::handleResponse(const QByteArray &buff)
     //> [bk101903173] github.com/derekparker/delve/vendor/github.com/spf13/cobra.(*Command).Execute() github.com/derekparker/delve/vendor/github.com/spf13/cobra/command.go:615 (hits goroutine(1):1 total:1) (PC: 0x524ea6)
     //> qlang.io/qlang%2espec%2ev1.Import()
     //> main.main() goapi/_test/_testmain.go:50 (hits goroutine(1):1 total:1) (PC: 0x4011ca)
+    //> [bk3711824616] main.test[go.shape.int_0]() ./main.go:9 (hits goroutine(1):1 total:1) (PC: 0x10b2be2)
     if (buff.contains("> ")) {
-        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\%\\*\\(\\)\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_@\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
+        // [bk] main.test[shape]() file:line
+        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\%\\*\\(\\)\\/]+)(\\[[\\w\\d_\\.]+\\])?\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_@\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
         int n = reg.indexIn(QString::fromUtf8(buff));
         if (n < 0) {
             return;
         }
-        QString fileName = reg.cap(3);
+        QString fileName = reg.cap(4);
         if (fileName.startsWith("./")) {
             fileName = QDir::cleanPath(m_process->workingDirectory()+"/"+fileName);
         }
-        QString line = reg.cap(4);
+        QString line = reg.cap(5);
 
         if (!fileName.isEmpty() && !line.isEmpty()) {
             bool ok = false;
@@ -596,13 +629,13 @@ void DlvRpcDebugger::handleResponse(const QByteArray &buff)
 
         m_asyncItem->removeRows(0,m_asyncItem->rowCount());
         m_asyncItem->setText("stopped");
-        QString func = reg.cap(2).trimmed();
+        QString func = reg.cap(2).trimmed()+reg.cap(3).trimmed();
         //hack
         if (func.contains("%")) {
             func.replace("%2e",".");
         }
-        QString hits = reg.cap(5).trimmed();
-        QString pc = reg.cap(6).trimmed();
+        QString hits = reg.cap(6).trimmed();
+        QString pc = reg.cap(7).trimmed();
         int pos = pc.indexOf('\n');
         if (pos != -1) {
             pc.truncate(pos);
@@ -647,6 +680,7 @@ void DlvRpcDebugger::clear()
     m_goroutinesModel->removeRows(0,m_goroutinesModel->rowCount());
     m_varsModel->removeRows(0,m_varsModel->rowCount());
     m_watchModel->removeRows(0,m_watchModel->rowCount());
+    m_asmModel->removeRows(0,m_asmModel->rowCount());
 }
 
 void DlvRpcDebugger::initDebug()
@@ -931,6 +965,7 @@ void DlvRpcDebugger::readStdOutput()
             updateThreads(state.Threads);
             updateGoroutines();
             updateRegisters(state.pCurrentThread->ID,true);
+            updateAsm(id,state.pCurrentThread->PC);
         }
     }
 
@@ -999,13 +1034,13 @@ void DlvRpcDebugger::updateVariable(int id)
 void DlvRpcDebugger::updateStackframe(int id)
 {
     QList<Stackframe> frames = m_dlvClient->Stacktrace(id,128,LoadConfig::Long128(3));
-    emit beginUpdateModel(LiteApi::CALLSTACK_MODEL);
+    emit beginUpdateModel(LiteApi::FRAMES_MODEL);
     m_framesModel->removeRows(0,m_framesModel->rowCount());
     int index = 0;
     foreach(Stackframe f, frames) {
         QList<QStandardItem*> items;
         items << new QStandardItem(QString("%1").arg(index));
-        items << new QStandardItem(QString("0x%1").arg(qulonglong(f.PC),16,16,QLatin1Char('0')));
+        items << new QStandardItem(QString("0x%1").arg(f.PC,0,16));
         if (f.pFunction) {
             items << new QStandardItem(f.pFunction->Name);
         } else {
@@ -1016,7 +1051,7 @@ void DlvRpcDebugger::updateStackframe(int id)
         m_framesModel->appendRow(items);
         index++;
     }
-    emit endUpdateModel(LiteApi::CALLSTACK_MODEL);
+    emit endUpdateModel(LiteApi::FRAMES_MODEL);
 }
 
 static bool threadIdThan(const Thread &s1, const Thread &s2)
@@ -1050,13 +1085,42 @@ void DlvRpcDebugger::updateThreads(const QList<Thread> &threads)
 
 static void appendLocationItem(QStandardItem *parent, const QString &name, const Location &loc)
 {
-    QString text = QString("%1:%2").arg(loc.File).arg(loc.Line);
+    QStandardItem *item = new QStandardItem(name);
+    QStandardItem *file = new QStandardItem(loc.File);
+    QStandardItem *line = new QStandardItem(QString("%1").arg(loc.Line));
+    QStandardItem *pc = new QStandardItem(QString("0x%1").arg(loc.PC,0,16));
+    QStandardItem *func = new QStandardItem;
     if (loc.pFunction) {
-        text += QString(" %1").arg(loc.pFunction->Name);
+        func->setText(loc.pFunction->Name);
     }
-    text += QString(" (0x%1)").arg(loc.PC,0,16);
-    parent->appendRow(QList<QStandardItem*>() << new QStandardItem(name) << new QStandardItem(text));
+    parent->appendRow(QList<QStandardItem*>() << item << pc << func << file << line);
 }
+
+static void appendLocationRoot(QStandardItemModel *parent, QStandardItem *item, const Location &loc)
+{
+    QStandardItem *file = new QStandardItem(loc.File);
+    QStandardItem *line = new QStandardItem(QString("%1").arg(loc.Line));
+    QStandardItem *pc = new QStandardItem(QString("0x%1").arg(loc.PC,0,16));
+    QStandardItem *func = new QStandardItem;
+    if (loc.pFunction) {
+        func->setText(loc.pFunction->Name);
+    }
+    parent->appendRow(QList<QStandardItem*>() << item << pc << func << file << line);
+}
+
+/*
+const (
+    Gidle           uint64 = iota // 0
+    Grunnable                     // 1 runnable and on a run queue
+    Grunning                      // 2
+    Gsyscall                      // 3
+    Gwaiting                      // 4
+    GmoribundUnused               // 5 currently unused, but hardcoded in gdb scripts
+    Gdead                         // 6
+    Genqueue                      // 7 Only the Gscanenqueue is used.
+    Gcopystack                    // 8 in this state when newstack is moving the stack
+)
+*/
 
 void DlvRpcDebugger::updateGoroutines()
 {
@@ -1064,17 +1128,61 @@ void DlvRpcDebugger::updateGoroutines()
     emit beginUpdateModel(LiteApi::GOROUTINES_MODEL);
     m_goroutinesModel->removeRows(0,m_goroutinesModel->rowCount());
     foreach (Goroutine g, lst) {
-        //qDebug() << g.ID << g.ThreadId << g.CurrentLoc.Line << g.GoStatementLoc.Line << g.UserCurrentLoc.Line;
-        QStandardItem *item = new QStandardItem(QString("Goroutine %1").arg(g.ID));
+        QString value;
         if (g.ThreadId != 0) {
-            item->appendRow(QList<QStandardItem*>() << new QStandardItem("ThreadID") << new QStandardItem(QString("%1").arg(g.ThreadId)));
+            value = QString("(thread %1)").arg(g.ThreadId);
         }
-        appendLocationItem(item,"CurrentLoc",g.CurrentLoc);
-        //appendLocationItem(item,"UserCurrentLoc",g.UserCurrentLoc);
-        appendLocationItem(item,"GoStatementLoc",g.GoStatementLoc);
-        m_goroutinesModel->appendRow(item);
+        if ( (g.Status == 4 || g.Status == 3) && g.WaitReason != 0) {
+            if (!value.isEmpty()) {
+                value += " ";
+            }
+            value += "["+waitReason(int(g.WaitReason));
+            if (g.WaitSince > 0) {
+                value += QString(" %1").arg(g.WaitSince);
+            }
+            value += "]";
+        }
+
+        QStandardItem *item = new QStandardItem(QString("Goroutine %1 %2").arg(g.ID).arg(value));
+
+        appendLocationItem(item,"Runtime",g.CurrentLoc);
+        appendLocationItem(item,"Go",g.GoStatementLoc);
+        appendLocationItem(item,"Star",g.StartLoc);
+        appendLocationRoot(m_goroutinesModel,item,g.UserCurrentLoc);
     }
     emit endUpdateModel(LiteApi::GOROUTINES_MODEL);
+}
+
+void DlvRpcDebugger::updateAsm(int id, quint64 pc)
+{
+    int flag = m_liteApp->settings()->value(DLVDEBUGGER_ASMSYNTAX,1).toInt();
+    QList<AsmInstruction> asms = m_dlvClient->DisassemblePC(EvalScope(id),pc,AssemblyFlavour(flag));
+    emit beginUpdateModel(LiteApi::ASM_MODEL);
+    m_asmModel->removeRows(0,m_asmModel->rowCount());
+    QModelIndex at;
+    foreach(AsmInstruction a, asms) {
+        QString head;
+        if (a.AtPC) {
+            head = "=>";
+        }
+        if (a.Breakpoint) {
+            head += "*";
+        }
+        QStandardItem *item = new QStandardItem(head);
+        QStandardItem *file = new QStandardItem(a.Loc.File);
+        QStandardItem *line = new QStandardItem(QString("%1").arg(a.Loc.Line));
+        QStandardItem *pc = new QStandardItem(QString("0x%1").arg(a.Loc.PC,0,16));
+        QStandardItem *inst = new QStandardItem(QString(a.Bytes.toHex()));
+        QStandardItem *text = new QStandardItem(a.Text);
+        m_asmModel->appendRow(QList<QStandardItem*>() << item << pc << inst << text << file << line);
+        if (a.AtPC) {
+            at = m_asmModel->indexFromItem(item);
+        }
+    }
+    emit endUpdateModel(LiteApi::ASM_MODEL);
+    if (at.isValid()) {
+        emit scrollTo(LiteApi::ASM_MODEL, at);
+    }
 }
 
 void DlvRpcDebugger::updateRegisters(int threadid, bool includeFp)

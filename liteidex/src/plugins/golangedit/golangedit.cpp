@@ -1238,8 +1238,8 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
         cmd = guruFilePath;
         cmdName = "guru";
     } else {
-        cmd = LiteApi::getGotools(m_liteApp);
-        cmdName = "oracle";
+        m_liteApp->appendLog("GolangEdit","Could not find guru ( hint: go install golang.org/x/tools/cmd/guru@latest )",true);
+        return;
     }
 
     m_sourceQueryOutputAct->setChecked(true);
