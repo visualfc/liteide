@@ -397,8 +397,8 @@ void DlvRpcDebugger::removeAllWatch()
 
 void DlvRpcDebugger::gotoFileByIndex(const QStandardItemModel *model, QModelIndex index, int ifile, int iline)
 {
-    QVariant file = index.siblingAtColumn(ifile).data();
-    QVariant line = index.siblingAtColumn(iline).data();
+    QVariant file = index.sibling(index.row(),ifile).data();
+    QVariant line = index.sibling(index.row(),iline).data();
     if( !file.isValid() || !line.isValid() ) {
         return;
     }
