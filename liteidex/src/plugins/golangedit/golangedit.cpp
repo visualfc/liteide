@@ -1238,7 +1238,7 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
         cmd = guruFilePath;
         cmdName = "guru";
     } else {
-        m_liteApp->appendLog("GolangEdit","Could not find guru ( hint: go install golang.org/x/tools/cmd/guru@latest )",true);
+        m_liteApp->appendLog("GolangEdit","guru was not found on system PATH (hint: is guru installed? \"go install golang.org/x/tools/cmd/guru@latest\")",true);
         return;
     }
 

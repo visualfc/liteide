@@ -479,7 +479,7 @@ void GolangCode::currentEnvChanged(LiteApi::IEnv*)
 
     m_gocodeCmd = FileUtil::lookupGoBin("gocode",m_liteApp,env,true);
     if (m_gocodeCmd.isEmpty()) {
-         m_liteApp->appendLog("GolangCode","Could not find gocode (hint: is gocode installed?)",true);
+         m_liteApp->appendLog("GolangCode","gocode was not found on system PATH (hint: is gocode installed? \"go install github.com/visualfc/gocode@latest\")",true);
     } else {
          m_liteApp->appendLog("GolangCode",QString("Found gocode at %1").arg(m_gocodeCmd));
     }
