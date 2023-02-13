@@ -1165,9 +1165,9 @@ void DlvRpcDebugger::updateAsm(int id, quint64 pc)
             head += "*";
         }
         QStandardItem *item = new QStandardItem(head);
+        QStandardItem *pc = new QStandardItem(QString("0x%1").arg(a.Loc.PC,0,16));
         QStandardItem *file = new QStandardItem(a.Loc.File);
         QStandardItem *line = new QStandardItem(QString("%1").arg(a.Loc.Line));
-        QStandardItem *pc = new QStandardItem(QString("0x%1").arg(a.Loc.PC,0,16));
         QStandardItem *inst = new QStandardItem(QString(a.Bytes.toHex()));
         QStandardItem *text = new QStandardItem(a.Text);
         m_asmModel->appendRow(QList<QStandardItem*>() << item << pc << inst << text << file << line);

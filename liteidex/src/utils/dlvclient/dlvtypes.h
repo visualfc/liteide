@@ -725,7 +725,7 @@ struct AsmInstruction
             pDestLoc->fromMap(md);
         }
         Text = map["Text"].toString();
-        Bytes = map["Bytes"].toByteArray();
+        Bytes = QByteArray::fromBase64(map["Bytes"].toByteArray());
         Breakpoint = map["Breakpoint"].toBool();
         AtPC = map["AtPC"].toBool();
     }
