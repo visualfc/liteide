@@ -428,7 +428,8 @@ void DlvRpcDebugger::dbclickItem(QModelIndex index, LiteApi::DEBUG_MODEL_TYPE ty
     case LiteApi::GOROUTINES_MODEL:
         gotoFileByIndex(m_goroutinesModel,index,3,4);
         break;
-    default:
+    case LiteApi::ASM_MODEL:
+        gotoFileByIndex(m_asmModel,index,4,5);
         break;
     }
 }
@@ -1154,7 +1155,7 @@ void DlvRpcDebugger::updateGoroutines()
 
 void DlvRpcDebugger::updateAsm(int id, quint64 pc)
 {
-    int flag = m_liteApp->settings()->value(DLVDEBUGGER_ASMSYNTAX,2).toInt();
+    int flag = m_liteApp->settings()->value(DLVDEBUGGER_ASMSYNTAX,1).toInt();
     QList<AsmInstruction> asms = m_dlvClient->DisassemblePC(EvalScope(id),pc,AssemblyFlavour(flag));
     emit beginUpdateModel(LiteApi::ASM_MODEL);
     m_asmModel->removeRows(0,m_asmModel->rowCount());

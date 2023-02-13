@@ -67,7 +67,7 @@ QString DlvDebuggerOption::mimeType() const
 void DlvDebuggerOption::load()
 {
     ui->flagsLineEdit->setText(m_liteApp->settings()->value(DLVDEBUGGER_EXTFLAGS,"").toString());
-    int id = m_liteApp->settings()->value(DLVDEBUGGER_ASMSYNTAX,2).toInt();
+    int id = m_liteApp->settings()->value(DLVDEBUGGER_ASMSYNTAX,1).toInt();
     if (id >= 0 && id < ui->buttonGroup->buttons().size()) {
         ui->buttonGroup->buttons().at(id)->setChecked(true);
     }
