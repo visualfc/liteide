@@ -33,6 +33,7 @@
 
 class QProcess;
 class LiteProcess;
+class Process;
 class GdbHandleState
 {
 public:
@@ -158,7 +159,7 @@ protected:
     QString                 m_lastCmd;
     QString                 m_processId;
     LiteProcess *m_process;
-    LiteProcess *m_headlessProcess;
+    Process *m_headlessProcess;
     DlvClient   *m_dlvClient;
     QStandardItemModel *m_asyncModel;
     QStandardItemModel *m_varsModel;

@@ -149,7 +149,7 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_asmModel = new QStandardItemModel(0,6,this);
     m_asmModel->setHeaderData(0,Qt::Horizontal,"State");
     m_asmModel->setHeaderData(1,Qt::Horizontal,"Address");
-    m_asmModel->setHeaderData(2,Qt::Horizontal,"Bytes");
+    m_asmModel->setHeaderData(2,Qt::Horizontal,"Code");
     m_asmModel->setHeaderData(3,Qt::Horizontal,"Text");
     m_asmModel->setHeaderData(4,Qt::Horizontal,"File");
     m_asmModel->setHeaderData(5,Qt::Horizontal,"Line");
@@ -160,8 +160,8 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     m_writeDataBusy = false;
 
     m_headlessInitAddress = false;
-    m_headlessProcess = new LiteProcess(m_liteApp,this);
-    m_headlessProcess->setUseCtrlC(true);
+    m_headlessProcess = new Process(this);
+//    m_headlessProcess->setUseCtrlC(true);
 
     m_dlvClient = new DlvClient(this);
     connect(m_dlvClient,SIGNAL(commandSuccess(QString,DebuggerState,QVariant)),this,SLOT(clientCommandSuccess(QString,DebuggerState,QVariant)));
@@ -292,17 +292,11 @@ bool DlvRpcDebugger::start(const QString &cmd, const QString &arguments)
 
 void DlvRpcDebugger::stop()
 {
-    if (m_dlvExit) {
-        return;
-    }
     m_dlvExit = true;
 
     if (!m_headlessProcess->isStop()) {
         m_dlvClient->Detach();
         m_headlessProcess->waitForFinished(500);
-        if (!m_headlessProcess->isStop()) {
-            m_headlessProcess->interrupt();
-        }
     }
     if (!m_process->isStop()) {
         m_process->interrupt();
