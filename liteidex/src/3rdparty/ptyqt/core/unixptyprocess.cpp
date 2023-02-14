@@ -18,6 +18,13 @@
 #if defined(__linux__)
 #include <stdio.h>
 #include <stdint.h>
+
+// support for build with MUSL on Alpine Linux
+#ifndef _PATH_UTMPX
+#include <sys/time.h>
+# define _PATH_UTMPX	"/var/log/utmp"
+#endif
+
 #elif defined(__APPLE__)
 #include <sys/sysctl.h>
 #include <libproc.h>
