@@ -599,7 +599,7 @@ void DlvRpcDebugger::handleResponse(const QByteArray &buff)
     //> [bk1584098684] main.(*My[go.shape.int]).Test1() c:/dev/demo/main.go:16 (hits goroutine(1):1 total:1) (PC: 0x4daa88)
     if (buff.contains("> ")) {
         // [bk] main.test[shape]() file:line
-        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\.\\%\\*\\[\\]\\(\\)\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_@\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
+        static QRegExp reg(">(\\s+\\[[\\w\\d]+\\])?\\s+([\\w\\d_\\-\\.\\%\\*\\[\\]\\(\\)\\/]+)\\(\\)\\s+((?:[a-zA-Z]:)?[\\w\\d_@\\s\\-\\/\\.\\\\]+):(\\d+)\\s?(.*)\\s?(\\(PC:\\s+.*)");
 
         int n = reg.indexIn(QString::fromUtf8(buff));
         if (n < 0) {
