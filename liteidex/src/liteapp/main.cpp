@@ -34,6 +34,7 @@
 #endif
 #include <QDebug>
 #include <QtGlobal>
+#include <QtConcurrent/QtConcurrent>
 #include "mainwindow.h"
 #include "liteapp.h"
 #include "goproxy.h"
@@ -47,6 +48,43 @@
      #define new DEBUG_NEW
 #endif
 //lite_memory_check_end
+
+class LiteIDEApplication : public QApplication {
+public:
+    IApplication *liteApp = nullptr;
+
+    LiteIDEApplication(int &argc, char **argv) : QApplication(argc, argv) {}
+
+    bool event(QEvent *event) override
+    {
+        if (event->type() == QEvent::FileOpen) {
+            QString filePath = static_cast<QFileOpenEvent *>(event)->file();
+            if (liteApp == nullptr) {
+                // Cold start, wait liteApp ready
+                QFuture<void> future = QtConcurrent::run([this, filePath](){
+                    while(this->liteApp == nullptr) QThread::sleep(1);
+                    QMetaObject::invokeMethod(this, [this, filePath]() {
+                        openFileOrFolder(filePath);
+                    }, Qt::QueuedConnection);
+                });
+            } else {
+                openFileOrFolder(filePath);
+            }
+        }
+        return QApplication::event(event);
+    }
+
+private:
+    void openFileOrFolder(QString filePath) {
+        QFileInfo f(filePath);
+        if (!f.exists() || liteApp == nullptr) return;
+        if (f.isFile()) {
+            liteApp->fileManager()->openEditor(filePath);
+        } else if (f.isDir()) {
+            liteApp->fileManager()->addFolderList(filePath);
+        }
+    }
+};
 
 #ifdef LITEAPP_LIBRARY
 int liteapp_main(int argc, char *argv[])
@@ -63,8 +101,8 @@ int main(int argc, char *argv[])
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-    
-    QApplication app(argc, argv);
+
+    LiteIDEApplication app(argc, argv);
 
     QStringList arguments = app.arguments();
 
@@ -174,6 +212,8 @@ int main(int argc, char *argv[])
     }
 
     IApplication *liteApp = LiteApp::NewApplication("default",0);
+
+    app.liteApp = liteApp;
 
     foreach(QString file, fileList) {
         QFileInfo f(file);
