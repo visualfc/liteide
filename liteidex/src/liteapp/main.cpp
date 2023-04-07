@@ -32,7 +32,7 @@
 #if QT_VERSION >= 0x050000
 #include <QStandardPaths>
 #endif
-#ifdef Q_OS_MACOS
+#ifdef QT_OS_MACOS
 #include <QtConcurrent/QtConcurrent>
 #endif
 #include <QDebug>
@@ -51,7 +51,7 @@
 #endif
 //lite_memory_check_end
 
-#ifdef Q_OS_MACOS
+#ifdef QT_OS_MACOS
 class LiteIDEApplication : public QApplication {
 public:
     IApplication *liteApp = nullptr;
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-#ifdef Q_OS_MACOS
+#ifdef QT_OS_MACOS
     LiteIDEApplication app(argc, argv);
 #else
     QApplication app(argc, argv);
@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
 
     IApplication *liteApp = LiteApp::NewApplication("default",0);
 
-#if Q_OS_MACOS
+#if QT_OS_MACOS
     app.liteApp = liteApp;
 #endif
 
