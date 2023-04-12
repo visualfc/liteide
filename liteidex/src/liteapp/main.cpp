@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
 
     IApplication *liteApp = LiteApp::NewApplication("default",0);
 
-#if Q_OS_MACOS
+#ifdef Q_OS_MACOS
     app.liteApp = liteApp;
 #endif
 
