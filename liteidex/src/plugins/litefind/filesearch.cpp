@@ -472,7 +472,7 @@ void FileSearch::currentDir()
             m_findPathCombo->setEditText(info.path());
         }
     }
-
+    m_findPathCombo->setFocus();
 }
 
 void FileSearch::browser()
