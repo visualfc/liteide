@@ -102,8 +102,6 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 <https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/zh_CN/guide.md>
 
 ### Links
-* LiteIDE Home
-<http://liteide.org>
 * LiteIDE Source code
 <https://github.com/visualfc/liteide>
 * Gotools Source code
@@ -122,9 +120,3 @@ _LiteIDE is a simple, open source, cross-platform Go IDE._
 
 ### Donate
 * https://visualfc.github.io/support
-
-### New Home Page
-* [Home](http://liteide.org)
-* [English Document](http://liteide.org/en/documents)
-* [中文文档](http://liteide.org/cn/documents)
-* More info at [liteide.org](http://liteide.org)
