@@ -294,6 +294,7 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
     connect(m_thread,SIGNAL(finished()),this,SIGNAL(findFinished()));
     connect(m_thread,SIGNAL(findResult(LiteApi::FileSearchResult)),this,SIGNAL(findResult(LiteApi::FileSearchResult)));
     connect(m_findCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findInFiles()));
+    connect(m_findPathCombo->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findInFiles()));
 
     bool b = m_liteApp->settings()->value(FILESEARCH_AUTOSWITCHDIR,true).toBool();
     m_autoSwitchPathCheckBox->setChecked(b);
