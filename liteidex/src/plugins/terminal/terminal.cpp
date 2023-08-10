@@ -724,7 +724,7 @@ void Terminal::loadEnv(int index)
             list << QString("export %1=\"%2\"").arg(key).arg(env.value(key));
         }
         file.write("#!/bin/sh\n");
-        file.write("echo "+term_bold("Load environment form LiteIDE.").toUtf8());
+        file.write("echo \"load environment form LiteIDE.\"");
         file.write("\n");
         file.write(list.join("\n").toUtf8());
         file.write("\n");
