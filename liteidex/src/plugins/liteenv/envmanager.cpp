@@ -231,6 +231,8 @@ void Env::readStdout()
             QString value = info.right(info.length()-index-1);
             if (value.startsWith("\"") && value.endsWith("\"")) {
                 value = value.mid(1,value.length()-2);
+            } else if (value.startsWith("\'") && value.endsWith("\'")) {
+                value = value.mid(1,value.length()-2);
             }
             m_goEnvMap[key] = value;
         }
