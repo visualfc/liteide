@@ -3,6 +3,16 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### 2023.08.14 Ver X38.3
+* LiteIDE
+	* support Go1.21
+* LiteEnv
+	* support Go1.21 `go env`
+* LiteFind
+	* support enter on directory searches
+* Terminal
+	* fix source for not bash
+
 ### 2023.02.14 Ver X38.2
 * LiteIDE
     * fix and update gotools & gocode

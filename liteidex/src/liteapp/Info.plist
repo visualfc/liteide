@@ -21,8 +21,7 @@
 	<key>CFBundleVersion</key>
 		<string>X38</string>
 	<key>CFBundleShortVersionString</key>
-		<string>38.2</string>
-
+		<string>38.3</string>
         <key>CFBundleDocumentTypes</key>
         <array>
             <dict>
