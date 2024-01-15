@@ -27,6 +27,7 @@ SOURCES += golangeditplugin.cpp \
     golangeditoption.cpp \
     golangeditoptionfactory.cpp \
     goaddtagsdialog.cpp \
+    goplsfilesearch.cpp \
     goremovetagsdialog.cpp
 
 HEADERS += golangeditplugin.h\
@@ -39,6 +40,7 @@ HEADERS += golangeditplugin.h\
     golangeditoption.h \
     golangeditoptionfactory.h \
     goaddtagsdialog.h \
+    goplsfilesearch.h \
     goremovetagsdialog.h
 
 FORMS += \
