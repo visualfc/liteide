@@ -90,6 +90,7 @@ public:
     virtual void activate();
     virtual QString searchText() const;
     virtual bool replaceMode() const { return false; }
+    virtual bool readOnly() const { return false; }
     virtual bool canCancel() const { return true; }
     virtual void setSearchInfo(const QString &text, const QString &filter, const QString &path);
 public slots:

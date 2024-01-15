@@ -358,6 +358,10 @@ void SearchResultWidget::setShowReplaceUI(bool visible)
     m_showReplaceModeButton->setVisible(false);
 }
 
+void SearchResultWidget::setReadOnly(bool readOnly) {
+    m_isReadOnly = readOnly;
+}
+
 void SearchResultWidget::setInfoWidgetLabel(const QString &infoText)
 {
     m_infoLabel->setText(infoText);
@@ -484,7 +488,7 @@ void SearchResultWidget::finishSearch(bool canceled)
     m_cancelButton->setVisible(false);
     m_messageWidget->setVisible(canceled);
     m_searchAgainButton->setVisible(m_searchAgainSupported);
-    m_showReplaceModeButton->setVisible(!this->m_isShowingReplaceUI && !canceled && m_count > 0);
+    m_showReplaceModeButton->setVisible(!this->m_isShowingReplaceUI && !canceled && m_count > 0 && !m_isReadOnly);
 }
 
 void SearchResultWidget::sendRequestPopup()

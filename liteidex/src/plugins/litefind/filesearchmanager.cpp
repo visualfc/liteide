@@ -143,6 +143,7 @@ void FileSearchManager::setCurrentSearch(LiteApi::IFileSearch *search)
     }
     m_searchResultWidget->setShowReplaceUI(m_currentSearch->replaceMode());
     m_searchResultWidget->setCancelSupported(m_currentSearch->canCancel());
+    m_searchResultWidget->setReadOnly(m_currentSearch->readOnly());
     m_currentSearch->activate();
 }
 
