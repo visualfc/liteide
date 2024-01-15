@@ -406,6 +406,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_goplsAllReferencesAct);
         menu->addAction(m_goplsAllImplementationsAct);
+        menu->addSeparator();
         menu->addAction(m_sourceWhatAct);
         sub = menu->addMenu(tr("SourceQuery"));
         sub->addAction(m_sourceCalleesAct);
@@ -446,6 +447,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_goplsAllReferencesAct);
         menu->addAction(m_goplsAllImplementationsAct);
+        menu->addSeparator();
         menu->addAction(m_sourceWhatAct);
         sub = menu->addMenu(tr("SourceQuery"));
         sub->addAction(m_sourceCalleesAct);
