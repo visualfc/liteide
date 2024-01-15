@@ -155,7 +155,7 @@ bool Rule::charPredicateMatchSucceed(const QString &text,
                                      ProgressData *progress,
                                      bool (QChar::* predicate)() const) const
 {
-    return predicateMatchSucceed(text, length, progress, std::mem_fun_ref(predicate));
+    return predicateMatchSucceed(text, length, progress, std::mem_fn(predicate));
 }
 
 bool Rule::charPredicateMatchSucceed(const QString &text,
@@ -163,7 +163,8 @@ bool Rule::charPredicateMatchSucceed(const QString &text,
                                      ProgressData *progress,
                                      bool (*predicate)(const QChar &)) const
 {
-    return predicateMatchSucceed(text, length, progress, std::ptr_fun(predicate));
+    std::function<bool(const QChar&)> predicateFunc = predicate;
+    return predicateMatchSucceed(text, length, progress, predicateFunc);
 }
 
 bool Rule::matchSucceed(const QString &text, const int length, ProgressData *progress)
