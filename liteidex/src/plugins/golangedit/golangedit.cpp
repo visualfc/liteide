@@ -117,10 +117,14 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_renameAllSymbolSkipGorootAct = new QAction(QString("%1 (Module/GOPATH)").arg(tr("Rename Symbol Under Cursor")),this);
     actionContext->regAction(m_renameAllSymbolSkipGorootAct,"RenameAllSymbolSkipGOROOT","");
 
+
     m_fileSearch = new GolangFileSearch(app,m_liteApp);
+    m_goplsSearch = new GoplsFileSearch(app,m_liteApp);
+
     LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(app);
     if (manager) {
         manager->addFileSearch(m_fileSearch);
+        manager->addFileSearch(m_goplsSearch);
     }
     m_envManager = LiteApi::getEnvManager(m_liteApp);
     if (m_envManager) {
@@ -241,6 +245,14 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_goRemoveTagAct = new QAction(tr("Remove Tags From Struct Field"),this);
     actionContext->regAction(m_goRemoveTagAct,"GoRemoveTags","");
     connect(m_goRemoveTagAct,SIGNAL(triggered()),this,SLOT(goRemoveTags()));
+
+    m_goplsAllReferencesAct = new QAction(tr("Find All References (gopls)"),this);
+    actionContext->regAction(m_goplsAllReferencesAct,"GoplsFindAllReferences","");
+    connect(m_goplsAllReferencesAct,SIGNAL(triggered()),this,SLOT(goplsFindAllReferences()));
+
+    m_goplsAllImplementationsAct = new QAction(tr("Find All Implementations (gopls)"),this);
+    actionContext->regAction(m_goplsAllImplementationsAct,"GoplsFindAllImplementations","");
+    connect(m_goplsAllImplementationsAct,SIGNAL(triggered()),this,SLOT(goplsFindAllImplementations()));
 
     m_addTagsDlg = 0;
     m_removeTagsDlg = 0;
@@ -392,6 +404,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_renameAllSymbolWithGorootAct);
 
         menu->addSeparator();
+        menu->addAction(m_goplsAllReferencesAct);
+        menu->addAction(m_goplsAllImplementationsAct);
         menu->addAction(m_sourceWhatAct);
         sub = menu->addMenu(tr("SourceQuery"));
         sub->addAction(m_sourceCalleesAct);
@@ -430,6 +444,8 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         connect(menu,SIGNAL(aboutToShow()),this,SLOT(aboutToShowContextMenu()));
 
         menu->addSeparator();
+        menu->addAction(m_goplsAllReferencesAct);
+        menu->addAction(m_goplsAllImplementationsAct);
         menu->addAction(m_sourceWhatAct);
         sub = menu->addMenu(tr("SourceQuery"));
         sub->addAction(m_sourceCalleesAct);
@@ -1414,6 +1430,22 @@ void GolangEdit::stopSourceQueryProcess()
     if (m_sourceQueryProcess->isRunning()) {
         m_sourceQueryProcess->stop(200);
     }
+}
+
+void GolangEdit::goplsFindAllReferences()
+{
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    m_goplsSearch->setReadOnly(false);
+    m_goplsSearch->setDisplyName(tr("All References"));
+    m_goplsSearch->findUsages(m_editor,cursor, GOPLS_references,QStringList() << "-d");
+}
+
+void GolangEdit::goplsFindAllImplementations()
+{
+    QTextCursor cursor = m_plainTextEdit->textCursor();
+    m_goplsSearch->setReadOnly(true);
+    m_goplsSearch->setDisplyName(tr("All Implementation"));
+    m_goplsSearch->findUsages(m_editor,cursor, GOPLS_implementation);
 }
 
 QString GolangEdit::getGoModifyTagsInfo() const

@@ -74,6 +74,7 @@ public:
     void setTextToReplace(const QString &textToReplace);
     QString textToReplace() const;
     void setShowReplaceUI(bool visible);
+    void setReadOnly(bool readOnly);
 
     void setInfoWidgetLabel(const QString &infoText);
 
@@ -142,6 +143,7 @@ private:
     QCheckBox *m_preserveCaseCheck;
     QToolButton *m_showReplaceModeButton;
     bool m_isShowingReplaceUI;
+    bool m_isReadOnly;
     bool m_searchAgainSupported;
     bool m_preserveCaseSupported;
     bool m_cancelSupported;

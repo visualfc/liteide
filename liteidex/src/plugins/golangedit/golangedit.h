@@ -30,6 +30,7 @@
 #include "processex/processex.h"
 #include "textoutput/textoutput.h"
 #include "golangfilesearch.h"
+#include "goplsfilesearch.h"
 /*
     a tool for answering questions about Go source code.
     callees	  	show possible targets of selected function call
@@ -117,6 +118,8 @@ public slots:
     void sourceWhicherrs();
     void sourceQueryStateChanged(QProcess::ProcessState state);
     void stopSourceQueryProcess();
+    void goplsFindAllReferences();
+    void goplsFindAllImplementations();
     void goAddTags();
     void goRemoveTags();
     void execGoModifyTags(const QString &args);
@@ -163,6 +166,8 @@ protected:
     QAction *m_sourceWhicherrs;
     QAction *m_goAddTagsAct;
     QAction *m_goRemoveTagAct;
+    QAction *m_goplsAllReferencesAct;
+    QAction *m_goplsAllImplementationsAct;
     Process  *m_findDefProcess;
     Process  *m_findInfoProcess;
     Process  *m_findLinkProcess;
@@ -175,6 +180,7 @@ protected:
     QTextCursor m_findLastCursor;
     QByteArray  m_findInfoData;
     GolangFileSearch *m_fileSearch;
+    GoplsFileSearch  *m_goplsSearch;
     GoAddTagsDialog  *m_addTagsDlg;
     GoRemoveTagsDialog *m_removeTagsDlg;
 };
