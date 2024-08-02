@@ -35,7 +35,7 @@ class FindFilesThread : public QThread
 public:
     FindFilesThread(QObject *parent);
     void setFolderList(const QStringList &folderLis, const QSet<QString> &extSet, const QSet<QString> &exceptFiles, int maxCount);
-    void stop(int time = 10);
+    void stop(int time = 1000);
 protected:
     virtual void run();
     void findFolder(QString folder);

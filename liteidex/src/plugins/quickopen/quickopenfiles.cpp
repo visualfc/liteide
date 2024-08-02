@@ -49,7 +49,7 @@ QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
     m_matchCase = Qt::CaseInsensitive;
-    m_maxCount = 100000;
+    m_maxCount = 10000;
     m_thread = new FindFilesThread(this);
     connect(m_thread,SIGNAL(findResult(QStringList)),this,SLOT(findResult(QStringList)));
 }
@@ -93,7 +93,9 @@ QModelIndex QuickOpenFiles::rootIndex() const
 
 void QuickOpenFiles::updateModel()
 {
-    m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
+    cancel();
+
+    m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,10000).toInt();
     m_matchCase = m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
     m_model->clear();
@@ -148,7 +150,6 @@ void QuickOpenFiles::startFindThread()
 
     m_thread->setFolderList(folderList,extSet,editorSet,maxcount);
 
-    m_thread->stop();
     m_thread->start();
 }
 
