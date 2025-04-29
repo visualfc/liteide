@@ -52,6 +52,8 @@ static VTermState *vterm_state_new(VTerm *vt)
 {
   VTermState *state = vterm_allocator_malloc(vt, sizeof(VTermState));
 
+  if (state == NULL)
+    return NULL;
   state->vt = vt;
 
   state->rows = vt->rows;
@@ -1736,6 +1738,8 @@ VTermState *vterm_obtain_state(VTerm *vt)
     return vt->state;
 
   VTermState *state = vterm_state_new(vt);
+  if (state == NULL)
+    return NULL;
   vt->state = state;
 
   state->combine_chars_size = 16;
