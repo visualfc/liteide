@@ -144,6 +144,43 @@ QString LiteAppOption::mimeType() const
     return OPTION_LITEAPP;
 }
 
+bool guess_dark(QString qss){
+    // printf("--- guess_dark: %s\n", qss.toStdString().c_str());
+    QString dark_keywords[] = { "black", "dark", "night" };
+    QString dark_names[] = { "carbon", "detroit-future", "gray", "sublime" };
+
+    QString qss_lower = qss.toLower();
+
+    for (const QString &keyword : dark_keywords) {
+        if (qss_lower.contains(keyword)) {
+            // qDebug() << "= guess dark by keyword:" << keyword;
+            return true;
+        }
+    }
+    if (qss_lower.endsWith(".qss")) {
+        qss_lower.chop(4);
+    }
+    for (const QString &theme : dark_names) {
+        if (qss_lower == theme) {
+            // qDebug() << "= guess dark by name:" << theme;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp){
+    //----1.check if dark
+    bool is_dark = guess_dark(qss);
+    qDebug() << "auto_editor_theme:" << qss << "is_dark?" << is_dark;
+
+    //----2.apply editor theme (hard-coded theme)
+    QString style = is_dark? "sublime.xml": "visualstudio.xml";
+    QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
+    m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+}
+
 void LiteAppOption::save()
 {
     bool storeLocal = ui->storeLocalCheckBox->isChecked();
@@ -225,6 +262,9 @@ void LiteAppOption::save()
             m_liteApp->settings()->setValue(LITEAPP_QSS,qss);
             QString styleSheet = QLatin1String(f.readAll());
             qApp->setStyleSheet(styleSheet);
+
+            //chen: auto editor theme
+            auto_editor_theme(qss, m_liteApp);
         }
     }
 
