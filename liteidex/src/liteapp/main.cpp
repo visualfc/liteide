@@ -90,6 +90,66 @@ private:
 };
 #endif
 
+
+#include <QProcess>
+
+//chen:
+extern void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp);
+
+void auto_app_theme(QString qss, QApplication &app, LiteApi::IApplication *m_liteApp){
+    // QFile f(resPath+"/liteapp/qss/"+qss);
+    QFile f(m_liteApp->resourcePath()+"/liteapp/qss/"+qss);
+    if (f.open(QFile::ReadOnly)) {
+        QString styleSheet = QLatin1String(f.readAll());
+        app.setStyleSheet(styleSheet);
+    }
+
+    auto_editor_theme(qss, m_liteApp);
+}
+
+void monit_system_theme_change(QApplication *app, LiteApi::IApplication *m_liteApp){
+    qDebug()<< "=== monit_system_theme_change...";
+
+    // 启动 gsettings monitor 进程
+	// gsettings monitor org.gnome.desktop.interface color-scheme
+    QProcess *proc = new QProcess(app);
+    proc->setProcessChannelMode(QProcess::MergedChannels);
+    proc->start("gsettings", {"monitor", "org.gnome.desktop.interface", "color-scheme"});
+
+    // 初始读取一次
+    {
+        QProcess getProc;
+        getProc.start("gsettings", {"get", "org.gnome.desktop.interface", "color-scheme"});
+        getProc.waitForFinished();
+        QString theme = getProc.readAllStandardOutput().trimmed();
+		theme = theme.remove("'");
+        qDebug() << "== system theme current:" << theme;
+
+        //----- 0. init theme
+        bool is_dark = theme.contains("dark", Qt::CaseInsensitive);
+        QString qss = is_dark ? "gray.qss" : "default.qss";
+        auto_app_theme(qss, *app, m_liteApp);
+    }
+
+    // 监听变化
+    QObject::connect(proc, &QProcess::readyReadStandardOutput, app, [proc, app, m_liteApp]() {
+        while (proc->canReadLine()) {
+            QString line = QString::fromUtf8(proc->readLine()).trimmed();
+            if (line.contains("color-scheme")) {
+                QString theme = line.section(' ', -1); // 取最后一个单词
+				theme = theme.remove("'");
+                qDebug() << "== system theme changed:" << theme;
+
+                bool is_dark = theme.contains("dark", Qt::CaseInsensitive);
+                QString qss = is_dark ? "gray.qss" : "default.qss";
+                //------- 1. auto theme
+                auto_app_theme(qss, *app, m_liteApp);
+            }
+        }
+    });
+
+}
+
 #ifdef LITEAPP_LIBRARY
 int liteapp_main(int argc, char *argv[])
 #else
@@ -223,6 +283,10 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_MACOS
     app.liteApp = liteApp;
 #endif
+
+    //chen: auto editor theme
+    auto_editor_theme(qss, liteApp);
+    monit_system_theme_change(&app, liteApp);
 
     foreach(QString file, fileList) {
         QFileInfo f(file);
