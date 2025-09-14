@@ -62,6 +62,9 @@
 #include <QComboBox>
 #include <QProcessEnvironment>
 #include <QDebug>
+
+#include "thememanager.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -142,7 +145,9 @@ IApplication* LiteApp::NewApplication(const QString &sessionName, IApplication *
     app->load(sessionName,baseApp);
 
     //chen: improve for new app instance
-    auto_editor_theme(LiteApp::s_darkMode, app);
+    // auto_editor_theme(LiteApp::s_darkMode, app);
+    ThemeManager::apply_to_liteApp(app);
+
     return app;
 }
 

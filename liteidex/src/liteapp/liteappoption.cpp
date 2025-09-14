@@ -34,6 +34,8 @@
 #include <QMessageBox>
 #include <QDebug>
 
+#include "thememanager.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -150,67 +152,6 @@ QString LiteAppOption::mimeType() const
     return OPTION_LITEAPP;
 }
 
-bool guess_dark(QString qss){
-    // printf("--- guess_dark: %s\n", qss.toStdString().c_str());
-    QString dark_keywords[] = { "black", "dark", "night" };
-    QString dark_names[] = { "carbon", "detroit-future", "gray", "sublime" };
-
-    QString qss_lower = qss.toLower();
-
-    for (const QString &keyword : dark_keywords) {
-        if (qss_lower.contains(keyword)) {
-            // qDebug() << "= guess dark by keyword:" << keyword;
-            return true;
-        }
-    }
-    if (qss_lower.endsWith(".qss")) {
-        qss_lower.chop(4);
-    }
-    for (const QString &theme : dark_names) {
-        if (qss_lower == theme) {
-            // qDebug() << "= guess dark by name:" << theme;
-            return true;
-        }
-    }
-
-    return false;
-}
-
-extern void auto_editor_theme(bool is_dark , LiteApi::IApplication *m_liteApp);
-
-void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp){
-    //----1.check if dark
-    bool is_dark = guess_dark(qss);
-    qDebug() << "--- auto_editor_theme guess_dark:" << qss << (is_dark ? "dark" : "light") << " //app:" << m_liteApp;
-
-    auto_editor_theme(is_dark, m_liteApp);
-}
-
-void auto_editor_theme(bool is_dark , LiteApi::IApplication *m_liteApp){
-    //----1.check if dark
-    // bool is_dark = guess_dark(qss);
-    // qDebug() << "--- auto_editor_theme guess_dark:" << (is_dark ? "dark" : "light") << " //app:" << m_liteApp;
-
-    //----2.get editor settings
-    #define EDITOR_STYLE "editor/style"
-    #define EDITOR_STYLE_DARK "editor/style_dark"
-    QString styleName = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
-    QString styleName_dark = m_liteApp->settings()->value(EDITOR_STYLE_DARK,"NOT SET").toString();
-
-    //----3.apply editor theme
-    if (is_dark && styleName_dark != "NOT SET") {
-        // styleName = styleName_dark;
-        qDebug() << "=== auto_editor_theme dark:" << styleName_dark;
-        QString style = styleName_dark;
-        QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
-        m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
-    }else{
-        qDebug() << "=== auto_editor_theme light:" << styleName;
-        QString style = styleName;
-        QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
-        m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
-    }
-}
 
 void LiteAppOption::save()
 {
@@ -295,7 +236,8 @@ void LiteAppOption::save()
             qApp->setStyleSheet(styleSheet);
 
             //chen: auto editor theme
-            auto_editor_theme(qss, m_liteApp);
+            // auto_editor_theme(qss, m_liteApp);
+            ThemeManager::app_theme_changed(qss);
         }
     }
     // qss dark: save

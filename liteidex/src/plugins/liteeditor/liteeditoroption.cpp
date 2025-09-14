@@ -32,6 +32,8 @@
 #include <QStandardItem>
 #include <QDebug>
 
+#include "../liteapp/thememanager.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -124,16 +126,22 @@ void LiteEditorOption::save()
     m_liteApp->settings()->setValue(EDITOR_FONTZOOM,fontZoom);
 
     QString style = ui->styleComboBox->currentText();
+    bool theme_changed = false;
     if (style != m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString()) {
         m_liteApp->settings()->setValue(EDITOR_STYLE,style);
         QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
         m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+        theme_changed = true;
     }
     // CHEN: save style_dark
     QString style_dark = ui->styleComboBox_dark->currentText();
     if (style_dark != m_liteApp->settings()->value(EDITOR_STYLE_DARK,"NOT SET").toString()) {
         m_liteApp->settings()->setValue(EDITOR_STYLE_DARK,style_dark);
         qDebug() << "=== editor_dark_theme save:" << style_dark;
+        theme_changed = true;
+    }
+    if(theme_changed){
+        ThemeManager::editor_theme_changed();
     }
 
     bool noprintCheck = ui->noprintCheckBox->isChecked();
