@@ -105,6 +105,11 @@ void auto_app_theme(QString qss, QApplication &app, LiteApi::IApplication *m_lit
     }
 
     auto_editor_theme(qss, m_liteApp);
+    // foreach(LiteApi::IApplication *liteApp, m_liteApp->appList()) {
+    // foreach(LiteApi::IApplication *liteApp, m_liteApp->instanceList()) {
+    //     qDebug() << " >>> auto_app_theme: - instance:" << liteApp;
+    //     auto_editor_theme(qss, liteApp);
+    // }
 }
 
 void monit_system_theme_change(QApplication *app, LiteApi::IApplication *m_liteApp){
@@ -132,18 +137,23 @@ void monit_system_theme_change(QApplication *app, LiteApi::IApplication *m_liteA
     }
 
     // 监听变化
-    QObject::connect(proc, &QProcess::readyReadStandardOutput, app, [proc, app, m_liteApp]() {
+    // QObject::connect(proc, &QProcess::readyReadStandardOutput, app, [proc, app, m_liteApp]() {
+    QObject::connect(proc, &QProcess::readyReadStandardOutput, app, [proc, app]() {
         while (proc->canReadLine()) {
             QString line = QString::fromUtf8(proc->readLine()).trimmed();
             if (line.contains("color-scheme")) {
                 QString theme = line.section(' ', -1); // 取最后一个单词
 				theme = theme.remove("'");
                 qDebug() << "== system theme changed:" << theme;
+                // qDebug() << "== system theme changed:" << theme << m_liteApp;
 
                 bool is_dark = theme.contains("dark", Qt::CaseInsensitive);
                 QString qss = is_dark ? "gray.qss" : "default.qss";
                 //------- 1. auto theme
-                auto_app_theme(qss, *app, m_liteApp);
+                // auto_app_theme(qss, *app, m_liteApp);
+                foreach(LiteApi::IApplication *liteApp, LiteApp::appList()) {
+                    auto_app_theme(qss, *app, liteApp);
+                }
             }
         }
     });
