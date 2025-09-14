@@ -173,12 +173,27 @@ bool guess_dark(QString qss){
 void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp){
     //----1.check if dark
     bool is_dark = guess_dark(qss);
-    qDebug() << "auto_editor_theme:" << qss << "is_dark?" << is_dark;
+    qDebug() << "--- auto_editor_theme guess_dark:" << qss << (is_dark ? "dark" : "light");
 
-    //----2.apply editor theme (hard-coded theme)
-    QString style = is_dark? "sublime.xml": "visualstudio.xml";
-    QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
-    m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+    //----2.get editor settings
+    #define EDITOR_STYLE "editor/style"
+    #define EDITOR_STYLE_DARK "editor/style_dark"
+    QString styleName = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
+    QString styleName_dark = m_liteApp->settings()->value(EDITOR_STYLE_DARK,"NOT SET").toString();
+
+    //----3.apply editor theme
+    if (is_dark && styleName_dark != "NOT SET") {
+        // styleName = styleName_dark;
+        qDebug() << "=== auto_editor_theme dark:" << styleName_dark;
+        QString style = styleName_dark;
+        QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
+        m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+    }else{
+        qDebug() << "=== auto_editor_theme light:" << styleName;
+        QString style = styleName;
+        QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
+        m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+    }
 }
 
 void LiteAppOption::save()
