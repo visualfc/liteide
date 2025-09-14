@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QDebug>
 
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -127,6 +128,12 @@ void LiteEditorOption::save()
         m_liteApp->settings()->setValue(EDITOR_STYLE,style);
         QString styleFile = m_liteApp->resourcePath()+"/liteeditor/color/"+style;
         m_liteApp->editorManager()->loadColorStyleScheme(styleFile);
+    }
+    // CHEN: save style_dark
+    QString style_dark = ui->styleComboBox_dark->currentText();
+    if (style_dark != m_liteApp->settings()->value(EDITOR_STYLE_DARK,"NOT SET").toString()) {
+        m_liteApp->settings()->setValue(EDITOR_STYLE_DARK,style_dark);
+        qDebug() << "=== editor_dark_theme save:" << style_dark;
     }
 
     bool noprintCheck = ui->noprintCheckBox->isChecked();
@@ -229,23 +236,39 @@ void LiteEditorOption::load()
 
     ui->fontZoomSpinBox->setValue(fontZoom);
 
+    //CHEN: load style_dark
+    QString styleName_dark = m_liteApp->settings()->value(EDITOR_STYLE_DARK,"NOT SET").toString();
     QString styleName = m_liteApp->settings()->value(EDITOR_STYLE,"default.xml").toString();
     QString stylePath = m_liteApp->resourcePath()+"/liteeditor/color";
     QDir dir(stylePath);
+    int index_dark = -1;
     int index = -1;
     if (!QFileInfo(stylePath,styleName).exists()) {
         styleName = "default.xml";
     }
+
+    //----- CHEN: 加载可选 editor theme
     ui->styleComboBox->clear();
+    ui->styleComboBox_dark->clear();
     foreach(QFileInfo info, dir.entryInfoList(QStringList() << "*.xml")) {
         ui->styleComboBox->addItem(info.fileName());
+        ui->styleComboBox_dark->addItem(info.fileName());
         if (info.fileName() == styleName) {
             index = ui->styleComboBox->count()-1;
+        }
+        if (info.fileName() == styleName_dark) {
+            index_dark = ui->styleComboBox_dark->count()-1;
         }
     }
     if (index >= 0 && index < ui->styleComboBox->count()) {
         ui->styleComboBox->setCurrentIndex(index);
     }
+    if (index_dark >= 0 && index_dark < ui->styleComboBox_dark->count()) {
+        ui->styleComboBox_dark->setCurrentIndex(index_dark);
+    }
+    ui->styleComboBox_dark->addItem("NOT SET");
+    qDebug() << "=== editor_dark_theme load:" << styleName_dark;
+
     bool noprintCheck = m_liteApp->settings()->value(EDITOR_NOPRINTCHECK,true).toBool();
     bool autoIndent = m_liteApp->settings()->value(EDITOR_AUTOINDENT,true).toBool();
     bool autoBraces0 = m_liteApp->settings()->value(EDITOR_AUTOBRACE0,true).toBool();
