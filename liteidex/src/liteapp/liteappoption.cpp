@@ -176,10 +176,20 @@ bool guess_dark(QString qss){
     return false;
 }
 
+extern void auto_editor_theme(bool is_dark , LiteApi::IApplication *m_liteApp);
+
 void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp){
     //----1.check if dark
     bool is_dark = guess_dark(qss);
-    qDebug() << "--- auto_editor_theme guess_dark:" << qss << (is_dark ? "dark" : "light");
+    qDebug() << "--- auto_editor_theme guess_dark:" << qss << (is_dark ? "dark" : "light") << " //app:" << m_liteApp;
+
+    auto_editor_theme(is_dark, m_liteApp);
+}
+
+void auto_editor_theme(bool is_dark , LiteApi::IApplication *m_liteApp){
+    //----1.check if dark
+    // bool is_dark = guess_dark(qss);
+    // qDebug() << "--- auto_editor_theme guess_dark:" << (is_dark ? "dark" : "light") << " //app:" << m_liteApp;
 
     //----2.get editor settings
     #define EDITOR_STYLE "editor/style"
