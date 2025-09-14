@@ -95,6 +95,8 @@ private:
 
 //chen:
 extern void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp);
+extern void auto_editor_theme(bool is_dark , LiteApi::IApplication *m_liteApp);
+extern bool guess_dark(QString qss);
 
 void auto_app_theme(QString qss, QApplication &app, LiteApi::IApplication *m_liteApp){
     // QFile f(resPath+"/liteapp/qss/"+qss);
@@ -103,8 +105,11 @@ void auto_app_theme(QString qss, QApplication &app, LiteApi::IApplication *m_lit
         QString styleSheet = QLatin1String(f.readAll());
         app.setStyleSheet(styleSheet);
     }
+ 
+    LiteApp::s_darkMode = guess_dark(qss);
+    auto_editor_theme(LiteApp::s_darkMode, m_liteApp);
 
-    auto_editor_theme(qss, m_liteApp);
+    // auto_editor_theme(qss, m_liteApp);
     // foreach(LiteApi::IApplication *liteApp, m_liteApp->appList()) {
     // foreach(LiteApi::IApplication *liteApp, m_liteApp->instanceList()) {
     //     qDebug() << " >>> auto_app_theme: - instance:" << liteApp;
