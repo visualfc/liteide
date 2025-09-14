@@ -75,6 +75,7 @@ SOURCES += main.cpp\
     folderprojectfactory.cpp \
     goproxy.cpp \
     htmlwidgetmanager.cpp \
+    thememanager.cpp \
     textbrowserhtmlwidget.cpp \
     splitwindowstyle.cpp \
     sidewindowstyle.cpp \
@@ -110,6 +111,7 @@ HEADERS  += mainwindow.h \
     goproxy.h \
     cdrv.h \
     htmlwidgetmanager.h \
+    thememanager.h \
     textbrowserhtmlwidget.h \
     windowstyle.h \
     splitwindowstyle.h \
