@@ -1,3 +1,7 @@
+
+// Module: thememanager.cpp
+// Creator: yurenchen
+
 #pragma once
 
 #include <QObject>

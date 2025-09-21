@@ -1,4 +1,7 @@
 
+// Module: thememanager.cpp
+// Creator: yurenchen
+
 #include <QApplication>
 #include <QObject>
 #include <QProcess>
@@ -118,7 +121,8 @@ void ThemeManager::monit_system_theme(QApplication *app) {
     ThemeManager::app = app;
 
 #if defined(Q_OS_LINUX)
-
+    // TODO: implement it for other desktop environment (currently only gnome is supported)
+    // TODO: improve it without run a gsettings process (currently need gsettings cmd)
     qDebug()<< "=== monit_system_theme_change...";
 
     // 启动 gsettings monitor 进程
@@ -166,9 +170,9 @@ void ThemeManager::monit_system_theme(QApplication *app) {
     });
 
 #elif defined(Q_OS_WIN)
-
+    // TODO: implement it for windows11
 #elif defined(Q_OS_MAC)
-
+    // TODO: implement it for macos
 #else
 
 #endif
