@@ -77,10 +77,6 @@
 
 #define LITEIDE_VERSION "X38.4"
 
-//chen
-extern void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp);
-extern void auto_editor_theme(bool is_dark , LiteApi::IApplication *m_liteApp);
-
 
 QString LiteApp::getRootPath()
 {
@@ -145,7 +141,6 @@ IApplication* LiteApp::NewApplication(const QString &sessionName, IApplication *
     app->load(sessionName,baseApp);
 
     //chen: improve for new app instance
-    // auto_editor_theme(LiteApp::s_darkMode, app);
     ThemeManager::apply_to_liteApp(app);
 
     return app;

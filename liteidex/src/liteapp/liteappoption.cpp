@@ -152,7 +152,6 @@ QString LiteAppOption::mimeType() const
     return OPTION_LITEAPP;
 }
 
-
 void LiteAppOption::save()
 {
     bool storeLocal = ui->storeLocalCheckBox->isChecked();
@@ -236,7 +235,6 @@ void LiteAppOption::save()
             qApp->setStyleSheet(styleSheet);
 
             //chen: auto editor theme
-            // auto_editor_theme(qss, m_liteApp);
             ThemeManager::app_theme_changed(qss);
         }
     }

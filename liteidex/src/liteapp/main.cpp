@@ -93,14 +93,6 @@ private:
 };
 #endif
 
-
-
-//chen:
-// extern void auto_editor_theme(QString qss, LiteApi::IApplication *m_liteApp);
-// extern void auto_editor_theme(bool is_dark , LiteApi::IApplication *m_liteApp);
-// extern bool guess_dark(QString qss);
-
-
 #ifdef LITEAPP_LIBRARY
 int liteapp_main(int argc, char *argv[])
 #else
@@ -238,8 +230,6 @@ int main(int argc, char *argv[])
     //chen: auto editor theme
     ThemeManager themeManager(&app);
     ThemeManager::monit_system_theme(&app);
-    // auto_editor_theme(qss, liteApp);
-    // monit_system_theme_change(&app, liteApp);
 
     foreach(QString file, fileList) {
         QFileInfo f(file);
