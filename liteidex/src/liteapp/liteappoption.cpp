@@ -247,6 +247,7 @@ void LiteAppOption::save()
         // auto_editor_theme(qss, m_liteApp);
     }
     qDebug() << "=== save qss, qss_dark:" << qss << qss_dark;
+    // TODO: improve the dark/light settings UI
 
     bool customelIcon = ui->customIconCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEIDE_CUSTOMEICON,customelIcon);

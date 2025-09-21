@@ -143,6 +143,7 @@ void LiteEditorOption::save()
     if(theme_changed){
         ThemeManager::editor_theme_changed();
     }
+    // TODO: improve the dark/light settings UI
 
     bool noprintCheck = ui->noprintCheckBox->isChecked();
     bool autoIndent = ui->autoIndentCheckBox->isChecked();
