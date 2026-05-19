@@ -22,3 +22,4 @@ export PATH=$QTDIR/bin:$PATH
 
 rm liteide/LiteIDE.app/Contents/Resources/qt.conf
 macdeployqt liteide/LiteIDE.app
+codesign --force --deep --sign - liteide/LiteIDE.app
