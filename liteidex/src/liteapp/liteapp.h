@@ -159,6 +159,7 @@ protected:
 public:
     static QMap<QString,QVariant> s_cookie;
     static QList<IApplication*> s_appList;
+    static bool     s_darkMode; //app dark or light
 protected:
     QAction     *m_newAct;
     QAction     *m_openFileAct;

@@ -62,6 +62,9 @@
 #include <QComboBox>
 #include <QProcessEnvironment>
 #include <QDebug>
+
+#include "thememanager.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -136,6 +139,10 @@ IApplication* LiteApp::NewApplication(const QString &sessionName, IApplication *
 {
     LiteApp *app = new LiteApp;
     app->load(sessionName,baseApp);
+
+    //chen: improve for new app instance
+    ThemeManager::apply_to_liteApp(app);
+
     return app;
 }
 
@@ -153,6 +160,8 @@ QList<IApplication *> LiteApp::appList()
 QMap<QString,QVariant> LiteApp::s_cookie;
 
 QList<IApplication*> LiteApp::s_appList;
+
+bool LiteApp::s_darkMode;
 
 LiteApp::LiteApp()
     : m_rootPath(LiteApp::getRootPath()),
