@@ -2,6 +2,8 @@
 #define GOPLSPLUGIN_H
 
 #include "liteapi/liteapi.h"
+#include <QHash>
+#include <QSet>
 #include <QtPlugin>
 
 class GoplsClient;
@@ -20,13 +22,24 @@ private slots:
     void clientInitialized();
     void clientStopped();
     void clientLog(const QString &message, bool error);
+    void editorCreated(LiteApi::IEditor *editor);
+    void editorAboutToClose(LiteApi::IEditor *editor);
+    void editorSaved(LiteApi::IEditor *editor);
+    void editorContentsChanged();
 
 private:
     QString workspaceRoot() const;
     void setLegacyCompletionEnabled(bool enabled);
+    bool isGoEditor(LiteApi::IEditor *editor) const;
+    QString documentUri(LiteApi::IEditor *editor) const;
+    void openDocument(LiteApi::IEditor *editor);
+    void changeDocument(LiteApi::IEditor *editor);
 
     LiteApi::IApplication *m_liteApp;
     GoplsClient *m_client;
+    QHash<LiteApi::IEditor*,int> m_documentVersions;
+    QSet<LiteApi::IEditor*> m_openDocuments;
+    bool m_ready;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>

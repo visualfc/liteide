@@ -10,7 +10,7 @@
 #include <QJsonObject>
 #include <QUrl>
 
-GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0)
+GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_ready(false)
 {
 }
 
@@ -31,6 +31,9 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(m_client,SIGNAL(initialized()),this,SLOT(clientInitialized()));
     connect(m_client,SIGNAL(stopped()),this,SLOT(clientStopped()));
     connect(m_client,SIGNAL(logMessage(QString,bool)),this,SLOT(clientLog(QString,bool)));
+    connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
+    connect(app->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
+    connect(app->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
     return true;
 }
 
@@ -90,12 +93,19 @@ void GoplsPlugin::appLoaded()
 
 void GoplsPlugin::clientInitialized()
 {
+    m_ready = true;
     m_liteApp->appendLog("Gopls",tr("gopls initialized"));
     setLegacyCompletionEnabled(false);
+    foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
+        editorCreated(editor);
+        openDocument(editor);
+    }
 }
 
 void GoplsPlugin::clientStopped()
 {
+    m_ready = false;
+    m_openDocuments.clear();
     setLegacyCompletionEnabled(true);
 }
 
@@ -113,6 +123,98 @@ void GoplsPlugin::setLegacyCompletionEnabled(bool enabled)
     if (golangCode) {
         QMetaObject::invokeMethod(golangCode,"setGocodeEnabled",Qt::DirectConnection,Q_ARG(bool,enabled));
     }
+}
+
+bool GoplsPlugin::isGoEditor(LiteApi::IEditor *editor) const
+{
+    return editor && editor->mimeType() == "text/x-gosrc" && !editor->filePath().isEmpty();
+}
+
+QString GoplsPlugin::documentUri(LiteApi::IEditor *editor) const
+{
+    return QUrl::fromLocalFile(QFileInfo(editor->filePath()).absoluteFilePath()).toString();
+}
+
+void GoplsPlugin::editorCreated(LiteApi::IEditor *editor)
+{
+    if (!isGoEditor(editor)) {
+        return;
+    }
+    connect(editor,SIGNAL(contentsChanged()),this,SLOT(editorContentsChanged()),Qt::UniqueConnection);
+    if (m_ready) {
+        openDocument(editor);
+    }
+}
+
+void GoplsPlugin::openDocument(LiteApi::IEditor *editor)
+{
+    if (!isGoEditor(editor) || m_openDocuments.contains(editor)) {
+        return;
+    }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) {
+        return;
+    }
+    int version = 1;
+    m_documentVersions.insert(editor,version);
+    QJsonObject textDocument;
+    textDocument.insert("uri",documentUri(editor));
+    textDocument.insert("languageId","go");
+    textDocument.insert("version",version);
+    textDocument.insert("text",QString::fromUtf8(textEditor->utf8Data()));
+    m_client->notify("textDocument/didOpen",QJsonObject{{"textDocument",textDocument}});
+    m_openDocuments.insert(editor);
+}
+
+void GoplsPlugin::changeDocument(LiteApi::IEditor *editor)
+{
+    if (!m_openDocuments.contains(editor)) {
+        openDocument(editor);
+        return;
+    }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) {
+        return;
+    }
+    int version = m_documentVersions.value(editor)+1;
+    m_documentVersions.insert(editor,version);
+    QJsonObject identifier;
+    identifier.insert("uri",documentUri(editor));
+    identifier.insert("version",version);
+    QJsonArray changes;
+    changes.append(QJsonObject{{"text",QString::fromUtf8(textEditor->utf8Data())}});
+    m_client->notify("textDocument/didChange",QJsonObject{{"textDocument",identifier},{"contentChanges",changes}});
+}
+
+void GoplsPlugin::editorContentsChanged()
+{
+    LiteApi::IEditor *editor = qobject_cast<LiteApi::IEditor*>(sender());
+    if (editor && m_ready) {
+        changeDocument(editor);
+    }
+}
+
+void GoplsPlugin::editorSaved(LiteApi::IEditor *editor)
+{
+    if (!m_openDocuments.contains(editor)) {
+        return;
+    }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    QJsonObject params;
+    params.insert("textDocument",QJsonObject{{"uri",documentUri(editor)}});
+    if (textEditor) {
+        params.insert("text",QString::fromUtf8(textEditor->utf8Data()));
+    }
+    m_client->notify("textDocument/didSave",params);
+}
+
+void GoplsPlugin::editorAboutToClose(LiteApi::IEditor *editor)
+{
+    if (m_openDocuments.remove(editor)) {
+        m_client->notify("textDocument/didClose",QJsonObject{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}}});
+    }
+    m_documentVersions.remove(editor);
+    disconnect(editor,0,this,0);
 }
 
 #if QT_VERSION < 0x050000
