@@ -23,16 +23,16 @@
 
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_ready(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
-    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0)
+    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false)
 {
 }
 
 GoplsPlugin::~GoplsPlugin()
 {
-    if (m_liteApp && m_liteApp->extension()) {
-        m_liteApp->extension()->removeObject("LiteApi.IGoplsService");
+    if (m_client) {
+        disconnect(m_client,0,this,0);
+        m_client->stop();
     }
-    setLegacyCompletionEnabled(true);
 }
 
 bool GoplsPlugin::load(LiteApi::IApplication *app)
@@ -74,6 +74,11 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
+    connect(app->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(workspaceChanged()));
+    LiteApi::IEnvManager *envManager = LiteApi::getEnvManager(app);
+    if (envManager) {
+        connect(envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(environmentChanged(LiteApi::IEnv*)));
+    }
     return true;
 }
 
@@ -104,6 +109,10 @@ QString GoplsPlugin::workspaceRoot() const
 
 void GoplsPlugin::appLoaded()
 {
+    m_appLoaded = true;
+    if (m_client->isRunning()) {
+        return;
+    }
     QProcessEnvironment environment = LiteApi::getGoEnvironment(m_liteApp);
     QString program = FileUtil::lookupGoBin("gopls",m_liteApp,environment,true);
     if (program.isEmpty()) {
@@ -772,6 +781,20 @@ void GoplsPlugin::completionAccepted(const QString &text, const QString &, const
     LiteApi::IEditor *editor = m_completerEditors.value(completer,0);
     QJsonArray edits = m_completionAdditionalEdits[completer].take(text);
     if (editor && !edits.isEmpty()) applyTextEdits(documentUri(editor),edits);
+}
+
+void GoplsPlugin::workspaceChanged()
+{
+    if (!m_appLoaded) return;
+    m_ready = false;
+    m_openDocuments.clear();
+    m_client->stop();
+    appLoaded();
+}
+
+void GoplsPlugin::environmentChanged(LiteApi::IEnv *)
+{
+    workspaceChanged();
 }
 
 #if QT_VERSION < 0x050000

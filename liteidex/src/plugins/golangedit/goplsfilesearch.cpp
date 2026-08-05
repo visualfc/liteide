@@ -139,9 +139,6 @@ void GoplsFileSearch::findUsages(LiteApi::ITextEditor *editor, QTextCursor curso
     FileUtil::lookupGoBin("gopls",m_liteApp,env,false);
 
     QString gopls = FileUtil::lookupGoBin("gopls",m_liteApp,env,true);
-    if (gopls.isEmpty()) {
-        gopls = FileUtil::lookPath("dlv",env,false);
-    }
 
     if (gopls.isEmpty()) {
         m_liteApp->appendLog("GolangEdit","gopls was not found on system PATH (hint: is gopls installed?)",true);
@@ -254,4 +251,3 @@ void GoplsFileSearch::findUsagesFinish(bool b, int, QString)
 
     emit findFinished(b);
 }
-

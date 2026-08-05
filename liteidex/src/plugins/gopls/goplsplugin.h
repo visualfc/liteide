@@ -2,6 +2,7 @@
 #define GOPLSPLUGIN_H
 
 #include "liteapi/liteapi.h"
+#include "liteenvapi/liteenvapi.h"
 #include <QHash>
 #include <QSet>
 #include <QTextCursor>
@@ -42,6 +43,8 @@ private slots:
     void formatDocument();
     void organizeImports();
     void completionAccepted(const QString &text, const QString &kind, const QString &info);
+    void workspaceChanged();
+    void environmentChanged(LiteApi::IEnv *environment);
 
 private:
     QString workspaceRoot() const;
@@ -83,6 +86,7 @@ private:
     QHash<int,QString> m_editRequests;
     QHash<int,LiteApi::IEditor*> m_editRequestEditors;
     QHash<QObject*,QHash<QString,QJsonArray> > m_completionAdditionalEdits;
+    bool m_appLoaded;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>
