@@ -54,6 +54,7 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(m_client,SIGNAL(stopped()),this,SLOT(clientStopped()));
     connect(m_client,SIGNAL(logMessage(QString,bool)),this,SLOT(clientLog(QString,bool)));
     connect(m_client,SIGNAL(response(int,QString,QJsonValue,QJsonObject)),this,SLOT(clientResponse(int,QString,QJsonValue,QJsonObject)));
+    connect(m_client,SIGNAL(notification(QString,QJsonValue)),this,SLOT(clientNotification(QString,QJsonValue)));
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
@@ -171,6 +172,10 @@ void GoplsPlugin::editorCreated(LiteApi::IEditor *editor)
         return;
     }
     connect(editor,SIGNAL(contentsChanged()),this,SLOT(editorContentsChanged()),Qt::UniqueConnection);
+    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+    if (liteEditor) {
+        connect(liteEditor,SIGNAL(updateLink(QTextCursor,QPoint,bool)),this,SLOT(hoverRequested(QTextCursor,QPoint,bool)),Qt::UniqueConnection);
+    }
     configureCompleter(editor,m_ready);
     addEditorActions(editor);
     if (m_ready) {
@@ -223,6 +228,15 @@ void GoplsPlugin::editorContentsChanged()
     LiteApi::IEditor *editor = qobject_cast<LiteApi::IEditor*>(sender());
     if (editor && m_ready) {
         changeDocument(editor);
+        LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+        if (textEditor) {
+            QTextCursor cursor = textEditor->textCursor();
+            int pos = cursor.position();
+            QString previous = pos > 0 ? textEditor->textAt(pos-1,1) : QString();
+            if (previous == "(" || previous == ",") {
+                requestSignatureHelp(editor);
+            }
+        }
     }
 }
 
@@ -361,6 +375,32 @@ void GoplsPlugin::clientResponse(int id, const QString &method, const QJsonValue
         }
         return;
     }
+    if (method == "textDocument/hover" || method == "textDocument/signatureHelp") {
+        LiteApi::IEditor *editor = m_hintEditors.take(id);
+        QPoint position = m_hintPositions.take(id);
+        if (!editor || !error.isEmpty() || result.isNull()) {
+            return;
+        }
+        QString text;
+        if (method == "textDocument/hover") {
+            text = markupText(result.toObject().value("contents"));
+        } else {
+            QJsonArray signatures = result.toObject().value("signatures").toArray();
+            if (!signatures.isEmpty()) {
+                QJsonObject signature = signatures.first().toObject();
+                text = signature.value("label").toString();
+                QString documentation = markupText(signature.value("documentation"));
+                if (!documentation.isEmpty()) {
+                    text += "\n"+documentation;
+                }
+            }
+        }
+        LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+        if (liteEditor && !text.isEmpty()) {
+            liteEditor->showToolTipInfo(position,text);
+        }
+        return;
+    }
     if (method != "textDocument/completion") {
         return;
     }
@@ -451,6 +491,85 @@ void GoplsPlugin::requestLocations(const QString &method)
 void GoplsPlugin::goToDefinition() { requestLocations("textDocument/definition"); }
 void GoplsPlugin::findReferences() { requestLocations("textDocument/references"); }
 void GoplsPlugin::findImplementations() { requestLocations("textDocument/implementation"); }
+
+QString GoplsPlugin::markupText(const QJsonValue &value) const
+{
+    if (value.isString()) {
+        return value.toString();
+    }
+    if (value.isObject()) {
+        QJsonObject object = value.toObject();
+        return object.value("value").toString(object.value("language").toString());
+    }
+    if (value.isArray()) {
+        QStringList parts;
+        foreach (QJsonValue part, value.toArray()) {
+            QString text = markupText(part);
+            if (!text.isEmpty()) parts.append(text);
+        }
+        return parts.join("\n");
+    }
+    return QString();
+}
+
+void GoplsPlugin::hoverRequested(const QTextCursor &cursor, const QPoint &position, bool navigation)
+{
+    if (!m_ready || navigation) {
+        return;
+    }
+    LiteApi::ILiteEditor *liteEditor = qobject_cast<LiteApi::ILiteEditor*>(sender());
+    LiteApi::IEditor *editor = liteEditor;
+    if (!isGoEditor(editor) || cursor.selectedText().trimmed().isEmpty()) {
+        return;
+    }
+    QTextCursor requestCursor = cursor;
+    requestCursor.setPosition(cursor.selectionStart());
+    QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
+                       {"position",QJsonObject{{"line",requestCursor.blockNumber()},{"character",requestCursor.positionInBlock()}}}};
+    int id = m_client->request("textDocument/hover",params);
+    m_hintEditors.insert(id,editor);
+    m_hintPositions.insert(id,position);
+}
+
+void GoplsPlugin::requestSignatureHelp(LiteApi::IEditor *editor)
+{
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) return;
+    QTextCursor cursor = textEditor->textCursor();
+    QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
+                       {"position",QJsonObject{{"line",cursor.blockNumber()},{"character",cursor.positionInBlock()}}},
+                       {"context",QJsonObject{{"triggerKind",2}}}};
+    int id = m_client->request("textDocument/signatureHelp",params);
+    QPlainTextEdit *plainTextEdit = LiteApi::getPlainTextEdit(editor);
+    QPoint position;
+    if (plainTextEdit) {
+        position = plainTextEdit->mapToGlobal(plainTextEdit->cursorRect().bottomLeft());
+    }
+    m_hintEditors.insert(id,editor);
+    m_hintPositions.insert(id,position);
+}
+
+void GoplsPlugin::clientNotification(const QString &method, const QJsonValue &paramsValue)
+{
+    if (method != "textDocument/publishDiagnostics") {
+        return;
+    }
+    QJsonObject params = paramsValue.toObject();
+    QString fileName = QUrl(params.value("uri").toString()).toLocalFile();
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
+    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+    if (!liteEditor) {
+        return;
+    }
+    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad,"gopls");
+    foreach (QJsonValue value, params.value("diagnostics").toArray()) {
+        QJsonObject diagnostic = value.toObject();
+        QJsonObject start = diagnostic.value("range").toObject().value("start").toObject();
+        int severity = diagnostic.value("severity").toInt(2);
+        LiteApi::EditorNaviagteType type = severity == 1 ? LiteApi::EditorNavigateError : LiteApi::EditorNavigateWarning;
+        liteEditor->insertNavigateMark(start.value("line").toInt(),type,diagnostic.value("message").toString(),"gopls");
+    }
+}
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)

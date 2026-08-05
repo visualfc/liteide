@@ -5,6 +5,7 @@
 #include <QHash>
 #include <QSet>
 #include <QTextCursor>
+#include <QPoint>
 #include <QtPlugin>
 
 class GoplsClient;
@@ -34,6 +35,8 @@ private slots:
     void goToDefinition();
     void findReferences();
     void findImplementations();
+    void clientNotification(const QString &method, const QJsonValue &params);
+    void hoverRequested(const QTextCursor &cursor, const QPoint &position, bool navigation);
 
 private:
     QString workspaceRoot() const;
@@ -46,6 +49,8 @@ private:
     QString completionKind(int kind) const;
     void requestLocations(const QString &method);
     void addEditorActions(LiteApi::IEditor *editor);
+    void requestSignatureHelp(LiteApi::IEditor *editor);
+    QString markupText(const QJsonValue &value) const;
 
     LiteApi::IApplication *m_liteApp;
     GoplsClient *m_client;
@@ -63,6 +68,8 @@ private:
     QAction *m_definitionAction;
     QAction *m_referencesAction;
     QAction *m_implementationAction;
+    QHash<int,LiteApi::IEditor*> m_hintEditors;
+    QHash<int,QPoint> m_hintPositions;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>
