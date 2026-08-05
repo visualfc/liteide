@@ -19,11 +19,13 @@ public:
     bool isRunning() const;
     int request(const QString &method, const QJsonValue &params);
     void notify(const QString &method, const QJsonValue &params = QJsonValue());
+    void reply(int id, const QJsonValue &result);
 
 signals:
     void initialized();
     void response(int id, const QString &method, const QJsonValue &result, const QJsonObject &error);
     void notification(const QString &method, const QJsonValue &params);
+    void serverRequest(int id, const QString &method, const QJsonValue &params);
     void logMessage(const QString &message, bool error);
     void stopped();
 

@@ -85,6 +85,15 @@ void GoplsClient::notify(const QString &method, const QJsonValue &params)
     writeMessage(message);
 }
 
+void GoplsClient::reply(int id, const QJsonValue &result)
+{
+    QJsonObject message;
+    message.insert("jsonrpc","2.0");
+    message.insert("id",id);
+    message.insert("result",result);
+    writeMessage(message);
+}
+
 void GoplsClient::writeMessage(const QJsonObject &message)
 {
     if (!isRunning()) {
@@ -136,7 +145,11 @@ void GoplsClient::readOutput()
 void GoplsClient::dispatch(const QJsonObject &message)
 {
     if (message.contains("method")) {
-        emit notification(message.value("method").toString(),message.value("params"));
+        if (message.contains("id")) {
+            emit serverRequest(message.value("id").toInt(),message.value("method").toString(),message.value("params"));
+        } else {
+            emit notification(message.value("method").toString(),message.value("params"));
+        }
         return;
     }
     int id = message.value("id").toInt();

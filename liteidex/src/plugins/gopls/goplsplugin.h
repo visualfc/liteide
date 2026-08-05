@@ -37,6 +37,11 @@ private slots:
     void findImplementations();
     void clientNotification(const QString &method, const QJsonValue &params);
     void hoverRequested(const QTextCursor &cursor, const QPoint &position, bool navigation);
+    void serverRequest(int id, const QString &method, const QJsonValue &params);
+    void renameSymbol();
+    void formatDocument();
+    void organizeImports();
+    void completionAccepted(const QString &text, const QString &kind, const QString &info);
 
 private:
     QString workspaceRoot() const;
@@ -51,6 +56,8 @@ private:
     void addEditorActions(LiteApi::IEditor *editor);
     void requestSignatureHelp(LiteApi::IEditor *editor);
     QString markupText(const QJsonValue &value) const;
+    void applyWorkspaceEdit(const QJsonObject &workspaceEdit);
+    void applyTextEdits(const QString &uri, QJsonArray edits);
 
     LiteApi::IApplication *m_liteApp;
     GoplsClient *m_client;
@@ -70,6 +77,12 @@ private:
     QAction *m_implementationAction;
     QHash<int,LiteApi::IEditor*> m_hintEditors;
     QHash<int,QPoint> m_hintPositions;
+    QAction *m_renameAction;
+    QAction *m_formatAction;
+    QAction *m_organizeImportsAction;
+    QHash<int,QString> m_editRequests;
+    QHash<int,LiteApi::IEditor*> m_editRequestEditors;
+    QHash<QObject*,QHash<QString,QJsonArray> > m_completionAdditionalEdits;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>

@@ -8,16 +8,22 @@
 
 #include <QCoreApplication>
 #include <QAction>
+#include <QFile>
+#include <QInputDialog>
 #include <QDir>
 #include <QFileInfo>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QStandardItem>
+#include <QTextBlock>
+#include <QTextDocument>
 #include <QUrl>
+#include <algorithm>
 
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_ready(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
+    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0)
 {
 }
 
@@ -42,12 +48,21 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     m_definitionAction = new QAction(tr("Go to Definition (gopls)"),this);
     m_referencesAction = new QAction(tr("Find References (gopls)"),this);
     m_implementationAction = new QAction(tr("Find Implementations (gopls)"),this);
+    m_renameAction = new QAction(tr("Rename Symbol (gopls)"),this);
+    m_formatAction = new QAction(tr("Format Document (gopls)"),this);
+    m_organizeImportsAction = new QAction(tr("Organize Imports (gopls)"),this);
     actions->regAction(m_definitionAction,"Definition","");
     actions->regAction(m_referencesAction,"References","");
     actions->regAction(m_implementationAction,"Implementation","");
+    actions->regAction(m_renameAction,"Rename","");
+    actions->regAction(m_formatAction,"Format","");
+    actions->regAction(m_organizeImportsAction,"OrganizeImports","");
     connect(m_definitionAction,SIGNAL(triggered()),this,SLOT(goToDefinition()));
     connect(m_referencesAction,SIGNAL(triggered()),this,SLOT(findReferences()));
     connect(m_implementationAction,SIGNAL(triggered()),this,SLOT(findImplementations()));
+    connect(m_renameAction,SIGNAL(triggered()),this,SLOT(renameSymbol()));
+    connect(m_formatAction,SIGNAL(triggered()),this,SLOT(formatDocument()));
+    connect(m_organizeImportsAction,SIGNAL(triggered()),this,SLOT(organizeImports()));
     app->extension()->addObject("LiteApi.IGoplsService",m_client);
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_client,SIGNAL(initialized()),this,SLOT(clientInitialized()));
@@ -55,6 +70,7 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(m_client,SIGNAL(logMessage(QString,bool)),this,SLOT(clientLog(QString,bool)));
     connect(m_client,SIGNAL(response(int,QString,QJsonValue,QJsonObject)),this,SLOT(clientResponse(int,QString,QJsonValue,QJsonObject)));
     connect(m_client,SIGNAL(notification(QString,QJsonValue)),this,SLOT(clientNotification(QString,QJsonValue)));
+    connect(m_client,SIGNAL(serverRequest(int,QString,QJsonValue)),this,SLOT(serverRequest(int,QString,QJsonValue)));
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
@@ -283,6 +299,7 @@ void GoplsPlugin::configureCompleter(LiteApi::IEditor *editor, bool enabled)
         completer->setSearchSeparator(false);
         completer->setExternalMode(true);
         connect(completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(completionRequested(QTextCursor,QString,bool)),Qt::UniqueConnection);
+        connect(completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(completionAccepted(QString,QString,QString)),Qt::UniqueConnection);
         m_completerEditors.insert(completer,editor);
     }
 }
@@ -346,6 +363,39 @@ QString GoplsPlugin::completionKind(int kind) const
 
 void GoplsPlugin::clientResponse(int id, const QString &method, const QJsonValue &result, const QJsonObject &error)
 {
+    if (method == "textDocument/rename" || method == "textDocument/formatting" || method == "textDocument/codeAction") {
+        QString operation = m_editRequests.take(id);
+        LiteApi::IEditor *editor = m_editRequestEditors.take(id);
+        if (!error.isEmpty()) {
+            clientLog(error.value("message").toString(),true);
+            return;
+        }
+        if (method == "textDocument/rename") {
+            applyWorkspaceEdit(result.toObject());
+        } else if (method == "textDocument/formatting") {
+            if (editor) applyTextEdits(documentUri(editor),result.toArray());
+        } else {
+            QJsonArray actions = result.toArray();
+            foreach (QJsonValue value, actions) {
+                QJsonObject action = value.toObject();
+                if (action.contains("edit")) {
+                    applyWorkspaceEdit(action.value("edit").toObject());
+                    break;
+                }
+                QJsonObject command = action.value("command").toObject();
+                if (command.isEmpty() && action.contains("command") && action.value("command").isString()) {
+                    command = action;
+                }
+                if (!command.isEmpty()) {
+                    m_client->request("workspace/executeCommand",QJsonObject{{"command",command.value("command")},
+                                                                             {"arguments",command.value("arguments")}});
+                    break;
+                }
+            }
+        }
+        Q_UNUSED(operation);
+        return;
+    }
     if (method == "textDocument/definition" || method == "textDocument/references" || method == "textDocument/implementation") {
         QString requestMethod = m_locationRequests.take(id);
         QString searchText = m_locationSearchText.take(id);
@@ -421,6 +471,7 @@ void GoplsPlugin::clientResponse(int id, const QString &method, const QJsonValue
     QJsonArray items = result.isArray() ? result.toArray() : result.toObject().value("items").toArray();
     QStandardItem *root = completer->findRoot(rootName);
     completer->clearChildItem(root);
+    m_completionAdditionalEdits[completer].clear();
     LiteApi::IGolangAst *ast = LiteApi::findExtensionObject<LiteApi::IGolangAst*>(m_liteApp,"LiteApi.IGolangAst");
     int count = 0;
     foreach (QJsonValue value, items) {
@@ -444,6 +495,10 @@ void GoplsPlugin::clientResponse(int id, const QString &method, const QJsonValue
             icon = ast->iconFromTagEnum(tag,true);
         }
         completer->appendChildItem(root,label,kind,detail,icon,true);
+        QJsonArray additionalEdits = item.value("additionalTextEdits").toArray();
+        if (!additionalEdits.isEmpty()) {
+            m_completionAdditionalEdits[completer].insert(label,additionalEdits);
+        }
         count++;
     }
     if (count) {
@@ -465,6 +520,10 @@ void GoplsPlugin::addEditorActions(LiteApi::IEditor *editor)
             menu->addAction(m_definitionAction);
             menu->addAction(m_referencesAction);
             menu->addAction(m_implementationAction);
+            menu->addSeparator();
+            menu->addAction(m_renameAction);
+            menu->addAction(m_formatAction);
+            menu->addAction(m_organizeImportsAction);
         }
     }
 }
@@ -569,6 +628,150 @@ void GoplsPlugin::clientNotification(const QString &method, const QJsonValue &pa
         LiteApi::EditorNaviagteType type = severity == 1 ? LiteApi::EditorNavigateError : LiteApi::EditorNavigateWarning;
         liteEditor->insertNavigateMark(start.value("line").toInt(),type,diagnostic.value("message").toString(),"gopls");
     }
+}
+
+struct GoplsTextEditGreater
+{
+    bool operator()(const QJsonValue &leftValue, const QJsonValue &rightValue) const {
+        QJsonObject left = leftValue.toObject().value("range").toObject().value("start").toObject();
+        QJsonObject right = rightValue.toObject().value("range").toObject().value("start").toObject();
+        int leftLine = left.value("line").toInt();
+        int rightLine = right.value("line").toInt();
+        return leftLine == rightLine ? left.value("character").toInt() > right.value("character").toInt() : leftLine > rightLine;
+    }
+};
+
+void GoplsPlugin::applyTextEdits(const QString &uri, QJsonArray edits)
+{
+    if (edits.isEmpty()) return;
+    QList<QJsonValue> sortedEdits;
+    foreach (QJsonValue edit, edits) sortedEdits.append(edit);
+    std::sort(sortedEdits.begin(),sortedEdits.end(),GoplsTextEditGreater());
+    QString fileName = QUrl(uri).toLocalFile();
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (textEditor) {
+        QTextCursor cursor(textEditor->document());
+        cursor.beginEditBlock();
+        foreach (QJsonValue value, sortedEdits) {
+            QJsonObject edit = value.toObject();
+            QJsonObject range = edit.value("range").toObject();
+            QJsonObject start = range.value("start").toObject();
+            QJsonObject end = range.value("end").toObject();
+            QTextBlock startBlock = textEditor->document()->findBlockByNumber(start.value("line").toInt());
+            QTextBlock endBlock = textEditor->document()->findBlockByNumber(end.value("line").toInt());
+            if (!startBlock.isValid() || !endBlock.isValid()) continue;
+            cursor.setPosition(startBlock.position()+start.value("character").toInt());
+            cursor.setPosition(endBlock.position()+end.value("character").toInt(),QTextCursor::KeepAnchor);
+            cursor.insertText(edit.value("newText").toString());
+        }
+        cursor.endEditBlock();
+        return;
+    }
+
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) return;
+    QString text = QString::fromUtf8(file.readAll());
+    file.close();
+    foreach (QJsonValue value, sortedEdits) {
+        QJsonObject edit = value.toObject();
+        QJsonObject range = edit.value("range").toObject();
+        QJsonObject start = range.value("start").toObject();
+        QJsonObject end = range.value("end").toObject();
+        QStringList lines = text.split('\n',Qt::KeepEmptyParts);
+        int startOffset = 0;
+        int endOffset = 0;
+        for (int line = 0; line < start.value("line").toInt() && line < lines.size(); ++line) startOffset += lines.at(line).size()+1;
+        for (int line = 0; line < end.value("line").toInt() && line < lines.size(); ++line) endOffset += lines.at(line).size()+1;
+        startOffset += start.value("character").toInt();
+        endOffset += end.value("character").toInt();
+        text.replace(startOffset,endOffset-startOffset,edit.value("newText").toString());
+    }
+    if (file.open(QFile::WriteOnly|QFile::Truncate)) {
+        file.write(text.toUtf8());
+    }
+}
+
+void GoplsPlugin::applyWorkspaceEdit(const QJsonObject &workspaceEdit)
+{
+    QJsonObject changes = workspaceEdit.value("changes").toObject();
+    foreach (QString uri, changes.keys()) applyTextEdits(uri,changes.value(uri).toArray());
+    foreach (QJsonValue value, workspaceEdit.value("documentChanges").toArray()) {
+        QJsonObject change = value.toObject();
+        if (change.contains("edits")) {
+            applyTextEdits(change.value("textDocument").toObject().value("uri").toString(),change.value("edits").toArray());
+        }
+    }
+}
+
+void GoplsPlugin::serverRequest(int id, const QString &method, const QJsonValue &params)
+{
+    if (method == "workspace/applyEdit") {
+        applyWorkspaceEdit(params.toObject().value("edit").toObject());
+        m_client->reply(id,QJsonObject{{"applied",true}});
+    } else if (method == "workspace/configuration") {
+        QJsonArray result;
+        foreach (QJsonValue item, params.toObject().value("items").toArray()) {
+            Q_UNUSED(item);
+            result.append(QJsonObject());
+        }
+        m_client->reply(id,result);
+    } else {
+        m_client->reply(id,QJsonValue());
+    }
+}
+
+void GoplsPlugin::renameSymbol()
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!m_ready || !isGoEditor(editor) || !textEditor) return;
+    bool ok = false;
+    QString oldName = LiteApi::wordUnderCursor(textEditor->textCursor());
+    QString newName = QInputDialog::getText(m_liteApp->mainWindow(),tr("Rename Symbol"),tr("New name:"),QLineEdit::Normal,oldName,&ok);
+    if (!ok || newName.isEmpty() || newName == oldName) return;
+    QTextCursor cursor = textEditor->textCursor();
+    QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
+                       {"position",QJsonObject{{"line",cursor.blockNumber()},{"character",cursor.positionInBlock()}}},
+                       {"newName",newName}};
+    int id = m_client->request("textDocument/rename",params);
+    m_editRequests.insert(id,"rename");
+    m_editRequestEditors.insert(id,editor);
+}
+
+void GoplsPlugin::formatDocument()
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!m_ready || !isGoEditor(editor)) return;
+    QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
+                       {"options",QJsonObject{{"tabSize",4},{"insertSpaces",false}}}};
+    int id = m_client->request("textDocument/formatting",params);
+    m_editRequests.insert(id,"format");
+    m_editRequestEditors.insert(id,editor);
+}
+
+void GoplsPlugin::organizeImports()
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (!m_ready || !isGoEditor(editor)) return;
+    QJsonObject zero{{"line",0},{"character",0}};
+    QJsonArray only;
+    only.append("source.organizeImports");
+    QJsonObject context{{"diagnostics",QJsonArray()},{"only",only}};
+    QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
+                       {"range",QJsonObject{{"start",zero},{"end",zero}}},
+                       {"context",context}};
+    int id = m_client->request("textDocument/codeAction",params);
+    m_editRequests.insert(id,"organizeImports");
+    m_editRequestEditors.insert(id,editor);
+}
+
+void GoplsPlugin::completionAccepted(const QString &text, const QString &, const QString &)
+{
+    QObject *completer = sender();
+    LiteApi::IEditor *editor = m_completerEditors.value(completer,0);
+    QJsonArray edits = m_completionAdditionalEdits[completer].take(text);
+    if (editor && !edits.isEmpty()) applyTextEdits(documentUri(editor),edits);
 }
 
 #if QT_VERSION < 0x050000
