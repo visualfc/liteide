@@ -49,6 +49,7 @@ bool GolangCodePlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
     m_code = new GolangCode(app,this);
+    app->extension()->addObject("LiteApi.GolangCode",m_code);
 
     //app->optionManager()->addFactory(new GolangCodeOptionFactory(app,this));
     connect(app->editorManager(),SIGNAL(editorCreated(LiteApi::IEditor*)),this,SLOT(editorCreated(LiteApi::IEditor*)));
