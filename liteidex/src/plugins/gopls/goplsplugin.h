@@ -8,6 +8,8 @@
 #include <QtPlugin>
 
 class GoplsClient;
+class GoplsSearchResults;
+class QAction;
 
 class GoplsPlugin : public LiteApi::IPlugin
 {
@@ -29,6 +31,9 @@ private slots:
     void editorContentsChanged();
     void completionRequested(QTextCursor cursor, QString prefix, bool force);
     void clientResponse(int id, const QString &method, const QJsonValue &result, const QJsonObject &error);
+    void goToDefinition();
+    void findReferences();
+    void findImplementations();
 
 private:
     QString workspaceRoot() const;
@@ -39,6 +44,8 @@ private:
     void changeDocument(LiteApi::IEditor *editor);
     void configureCompleter(LiteApi::IEditor *editor, bool enabled);
     QString completionKind(int kind) const;
+    void requestLocations(const QString &method);
+    void addEditorActions(LiteApi::IEditor *editor);
 
     LiteApi::IApplication *m_liteApp;
     GoplsClient *m_client;
@@ -50,6 +57,12 @@ private:
     QHash<int,QString> m_completionPrefixes;
     QHash<int,QString> m_completionRoots;
     QHash<LiteApi::IEditor*,int> m_pendingCompletions;
+    QHash<int,QString> m_locationRequests;
+    QHash<int,QString> m_locationSearchText;
+    GoplsSearchResults *m_searchResults;
+    QAction *m_definitionAction;
+    QAction *m_referencesAction;
+    QAction *m_implementationAction;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>
@@ -68,6 +81,7 @@ public:
         m_info->setInfo("Go language server support");
         m_info->appendDepend("plugin/liteenv");
         m_info->appendDepend("plugin/golangast");
+        m_info->appendDepend("plugin/litefind");
     }
 };
 

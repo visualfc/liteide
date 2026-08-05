@@ -1,11 +1,13 @@
 #include "goplsplugin.h"
 #include "goplsclient.h"
+#include "goplssearchresults.h"
 #include "liteenvapi/liteenvapi.h"
 #include "golangastapi/golangastapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "fileutil/fileutil.h"
 
 #include <QCoreApplication>
+#include <QAction>
 #include <QDir>
 #include <QFileInfo>
 #include <QJsonArray>
@@ -14,7 +16,8 @@
 #include <QStandardItem>
 #include <QUrl>
 
-GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_ready(false)
+GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_ready(false),
+    m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
 {
 }
 
@@ -30,6 +33,21 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
     m_client = new GoplsClient(this);
+    m_searchResults = new GoplsSearchResults(this);
+    LiteApi::IFileSearchManager *searchManager = LiteApi::getFileSearchManager(app);
+    if (searchManager) {
+        searchManager->addFileSearch(m_searchResults);
+    }
+    LiteApi::IActionContext *actions = app->actionManager()->getActionContext(this,"Gopls");
+    m_definitionAction = new QAction(tr("Go to Definition (gopls)"),this);
+    m_referencesAction = new QAction(tr("Find References (gopls)"),this);
+    m_implementationAction = new QAction(tr("Find Implementations (gopls)"),this);
+    actions->regAction(m_definitionAction,"Definition","");
+    actions->regAction(m_referencesAction,"References","");
+    actions->regAction(m_implementationAction,"Implementation","");
+    connect(m_definitionAction,SIGNAL(triggered()),this,SLOT(goToDefinition()));
+    connect(m_referencesAction,SIGNAL(triggered()),this,SLOT(findReferences()));
+    connect(m_implementationAction,SIGNAL(triggered()),this,SLOT(findImplementations()));
     app->extension()->addObject("LiteApi.IGoplsService",m_client);
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_client,SIGNAL(initialized()),this,SLOT(clientInitialized()));
@@ -44,7 +62,7 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
 
 QStringList GoplsPlugin::dependPluginList() const
 {
-    return QStringList() << "plugin/liteenv" << "plugin/golangast";
+    return QStringList() << "plugin/liteenv" << "plugin/golangast" << "plugin/litefind";
 }
 
 QString GoplsPlugin::workspaceRoot() const
@@ -154,6 +172,7 @@ void GoplsPlugin::editorCreated(LiteApi::IEditor *editor)
     }
     connect(editor,SIGNAL(contentsChanged()),this,SLOT(editorContentsChanged()),Qt::UniqueConnection);
     configureCompleter(editor,m_ready);
+    addEditorActions(editor);
     if (m_ready) {
         openDocument(editor);
     }
@@ -313,6 +332,35 @@ QString GoplsPlugin::completionKind(int kind) const
 
 void GoplsPlugin::clientResponse(int id, const QString &method, const QJsonValue &result, const QJsonObject &error)
 {
+    if (method == "textDocument/definition" || method == "textDocument/references" || method == "textDocument/implementation") {
+        QString requestMethod = m_locationRequests.take(id);
+        QString searchText = m_locationSearchText.take(id);
+        if (!error.isEmpty()) {
+            clientLog(error.value("message").toString(),true);
+            return;
+        }
+        QJsonArray locations = result.isArray() ? result.toArray() : QJsonArray{result};
+        if (requestMethod == "textDocument/definition") {
+            if (!locations.isEmpty()) {
+                QJsonObject location = locations.first().toObject();
+                QString uri = location.value("uri").toString();
+                QJsonObject range = location.value("range").toObject();
+                if (uri.isEmpty()) {
+                    uri = location.value("targetUri").toString();
+                    range = location.value("targetSelectionRange").toObject();
+                }
+                QJsonObject start = range.value("start").toObject();
+                LiteApi::gotoLine(m_liteApp,QUrl(uri).toLocalFile(),start.value("line").toInt(),start.value("character").toInt(),true,true);
+            }
+        } else {
+            LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(m_liteApp);
+            if (manager) {
+                manager->setCurrentSearch(m_searchResults);
+                m_searchResults->showLocations(requestMethod == "textDocument/references" ? tr("References") : tr("Implementations"),searchText,locations);
+            }
+        }
+        return;
+    }
     if (method != "textDocument/completion") {
         return;
     }
@@ -363,6 +411,46 @@ void GoplsPlugin::clientResponse(int id, const QString &method, const QJsonValue
         completer->showPopup();
     }
 }
+
+void GoplsPlugin::addEditorActions(LiteApi::IEditor *editor)
+{
+    if (!isGoEditor(editor)) {
+        return;
+    }
+    QMenu *editMenu = LiteApi::getEditMenu(editor);
+    QMenu *contextMenu = LiteApi::getContextMenu(editor);
+    foreach (QMenu *menu, QList<QMenu*>() << editMenu << contextMenu) {
+        if (menu) {
+            menu->addSeparator();
+            menu->addAction(m_definitionAction);
+            menu->addAction(m_referencesAction);
+            menu->addAction(m_implementationAction);
+        }
+    }
+}
+
+void GoplsPlugin::requestLocations(const QString &method)
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!m_ready || !isGoEditor(editor) || !textEditor) {
+        return;
+    }
+    QTextCursor cursor = textEditor->textCursor();
+    QString searchText = LiteApi::wordUnderCursor(cursor);
+    QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
+                       {"position",QJsonObject{{"line",cursor.blockNumber()},{"character",cursor.positionInBlock()}}}};
+    if (method == "textDocument/references") {
+        params.insert("context",QJsonObject{{"includeDeclaration",true}});
+    }
+    int id = m_client->request(method,params);
+    m_locationRequests.insert(id,method);
+    m_locationSearchText.insert(id,searchText);
+}
+
+void GoplsPlugin::goToDefinition() { requestLocations("textDocument/definition"); }
+void GoplsPlugin::findReferences() { requestLocations("textDocument/references"); }
+void GoplsPlugin::findImplementations() { requestLocations("textDocument/implementation"); }
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(PluginFactory,PluginFactory)
