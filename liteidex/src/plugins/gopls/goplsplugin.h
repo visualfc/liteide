@@ -12,6 +12,7 @@
 class GoplsClient;
 class GoplsSearchResults;
 class QAction;
+namespace LiteApi { class ICompleter; }
 
 class GoplsPlugin : public LiteApi::IPlugin
 {
@@ -28,6 +29,7 @@ private slots:
     void clientStopped();
     void clientLog(const QString &message, bool error);
     void editorCreated(LiteApi::IEditor *editor);
+    void currentEditorChanged(LiteApi::IEditor *editor);
     void editorAboutToClose(LiteApi::IEditor *editor);
     void editorSaved(LiteApi::IEditor *editor);
     void editorContentsChanged();
@@ -55,6 +57,10 @@ private:
     void changeDocument(LiteApi::IEditor *editor);
     void configureCompleter(LiteApi::IEditor *editor, bool enabled);
     QString completionKind(int kind) const;
+    void handleEditResponse(int id, const QString &method, const QJsonValue &result, const QJsonObject &error);
+    void handleLocationResponse(int id, const QJsonValue &result, const QJsonObject &error);
+    void handleHintResponse(int id, const QString &method, const QJsonValue &result, const QJsonObject &error);
+    void handleCompletionResponse(int id, const QJsonValue &result, const QJsonObject &error);
     void requestLocations(const QString &method);
     void addEditorActions(LiteApi::IEditor *editor);
     void requestSignatureHelp(LiteApi::IEditor *editor);
@@ -64,10 +70,10 @@ private:
 
     LiteApi::IApplication *m_liteApp;
     GoplsClient *m_client;
+    LiteApi::ICompleter *m_completer;
     QHash<LiteApi::IEditor*,int> m_documentVersions;
     QSet<LiteApi::IEditor*> m_openDocuments;
     bool m_ready;
-    QHash<QObject*,LiteApi::IEditor*> m_completerEditors;
     QHash<int,LiteApi::IEditor*> m_completionEditors;
     QHash<int,QString> m_completionPrefixes;
     QHash<int,QString> m_completionRoots;
