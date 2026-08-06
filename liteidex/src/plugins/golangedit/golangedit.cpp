@@ -85,6 +85,7 @@ static QString getGocode(LiteApi::IApplication *app)
 GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     QObject(parent), m_liteApp(app), m_gorootSourceReadOnly(false), m_useGoModule(false)
 {
+    m_sourceQueryOutput = 0;
     LiteApi::IActionContext *actionContext = m_liteApp->actionManager()->getActionContext(this,"GolangEdit");
 
     m_viewGodocAct = new QAction(tr("View import package use godoc"),this);
@@ -134,7 +135,9 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_findDefProcess = new Process(this);
     m_findInfoProcess = new Process(this);
     m_findLinkProcess = new Process(this);
+#if 0 // Source Query is superseded by gopls.
     m_sourceQueryProcess = new Process(this);
+#endif
     m_enableMouseUnderInfo = true;
     m_enableMouseNavigation = true;
     m_useGocodeInfo = true;
@@ -168,10 +171,11 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
         connect(m_fileSearch,SIGNAL(searchTextChanged(QString)),this,SLOT(searchTextChanged(QString)));
     }
 
+    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
+
+#if 0 // Source Query is superseded by gopls.
     connect(m_sourceQueryProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(sourceQueryFinished(int,QProcess::ExitStatus)));
     connect(m_sourceQueryProcess,SIGNAL(error(QProcess::ProcessError)),this,SLOT(sourcequeryError(QProcess::ProcessError)));
-
-    connect(m_liteApp->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
 
     m_sourceQueryOutput = new TextOutput(m_liteApp,true);
     m_sourceQueryOutput->setLineWrap(false);
@@ -237,6 +241,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
     m_sourceWhicherrs = new QAction(tr("Whicherrs"),this);
     actionContext->regAction(m_sourceWhicherrs,"SourceQueryWhicherrs","");
     connect(m_sourceWhicherrs,SIGNAL(triggered()),this,SLOT(sourceWhicherrs()));
+#endif
 
     m_goAddTagsAct = new QAction(tr("Add Tags To Struct Field"),this);
     actionContext->regAction(m_goAddTagsAct,"GoAddTags","");
@@ -406,6 +411,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_goplsAllReferencesAct);
         menu->addAction(m_goplsAllImplementationsAct);
+#if 0 // Source Query is superseded by gopls.
         menu->addSeparator();
         menu->addAction(m_sourceWhatAct);
         sub = menu->addMenu(tr("SourceQuery"));
@@ -421,6 +427,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourcePointstoAct);
         sub->addAction(m_sourceReferrersAct);
         sub->addAction(m_sourceWhicherrs);
+#endif
 
         menu->addSeparator();
         menu->addAction(m_goAddTagsAct);
@@ -447,6 +454,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         menu->addSeparator();
         menu->addAction(m_goplsAllReferencesAct);
         menu->addAction(m_goplsAllImplementationsAct);
+#if 0 // Source Query is superseded by gopls.
         menu->addSeparator();
         menu->addAction(m_sourceWhatAct);
         sub = menu->addMenu(tr("SourceQuery"));
@@ -462,6 +470,7 @@ void GolangEdit::editorCreated(LiteApi::IEditor *editor)
         sub->addAction(m_sourcePointstoAct);
         sub->addAction(m_sourceReferrersAct);
         sub->addAction(m_sourceWhicherrs);
+#endif
 
         menu->addSeparator();
         menu->addAction(m_goAddTagsAct);
@@ -1249,6 +1258,7 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
     QString cmd;
     QString cmdName;
 
+#if 0 // guru is obsolete; keep the implementation for reference.
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,env,true);
 
@@ -1259,6 +1269,10 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
         m_liteApp->appendLog("GolangEdit","guru was not found on system PATH (hint: is guru installed? \"go install golang.org/x/tools/cmd/guru@latest\")",true);
         return;
     }
+#else
+    cmd = LiteApi::getGotools(m_liteApp);
+    cmdName = "oracle";
+#endif
 
     m_sourceQueryOutputAct->setChecked(true);
 
@@ -1284,6 +1298,7 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
 
     QString fileName = info.fileName();
     QStringList args;
+#if 0 // guru is obsolete; keep the implementation for reference.
     if (!guruFilePath.isEmpty()) {
         args << "-scope" << scope;
         args << action;
@@ -1293,6 +1308,7 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
             args << QString("\"%1:#%2,#%3\"").arg(fileName).arg(offset).arg(offset2);
         }
     } else {
+#endif
         args << "oracle";
         if (offset2 -= 1) {
             args << QString("-pos \"%1:#%2\"").arg(fileName).arg(offset);
@@ -1301,7 +1317,9 @@ void GolangEdit::runSourceQueryAction(const QString &action, const QString &scop
         }
         args << action;
         args << scope;
+#if 0
     }
+#endif
     m_sourceQueryProcess->startEx(cmd,args);
 }
 
@@ -1314,6 +1332,7 @@ void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scop
     QString cmd;
     QString cmdName;
 
+#if 0 // guru is obsolete; keep the implementation for reference.
     QProcessEnvironment env = LiteApi::getGoEnvironment(m_liteApp);
     QString guruFilePath = FileUtil::lookupGoBin("guru",m_liteApp,env,true);
 
@@ -1324,6 +1343,10 @@ void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scop
         cmd = LiteApi::getGotools(m_liteApp);
         cmdName = "oracle";
     }
+#else
+    cmd = LiteApi::getGotools(m_liteApp);
+    cmdName = "oracle";
+#endif
 
     m_sourceQueryInfo.cmdName = cmdName;
     int offset = m_sourceQueryInfo.offset;
@@ -1336,6 +1359,7 @@ void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scop
 
     QString fileName = m_sourceQueryInfo.fileName;
     QStringList args;
+#if 0 // guru is obsolete; keep the implementation for reference.
     if (!guruFilePath.isEmpty()) {
         args << "-scope" << scope;
         args << action;
@@ -1345,6 +1369,7 @@ void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scop
             args << QString("\"%1:#%2,#%3\"").arg(fileName).arg(offset).arg(offset2);
         }
     } else {
+#endif
         args << "oracle";
         if (offset2 -= 1) {
             args << QString("-pos \"%1:#%2\"").arg(fileName).arg(offset);
@@ -1353,7 +1378,9 @@ void GolangEdit::runSourceQueryByInfo(const QString &action, const QString &scop
         }
         args << action;
         args << scope;
+#if 0
     }
+#endif
     m_sourceQueryProcess->startEx(cmd,args);
 }
 
