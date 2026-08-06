@@ -21,11 +21,15 @@ public:
     virtual bool canCancel() const;
     virtual void setSearchInfo(const QString &, const QString &, const QString &);
 
-    void showLocations(const QString &title, const QString &searchText, const QJsonArray &locations);
+    void setReplaceMode(bool replaceMode, bool readOnly);
+    void showLocations(const QString &title, const QString &searchText, const QJsonArray &locations,
+                       bool replaceMode = false, bool readOnly = true);
 
 private:
     QString m_title;
     QString m_searchText;
+    bool m_replaceMode;
+    bool m_readOnly;
 };
 
 #endif // GOPLSSEARCHRESULTS_H

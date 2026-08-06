@@ -46,8 +46,8 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     }
     LiteApi::IActionContext *actions = app->actionManager()->getActionContext(this,"Gopls");
     m_definitionAction = new QAction(tr("Go to Definition (gopls)"),this);
-    m_referencesAction = new QAction(tr("Find References (gopls)"),this);
-    m_implementationAction = new QAction(tr("Find Implementations (gopls)"),this);
+    m_referencesAction = new QAction(tr("Find All References (gopls)"),this);
+    m_implementationAction = new QAction(tr("Find All Implementations (gopls)"),this);
     m_renameAction = new QAction(tr("Rename Symbol (gopls)"),this);
     m_formatAction = new QAction(tr("Format Document (gopls)"),this);
     m_organizeImportsAction = new QAction(tr("Organize Imports (gopls)"),this);
@@ -475,8 +475,11 @@ void GoplsPlugin::handleLocationResponse(int id, const QJsonValue &result, const
     } else {
         LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(m_liteApp);
         if (manager) {
+            bool references = requestMethod == "textDocument/references";
+            m_searchResults->setReplaceMode(false,!references);
             manager->setCurrentSearch(m_searchResults);
-            m_searchResults->showLocations(requestMethod == "textDocument/references" ? tr("References") : tr("Implementations"),searchText,locations);
+            m_searchResults->showLocations(references ? tr("All References") : tr("Implementations"),
+                                           searchText,locations,false,!references);
         }
     }
 }
@@ -591,6 +594,10 @@ void GoplsPlugin::requestLocations(const QString &method)
     if (!m_ready || !isGoEditor(editor) || !textEditor) {
         return;
     }
+    if (method == "textDocument/references") {
+        m_liteApp->editorManager()->saveAllEditors(false);
+    }
+    changeDocument(editor);
     QTextCursor cursor = textEditor->textCursor();
     QString searchText = LiteApi::wordUnderCursor(cursor);
     QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
@@ -722,6 +729,9 @@ void GoplsPlugin::applyTextEdits(const QString &uri, QJsonArray edits)
             cursor.insertText(edit.value("newText").toString());
         }
         cursor.endEditBlock();
+        if (m_openDocuments.contains(editor)) {
+            changeDocument(editor);
+        }
         return;
     }
 
@@ -786,6 +796,7 @@ void GoplsPlugin::renameSymbol()
     QString oldName = LiteApi::wordUnderCursor(textEditor->textCursor());
     QString newName = QInputDialog::getText(m_liteApp->mainWindow(),tr("Rename Symbol"),tr("New name:"),QLineEdit::Normal,oldName,&ok);
     if (!ok || newName.isEmpty() || newName == oldName) return;
+    changeDocument(editor);
     QTextCursor cursor = textEditor->textCursor();
     QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
                        {"position",QJsonObject{{"line",cursor.blockNumber()},{"character",cursor.positionInBlock()}}},
@@ -798,7 +809,9 @@ void GoplsPlugin::renameSymbol()
 void GoplsPlugin::formatDocument()
 {
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (!m_ready || !isGoEditor(editor)) return;
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!m_ready || !isGoEditor(editor) || !textEditor) return;
+    changeDocument(editor);
     QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
                        {"options",QJsonObject{{"tabSize",4},{"insertSpaces",false}}}};
     int id = m_client->request("textDocument/formatting",params);
@@ -809,7 +822,9 @@ void GoplsPlugin::formatDocument()
 void GoplsPlugin::organizeImports()
 {
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (!m_ready || !isGoEditor(editor)) return;
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!m_ready || !isGoEditor(editor) || !textEditor) return;
+    changeDocument(editor);
     QJsonObject zero{{"line",0},{"character",0}};
     QJsonArray only;
     only.append("source.organizeImports");
