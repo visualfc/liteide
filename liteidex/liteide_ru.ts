@@ -618,6 +618,10 @@ LiteIDE это простая кросплатформенная среда ра
         <source>Watch expression (e.g. buf main.var os.Stdout):</source>
         <translation>Наблюдаемое выражение (например: buf main.var os.Stdout):</translation>
     </message>
+    <message>
+        <source>Disassemble</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DlvDebuggerOption</name>
@@ -626,7 +630,27 @@ LiteIDE это простая кросплатформенная среда ра
         <translation></translation>
     </message>
     <message>
-        <source>delve debug pass flags: (example --check-go-version=false)</source>
+        <source>Delve Pass Flags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>example --check-go-version=false</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assembly Syntax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gnu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -761,6 +785,14 @@ LiteIDE это простая кросплатформенная среда ра
     </message>
     <message>
         <source>Open in Integrated Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to next tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to previous tab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1770,17 +1802,6 @@ Want to replace to all the search items to whitespace?</source>
     </message>
 </context>
 <context>
-    <name>GdbDebuggerOption</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Enable --tty for program being debugged.</source>
-        <translation>Включить --tty для отлаживаемой программы.</translation>
-    </message>
-</context>
-<context>
     <name>GoAddTagsDialog</name>
     <message>
         <source>Add Tags To Struct Field</source>
@@ -1940,11 +1961,6 @@ Want to replace to all the search items to whitespace?</source>
         <translation>Gocode</translation>
     </message>
     <message>
-        <source>Auto update depends package when it&apos;s source changed.</source>
-        <oldsource>Auto update depends package when its source is changed.</oldsource>
-        <translation>Обновлять зависимости при изменении их исходников.</translation>
-    </message>
-    <message>
         <source>Close gocode when exiting</source>
         <translation>Закрывать gocode при выходе</translation>
     </message>
@@ -1953,12 +1969,12 @@ Want to replace to all the search items to whitespace?</source>
         <translation>PKG: автоматический запрос импорта</translation>
     </message>
     <message>
-        <source>PKG automatic import hints for all packages (GOPATH)</source>
-        <translation>PKG: подсказки автоматического импорта для всех пакетов (GOPATH)</translation>
-    </message>
-    <message>
         <source>PKG automatic import hints for standard package</source>
         <translation>PKG: подсказки автоматического импорта для стандартных пакетов</translation>
+    </message>
+    <message>
+        <source>PKG automatic import hints for all packages (Module/GOPATH)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2104,6 +2120,10 @@ Want to replace to all the search items to whitespace?</source>
     </message>
     <message>
         <source>%1 (Module/GOPATH) with GOROOT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (Module) and GOROOT</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2376,6 +2396,76 @@ Success: %2.</oldsource>
     <message>
         <source>New File Name:</source>
         <translation>Имя файла:</translation>
+    </message>
+</context>
+<context>
+    <name>GoplsClient</name>
+    <message>
+        <source>Failed to start gopls: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid LSP response header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid JSON from gopls: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gopls stopped unexpectedly</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GoplsPlugin</name>
+    <message>
+        <source>Go to Definition (gopls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find All References (gopls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find All Implementations (gopls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename Symbol (gopls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format Document (gopls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Organize Imports (gopls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gopls was not found on system PATH (hint: go install golang.org/x/tools/gopls@latest)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gopls initialized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All References</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Implementations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4622,6 +4712,37 @@ Do you want to replace it?</source>
     <message>
         <source>Tool Windows</source>
         <translation>Панели инструментов</translation>
+    </message>
+</context>
+<context>
+    <name>TermianlOption</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">Шрифт</translation>
+    </message>
+    <message>
+        <source>Family:</source>
+        <translation type="unfinished">Семейство:</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation type="unfinished">Размер:</translation>
+    </message>
+    <message>
+        <source>Zoom:</source>
+        <translation type="unfinished">Масштаб:</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Antialias</source>
+        <translation type="unfinished">Сглаживание</translation>
     </message>
 </context>
 <context>
