@@ -64,7 +64,7 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(m_formatAction,SIGNAL(triggered()),this,SLOT(formatDocument()));
     connect(m_organizeImportsAction,SIGNAL(triggered()),this,SLOT(organizeImports()));
     app->extension()->addObject("LiteApi.IGoplsService",m_client);
-    connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    //connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_client,SIGNAL(initialized()),this,SLOT(clientInitialized()));
     connect(m_client,SIGNAL(stopped()),this,SLOT(clientStopped()));
     connect(m_client,SIGNAL(logMessage(QString,bool)),this,SLOT(clientLog(QString,bool)));
@@ -75,7 +75,7 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
-    connect(app->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(workspaceChanged()));
+    //connect(app->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(workspaceChanged()));
     LiteApi::IEnvManager *envManager = LiteApi::getEnvManager(app);
     if (envManager) {
         connect(envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(environmentChanged(LiteApi::IEnv*)));
@@ -114,11 +114,15 @@ void GoplsPlugin::appLoaded()
     if (m_client->isRunning()) {
         return;
     }
+
     QProcessEnvironment environment = LiteApi::getGoEnvironment(m_liteApp);
     QString program = FileUtil::lookupGoBin("gopls",m_liteApp,environment,true);
     if (program.isEmpty()) {
+        // gopls is optional; the plugin restores legacy gocode completion when it is unavailable.
         clientLog(tr("gopls was not found on system PATH (hint: go install golang.org/x/tools/gopls@latest)"),true);
         return;
+    } else {
+        clientLog(QString("Found gopls at %1").arg(program),false);
     }
 
     QString root = workspaceRoot();
@@ -847,7 +851,7 @@ void GoplsPlugin::completionAccepted(const QString &text, const QString &, const
 
 void GoplsPlugin::workspaceChanged()
 {
-    if (!m_appLoaded) return;
+    //if (!m_appLoaded) return;
     m_ready = false;
     m_openDocuments.clear();
     m_client->stop();
