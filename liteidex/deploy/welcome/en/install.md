@@ -142,10 +142,12 @@ Use brew install qt (eg brew install qt. Other versions of qt@5.5 and qt@5.7 wor
 Warning! brew install qt rpath incorrect do not use deploy script. 
 
 ### OpenBSD
+	$ doas pkg_add go qt5
 	$ git clone https://github.com/visualfc/liteide.git
-	$ export QTDIR=/usr/local/lib/qt4
 	$ cd liteide/build
 	$ ./update_pkg.sh
+	$ export CXX="c++ -std=c++14"
+	$ export MAKEFLAGS="-j$(sysctl -n hw.ncpu)"
 	$ ./build_openbsd.sh
 
 	## Run it: ##
