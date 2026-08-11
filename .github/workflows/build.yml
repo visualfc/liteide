@@ -1,0 +1,93 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            qt_arch: gcc_64
+          - os: macos-13
+            qt_arch: clang_64
+          - os: windows-latest
+            qt_arch: win64_msvc2019_64
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21.x'
+          cache: false
+
+      - name: Install Qt (Linux)
+        if: runner.os == 'Linux'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '5.15.2'
+          host: linux
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          install-deps: true
+          cache: true
+
+      - name: Install Qt (macOS)
+        if: runner.os == 'macOS'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '5.15.2'
+          host: mac
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          cache: true
+
+      - name: Install Qt (Windows)
+        if: runner.os == 'Windows'
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '5.15.2'
+          host: windows
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          cache: true
+
+      - name: Set up MSVC
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.29
+
+      - name: Configure (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          mkdir -p build-ci
+          cd build-ci
+          qmake ../liteidex CONFIG+=release
+
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          if not exist build-ci mkdir build-ci
+          cd build-ci
+          qmake ..\liteidex CONFIG+=release CONFIG-=precompile_header
+
+      - name: Compile (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: make -C build-ci -j2
+
+      - name: Compile (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: nmake /f build-ci\Makefile
