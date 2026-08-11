@@ -1,9 +1,9 @@
 #!/bin/sh
 
-export BUILD_ROOT=$PWD
+export BUILD_ROOT="$PWD"
 
-if [ -z $LITEIDE_ROOT ]; then
-	export LITEIDE_ROOT=$PWD/../liteidex
+if [ -z "$LITEIDE_ROOT" ]; then
+	export LITEIDE_ROOT="$PWD/../liteidex"
 fi
 
 echo build liteide
@@ -12,11 +12,18 @@ echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
 echo .
 
-export PATH=$QTDIR/bin:$PATH
+if [ -n "$QTDIR" ]; then
+	export PATH="$QTDIR/bin:$PATH"
+fi
+
+if ! command -v qmake >/dev/null 2>&1; then
+	echo 'error, qmake not found in PATH'
+	exit 1
+fi
 
 echo qmake liteide ...
 echo .
-qtchooser -qt=qt5 -run-tool=qmake $LITEIDE_ROOT -spec linux-g++ "CONFIG+=release"
+qtchooser -qt=qt5 -run-tool=qmake "$LITEIDE_ROOT" -spec linux-g++ "CONFIG+=release"
 
 if [ $? -ge 1 ]; then
 	echo 'error, qmake fail'
@@ -39,12 +46,12 @@ if [ $? -ge 1 ]; then
 fi
 
 echo build liteide tools ...
-cd $LITEIDE_ROOT
+cd "$LITEIDE_ROOT" || exit 1
 
-if [ -z $GOPATH ]; then
-	export GOPATH=$PWD
+if [ -z "$GOPATH" ]; then
+	export GOPATH="$PWD"
 else
-	export GOPATH=$PWD:$GOPATH
+	export GOPATH="$PWD:$GOPATH"
 fi
 
 #(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
@@ -67,18 +74,18 @@ fi
 
 echo deploy ...
 
-cd $BUILD_ROOT
+cd "$BUILD_ROOT" || exit 1
 
-rm -r liteide
+rm -rf liteide
 mkdir -p liteide
 mkdir -p liteide/bin
 mkdir -p liteide/share/liteide
 mkdir -p liteide/lib/liteide/plugins
 
-cp -a -v $LITEIDE_ROOT/LICENSE.LGPL liteide
-cp -a -v $LITEIDE_ROOT/LGPL_EXCEPTION.TXT liteide
-cp -a -v $LITEIDE_ROOT/../README.md liteide
-cp -a -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
+cp -a -v "$LITEIDE_ROOT/LICENSE.LGPL" liteide
+cp -a -v "$LITEIDE_ROOT/LGPL_EXCEPTION.TXT" liteide
+cp -a -v "$LITEIDE_ROOT/../README.md" liteide
+cp -a -v "$LITEIDE_ROOT/../CONTRIBUTORS" liteide
 
 cp -a -v $LITEIDE_ROOT/liteide/bin/liteide liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gotools liteide/bin
