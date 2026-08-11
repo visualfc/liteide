@@ -1,9 +1,9 @@
 #!/bin/sh
 
-export BUILD_ROOT=$PWD
+export BUILD_ROOT="$PWD"
 
-if [ -z $LITEIDE_ROOT ]; then
-	export LITEIDE_ROOT=$PWD/../liteidex
+if [ -z "$LITEIDE_ROOT" ]; then
+	export LITEIDE_ROOT="$PWD/../liteidex"
 fi
 
 echo build liteide
@@ -12,16 +12,18 @@ echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
 echo .
 
-if [ -z $QTDIR ]; then
-	echo 'error, QTDIR is null'
+if [ -n "$QTDIR" ]; then
+	export PATH="$QTDIR/bin:$PATH"
+fi
+
+if ! command -v qmake >/dev/null 2>&1; then
+	echo 'error, qmake not found in PATH'
 	exit 1
 fi
 
-export PATH=$QTDIR/bin:$PATH
-
 echo qmake liteide ...
 echo .
-qmake $LITEIDE_ROOT -spec macx-clang CONFIG+=X86_64
+qmake "$LITEIDE_ROOT" -spec macx-clang "CONFIG+=release"
 
 if [ $? -ge 1 ]; then
 	echo 'error, qmake fail'
@@ -44,13 +46,13 @@ if [ $? -ge 1 ]; then
 fi
 
 echo build liteide tools ...
-cd $LITEIDE_ROOT
+cd "$LITEIDE_ROOT" || exit 1
 
 
-if [ -z $GOPATH ]; then
-	export GOPATH=$PWD
+if [ -z "$GOPATH" ]; then
+	export GOPATH="$PWD"
 else
-	export GOPATH=$PWD:$GOPATH
+	export GOPATH="$PWD:$GOPATH"
 fi
 
 #(cd "$PWD/src/github.com/visualfc/gotools" && go install -ldflags "-s" -v)
@@ -72,9 +74,9 @@ fi
 
 echo deploy ...
 
-cd $BUILD_ROOT
+cd "$BUILD_ROOT" || exit 1
 
-rm -r liteide
+rm -rf liteide
 mkdir -p liteide
 
 cp -R -v $LITEIDE_ROOT/liteide/bin/LiteIDE.app liteide
@@ -91,4 +93,3 @@ cp -R -v $LITEIDE_ROOT/bin/gocode liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/bin/gomodifytags liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/deploy/* liteide/LiteIDE.app/Contents/Resources
 cp -R -v $LITEIDE_ROOT/os_deploy/macosx/* liteide/LiteIDE.app/Contents/Resources
-

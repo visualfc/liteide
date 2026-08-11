@@ -2,8 +2,8 @@
 
 setlocal
 
-set BUILD_ROOT=%CD%
-if x%LITEIDE_ROOT%==x set LITEIDE_ROOT=%CD%\..\liteidex
+set "BUILD_ROOT=%CD%"
+if not defined LITEIDE_ROOT set "LITEIDE_ROOT=%CD%\..\liteidex"
 
 echo build liteide
 echo QTDIR=%QTDIR%
@@ -12,13 +12,13 @@ echo BUILD_ROOT=%BUILD_ROOT%
 echo LITEIDE_ROOT=%LITEIDE_ROOT%
 echo .
 
-if x%QTDIR%==x goto qtdir_fail
-
-set PATH=%QTDIR%/bin;%PATH%
+if defined QTDIR set "PATH=%QTDIR%\bin;%PATH%"
+where qmake >nul 2>&1
+if ERRORLEVEL 1 goto qmake_missing
 
 echo qmake liteide ...
 echo .
-qmake %LITEIDE_ROOT% "CONFIG+=release"
+qmake "%LITEIDE_ROOT%" "CONFIG+=release" "CONFIG-=precompile_header"
 
 if ERRORLEVEL 1 goto qmake_fail
 
@@ -35,11 +35,11 @@ if ERRORLEVEL 1 goto go_fail
 echo build liteide tools
 echo .
 
-cd %LITEIDE_ROOT%
-if defined %GOPATH (
-	set GOPATH=%CD%;%GOPATH%
+cd /d "%LITEIDE_ROOT%"
+if defined GOPATH (
+	set "GOPATH=%CD%;%GOPATH%"
 ) else (
-	set GOPATH=%CD%
+	set "GOPATH=%CD%"
 )
 
 :: (cd "%CD%/src/github.com/visualfc/gotools" & go install -ldflags "-s" -v & cd %CD%)
@@ -52,7 +52,7 @@ echo export qrc images
 go run src/tools/exportqrc/main.go -root .
 if ERRORLEVEL 1 goto go_fail
 
-cd %BUILD_ROOT%
+cd /d "%BUILD_ROOT%"
 
 echo deploy liteide ...
 echo .
@@ -82,19 +82,23 @@ xcopy %LITEIDE_ROOT%\os_deploy\windows liteide\share\liteide  /e /y /i
 goto end
 
 :qtdir_fail
-echo error, QTDIR is null
-goto end
+goto qmake_missing
+
+:qmake_missing
+echo error, qmake not found in PATH
+exit /b 1
 
 :qmake_fail
 echo error, qmake fail
-goto end
+exit /b 1
 
 :make_fail
 echo error, make fail
-goto end
+exit /b 1
 
 :go_fail
 echo error, go fail
-goto end
+exit /b 1
 
 :end
+exit /b 0

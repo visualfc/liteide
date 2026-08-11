@@ -1,9 +1,9 @@
 #!/bin/sh
 
-export BUILD_ROOT=$PWD
+export BUILD_ROOT="$PWD"
 
-if [ -z $LITEIDE_ROOT ]; then
-	export LITEIDE_ROOT=$PWD/../liteidex
+if [ -z "$LITEIDE_ROOT" ]; then
+	export LITEIDE_ROOT="$PWD/../liteidex"
 fi
 
 echo deploy liteide/LiteIDE.app
@@ -13,13 +13,15 @@ echo BUILD_ROOT=$BUILD_ROOT
 echo LITEIDE_ROOT=$LITEIDE_ROOT
 echo .
 
-if [ -z $QTDIR ]; then
-	echo 'error, QTDIR is null'
+if [ -n "$QTDIR" ]; then
+	export PATH="$QTDIR/bin:$PATH"
+fi
+
+if ! command -v macdeployqt >/dev/null 2>&1; then
+	echo 'error, macdeployqt not found in PATH'
 	exit 1
 fi
 
-export PATH=$QTDIR/bin:$PATH
-
-rm liteide/LiteIDE.app/Contents/Resources/qt.conf
-macdeployqt liteide/LiteIDE.app
-codesign --force --deep --sign - liteide/LiteIDE.app
+rm -f liteide/LiteIDE.app/Contents/Resources/qt.conf
+macdeployqt liteide/LiteIDE.app || exit 1
+codesign --force --deep --sign - liteide/LiteIDE.app || exit 1
