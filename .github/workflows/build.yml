@@ -14,7 +14,7 @@ jobs:
         include:
           - os: ubuntu-latest
             qt_arch: gcc_64
-          - os: macos-13
+          - os: macos-latest
             qt_arch: clang_64
           - os: windows-latest
             qt_arch: win64_msvc2019_64
@@ -66,13 +66,21 @@ jobs:
         with:
           toolset: 14.29
 
-      - name: Configure (Unix)
-        if: runner.os != 'Windows'
+      - name: Configure (Linux)
+        if: runner.os == 'Linux'
         shell: bash
         run: |
           mkdir -p build-ci
           cd build-ci
           qmake ../liteidex CONFIG+=release
+
+      - name: Configure (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          mkdir -p build-ci
+          cd build-ci
+          qmake ../liteidex CONFIG+=release 'QMAKE_LIBS_OPENGL=-framework OpenGL'
 
       - name: Configure (Windows)
         if: runner.os == 'Windows'
