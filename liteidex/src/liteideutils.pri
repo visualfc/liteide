@@ -24,4 +24,4 @@ contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
     INSTALLS += target
 }
 
-TARGET = $$qtLibraryTarget($$TARGET)
+TARGET = $$qtLibraryName($$TARGET)

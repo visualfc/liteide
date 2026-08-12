@@ -129,9 +129,9 @@ QMap<QString,QStringList> FileUtil::readFileContext(QIODevice *dev)
     foreach (QString line, list) {
         if (line.size() >= 1 && line.at(0) == '#')
             continue;
-        QStringList v = line.split(QRegExp("\\+="),qtSkipEmptyParts);
+        QStringList v = line.split("+=",qtSkipEmptyParts);
         if (v.count() == 1) {
-            v = line.split(QRegExp("="),qtSkipEmptyParts);
+            v = line.split("=",qtSkipEmptyParts);
             if (v.count() == 2) {
                 QStringList v2 = v.at(1).split(" ",qtSkipEmptyParts);
                 if (!v2.isEmpty()) {
@@ -770,4 +770,3 @@ bool FileUtil::moveToTrash(const QString &fileName)
     return getTrash()->moveToTrash(fileName);
 }
 #endif
-

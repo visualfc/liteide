@@ -145,7 +145,11 @@ void LiteEditorWidget::focusInEvent(QFocusEvent *e)
 void LiteEditorWidget::wheelEvent(QWheelEvent *e)
 {
     if (m_scrollWheelZooming && e->modifiers() & Qt::ControlModifier) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        const int delta = e->angleDelta().y();
+#else
         const int delta = e->delta();
+#endif
         if (delta < 0)
             zoomOut();
         else if (delta > 0)
@@ -332,7 +336,12 @@ QString LiteEditorWidget::cursorToHtml(QTextCursor cursor) const
     const int endOfDocument = tempDocument->characterCount() - 1;
     for (QTextBlock current = start; current.isValid() && current != end; current = current.next()) {
         const QTextLayout *layout = current.layout();
-        foreach (const QTextLayout::FormatRange &range, layout->additionalFormats()) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        const auto formats = layout->formats();
+#else
+        const auto formats = layout->additionalFormats();
+#endif
+        foreach (const QTextLayout::FormatRange &range, formats) {
             const int start = current.position() + range.start - selectionStart;
             const int end = start + range.length;
             if (end <= 0 || start >= endOfDocument)

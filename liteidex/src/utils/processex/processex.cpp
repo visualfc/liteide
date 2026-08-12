@@ -92,7 +92,7 @@ ProcessEx::ProcessEx(QObject *parent)
     connect(this,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(slotStateChanged(QProcess::ProcessState)));
     connect(this,SIGNAL(readyReadStandardOutput()),this,SLOT(slotReadOutput()));
     connect(this,SIGNAL(readyReadStandardError()),this,SLOT(slotReadError()));
-    connect(this,SIGNAL(error(QProcess::ProcessError)),this,SLOT(slotError(QProcess::ProcessError)));
+    connect(this,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SLOT(slotError(QProcess::ProcessError)));
     connect(this,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slotFinished(int,QProcess::ExitStatus)));
 }
 
@@ -243,10 +243,10 @@ void SendProcessCtrlC(QProcess */*process*/)
 #else
 void SendProcessCtrlC(QProcess *process)
 {
-    if (process->pid() <= 0) {
+    if (process->processId() <= 0) {
         return;
     }
-    kill(process->pid(),SIGINT);
+    kill(process->processId(),SIGINT);
 }
 #endif
 
@@ -308,10 +308,10 @@ BOOL CALLBACK sendInterruptMessageToAllWindowsOfProcess_enumWnd(HWND hwnd, LPARA
 void LiteProcess::interrupt()
 {
     if (m_useCtrlC) {
-        Q_PID processId = this->pid();
+        qint64 processId = this->processId();
 #ifdef Q_OS_WIN
-        if (processId) {
-            EnumWindows(sendInterruptMessageToAllWindowsOfProcess_enumWnd, processId->dwProcessId);
+        if (processId > 0) {
+            EnumWindows(sendInterruptMessageToAllWindowsOfProcess_enumWnd, static_cast<LPARAM>(processId));
         }
 #else
         if (processId > 0) {
@@ -324,10 +324,10 @@ void LiteProcess::interrupt()
 void LiteProcess::terminate()
 {
     if (m_useCtrlC) {
-        Q_PID processId = this->pid();
+        qint64 processId = this->processId();
 #ifdef Q_OS_WIN
-        if (processId) {
-            EnumWindows(sendShutDownMessageToAllWindowsOfProcess_enumWnd, processId->dwProcessId);
+        if (processId > 0) {
+            EnumWindows(sendShutDownMessageToAllWindowsOfProcess_enumWnd, static_cast<LPARAM>(processId));
         }
 #else
         if (processId > 0) {

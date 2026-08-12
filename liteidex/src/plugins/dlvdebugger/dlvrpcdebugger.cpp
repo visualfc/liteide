@@ -34,7 +34,9 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QTextCodec>
+#include <QRegExp>
 #include <QDebug>
+#include <algorithm>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -175,13 +177,13 @@ DlvRpcDebugger::DlvRpcDebugger(LiteApi::IApplication *app, QObject *parent) :
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_process,SIGNAL(started()),this,SIGNAL(debugStarted()));
     connect(m_process,SIGNAL(finished(int)),this,SLOT(finished(int)));
-    connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
+    connect(m_process,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStdError()));
     connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdOutput()));
 
     connect(m_headlessProcess,SIGNAL(started()),this,SIGNAL(debugStarted()));
     connect(m_headlessProcess,SIGNAL(finished(int)),this,SLOT(headlessFinished(int)));
-    connect(m_headlessProcess,SIGNAL(error(QProcess::ProcessError)),this,SLOT(headlessError(QProcess::ProcessError)));
+    connect(m_headlessProcess,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SLOT(headlessError(QProcess::ProcessError)));
     connect(m_headlessProcess,SIGNAL(readyReadStandardError()),this,SLOT(headlessReadStdError()));
     connect(m_headlessProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(headlessReadStdOutput()));
 }
@@ -684,10 +686,7 @@ void DlvRpcDebugger::initDebug()
     //get thread id
     m_processId.clear();
 
-    QMapIterator<QString,int> i(m_initBks);
-
-    while (i.hasNext()) {
-        i.next();
+    for (auto i = m_initBks.cbegin(); i != m_initBks.cend(); ++i) {
         QString fileName = i.key();
         QList<int> lines = m_initBks.values(fileName);
         foreach(int line, lines) {
@@ -735,7 +734,8 @@ static QString valueToolTip(const QString &value)
             toolTip += text[i];
         } else if (text[i] == ',') {
             toolTip += text[i];
-            int pos = text.lastIndexOf(QRegExp("\\{|\\[|\\]|\\}"),i-1);
+            QRegExp delimiter("\\{|\\[|\\]|\\}");
+            int pos = delimiter.lastIndexIn(text, i - 1);
             if (pos != -1 && text[pos] == '[') {
                 continue;
             }
@@ -885,9 +885,9 @@ void DlvRpcDebugger::readStdOutput()
                 QMap<QString,QString>::iterator it = m_checkVarsMap.find(name);
                 if (it != m_checkVarsMap.end() && it.value() != value) {
 #if QT_VERSION >= 0x050000
-        valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+        valueItem->setData(QColor(Qt::red),Qt::ForegroundRole);
 #else
-        valueItem->setData(Qt::red,Qt::TextColorRole);
+        valueItem->setData(Qt::red,Qt::ForegroundRole);
 #endif
                 }
                 m_varsModel->appendRow(QList<QStandardItem*>() << nameItem << valueItem);
@@ -911,15 +911,15 @@ void DlvRpcDebugger::readStdOutput()
                             find = true;
                             if (m_watchNameMap.value(name) == value) {
 #if QT_VERSION >= 0x050000
-                                valueItem->setData(QColor(Qt::black),Qt::TextColorRole);
+                                valueItem->setData(QColor(Qt::black),Qt::ForegroundRole);
 #else
-                                valueItem->setData(Qt::black,Qt::TextColorRole);
+                                valueItem->setData(Qt::black,Qt::ForegroundRole);
 #endif
                             } else {
 #if QT_VERSION >= 0x050000
-                                valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+                                valueItem->setData(QColor(Qt::red),Qt::ForegroundRole);
 #else
-                                valueItem->setData(Qt::red,Qt::TextColorRole);
+                                valueItem->setData(Qt::red,Qt::ForegroundRole);
 #endif
                                 valueItem->setText(value);
                             }
@@ -1001,9 +1001,9 @@ void DlvRpcDebugger::updateWatch(int id)
         item->setData(name,VarNameRole);
         QStandardItem *type = new QStandardItem("not find");
 #if QT_VERSION >= 0x050000
-            type->setData(QColor(Qt::red),Qt::TextColorRole);
+            type->setData(QColor(Qt::red),Qt::ForegroundRole);
 #else
-            type->setData(Qt::red,Qt::TextColorRole);
+            type->setData(Qt::red,Qt::ForegroundRole);
 #endif
         m_watchModel->appendRow(QList<QStandardItem*>() << item << type);
     }
@@ -1061,7 +1061,7 @@ static bool threadIdThan(const Thread &s1, const Thread &s2)
 void DlvRpcDebugger::updateThreads(const QList<Thread> &threads)
 {
     QList<Thread> ths = threads;
-    qSort(ths.begin(),ths.end(),threadIdThan);
+    std::sort(ths.begin(), ths.end(), threadIdThan);
     emit beginUpdateModel(LiteApi::THREADS_MODEL);
     m_threadsModel->removeRows(0,m_threadsModel->rowCount());
     foreach (Thread t, ths) {
@@ -1193,9 +1193,9 @@ void DlvRpcDebugger::updateRegisters(int threadid, bool includeFp)
         QMap<QString,QString>::const_iterator it = m_checkRegsMap.find(r.Name);
         if (it != m_checkRegsMap.end() && it.value() != r.Value) {
 #if QT_VERSION >= 0x050000
-            valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+            valueItem->setData(QColor(Qt::red),Qt::ForegroundRole);
 #else
-            valueItem->setData(Qt::red,Qt::TextColorRole);
+            valueItem->setData(Qt::red,Qt::ForegroundRole);
 #endif
         }
         saveMap.insert(r.Name,r.Value);
@@ -1271,9 +1271,9 @@ void DlvRpcDebugger::updateVariableHelper(const QList<Variable> &vars, QStandard
         QMap<QString,QString>::const_iterator it = checkMap.find(checkName);
         if (it != checkMap.end() && it.value() != var.Value) {
 #if QT_VERSION >= 0x050000
-            valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+            valueItem->setData(QColor(Qt::red),Qt::ForegroundRole);
 #else
-            valueItem->setData(Qt::red,Qt::TextColorRole);
+            valueItem->setData(Qt::red,Qt::ForegroundRole);
 #endif
         }
         saveMap.insert(checkName,var.Value);

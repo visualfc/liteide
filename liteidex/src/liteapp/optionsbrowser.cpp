@@ -75,7 +75,7 @@ void OptionsBrowser::addOption(LiteApi::IOption *opt)
     item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     QLayout *layout = opt->widget()->layout();
     if (layout) {
-        layout->setMargin(0);
+        layout->setContentsMargins(0, 0, 0, 0);
     }
     ui->listWidget->addItem(item);
     ui->stackedWidget->addWidget(opt->widget());

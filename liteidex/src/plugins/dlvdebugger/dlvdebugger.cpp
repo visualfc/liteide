@@ -33,6 +33,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QTextCodec>
+#include <QRegExp>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -142,13 +143,13 @@ DlvDebugger::DlvDebugger(LiteApi::IApplication *app, QObject *parent) :
     connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
     connect(m_process,SIGNAL(started()),this,SIGNAL(debugStarted()));
     connect(m_process,SIGNAL(finished(int)),this,SLOT(finished(int)));
-    connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
+    connect(m_process,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStdError()));
     connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdOutput()));
 
     connect(m_headlessProcess,SIGNAL(started()),this,SIGNAL(debugStarted()));
     connect(m_headlessProcess,SIGNAL(finished(int)),this,SLOT(headlessFinished(int)));
-    connect(m_headlessProcess,SIGNAL(error(QProcess::ProcessError)),this,SLOT(headlessError(QProcess::ProcessError)));
+    connect(m_headlessProcess,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SLOT(headlessError(QProcess::ProcessError)));
     connect(m_headlessProcess,SIGNAL(readyReadStandardError()),this,SLOT(headlessReadStdError()));
     connect(m_headlessProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(headlessReadStdOutput()));
 }
@@ -665,10 +666,7 @@ void DlvDebugger::initDebug()
         command_helper("restart",true);
     }
 
-    QMapIterator<QString,int> i(m_initBks);
-
-    while (i.hasNext()) {
-        i.next();
+    for (auto i = m_initBks.cbegin(); i != m_initBks.cend(); ++i) {
         QString fileName = i.key();
         QList<int> lines = m_initBks.values(fileName);
         foreach(int line, lines) {
@@ -716,7 +714,8 @@ static QString valueToolTip(const QString &value)
             toolTip += text[i];
         } else if (text[i] == ',') {
             toolTip += text[i];
-            int pos = text.lastIndexOf(QRegExp("\\{|\\[|\\]|\\}"),i-1);
+            QRegExp delimiter("\\{|\\[|\\]|\\}");
+            int pos = delimiter.lastIndexIn(text, i - 1);
             if (pos != -1 && text[pos] == '[') {
                 continue;
             }
@@ -861,9 +860,9 @@ void DlvDebugger::readStdOutput()
                 QMap<QString,QString>::iterator it = m_varNameMap.find(name);
                 if (it != m_varNameMap.end() && it.value() != value) {
 #if QT_VERSION >= 0x050000
-        valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+        valueItem->setData(QColor(Qt::red),Qt::ForegroundRole);
 #else
-        valueItem->setData(Qt::red,Qt::TextColorRole);
+        valueItem->setData(Qt::red,Qt::ForegroundRole);
 #endif
                 }
                 m_varsModel->appendRow(QList<QStandardItem*>() << nameItem << valueItem);
@@ -887,15 +886,15 @@ void DlvDebugger::readStdOutput()
                             find = true;
                             if (m_watchNameMap.value(name) == value) {
 #if QT_VERSION >= 0x050000
-                                valueItem->setData(QColor(Qt::black),Qt::TextColorRole);
+                                valueItem->setData(QColor(Qt::black),Qt::ForegroundRole);
 #else
-                                valueItem->setData(Qt::black,Qt::TextColorRole);
+                                valueItem->setData(Qt::black,Qt::ForegroundRole);
 #endif
                             } else {
 #if QT_VERSION >= 0x050000
-                                valueItem->setData(QColor(Qt::red),Qt::TextColorRole);
+                                valueItem->setData(QColor(Qt::red),Qt::ForegroundRole);
 #else
-                                valueItem->setData(Qt::red,Qt::TextColorRole);
+                                valueItem->setData(Qt::red,Qt::ForegroundRole);
 #endif
                                 valueItem->setText(value);
                             }

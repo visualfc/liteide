@@ -22,6 +22,7 @@
 #include "serializer.h"
 
 #include <QtCore/QDataStream>
+#include <QtCore/QIODevice>
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 

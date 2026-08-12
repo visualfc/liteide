@@ -78,7 +78,7 @@ GopathBrowser::GopathBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_pathTree->setModel(m_model);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(m_toolBar);
     layout->addWidget(m_pathTree);
     m_widget->setLayout(layout);

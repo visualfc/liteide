@@ -25,7 +25,7 @@
 #include <ctype.h>
 
 #include <QtCore/QDebug>
-#include <QtCore/QRegExp>
+#include <QRegExp>
 
 #include <cassert>
 
@@ -373,5 +373,4 @@ int JSonScanner::yylex(YYSTYPE* yylval, yy::location *yylloc)
   qCritical() << "JSonScanner::yylex - unknown char, returning -1";
   return -1;
 }
-
 

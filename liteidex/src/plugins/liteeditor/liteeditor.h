@@ -35,6 +35,7 @@
 #include <QStack>
 #include <QTextBlock>
 #include <QLabel>
+#include <QTextCodec>
 
 //#define LITEEDITOR_FIND
 

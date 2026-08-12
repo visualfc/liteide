@@ -106,7 +106,7 @@ static bool lessThanByText(SearchResultTreeItem *a, const QString &b)
 int SearchResultTreeItem::insertionIndex(const QString &text, SearchResultTreeItem **existingItem) const
 {
     QList<SearchResultTreeItem *>::const_iterator insertionPosition =
-            qLowerBound(m_children.begin(), m_children.end(), text, lessThanByText);
+            std::lower_bound(m_children.begin(), m_children.end(), text, lessThanByText);
     if (existingItem) {
         if (insertionPosition != m_children.end() && (*insertionPosition)->item.text == text)
             (*existingItem) = (*insertionPosition);

@@ -52,7 +52,7 @@ AstWidget::AstWidget(bool outline, LiteApi::IApplication *app, QWidget *parent) 
 {
     m_bFirst = true;
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     m_tree = new SymbolTreeView;

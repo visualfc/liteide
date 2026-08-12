@@ -121,22 +121,28 @@ void ImageEditorWidget::doScale(qreal factor)
 
 void ImageEditorWidget::wheelEvent(QWheelEvent *event)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QPoint angleDelta = event->angleDelta();
+    const bool horizontal = qAbs(angleDelta.x()) > qAbs(angleDelta.y());
+    int delta = horizontal ? angleDelta.x() : angleDelta.y();
+#else
+    int delta = event->delta();
+    const bool horizontal = event->orientation() == Qt::Horizontal;
+#endif
     if (event->modifiers() & Qt::ControlModifier) {
-        const int delta = event->delta();
         if (delta < 0)
             zoomOut();
         else if (delta > 0)
             zoomIn();
         return;
     }
-    if (event->delta() != 0) {
-        int delta = event->delta();
+    if (delta != 0) {
 #if QT_VERSION >= 0x050700
         if (event->inverted()) {
-            delta = -event->delta();
+            delta = -delta;
         }
 #endif
-        if (event->orientation() == Qt::Horizontal) {
+        if (horizontal) {
             this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value()-delta);
         } else {
             this->verticalScrollBar()->setValue(this->verticalScrollBar()->value()-delta);
@@ -211,4 +217,3 @@ qreal ImageEditorWidget::scaleFactor() const
 {
     return transform().m11();
 }
-

@@ -24,6 +24,8 @@
 #ifndef FILESEARCH_H
 #define FILESEARCH_H
 
+#include <QRegExp>
+
 #include "liteapi/liteapi.h"
 #include "litefindapi/litefindapi.h"
 #include "textoutput/terminaledit.h"

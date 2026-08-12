@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "htmlutil.h"
+#include <QRegExp>
 #include <QStringList>
 #include <QDomDocument>
 #include <QDebug>

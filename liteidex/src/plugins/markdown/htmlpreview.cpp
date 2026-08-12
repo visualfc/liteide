@@ -42,6 +42,9 @@
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QPageSize>
+#endif
 #endif
 
 //lite_memory_check_begin
@@ -204,7 +207,7 @@ void HtmlPreview::appLoaded()
     m_cssMenu->addActions(m_cssActGroup->actions());
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(m_htmlWidget->widget(),1);
     m_widget->setLayout(layout);
@@ -432,8 +435,13 @@ void HtmlPreview::printPreview()
     }
 #ifndef QT_NO_PRINTER
     QPrinter printer(QPrinter::HighResolution);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    printer.setPageMargins(QMarginsF(10, 10, 10, 10), QPageLayout::Millimeter);
+    printer.setPageSize(QPageSize(QPageSize::A4));
+#else
     printer.setPageMargins(10,10,10,10,QPrinter::Millimeter);
     printer.setPageSize(QPrinter::A4);
+#endif
     QPrintPreviewDialog dlg(&printer,m_widget);
     connect(&dlg,SIGNAL(paintRequested(QPrinter*)),m_htmlWidget,SLOT(print(QPrinter*)));
     dlg.exec();

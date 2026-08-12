@@ -48,7 +48,7 @@ QSqlEditor::QSqlEditor(LiteApi::IApplication *app) :
 {
     ui->setupUi(m_widget);
     m_dbModel = new QStandardItemModel(this);
-    ui->dbTreeView->setEditTriggers(0);
+    ui->dbTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->dbTreeView->setModel(m_dbModel);
     ui->dbTreeView->setHeaderHidden(true);
     ui->dbTreeView->setContextMenuPolicy(Qt::CustomContextMenu);

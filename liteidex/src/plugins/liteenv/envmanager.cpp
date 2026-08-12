@@ -130,7 +130,7 @@ void Env::loadGoEnv()
         connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readStdout()));
         connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readStderr()));
         connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
-        connect(m_process,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
+        connect(m_process,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
     }
     m_process->stopAndWait(100,200);
     m_goEnvMap.clear();
@@ -474,7 +474,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
 
     m_liteApp->extension()->addObject("LiteApi.IEnvManager",this);
 
-    connect(m_envCmb,SIGNAL(activated(QString)),this,SLOT(envActivated(QString)));
+    connect(m_envCmb,SIGNAL(textActivated(QString)),this,SLOT(envActivated(QString)));
     connect(m_selectActionGroup,SIGNAL(triggered(QAction*)),this,SLOT(selectEnvAction(QAction*)));
     connect(editAct,SIGNAL(triggered()),this,SLOT(editCurrentEnv()));
     connect(reloadAct,SIGNAL(triggered()),this,SLOT(reloadCurrentEnv()));

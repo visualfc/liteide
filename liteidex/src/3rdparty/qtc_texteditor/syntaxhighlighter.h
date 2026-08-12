@@ -45,6 +45,7 @@
 #include "texteditor_global.h"
 
 #include <QtCore/QObject>
+#include <QtCore/QVector>
 #include <QtGui/QTextLayout>
 
 QT_BEGIN_NAMESPACE
@@ -58,6 +59,12 @@ class QTextEdit;
 QT_END_NAMESPACE
 
 namespace TextEditor {
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
+typedef QList<QTextLayout::FormatRange> FormatRangeList;
+#else
+typedef QVector<QTextLayout::FormatRange> FormatRangeList;
+#endif
 
 class SyntaxHighlighterPrivate;
 
@@ -122,7 +129,7 @@ public:
         return m_contextMap[id];
     }
 
-    void setExtraAdditionalFormats(const QTextBlock& block, const QList<QTextLayout::FormatRange> &formats);
+    void setExtraAdditionalFormats(const QTextBlock& block, const FormatRangeList &formats);
     void configureFormat(TextFormatId id, const QTextCharFormat &format);
     virtual void setTabSize(int tabSize);
 public:

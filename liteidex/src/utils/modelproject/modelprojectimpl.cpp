@@ -54,7 +54,7 @@ ModelProjectImpl::ModelProjectImpl(LiteApi::IApplication *app)
     m_tree->setContextMenuPolicy(Qt::CustomContextMenu);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(m_tree);
     m_widget->setLayout(layout);
 

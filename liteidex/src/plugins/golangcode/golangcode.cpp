@@ -30,12 +30,17 @@
 #include <QTextDocument>
 #include <QAbstractItemView>
 #include <QApplication>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QScreen>
+#else
 #include <QDesktopWidget>
+#endif
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QPlainTextEdit>
 #include <QTimer>
 #include <QScrollBar>
+#include <QRegExp>
 #include <QDebug>
 
 //#define GOCODE_CHECKGOPATH
@@ -823,7 +828,7 @@ ImportPkgTip::ImportPkgTip(LiteApi::IApplication *app, QObject *parent)
     m_infoLabel = new QLabel;
     m_pkgLabel = new QLabel;
     QHBoxLayout *layout = new QHBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(m_infoLabel);
     layout->addWidget(m_pkgLabel);
     m_popup->setLayout(layout);
@@ -838,11 +843,15 @@ ImportPkgTip::~ImportPkgTip()
 
 void ImportPkgTip::showPkgHint(int startpos, const QStringList &pkg, QPlainTextEdit *ed)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QRect screen = ed->screen()->availableGeometry();
+#else
     const QDesktopWidget *desktop = QApplication::desktop();
 #ifdef Q_WS_MAC
     const QRect screen = desktop->availableGeometry(desktop->screenNumber(ed));
 #else
     const QRect screen = desktop->screenGeometry(desktop->screenNumber(ed));
+#endif
 #endif
     m_pkg = pkg;
     m_startPos = startpos;

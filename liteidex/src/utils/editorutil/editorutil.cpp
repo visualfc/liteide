@@ -28,6 +28,7 @@
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QPlainTextEdit>
+#include <QRegExp>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -403,5 +404,4 @@ QString EditorUtil::unifiedDiffText(const QString &text1, const QString &text2)
 {
     return UnifiedDiffLines(text1,text2);
 }
-
 

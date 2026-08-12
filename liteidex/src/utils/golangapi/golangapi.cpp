@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "golangapi.h"
+#include "liteapi/liteqt.h"
 #include <QFile>
 #include <QSet>
 #include <QRegExp>
@@ -50,7 +51,7 @@ bool GolangApi::load(const QString &fileName)
         return false;
     }
     QTextStream stream(&file);
-    stream.setCodec("utf-8");
+    qtSetUtf8Encoding(stream);
     return loadStream(&stream);
 }
 

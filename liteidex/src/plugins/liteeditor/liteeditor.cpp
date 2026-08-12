@@ -39,6 +39,7 @@
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QAction>
+#include <QActionGroup>
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
@@ -104,7 +105,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
     m_editorWidget->setContextMenu(m_contextMenu);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 /*
     m_toolBar->setStyleSheet("QToolBar {border: 1px ; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #eeeeee, stop: 1 #ababab); }"\
@@ -113,7 +114,7 @@ LiteEditor::LiteEditor(LiteApi::IApplication *app)
                              "QToolBar::separator {width:2px; margin-left:2px; margin-right:2px; background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #dedede, stop: 1 #a0a0a0);}");
 */
     QHBoxLayout *toolLayout = new QHBoxLayout;
-    toolLayout->setMargin(0);
+    toolLayout->setContentsMargins(0, 0, 0, 0);
     toolLayout->setSpacing(0);
     toolLayout->addWidget(m_editToolBar);
     //toolLayout->addWidget(m_editNavBar);
@@ -1247,8 +1248,13 @@ void LiteEditor::filePrint()
 #ifndef QT_NO_PRINTER
     QPrinter printer(QPrinter::HighResolution);
     QPrintDialog *dlg = new QPrintDialog(&printer, m_widget);
-    if (m_editorWidget->textCursor().hasSelection())
+    if (m_editorWidget->textCursor().hasSelection()) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        dlg->setOption(QAbstractPrintDialog::PrintSelection);
+#else
         dlg->addEnabledOption(QAbstractPrintDialog::PrintSelection);
+#endif
+    }
     dlg->setWindowTitle(tr("Print Document"));
     if (dlg->exec() == QDialog::Accepted) {
         QPlainTextEdit::LineWrapMode mode = m_editorWidget->lineWrapMode();
@@ -1678,7 +1684,7 @@ void LiteEditor::loadColorStyleScheme()
     if (text) {
         if (text->foregound().isValid()) {
             p.setColor(QPalette::Text,text->foregound());
-            p.setColor(QPalette::Foreground, text->foregound());
+            p.setColor(QPalette::WindowText, text->foregound());
         }
         if (text->background().isValid()) {
             p.setColor(QPalette::Base, text->background());

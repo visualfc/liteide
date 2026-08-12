@@ -43,6 +43,7 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtGui/QIcon>
+#include <QTextCodec>
 
 QT_BEGIN_NAMESPACE
 class QIcon;

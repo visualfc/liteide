@@ -26,6 +26,7 @@
 #include <QTextCursor>
 #include <QTextDocument>
 #include <QMutableListIterator>
+#include <QRegularExpression>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -131,7 +132,7 @@ QTextDocument *ReplaceDocument::fileDocument(const QString &fileName, QTextCurso
         if (lf <= 0) {
             crlf = false;
         } else {
-            lf = text.indexOf(QRegExp("[^\r]\n"),lf-1);
+            lf = text.indexOf(QRegularExpression("[^\r]\n"), lf - 1);
             if (lf >= 0) {
                 crlf = false;
             } else {

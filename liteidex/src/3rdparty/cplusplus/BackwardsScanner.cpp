@@ -117,10 +117,10 @@ QString BackwardsScanner::text(int index) const
     return _text.mid(firstToken.begin(), firstToken.length());
 }
 
-QStringRef BackwardsScanner::textRef(int index) const
+QStringView BackwardsScanner::textRef(int index) const
 {
     const Token &firstToken = _tokens.at(index + _offset);
-    return _text.midRef(firstToken.begin(), firstToken.length());
+    return QStringView(_text).mid(firstToken.begin(), firstToken.length());
 }
 
 int BackwardsScanner::size() const

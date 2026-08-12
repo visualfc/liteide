@@ -57,7 +57,7 @@ TextOutput::TextOutput(LiteApi::IApplication *app, bool readOnly, QWidget *paren
 
     m_fmt = this->currentCharFormat();
     m_defPalette = this->palette();
-    m_clrText = m_defPalette.foreground().color();
+    m_clrText = m_defPalette.color(QPalette::WindowText);
     m_clrTag = Qt::darkBlue;
     m_clrError = Qt::red;
     m_existsTimer.start();
@@ -144,7 +144,7 @@ void TextOutput::loadColorStyleScheme()
     if (useColorShceme && text) {
         if (text->foregound().isValid()) {
             p.setColor(QPalette::Text,text->foregound());
-            p.setColor(QPalette::Foreground, text->foregound());
+            p.setColor(QPalette::WindowText, text->foregound());
         }
         if (text->background().isValid()) {
             p.setColor(QPalette::Base, text->background());

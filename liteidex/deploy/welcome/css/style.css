@@ -1,10 +1,10 @@
 body {
 	text-align: left;
 	margin: 0;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial;
 }
 pre, code {
-	font-family: Menlo, monospace;
+	font-family: Menlo;
 }
 pre .comment {
 	color: #375EAB;

@@ -43,6 +43,7 @@
 #include <QToolBar>
 #include <QFileSystemWatcher>
 #include <QFileDialog>
+#include <QStandardPaths>
 #include <QHeaderView>
 #include <QDebug>
 #ifdef Q_OS_WIN
@@ -80,7 +81,7 @@ FileSystemWidget::FileSystemWidget(bool bMultiDirMode, LiteApi::IApplication *ap
     m_tree->setModel(m_model);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(m_tree);
     this->setLayout(layout);
 

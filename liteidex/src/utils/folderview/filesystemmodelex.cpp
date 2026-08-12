@@ -88,12 +88,11 @@ QVariant FileSystemModelEx::data(const QModelIndex &index, int role) const
             return QString("%1\n%2\n%3")
                     .arg(QDir::toNativeSeparators(info.filePath()))
                     .arg(fileSize(info.size()))
-                    .arg(info.lastModified().toString(Qt::SystemLocaleDate));
+                    .arg(QLocale::system().toString(info.lastModified(), QLocale::ShortFormat));
         }
     }
     return QFileSystemModel::data(index,role);
 }
-
 
 
 

@@ -121,7 +121,7 @@ ImageEditor::ImageEditor(LiteApi::IApplication *app)
     m_mvToolBar->addSeparator();
 
     QHBoxLayout *toolLayout = new QHBoxLayout;
-    toolLayout->setMargin(0);
+    toolLayout->setContentsMargins(0, 0, 0, 0);
     toolLayout->setSpacing(0);
     toolLayout->addWidget(m_toolBar);
     toolLayout->addWidget(m_mvToolBar);
@@ -129,7 +129,7 @@ ImageEditor::ImageEditor(LiteApi::IApplication *app)
     toolLayout->addSpacing(0);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addLayout(toolLayout);
     layout->addWidget(m_imageWidget);

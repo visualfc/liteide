@@ -24,9 +24,12 @@ public:
     }
     int m_sid;
 protected:
-    virtual void setupChildProcess();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    void setupChildProcess() override;
+#endif
 
 private:
+    void setupPtyChildProcess();
     int m_handleMaster, m_handleSlave;
     QString m_handleSlaveName;
 };

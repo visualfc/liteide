@@ -66,7 +66,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 {
     m_widget = new QWidget;
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::Drives
@@ -142,7 +142,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
 
     m_rootCombo = new QComboBox;
     m_rootCombo->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-    m_rootCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
+    m_rootCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
     m_rootCombo->setEditable(false);
 
     m_rootToolBar->addAction(m_cdupAct);
@@ -175,7 +175,7 @@ FileBrowser::FileBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"FileSystem",tr("File System"),true,actions);
     connect(m_toolWindowAct,SIGNAL(toggled(bool)),this,SLOT(visibilityChanged(bool)));
     //connect(m_filterCombo,SIGNAL(activated(QString)),this,SLOT(activatedFilter(QString)));
-    connect(m_rootCombo,SIGNAL(activated(QString)),this,SLOT(activatedRoot(QString)));
+    connect(m_rootCombo,SIGNAL(textActivated(QString)),this,SLOT(activatedRoot(QString)));
     connect(m_syncAct,SIGNAL(triggered(bool)),this,SLOT(syncFileModel(bool)));
     connect(m_reloadAct,SIGNAL(triggered()),this,SLOT(reloadFileModel()));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));

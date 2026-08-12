@@ -23,6 +23,7 @@
 
 #include "filesearch.h"
 #include "litefind_global.h"
+#include "liteapi/liteqt.h"
 #include <QFile>
 #include <QTableWidget>
 #include <QTextStream>
@@ -103,7 +104,7 @@ void FindThread::findFile(const QRegExp &reg, const QString &fileName)
     file.seek(0);
 
     QTextStream stream(&file);
-    stream.setCodec("utf-8");
+    qtSetUtf8Encoding(stream);
     QString line;
     int lineNr = 1;
     while (!stream.atEnd()) {
@@ -226,7 +227,7 @@ FileSearch::FileSearch(LiteApi::IApplication *app, QObject *parent) :
 
     QHBoxLayout *findLayout = new QHBoxLayout;
     findLayout->setSpacing(6);
-    //findLayout->setMargin(0);
+    //findLayout->setContentsMargins(0, 0, 0, 0);
     m_findButton = new QPushButton(tr("Search"));
     m_stopButton = new QPushButton(tr("Cancel"));
     m_stopButton->setEnabled(false);

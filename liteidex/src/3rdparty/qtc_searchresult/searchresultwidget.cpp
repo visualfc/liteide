@@ -63,8 +63,8 @@ public:
     ~WideEnoughLineEdit(){}
     QSize sizeHint() const {
         QSize sh = QLineEdit::minimumSizeHint();
-        sh.rwidth() += qMax(25 * fontMetrics().width(QLatin1Char('x')),
-                            fontMetrics().width(text()));
+        sh.rwidth() += qMax(25 * fontMetrics().horizontalAdvance(QLatin1Char('x')),
+                            fontMetrics().horizontalAdvance(text()));
         return sh;
     }
 public slots:
@@ -86,7 +86,7 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     m_cancelSupported(true)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(2);
+    layout->setContentsMargins(2, 2, 2, 2);
     layout->setSpacing(1);
     setLayout(layout);
 
@@ -99,7 +99,7 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     topWidget->setLineWidth(0);
     //topWidget->setAutoFillBackground(true);
     QHBoxLayout *topLayout = new QHBoxLayout(topWidget);
-    topLayout->setMargin(0);
+    topLayout->setContentsMargins(0, 0, 0, 0);
     topWidget->setLayout(topLayout);
     layout->addWidget(topWidget);
 
@@ -113,7 +113,7 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     //m_infoWidget->setAutoFillBackground(true);
 
     QHBoxLayout *infoLayout = new QHBoxLayout(m_infoWidget);
-    infoLayout->setMargin(2);
+    infoLayout->setContentsMargins(2, 2, 2, 2);
     m_infoLabel = new QLabel();
     infoLayout->addWidget(m_infoLabel);
     layout->addWidget(m_infoWidget);
@@ -127,7 +127,7 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     m_messageWidget->setLineWidth(0);
     //m_messageWidget->setAutoFillBackground(true);
     QHBoxLayout *messageLayout = new QHBoxLayout(m_messageWidget);
-    messageLayout->setMargin(2);
+    messageLayout->setContentsMargins(2, 2, 2, 2);
     m_messageWidget->setLayout(messageLayout);
     QLabel *messageLabel = new QLabel(tr("Search was canceled."));
     //messageLabel->setPalette(pal);
@@ -150,7 +150,7 @@ SearchResultWidget::SearchResultWidget(QWidget *parent) :
     m_descriptionContainer = new QWidget(topWidget);
     QHBoxLayout *descriptionLayout = new QHBoxLayout(m_descriptionContainer);
     m_descriptionContainer->setLayout(descriptionLayout);
-    descriptionLayout->setMargin(0);
+    descriptionLayout->setContentsMargins(0, 0, 0, 0);
     m_descriptionContainer->setMinimumWidth(200);
     m_descriptionContainer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_label = new QLabel(m_descriptionContainer);
