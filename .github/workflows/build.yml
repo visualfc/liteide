@@ -81,6 +81,19 @@ jobs:
           modules: ${{ matrix.qt_modules }}
           cache: true
 
+      - name: Remove obsolete AGL dependency (Qt 6 macOS)
+        if: runner.os == 'macOS' && startsWith(matrix.qt_version, '6.')
+        shell: bash
+        run: |
+          qt_prefix="$(qmake -query QT_INSTALL_PREFIX)"
+          find "$qt_prefix" -type f \( -name '*.conf' -o -name '*.prf' -o -name '*.prl' \) \
+            -exec perl -pi -e 's/-framework AGL//g' {} +
+          if find "$qt_prefix" -type f \( -name '*.conf' -o -name '*.prf' -o -name '*.prl' \) \
+              -exec grep -l -- '-framework AGL' {} + | grep -q .; then
+            echo 'Failed to remove the obsolete AGL framework dependency.' >&2
+            exit 1
+          fi
+
       - name: Set up MSVC 2019
         if: runner.os == 'Windows' && startsWith(matrix.qt_version, '5.')
         uses: ilammy/msvc-dev-cmd@v1
