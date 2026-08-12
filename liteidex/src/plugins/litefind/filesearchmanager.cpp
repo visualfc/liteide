@@ -108,6 +108,13 @@ FileSearchManager::~FileSearchManager()
 
 void FileSearchManager::addFileSearch(LiteApi::IFileSearch *search)
 {
+    if (!search) {
+        return;
+    }
+    // The manager owns registered searches.  Plugins commonly create them
+    // with the plugin as QObject parent; reparenting prevents the plugin from
+    // deleting a search while it is still present in this list.
+    search->setParent(this);
     m_fileSearchList.push_back(search);
     if (search->widget()) {
         m_searchItemStackedWidget->addWidget(search->widget());
