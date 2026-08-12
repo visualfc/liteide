@@ -61,6 +61,8 @@
 #include <QPainter>
 #include <QComboBox>
 #include <QProcessEnvironment>
+#include <QRegExp>
+#include <QStandardPaths>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
@@ -124,7 +126,9 @@ QString LiteApp::getResoucePath()
 
 QString LiteApp::getStoragePath()
 {
-#if QT_VERSION >= 0x050000
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QString root = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+#elif QT_VERSION >= 0x050000
     QString root = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 #else
     QString root = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
@@ -324,7 +328,7 @@ static QImage makeSplashImage(LiteApi::IApplication *app)
     int bh = r.height()-th;
     painter.fillRect(1,th,r.width()-2,bh-1,Qt::white);
 
-    QFont font("Timer",32);
+    QFont font = QApplication::font();
     font.setPointSize(32);
     font.setItalic(true);
     painter.setPen(Qt::white);

@@ -23,6 +23,7 @@
 #include <QtCore>
 #include "liteapi/liteqt.h"
 #include "diff_match_patch.h"
+#include <QRegExp>
 
 
 //////////////////////////
@@ -65,7 +66,7 @@ QString Diff::strOperation(Operation op) {
 QString Diff::toString() const {
   QString prettyText = text;
   // Replace linebreaks with Pilcrow signs.
-  prettyText.replace('\n', L'\u00b6');
+  prettyText.replace(QLatin1Char('\n'), QChar(0x00b6));
   //qDebug(qPrintable(QString("Diff(") + strOperation(operation) + QString(",\"")
   //    + prettyText + QString("\")")));
   return QString("Diff(") + strOperation(operation) + QString(",\"")

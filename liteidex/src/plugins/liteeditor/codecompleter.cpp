@@ -31,10 +31,16 @@
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
 #include <QItemSelectionModel>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QScreen>
+#else
 #include <QDesktopWidget>
+#endif
 #include <QItemDelegate>
 #include <QLabel>
+#include <QRegExp>
 #include <QDebug>
+#include <algorithm>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -159,7 +165,7 @@ public:
         : FakeToolTip(parent), m_label(new QLabel(this))
     {
         QVBoxLayout *layout = new QVBoxLayout(this);
-        layout->setMargin(0);
+        layout->setContentsMargins(0, 0, 0, 0);
         layout->setSpacing(0);
         layout->addWidget(m_label);
 
@@ -178,10 +184,14 @@ public:
     // Workaround QTCREATORBUG-11653
     void calculateMaximumWidth()
     {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        const int desktopWidth = screen()->availableGeometry().width();
+#else
         const QDesktopWidget *desktopWidget = QApplication::desktop();
         const int desktopWidth = desktopWidget->isVirtualDesktop()
                 ? desktopWidget->width()
                 : desktopWidget->availableGeometry(desktopWidget->primaryScreen()).width();
+#endif
         const QMargins widgetMargins = contentsMargins();
         const QMargins layoutMargins = layout()->contentsMargins();
         const int margins = widgetMargins.left() + widgetMargins.right()
@@ -217,7 +227,12 @@ QSize CodeCompleterListView::calculateSize() const
     const int visibleItems = qMin(model()->rowCount(), maxVisibleItems);
     const int firstVisibleRow = verticalScrollBar()->value();
 
-    const QStyleOptionViewItem &option = viewOptions();
+    QStyleOptionViewItem option;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    initViewItemOption(&option);
+#else
+    option = viewOptions();
+#endif
     QSize shint;
     for (int i = 0; i < visibleItems; ++i) {
         QSize tmp = itemDelegate()->sizeHint(option, model()->index(i + firstVisibleRow, 0));
@@ -522,9 +537,9 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
                 }
             }
         }
-        qStableSort(best.begin(), best.end(), ContentLessThan(filter));
-        qStableSort(second.begin(), second.end(), ContentLessThan(filter));
-        qStableSort(other.begin(), other.end(), ContentLessThan(filter));
+        std::stable_sort(best.begin(), best.end(), ContentLessThan(filter));
+        std::stable_sort(second.begin(), second.end(), ContentLessThan(filter));
+        std::stable_sort(other.begin(), other.end(), ContentLessThan(filter));
         m_items.append(best);
         m_items.append(second);
         m_items.append(other);
@@ -543,7 +558,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
             QStandardItem *item = m_model->itemFromIndex(index);
             m_items.append(item->clone());
         }
-        qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
+        std::stable_sort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
         return m_items.size();
     }
 
@@ -576,8 +591,8 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
                 otherItems.append(item->clone());
             }
         }
-        qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
-        qStableSort(otherItems.begin(), otherItems.end(), ContentLessThan(prefix));
+        std::stable_sort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
+        std::stable_sort(otherItems.begin(), otherItems.end(), ContentLessThan(prefix));
         m_items.append(otherItems);
         return m_items.size();
     }
@@ -623,7 +638,7 @@ int CodeCompleterProxyModel::filter(const QString &filter, int cs, LiteApi::Comp
             m_items.append(item->clone());
         }
     }
-    qStableSort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
+    std::stable_sort(m_items.begin(), m_items.end(), ContentLessThan(prefix));
 
     return m_items.size();
 }
@@ -767,7 +782,11 @@ void CodeCompleterEx::complete(const QRect &rect)
         return;
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QRect screen = m_widget->screen()->availableGeometry();
+#else
     const QRect screen = QApplication::desktop()->availableGeometry(m_widget);
+#endif
     Qt::LayoutDirection dir = m_widget->layoutDirection();
     QPoint pos;
     int rh, w;

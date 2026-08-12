@@ -35,6 +35,7 @@
 #include <QStandardItem>
 #include <QTreeView>
 #include <QHeaderView>
+#include <QRegExp>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -305,13 +306,13 @@ FindApiWidget::FindApiWidget(LiteApi::IApplication *app, QWidget *parent) :
     findBtn->setText(tr("Find"));
 
     QHBoxLayout *findLayout = new QHBoxLayout;
-    findLayout->setMargin(2);
+    findLayout->setContentsMargins(2, 2, 2, 2);
     findLayout->addWidget(m_findEdit);
     findLayout->addWidget(findBtn);
     findLayout->addWidget(m_chaseWidget);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(1);
+    mainLayout->setContentsMargins(1, 1, 1, 1);
     mainLayout->setSpacing(1);
     mainLayout->addLayout(findLayout);
     mainLayout->addWidget(m_apiView);

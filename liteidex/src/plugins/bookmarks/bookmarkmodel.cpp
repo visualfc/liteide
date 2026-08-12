@@ -204,7 +204,7 @@ void BookmarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->save();
 
     QFontMetrics fm(opt.font);
-    static int lwidth = fm.width(QLatin1String("8888")) + 18;
+    static int lwidth = fm.horizontalAdvance(QLatin1String("8888")) + 18;
 
     QColor backgroundColor;
     QColor textColor;
@@ -217,8 +217,8 @@ void BookmarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         if (!m_selectedPixmap)
             generateGradientPixmap(lwidth, fm.height()+1, backgroundColor, selected);
     } else {
-        painter->setBrush(opt.palette.background().color());
-        backgroundColor = opt.palette.background().color();
+        painter->setBrush(opt.palette.color(QPalette::Window));
+        backgroundColor = opt.palette.color(QPalette::Window);
         if (!m_normalPixmap)
             generateGradientPixmap(lwidth, fm.height(), backgroundColor, selected);
     }
@@ -240,13 +240,13 @@ void BookmarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     QString topRight = index.data(BookmarkModel::LineNumber).toString();
     // Check whether we need to be fancy and paint some background
-    int fwidth = fm.width(topLeft);
+    int fwidth = fm.horizontalAdvance(topLeft);
     if (fwidth + lwidth > opt.rect.width()) {
         int left = opt.rect.right() - lwidth;
         painter->drawPixmap(left, opt.rect.top(), selected ? m_selectedPixmap : m_normalPixmap);
     }
     // topRight
-    painter->drawText(opt.rect.right() - fm.width(topRight) - 6 , 2 + opt.rect.top() + fm.ascent(), topRight);
+    painter->drawText(opt.rect.right() - fm.horizontalAdvance(topRight) - 6 , 2 + opt.rect.top() + fm.ascent(), topRight);
 
     // Directory
     QColor mix;
@@ -256,10 +256,10 @@ void BookmarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->setPen(mix);
 
     QString directory = index.data(BookmarkModel::FilePath).toString();
-    int availableSpace = opt.rect.width() - fm.width("888");
-    if (fm.width(directory) > availableSpace) {
+    int availableSpace = opt.rect.width() - fm.horizontalAdvance("888");
+    if (fm.horizontalAdvance(directory) > availableSpace) {
         // We need a shorter directory
-        availableSpace -= fm.width("...");
+        availableSpace -= fm.horizontalAdvance("...");
 
         int pos = directory.size();
         int idx;
@@ -269,7 +269,7 @@ void BookmarkDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
                 // Can't happen, this means the string did fit after all?
                 break;
             }
-            int width = fm.width(directory.mid(idx, pos-idx));
+            int width = fm.horizontalAdvance(directory.mid(idx, pos-idx));
             if (width > availableSpace) {
                 directory = "..." + directory.mid(pos);
                 break;

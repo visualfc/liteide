@@ -286,7 +286,7 @@ void Utils::unCommentSelection(QPlainTextEdit *edit, CommentFlag flag, const Com
                                             singleLineLength);
                         if (definition.isAfterWhiteSpacesAddSpace()) {
                             if (i < text.size()-singleLineLength) {
-                                if (text.at(i+singleLineLength) == 0x0020) {
+                                if (text.at(i+singleLineLength) == QChar(0x0020)) {
                                     cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,1);
                                 }
                             }

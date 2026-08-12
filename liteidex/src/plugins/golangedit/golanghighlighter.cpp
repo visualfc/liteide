@@ -29,6 +29,7 @@
 #include "cplusplus/Lexer.h"
 
 #include <QTextDocument>
+#include <QStringRef>
 #include <QDebug>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)

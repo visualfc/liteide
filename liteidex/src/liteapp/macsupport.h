@@ -25,7 +25,11 @@
 #define MACSUPPORT_H
 
 #include <QMainWindow>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QOperatingSystemVersion>
+#else
 #include <QSysInfo>
+#endif
 
 class MacSupport
 {
@@ -33,7 +37,12 @@ public:
     static void setFullScreen(QMainWindow *window);
     static bool isLionOrHigh()
     {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        return QOperatingSystemVersion::current()
+                >= QOperatingSystemVersion(QOperatingSystemVersion::MacOS, 10, 7);
+#else
         return QSysInfo::MacintoshVersion > QSysInfo::MV_10_6;
+#endif
     }
 };
 

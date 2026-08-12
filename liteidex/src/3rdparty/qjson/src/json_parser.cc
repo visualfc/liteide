@@ -420,7 +420,8 @@ namespace yy
     {
             QVariantMap members = (yysemantic_stack_[(2) - (2)]).toMap();
             (yysemantic_stack_[(2) - (2)]) = QVariant(); // Allow reuse of map
-            (yyval) = QVariant(members.unite ((yysemantic_stack_[(2) - (1)]).toMap()));
+            members.insert((yysemantic_stack_[(2) - (1)]).toMap());
+            (yyval) = QVariant(members);
           ;}
     break;
 
@@ -434,7 +435,8 @@ namespace yy
     {
           QVariantMap members = (yysemantic_stack_[(3) - (3)]).toMap();
           (yysemantic_stack_[(3) - (3)]) = QVariant(); // Allow reuse of map
-          (yyval) = QVariant(members.unite ((yysemantic_stack_[(3) - (2)]).toMap()));
+          members.insert((yysemantic_stack_[(3) - (2)]).toMap());
+          (yyval) = QVariant(members);
           ;}
     break;
 
@@ -1113,4 +1115,3 @@ void yy::json_parser::error (const yy::location& yyloc,
   qjsonDebug() << "json_parser::error [line" << yyloc.end.line << "] -" << error.c_str() ;
   driver->setError(QString::fromLatin1(error.c_str()), yyloc.end.line);
 }
-

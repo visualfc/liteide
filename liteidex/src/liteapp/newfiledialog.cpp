@@ -58,11 +58,11 @@ NewFileDialog::NewFileDialog(QWidget *parent) :
     ui->templateTreeView->setModel(m_templateModel);
     ui->pathTreeView->setModel(m_pathModel);
 
-    ui->pathTreeView->setEditTriggers(0);
+    ui->pathTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->pathTreeView->setRootIsDecorated(false);
     ui->pathTreeView->setHeaderHidden(true);
 
-    ui->templateTreeView->setEditTriggers(0);
+    ui->templateTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->templateTreeView->setRootIsDecorated(false);
     ui->templateTreeView->setHeaderHidden(true);
 

@@ -101,14 +101,16 @@ members: /* empty */ { $$ = QVariant (QVariantMap()); }
         | pair r_members {
             QVariantMap members = $2.toMap();
             $2 = QVariant(); // Allow reuse of map
-            $$ = QVariant(members.unite ($1.toMap()));
+            members.insert($1.toMap());
+            $$ = QVariant(members);
           };
 
 r_members: /* empty */ { $$ = QVariant (QVariantMap()); }
         | COMMA pair r_members {
           QVariantMap members = $3.toMap();
           $3 = QVariant(); // Allow reuse of map
-          $$ = QVariant(members.unite ($2.toMap()));
+          members.insert($2.toMap());
+          $$ = QVariant(members);
           };
 
 pair:   string COLON value {

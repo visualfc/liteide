@@ -217,9 +217,9 @@ bool SearchResultTreeModel::setCheckState(const QModelIndex &idx, Qt::CheckState
     // check children
     if (int children = item->childrenCount()) {
         for (int i = 0; i < children; ++i) {
-            setCheckState(idx.child(i, 0), checkState, false);
+            setCheckState(index(i, 0, idx), checkState, false);
         }
-        emit dataChanged(idx.child(0, 0), idx.child(children-1, 0));
+        emit dataChanged(index(0, 0, idx), index(children-1, 0, idx));
     }
     return true;
 }
@@ -256,7 +256,7 @@ QVariant SearchResultTreeModel::data(const SearchResultTreeItem *row, int role) 
         result = row->item.text;
         break;
     case ItemDataRoles::ResultItemRole:
-        result = qVariantFromValue(row->item);
+        result = QVariant::fromValue(row->item);
         break;
     case ItemDataRoles::ResultLineNumberRole:
         result = row->item.lineNumber;
@@ -354,7 +354,7 @@ void SearchResultTreeModel::addResultsToCurrentParent(const QList<SearchResultIt
             if (existingItem) {
                 existingItem->setGenerated(false);
                 existingItem->item = item;
-                QModelIndex itemIndex = m_currentIndex.child(insertionIndex, 0);
+                QModelIndex itemIndex = index(insertionIndex, 0, m_currentIndex);
                 dataChanged(itemIndex, itemIndex);
             } else {
                 beginInsertRows(m_currentIndex, insertionIndex, insertionIndex);
@@ -389,7 +389,7 @@ QList<QModelIndex> SearchResultTreeModel::addResults(const QList<SearchResultIte
 {
     QSet<SearchResultTreeItem *> pathNodes;
     QList<SearchResultItem> sortedItems = items;
-    qStableSort(sortedItems.begin(), sortedItems.end(), lessThanByPath);
+    std::stable_sort(sortedItems.begin(), sortedItems.end(), lessThanByPath);
     QList<SearchResultItem> itemSet;
     foreach (const SearchResultItem &item, sortedItems) {
         m_editorFontIsUsed |= item.useTextEditorFont;
@@ -433,7 +433,7 @@ QModelIndex SearchResultTreeModel::nextIndex(const QModelIndex &idx, bool *wrapp
 
     if (rowCount(idx) > 0) {
         // node with children
-        return idx.child(0, 0);
+        return index(0, 0, idx);
     }
     // leaf node
     QModelIndex nextIndex;

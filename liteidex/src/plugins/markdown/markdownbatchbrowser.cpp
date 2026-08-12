@@ -75,7 +75,7 @@ MarkdownBatchBrowser::MarkdownBatchBrowser(LiteApi::IApplication *app, QObject *
     m_model->setHorizontalHeaderLabels(QStringList()<< "FilePath");
     ui->setupUi(m_widget);
     ui->filesTreeView->setModel(m_model);
-    ui->filesTreeView->setEditTriggers(0);
+    ui->filesTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->filesTreeView->setDragDropMode(QAbstractItemView::NoDragDrop);
     connect(ui->importFolderPushButton,SIGNAL(clicked()),this,SLOT(browserImportFolder()));
     connect(ui->addFilesPushButton,SIGNAL(clicked()),this,SLOT(addFiles()));
@@ -184,7 +184,7 @@ static QByteArray head =
 "</head>"
 "<body>";
 
-static QByteArray end =
+static QByteArray htmlEnd =
 "</body>"
 "</html>";
 
@@ -214,11 +214,19 @@ void MarkdownBatchBrowser::loadFinished(bool b)
         }
     } else if (m_mode == MODE_MERGE_PRINT) {
         QPrinter printer(QPrinter::HighResolution);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        printer.setPageMargins(QMarginsF(10, 10, 10, 10), QPageLayout::Millimeter);
+#else
         printer.setPageMargins(10,10,10,10,QPrinter::Millimeter);
+#endif
         m_doc->print(&printer);
     } else if (m_mode == MODE_MERGE_PRINTPREVIEW) {
         QPrinter printer(QPrinter::HighResolution);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        printer.setPageMargins(QMarginsF(10, 10, 10, 10), QPageLayout::Millimeter);
+#else
         printer.setPageMargins(10,10,10,10,QPrinter::Millimeter);
+#endif
         QPrintPreviewDialog dlg(&printer);
         connect(&dlg,SIGNAL(paintRequested(QPrinter*)),m_doc,SLOT(print(QPrinter*)));
         dlg.exec();

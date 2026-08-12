@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "liteeditorfile.h"
+#include <QRegularExpression>
 #include "liteeditor_global.h"
 #include "editorutil/checkdata.h"
 #include <QFile>
@@ -237,7 +238,7 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
     } else if (lf == 0) {
         m_lineTerminatorMode = LFLineTerminator;
     } else {
-        lf = outText.indexOf(QRegExp("[^\r]\n"),lf-1);
+        lf = outText.indexOf(QRegularExpression("[^\r]\n"), lf - 1);
         if (lf >= 0) {
             m_lineTerminatorMode = LFLineTerminator;
         } else {

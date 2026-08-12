@@ -25,6 +25,8 @@ HEADERS +=\
 RESOURCES += \
     imageeditor.qrc
 
-!isEmpty(QT.svg.name): QT += svg
+!isEmpty(QT.svg.name) {
+    QT += svg
+    greaterThan(QT_MAJOR_VERSION, 5): QT += svgwidgets
+}
 else: DEFINES += QT_NO_SVG
-

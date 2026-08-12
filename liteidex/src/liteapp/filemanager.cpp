@@ -46,6 +46,7 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QDir>
+#include <QStandardPaths>
 #include <QVBoxLayout>
 #include <QDebug>
 //lite_memory_check_begin
@@ -120,7 +121,7 @@ bool FileManager::initWithApp(IApplication *app)
 
     m_folderWidget = new QWidget;
     m_layout = new QVBoxLayout;
-    m_layout->setMargin(0);
+    m_layout->setContentsMargins(0, 0, 0, 0);
     m_folderWidget->setLayout(m_layout);
     m_layout->addWidget(m_folderWindow->widget());
 
@@ -660,7 +661,7 @@ void FileManager::checkForReload()
 
     int lastReloadRet = QMessageBox::Yes;
     int lastCloseRet = QMessageBox::Yes;
-    QStringList files = m_changedFiles.toList();
+    QStringList files = m_changedFiles.values();
     m_changedFiles.clear();
     foreach (QString fileName, files) {
         if (!QFile::exists(fileName)) {
@@ -750,5 +751,4 @@ void FileManager::checkForReload()
     m_checkBlockActivated = false;
     QTimer::singleShot(200, this, SLOT(checkForReload()));
 }
-
 

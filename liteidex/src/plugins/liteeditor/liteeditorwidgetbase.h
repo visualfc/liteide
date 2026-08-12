@@ -26,6 +26,7 @@
 
 #include <QPlainTextEdit>
 #include <QTextBlock>
+#include <QRegExp>
 #include "liteeditorapi/liteeditorapi.h"
 #include "qtc_texteditor/autocompleter.h"
 #include "qtc_texteditor/basetextblockselection.h"

@@ -29,6 +29,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QDebug>
+#include <algorithm>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -88,8 +89,8 @@ void PluginManager::loadPlugins(const QString &dir)
         i.next();
         deps.insertMulti(i.value(),idPlguinMap.value(i.key()));
     }
-    QList<int> keys = deps.keys().toSet().toList();
-    qSort(keys);
+    QList<int> keys = deps.uniqueKeys();
+    std::sort(keys.begin(), keys.end());
     foreach(int index, keys) {
         foreach(IPluginFactory *p, deps.values(index)) {
             m_factoryList.append(p);

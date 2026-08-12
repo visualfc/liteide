@@ -90,7 +90,7 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_toolBar->addAction(m_reloadUrlAct);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
     mainLayout->addWidget(m_toolBar);
@@ -111,7 +111,7 @@ DocumentBrowser::DocumentBrowser(LiteApi::IApplication *app, QObject *parent) :
     connect(m_backwardAct,SIGNAL(triggered()),this,SLOT(backward()));
     connect(m_forwardAct,SIGNAL(triggered()),this,SLOT(forward()));
     connect(m_reloadUrlAct,SIGNAL(triggered()),this,SLOT(reloadUrl()));
-    connect(m_urlComboBox,SIGNAL(activated(QString)),this,SLOT(activatedUrl(QString)));
+    connect(m_urlComboBox,SIGNAL(textActivated(QString)),this,SLOT(activatedUrl(QString)));
     connect(this,SIGNAL(backwardAvailable(bool)),m_backwardAct,SLOT(setEnabled(bool)));
     connect(this,SIGNAL(forwardAvailable(bool)),m_forwardAct,SLOT(setEnabled(bool)));
 

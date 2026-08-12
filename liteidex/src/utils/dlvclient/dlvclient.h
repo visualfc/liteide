@@ -42,7 +42,7 @@ struct ResponseError
     void fromMap(const QVariantMap &map)
     {
         error = map["error"].toString();
-        id = map["id"].toInt();
+        id = map["id"].toString();
         result = map["result"];
     }
 };

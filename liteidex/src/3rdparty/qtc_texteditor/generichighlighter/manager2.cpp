@@ -126,7 +126,7 @@ void Manager2::loadPath(const QStringList &definitionsPaths)
         }
 
         // Consider definitions with higher priority first.
-        qSort(allMetaData.begin(), allMetaData.end(), PriorityComp());
+        std::sort(allMetaData.begin(), allMetaData.end(), PriorityComp());
 
         foreach (const QSharedPointer<HighlightDefinitionMetaData> &metaData, allMetaData) {
             if (m_idByName.contains(metaData->name()))

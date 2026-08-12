@@ -42,6 +42,9 @@
 #ifndef QT_NO_PRINTER
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QPageSize>
+#endif
 #endif
 
 //lite_memory_check_begin
@@ -204,7 +207,7 @@ void HtmlPreview::appLoaded()
     m_cssMenu->addActions(m_cssActGroup->actions());
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(m_htmlWidget->widget(),1);
     m_widget->setLayout(layout);
@@ -349,7 +352,9 @@ void HtmlPreview::loadHtmlData(const QByteArray &data, const QByteArray &title, 
         QTextCodec *codec = QTextCodec::codecForName("utf-8");
         m_exportHtml.replace("__MARKDOWN_TITLE__",title);
 #if QT_VERSION >= 0x050000
-        m_exportHtml.replace("__MARKDOWN_CONTENT__","<pre>"+codec->toUnicode(data).toHtmlEscaped().toUtf8()+"</pre>");
+        const QByteArray escaped = codec->toUnicode(data).toHtmlEscaped().toUtf8();
+        const QByteArray content = QByteArrayLiteral("<pre>") + escaped + QByteArrayLiteral("</pre>");
+        m_exportHtml.replace("__MARKDOWN_CONTENT__", content);
 #else
         m_exportHtml.replace("__MARKDOWN_CONTENT__","<pre>"+Qt::escape(codec->toUnicode(data)).toUtf8()+"</pre>");
 #endif
@@ -432,8 +437,13 @@ void HtmlPreview::printPreview()
     }
 #ifndef QT_NO_PRINTER
     QPrinter printer(QPrinter::HighResolution);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    printer.setPageMargins(QMarginsF(10, 10, 10, 10), QPageLayout::Millimeter);
+    printer.setPageSize(QPageSize(QPageSize::A4));
+#else
     printer.setPageMargins(10,10,10,10,QPrinter::Millimeter);
     printer.setPageSize(QPrinter::A4);
+#endif
     QPrintPreviewDialog dlg(&printer,m_widget);
     connect(&dlg,SIGNAL(paintRequested(QPrinter*)),m_htmlWidget,SLOT(print(QPrinter*)));
     dlg.exec();

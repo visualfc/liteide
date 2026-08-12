@@ -32,6 +32,7 @@
 #include "goaddtagsdialog.h"
 #include "goremovetagsdialog.h"
 #include "quickopenapi/quickopenapi.h"
+#include "liteapi/liteqt.h"
 
 #include <QMenu>
 #include <QToolBar>
@@ -172,7 +173,7 @@ GolangEdit::GolangEdit(LiteApi::IApplication *app, QObject *parent) :
 
 #if 0 // Source Query is superseded by gopls.
     connect(m_sourceQueryProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(sourceQueryFinished(int,QProcess::ExitStatus)));
-    connect(m_sourceQueryProcess,SIGNAL(error(QProcess::ProcessError)),this,SLOT(sourcequeryError(QProcess::ProcessError)));
+    connect(m_sourceQueryProcess,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SLOT(sourcequeryError(QProcess::ProcessError)));
 
     m_sourceQueryOutput = new TextOutput(m_liteApp,true);
     m_sourceQueryOutput->setLineWrap(false);
@@ -948,7 +949,7 @@ static QStringList FindSourceInfo(LiteApi::IApplication *app, const QString &fil
         QFile f(fileName);
         if (f.open(QFile::ReadOnly)) {
             QTextStream stream(&f);
-            stream.setCodec("utf-8");
+            qtSetUtf8Encoding(stream);
             int curLine = 0;
             QString text;
             while(!stream.atEnd() && (curLine < (line+maxLine)) ) {
@@ -978,7 +979,7 @@ static QString FindSourceBlock(LiteApi::IApplication *app, const QString &fileNa
         QFile f(fileName);
         if (f.open(QFile::ReadOnly)) {
             QTextStream stream(&f);
-            stream.setCodec("utf-8");
+            qtSetUtf8Encoding(stream);
             int curLine = 0;
             QString text;
             while(!stream.atEnd()) {

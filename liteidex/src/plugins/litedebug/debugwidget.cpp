@@ -85,14 +85,14 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_regsView = new QTreeView;
     m_asmView = new QTreeView;
 
-    m_asyncView->setEditTriggers(0);
-    m_varsView->setEditTriggers(0);
+    m_asyncView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_varsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_varsView->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    m_watchView->setEditTriggers(0);
+    m_watchView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_watchView->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    m_framesView->setEditTriggers(0);
+    m_framesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 #if QT_VERSION >= 0x050000
     m_framesView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_threadsView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -105,11 +105,11 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
     m_asmView->header()->setResizeMode(QHeaderView::ResizeToContents);
 #endif
 
-    m_libraryView->setEditTriggers(0);
-    m_threadsView->setEditTriggers(0);
-    m_goroutinesView->setEditTriggers(0);
-    m_regsView->setEditTriggers(0);
-    m_asmView->setEditTriggers(0);
+    m_libraryView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_threadsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_goroutinesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_regsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_asmView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     m_watchView->setEditTriggers(QAbstractItemView::DoubleClicked);
     m_watchView->setItemDelegate(new WatchDelegate(this));
@@ -122,7 +122,7 @@ DebugWidget::DebugWidget(LiteApi::IApplication *app, QObject *parent) :
 
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(m_tabWidget);
 
     m_widget->setLayout(layout);

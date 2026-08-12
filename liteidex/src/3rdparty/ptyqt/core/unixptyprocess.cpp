@@ -38,8 +38,8 @@ UnixPtyProcess::UnixPtyProcess()
     , m_readMasterNotify(0)
 {
 //    m_shellProcess.setWorkingDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
-    connect(&m_shellProcess,SIGNAL(finished(int, QProcess::ExitStatus)),this,SLOT(finished(int, QProcess::ExitStatus)));
-    connect(&m_shellProcess,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(stateChanged(QProcess::ProcessState)));
+    QObject::connect(&m_shellProcess,SIGNAL(finished(int, QProcess::ExitStatus)),this,SLOT(finished(int, QProcess::ExitStatus)));
+    QObject::connect(&m_shellProcess,SIGNAL(stateChanged(QProcess::ProcessState)),this,SLOT(stateChanged(QProcess::ProcessState)));
 }
 
 UnixPtyProcess::~UnixPtyProcess()
@@ -193,7 +193,7 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
     m_readMasterNotify = new QSocketNotifier(m_shellProcess.m_handleMaster, QSocketNotifier::Read, &m_shellProcess);
     m_readMasterNotify->setEnabled(true);
     m_readMasterNotify->moveToThread(m_shellProcess.thread());
-    connect(m_readMasterNotify,SIGNAL(activated(int)),this,SLOT(readActivated(int)));
+    QObject::connect(m_readMasterNotify,SIGNAL(activated(int)),this,SLOT(readActivated(int)));
 //    QObject::connect(m_readMasterNotify, &QSocketNotifier::activated, [this](int socket)
 //    {
 //        Q_UNUSED(socket)
@@ -248,10 +248,15 @@ bool UnixPtyProcess::startProcess(const QString &shellPath, const QStringList &a
     m_shellProcess.setWorkingDirectory(workingDirectory);
     m_shellProcess.setProcessEnvironment(envFormat);
     m_shellProcess.setReadChannel(QProcess::StandardOutput);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    m_shellProcess.setChildProcessModifier([this]() {
+        m_shellProcess.setupPtyChildProcess();
+    });
+#endif
     m_shellProcess.start(m_shellPath, arguments);
     m_shellProcess.waitForStarted();
 
-    m_pid = m_shellProcess.pid();
+    m_pid = m_shellProcess.processId();
 
     resize(cols, rows);
 
@@ -427,7 +432,14 @@ void UnixPtyProcess::moveToThread(QThread *targetThread)
     m_shellProcess.moveToThread(targetThread);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void ShellProcess::setupChildProcess()
+{
+    setupPtyChildProcess();
+}
+#endif
+
+void ShellProcess::setupPtyChildProcess()
 {
     dup2(m_handleSlave, STDIN_FILENO);
     dup2(m_handleSlave, STDOUT_FILENO);

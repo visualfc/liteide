@@ -49,7 +49,7 @@ BaseDockWidget::BaseDockWidget(QSize iconSize, QWidget *parent) :
     m_widget = 0;
     QDockWidget::setWidget(m_mainWidget);
     m_mainLayout = new QVBoxLayout;
-    m_mainLayout->setMargin(0);
+    m_mainLayout->setContentsMargins(0, 0, 0, 0);
     m_mainLayout->setSpacing(1);
     m_mainWidget->setLayout(m_mainLayout);
 
@@ -243,11 +243,11 @@ void BaseDockWidget::topLevelChanged(bool b)
     if (b) {
         this->setTitleBarWidget(0);
         m_mainLayout->insertWidget(0,m_toolBar);
-        m_mainLayout->setMargin(2);
+        m_mainLayout->setContentsMargins(2, 2, 2, 2);
         m_toolBar->setVisible(true);
         flags |= QDockWidget::DockWidgetFloatable;
     } else {
-        m_mainLayout->setMargin(0);
+        m_mainLayout->setContentsMargins(0, 0, 0, 0);
         m_toolBar->setVisible(false);
         m_mainLayout->removeWidget(m_toolBar);
         this->setTitleBarWidget(m_toolBar);

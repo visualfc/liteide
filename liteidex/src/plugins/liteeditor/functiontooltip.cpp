@@ -24,8 +24,12 @@
 #include "functiontooltip.h"
 #include "faketooltip.h"
 
-#include <QDesktopWidget>
 #include <QApplication>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QScreen>
+#else
+#include <QDesktopWidget>
+#endif
 #include <QStylePainter>
 #include <QStyleOptionFrame>
 #include <QToolButton>
@@ -48,7 +52,7 @@ FunctionTooltip::FunctionTooltip(LiteApi::IApplication *app, LiteApi::ITextEdito
     m_editWidget = LiteApi::getPlainTextEdit(editor);
     m_popup = new FakeToolTip(m_editWidget);
     QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->setMargin(0);
+    hbox->setContentsMargins(0, 0, 0, 0);
     hbox->setSpacing(0);
     m_label = new QLabel;
     hbox->addWidget(m_label);
@@ -193,11 +197,15 @@ void FunctionTooltip::showPopup(int startpos)
     QToolTip::hideText();
     m_popup->setFixedWidth(m_popup->minimumSizeHint().width());
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QRect screen = m_editor->widget()->screen()->availableGeometry();
+#else
     const QDesktopWidget *desktop = QApplication::desktop();
 #ifdef Q_WS_MAC
     const QRect screen = desktop->availableGeometry(desktop->screenNumber(m_editor->widget()));
 #else
     const QRect screen = desktop->screenGeometry(desktop->screenNumber(m_editor->widget()));
+#endif
 #endif
 
     const QSize sz = m_popup->sizeHint();
@@ -248,4 +256,3 @@ bool FunctionTooltip::restoreTip(int startpos)
     }
     return false;
 }
-

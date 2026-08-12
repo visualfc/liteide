@@ -23,6 +23,8 @@
 
 #include "multiindexmodel.h"
 
+#include <algorithm>
+
 /****************************************************************************
 **
 ** Copyright (C) 2011 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Stephen Kelly <stephen.kelly@kdab.com>
@@ -156,13 +158,13 @@ void MultiIndexModelPrivate::sort_source_rows(QAbstractItemModel *model,
     if (source_sort_column >= 0) {
         if (sort_order == Qt::AscendingOrder) {
             MultiIndexModelLessThan lt(source_sort_column, source_parent, model, q);
-            qStableSort(source_rows.begin(), source_rows.end(), lt);
+            std::stable_sort(source_rows.begin(), source_rows.end(), lt);
         } else {
             MultiIndexModelGreaterThan gt(source_sort_column, source_parent, model, q);
-            qStableSort(source_rows.begin(), source_rows.end(), gt);
+            std::stable_sort(source_rows.begin(), source_rows.end(), gt);
         }
     } else { // restore the source model order
-        qStableSort(source_rows.begin(), source_rows.end());
+        std::stable_sort(source_rows.begin(), source_rows.end());
     }
 }
 
@@ -1050,7 +1052,7 @@ void MultiIndexModelPrivate::_q_sourceRowsInserted(const QModelIndex &parent, in
             all[i-start] = m->proxy_rows.at(i);
             //qDebug() << m->sourceModel->index(i,0,parent).data();
         }
-        qStableSort(all);
+        std::stable_sort(all.begin(), all.end());
 
         if (all.last()-all.first()+1 == all.size()) {
             q->beginInsertRows(proxyIndex,all.first(),all.last());

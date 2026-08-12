@@ -121,7 +121,7 @@ GolangDoc::GolangDoc(LiteApi::IApplication *app, QObject *parent) :
     connect(m_docBrowser,SIGNAL(linkHovered(QUrl)),this,SLOT(highlighted(QUrl)));
     connect(m_docBrowser,SIGNAL(documentLoaded()),this,SLOT(documentLoaded()));
     connect(m_docBrowser,SIGNAL(anchorChanged(QString)),this,SLOT(anchorChanged(QString)));
-    connect(m_godocFindComboBox,SIGNAL(activated(QString)),this,SLOT(godocFindPackage(QString)));
+    connect(m_godocFindComboBox,SIGNAL(textActivated(QString)),this,SLOT(godocFindPackage(QString)));
     connect(m_godocProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(godocOutput(QByteArray,bool)));
     connect(m_godocProcess,SIGNAL(extFinish(bool,int,QString)),this,SLOT(godocFinish(bool,int,QString)));
     connect(m_findProcess,SIGNAL(extOutput(QByteArray,bool)),this,SLOT(findOutput(QByteArray,bool)));

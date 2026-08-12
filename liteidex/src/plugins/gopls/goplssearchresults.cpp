@@ -1,4 +1,5 @@
 #include "goplssearchresults.h"
+#include "liteapi/liteqt.h"
 
 #include <QFile>
 #include <QJsonObject>
@@ -54,7 +55,7 @@ void GoplsSearchResults::showLocations(const QString &title, const QString &sear
         QFile file(fileName);
         if (file.open(QFile::ReadOnly|QFile::Text)) {
             QTextStream stream(&file);
-            stream.setCodec("UTF-8");
+            qtSetUtf8Encoding(stream);
             for (int line = 0; !stream.atEnd(); ++line) {
                 QString text = stream.readLine();
                 if (line == lineNumber) {

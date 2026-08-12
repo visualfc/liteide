@@ -25,7 +25,11 @@
 #include "optionsbrowser.h"
 #include <QAction>
 #include <QApplication>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QScreen>
+#else
 #include <QDesktopWidget>
+#endif
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -81,7 +85,11 @@ void OptionManager::exec(const QString &mimeType)
 {
     if (!m_browser) {
         m_browser = new OptionsBrowser(m_liteApp,m_liteApp->mainWindow());
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        QRect rc = m_browser->screen()->availableGeometry();
+#else
         QRect rc = qApp->desktop()->screenGeometry(m_browser);
+#endif
         int width = rc.width();
         if (width > 900) {
             width = 900;

@@ -88,7 +88,7 @@ QList<Token> SimpleLexer::operator()(const QString &text, int state)
             break;
         }
 
-        QStringRef spell = text.midRef(lex.tokenOffset(), lex.tokenLength());
+        QStringView spell(text.constData() + lex.tokenOffset(), lex.tokenLength());
         lex.setScanAngleStringLiteralTokens(false);
 
         if (tk.f.newline && tk.is(T_POUND))

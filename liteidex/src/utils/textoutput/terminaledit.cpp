@@ -27,6 +27,7 @@
 #include <QLineEdit>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QRegularExpression>
 #include <QTextBlock>
 #include <QTextCharFormat>
 #include <QMenu>
@@ -120,7 +121,7 @@ void TerminalEdit::append(const QString &text, QTextCharFormat *fmt)
 {
     QString str = text;
     if (m_bFilterTermColor) {
-        static QRegExp rx("\033\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]");
+        static QRegularExpression rx("\033\\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]");
         str.remove(rx);
     }
     if (str.isEmpty()) {
