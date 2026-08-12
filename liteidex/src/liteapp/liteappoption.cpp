@@ -34,6 +34,8 @@
 #include <QMessageBox>
 #include <QDebug>
 
+#include "thememanager.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -102,6 +104,12 @@ LiteAppOption::LiteAppOption(LiteApi::IApplication *app,QObject *parent) :
         foreach (QFileInfo info, qssDir.entryInfoList(QStringList() << "*.qss")) {
             ui->qssComboBox->addItem(info.fileName());
         }
+
+        // qss dark: init
+        foreach (QFileInfo info, qssDir.entryInfoList(QStringList() << "*.qss")) {
+            ui->qssComboBox_dark->addItem(info.fileName());
+        }
+        ui->qssComboBox_dark->addItem(QString("NOT SET"));
     }
 
 //    if (libgopher.isValid()) {
@@ -225,8 +233,21 @@ void LiteAppOption::save()
             m_liteApp->settings()->setValue(LITEAPP_QSS,qss);
             QString styleSheet = QLatin1String(f.readAll());
             qApp->setStyleSheet(styleSheet);
+
+            //chen: auto editor theme
+            ThemeManager::app_theme_changed(qss);
         }
     }
+    // qss dark: save
+    QString qss_dark = ui->qssComboBox_dark->currentText();
+    if (!qss_dark.isEmpty()) {        
+        m_liteApp->settings()->setValue(LITEAPP_QSS_DARK,qss_dark);
+
+        //chen: auto editor theme
+        // auto_editor_theme(qss, m_liteApp);
+    }
+    qDebug() << "=== save qss, qss_dark:" << qss << qss_dark;
+    // TODO: improve the dark/light settings UI
 
     bool customelIcon = ui->customIconCheckBox->isChecked();
     m_liteApp->settings()->setValue(LITEIDE_CUSTOMEICON,customelIcon);
@@ -291,6 +312,13 @@ void LiteAppOption::load()
     if (index >= 0 && index < ui->qssComboBox->count()) {
         ui->qssComboBox->setCurrentIndex(index);
     }
+    //qss dark: load
+    QString qss_dark = m_liteApp->settings()->value(LITEAPP_QSS_DARK,"NOT SET").toString();
+    int index2 = ui->qssComboBox_dark->findText(qss_dark,Qt::MatchFixedString);
+    if (index2 >= 0 && index < ui->qssComboBox_dark->count()) {
+        ui->qssComboBox_dark->setCurrentIndex(index2);
+    }
+    qDebug() << "=== load qss, qss_dark:" << qss << qss_dark << index2;
 
     int max = m_liteApp->settings()->value(LITEAPP_MAXRECENTFILES,32).toInt();
     //ui->maxRecentLineEdit->setText(QString("%1").arg(max));

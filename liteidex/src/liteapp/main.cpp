@@ -41,6 +41,9 @@
 #include "liteapp.h"
 #include "goproxy.h"
 #include "cdrv.h"
+
+#include "thememanager.h"
+
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -223,6 +226,10 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_MACOS
     app.liteApp = liteApp;
 #endif
+
+    //chen: auto editor theme
+    ThemeManager themeManager(&app);
+    ThemeManager::monit_system_theme(&app);
 
     foreach(QString file, fileList) {
         QFileInfo f(file);

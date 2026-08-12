@@ -41,6 +41,7 @@
 
 #define OPTION_LITEEDITOR "option/liteeditor"
 #define EDITOR_STYLE "editor/style"
+#define EDITOR_STYLE_DARK "editor/style_dark"
 #define EDITOR_FAMILY "editor/family"
 #define EDITOR_FONTSIZE "editor/fontsize"
 #define EDITOR_FONTZOOM "editor/fontzoom"
