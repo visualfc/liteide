@@ -6,18 +6,36 @@ on:
 
 jobs:
   build:
-    name: Build (${{ matrix.os }})
+    name: Build (${{ matrix.os }}, Qt ${{ matrix.qt_version }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
+            qt_version: '5.15.2'
             qt_arch: gcc_64
+            qt_modules: ''
           - os: macos-latest
+            qt_version: '5.15.2'
             qt_arch: clang_64
+            qt_modules: ''
           - os: windows-latest
+            qt_version: '5.15.2'
             qt_arch: win64_msvc2019_64
+            qt_modules: ''
+          - os: ubuntu-latest
+            qt_version: '6.8.3'
+            qt_arch: linux_gcc_64
+            qt_modules: qt5compat
+          - os: macos-latest
+            qt_version: '6.8.3'
+            qt_arch: clang_64
+            qt_modules: qt5compat
+          - os: windows-latest
+            qt_version: '6.8.3'
+            qt_arch: win64_msvc2022_64
+            qt_modules: qt5compat
 
     steps:
       - name: Check out source
@@ -33,10 +51,11 @@ jobs:
         if: runner.os == 'Linux'
         uses: jurplel/install-qt-action@v4
         with:
-          version: '5.15.2'
+          version: ${{ matrix.qt_version }}
           host: linux
           target: desktop
           arch: ${{ matrix.qt_arch }}
+          modules: ${{ matrix.qt_modules }}
           install-deps: true
           cache: true
 
@@ -44,27 +63,33 @@ jobs:
         if: runner.os == 'macOS'
         uses: jurplel/install-qt-action@v4
         with:
-          version: '5.15.2'
+          version: ${{ matrix.qt_version }}
           host: mac
           target: desktop
           arch: ${{ matrix.qt_arch }}
+          modules: ${{ matrix.qt_modules }}
           cache: true
 
       - name: Install Qt (Windows)
         if: runner.os == 'Windows'
         uses: jurplel/install-qt-action@v4
         with:
-          version: '5.15.2'
+          version: ${{ matrix.qt_version }}
           host: windows
           target: desktop
           arch: ${{ matrix.qt_arch }}
+          modules: ${{ matrix.qt_modules }}
           cache: true
 
-      - name: Set up MSVC
-        if: runner.os == 'Windows'
+      - name: Set up MSVC 2019
+        if: runner.os == 'Windows' && startsWith(matrix.qt_version, '5.')
         uses: ilammy/msvc-dev-cmd@v1
         with:
           toolset: 14.29
+
+      - name: Set up MSVC 2022
+        if: runner.os == 'Windows' && startsWith(matrix.qt_version, '6.')
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure (Linux)
         if: runner.os == 'Linux'
@@ -80,7 +105,11 @@ jobs:
         run: |
           mkdir -p build-ci
           cd build-ci
-          qmake ../liteidex CONFIG+=release 'QMAKE_LIBS_OPENGL=-framework OpenGL'
+          qmake_args=(CONFIG+=release 'QMAKE_LIBS_OPENGL=-framework OpenGL')
+          if [[ '${{ matrix.qt_version }}' == 6.* ]]; then
+            qmake_args+=('QMAKE_CXXFLAGS+=-include arm_acle.h')
+          fi
+          qmake ../liteidex "${qmake_args[@]}"
 
       - name: Configure (Windows)
         if: runner.os == 'Windows'
