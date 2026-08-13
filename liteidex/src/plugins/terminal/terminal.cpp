@@ -271,10 +271,9 @@ Terminal::Terminal(LiteApi::IApplication *app, QObject *parent) : LiteApi::ITerm
 #ifdef Q_OS_MAC
 static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
 {
-    QString cmd = QString("lsof -a -p %1 -d cwd -Fn").arg(pids.join(","));
     QMap<QString,QString> kv;
     QProcess p;
-    p.start(cmd);
+    p.start("lsof",QStringList() << "-a" << "-p" << pids.join(",") << "-d" << "cwd" << "-Fn");
     if (!p.waitForStarted(1000)) {
         return kv;
     }
@@ -320,9 +319,8 @@ static QMap<QString,QString> getProcessWorkDirList(const QStringList &pids)
 //        pwdx 9194 9947
 //        9194: /home/my
 //        9947: /home/my
-        QString cmd = QString("pwdx %1").arg(pids.join(" "));
         QProcess p;
-        p.start(cmd);
+        p.start("pwdx",pids);
         if (!p.waitForStarted(1000)) {
             return kv;
         }
