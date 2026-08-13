@@ -7,15 +7,18 @@
 #include "fileutil/fileutil.h"
 
 #include <QCoreApplication>
+#include <QApplication>
 #include <QAction>
 #include <QFile>
 #include <QInputDialog>
 #include <QDir>
 #include <QFileInfo>
+#include <QHelpEvent>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QStandardItem>
+#include <QPlainTextEdit>
 #include <QTextBlock>
 #include <QTextDocument>
 #include <QUrl>
@@ -86,6 +89,26 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
 QStringList GoplsPlugin::dependPluginList() const
 {
     return QStringList() << "plugin/liteenv" << "plugin/golangast" << "plugin/litefind";
+}
+
+bool GoplsPlugin::eventFilter(QObject *object, QEvent *event)
+{
+    LiteApi::IEditor *editor = m_hoverViewports.value(object);
+    if (!m_ready || !editor || event->type() != QEvent::ToolTip) {
+        return LiteApi::IPlugin::eventFilter(object,event);
+    }
+    if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
+        return LiteApi::IPlugin::eventFilter(object,event);
+    }
+    QPlainTextEdit *plainTextEdit = LiteApi::getPlainTextEdit(editor);
+    if (!plainTextEdit) {
+        return LiteApi::IPlugin::eventFilter(object,event);
+    }
+    QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
+    QTextCursor cursor = plainTextEdit->cursorForPosition(helpEvent->pos());
+    LiteApi::selectWordUnderCursor(cursor);
+    requestHover(editor,cursor,helpEvent->globalPos());
+    return true;
 }
 
 QString GoplsPlugin::workspaceRoot() const
@@ -172,6 +195,7 @@ void GoplsPlugin::clientStopped()
     m_completionPrefixes.clear();
     m_completionRoots.clear();
     m_pendingCompletions.clear();
+    m_pendingHovers.clear();
     setLegacyCompletionEnabled(true);
 }
 
@@ -210,6 +234,11 @@ void GoplsPlugin::editorCreated(LiteApi::IEditor *editor)
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
     if (liteEditor) {
         connect(liteEditor,SIGNAL(updateLink(QTextCursor,QPoint,bool)),this,SLOT(hoverRequested(QTextCursor,QPoint,bool)),Qt::UniqueConnection);
+    }
+    QPlainTextEdit *plainTextEdit = LiteApi::getPlainTextEdit(editor);
+    if (plainTextEdit && !m_hoverViewports.contains(plainTextEdit->viewport())) {
+        plainTextEdit->viewport()->installEventFilter(this);
+        m_hoverViewports.insert(plainTextEdit->viewport(),editor);
     }
     addEditorActions(editor);
     if (m_ready) {
@@ -316,6 +345,17 @@ void GoplsPlugin::editorAboutToClose(LiteApi::IEditor *editor)
     m_completionEditors.remove(requestId);
     m_completionPrefixes.remove(requestId);
     m_completionRoots.remove(requestId);
+    int hoverId = m_pendingHovers.take(editor);
+    if (hoverId) {
+        m_client->notify("$/cancelRequest",QJsonObject{{"id",hoverId}});
+        m_hintEditors.remove(hoverId);
+        m_hintPositions.remove(hoverId);
+    }
+    QObject *viewport = m_hoverViewports.key(editor,0);
+    if (viewport) {
+        viewport->removeEventFilter(this);
+        m_hoverViewports.remove(viewport);
+    }
     disconnect(editor,0,this,0);
 }
 
@@ -492,6 +532,12 @@ void GoplsPlugin::handleHintResponse(int id, const QString &method, const QJsonV
 {
     LiteApi::IEditor *editor = m_hintEditors.take(id);
     QPoint position = m_hintPositions.take(id);
+    if (method == "textDocument/hover") {
+        if (!editor || m_pendingHovers.value(editor) != id) {
+            return;
+        }
+        m_pendingHovers.remove(editor);
+    }
     if (!editor || !error.isEmpty() || result.isNull()) {
         return;
     }
@@ -625,7 +671,18 @@ QString GoplsPlugin::markupText(const QJsonValue &value) const
     }
     if (value.isObject()) {
         QJsonObject object = value.toObject();
-        return object.value("value").toString(object.value("language").toString());
+        QString text = object.value("value").toString();
+        if (object.value("kind").toString() == "markdown") {
+#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+            QTextDocument document;
+            document.setMarkdown(text);
+            text = document.toPlainText();
+#else
+            text.replace(QRegExp("```[A-Za-z0-9_+.-]*\\n"),QString());
+            text.replace("```",QString());
+#endif
+        }
+        return text.trimmed();
     }
     if (value.isArray()) {
         QStringList parts;
@@ -633,7 +690,7 @@ QString GoplsPlugin::markupText(const QJsonValue &value) const
             QString text = markupText(part);
             if (!text.isEmpty()) parts.append(text);
         }
-        return parts.join("\n");
+        return parts.join("\n\n");
     }
     return QString();
 }
@@ -645,16 +702,36 @@ void GoplsPlugin::hoverRequested(const QTextCursor &cursor, const QPoint &positi
     }
     LiteApi::ILiteEditor *liteEditor = qobject_cast<LiteApi::ILiteEditor*>(sender());
     LiteApi::IEditor *editor = liteEditor;
+    requestHover(editor,cursor,position);
+}
+
+void GoplsPlugin::requestHover(LiteApi::IEditor *editor, const QTextCursor &cursor,
+                               const QPoint &position)
+{
     if (!isGoEditor(editor) || cursor.selectedText().trimmed().isEmpty()) {
+        int oldId = m_pendingHovers.take(editor);
+        if (oldId) {
+            m_client->notify("$/cancelRequest",QJsonObject{{"id",oldId}});
+            m_hintEditors.remove(oldId);
+            m_hintPositions.remove(oldId);
+        }
         return;
     }
     QTextCursor requestCursor = cursor;
     requestCursor.setPosition(cursor.selectionStart());
     QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
                        {"position",QJsonObject{{"line",requestCursor.blockNumber()},{"character",requestCursor.positionInBlock()}}}};
+    changeDocument(editor);
+    int oldId = m_pendingHovers.value(editor,0);
+    if (oldId) {
+        m_client->notify("$/cancelRequest",QJsonObject{{"id",oldId}});
+        m_hintEditors.remove(oldId);
+        m_hintPositions.remove(oldId);
+    }
     int id = m_client->request("textDocument/hover",params);
     m_hintEditors.insert(id,editor);
     m_hintPositions.insert(id,position);
+    m_pendingHovers.insert(editor,id);
 }
 
 void GoplsPlugin::requestSignatureHelp(LiteApi::IEditor *editor)

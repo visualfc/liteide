@@ -12,6 +12,7 @@
 class GoplsClient;
 class GoplsSearchResults;
 class QAction;
+class QEvent;
 namespace LiteApi { class ICompleter; }
 
 class GoplsPlugin : public LiteApi::IPlugin
@@ -22,6 +23,9 @@ public:
     ~GoplsPlugin();
     virtual bool load(LiteApi::IApplication *app);
     virtual QStringList dependPluginList() const;
+
+protected:
+    bool eventFilter(QObject *object, QEvent *event);
 
 private slots:
     void appLoaded();
@@ -64,6 +68,8 @@ private:
     void requestLocations(const QString &method);
     void addEditorActions(LiteApi::IEditor *editor);
     void requestSignatureHelp(LiteApi::IEditor *editor);
+    void requestHover(LiteApi::IEditor *editor, const QTextCursor &cursor,
+                      const QPoint &position);
     QString markupText(const QJsonValue &value) const;
     void applyWorkspaceEdit(const QJsonObject &workspaceEdit);
     void applyTextEdits(const QString &uri, QJsonArray edits);
@@ -86,6 +92,8 @@ private:
     QAction *m_implementationAction;
     QHash<int,LiteApi::IEditor*> m_hintEditors;
     QHash<int,QPoint> m_hintPositions;
+    QHash<LiteApi::IEditor*,int> m_pendingHovers;
+    QHash<QObject*,LiteApi::IEditor*> m_hoverViewports;
     QAction *m_renameAction;
     QAction *m_formatAction;
     QAction *m_organizeImportsAction;

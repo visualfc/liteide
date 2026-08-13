@@ -186,7 +186,11 @@ void Process::stopAndWait(int termMs, int finishMs)
 
 void Process::startEx(const QString &cmd, const QStringList &args)
 {
+#ifdef Q_OS_WIN
     this->startEx(cmd,args.join(" "));
+#else
+    this->start(cmd,args);
+#endif
 }
 
 void Process::startEx(const QString &cmd, const QString &args)
@@ -199,11 +203,15 @@ void Process::startEx(const QString &cmd, const QString &args)
         this->start(cmd);
     }
 #else
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    this->start(cmd,QProcess::splitCommand(args));
+#else
     if (cmd.contains(' ')) {
         this->start("\""+cmd+"\" "+args);
     } else {
         this->start(cmd+" "+args);
     }
+#endif
 #endif
 }
 
@@ -276,7 +284,11 @@ void LiteProcess::startEx(const QString &cmd, const QString &args)
         this->start(cmd);
     }
 #else
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    this->start(cmd,QProcess::splitCommand(args));
+#else
     this->start(cmd+" "+args);
+#endif
 #endif
 }
 
