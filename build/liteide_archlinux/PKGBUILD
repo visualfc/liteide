@@ -54,7 +54,7 @@ package() {
     "$pkgdir/usr/share/doc/$pkgname"
 
   msg2 'Packaging executables...'
-  for binary in gomodifytags gotools gocode liteide; do # goimports
+  for binary in gomodifytags gotools gocode gopls liteide; do # goimports
     install -Dm755 "bin/$binary" "$pkgdir/usr/bin/$binary"
   done
   ln -s /usr/bin/liteide "$pkgdir/usr/bin/golangide"

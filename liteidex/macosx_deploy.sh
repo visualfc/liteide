@@ -11,3 +11,4 @@ cp -R -v src/liteide/Info.plist liteide/bin/LiteIDE.app/Contents
 cp -v bin/gotools liteide/bin/LiteIDE.app/Contents/MacOS
 cp -v bin/gocode liteide/bin/LiteIDE.app/Contents/MacOS
 cp -v bin/gomodifytags liteide/bin/LiteIDE.app/Contents/MacOS
+cp -v bin/gopls liteide/bin/LiteIDE.app/Contents/MacOS

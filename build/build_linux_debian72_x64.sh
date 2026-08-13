@@ -96,6 +96,7 @@ cp -a -v $LITEIDE_ROOT/liteide/bin/liteide liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gotools liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gocode liteide/bin
 cp -a -v $LITEIDE_ROOT/bin/gomodifytags liteide/bin
+cp -a -v $LITEIDE_ROOT/bin/gopls liteide/bin
 cp -a -v $LITEIDE_ROOT/liteide/lib/liteide/libliteapp.* liteide/lib/liteide
 cp -a -v $LITEIDE_ROOT/liteide/lib/liteide/plugins/*.so liteide/lib/liteide/plugins
 

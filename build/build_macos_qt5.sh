@@ -91,5 +91,6 @@ cp -R -v $LITEIDE_ROOT/../CONTRIBUTORS liteide
 cp -R -v $LITEIDE_ROOT/bin/gotools liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/bin/gocode liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/bin/gomodifytags liteide/LiteIDE.app/Contents/MacOS
+cp -R -v $LITEIDE_ROOT/bin/gopls liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/deploy/* liteide/LiteIDE.app/Contents/Resources
 cp -R -v $LITEIDE_ROOT/os_deploy/macosx/* liteide/LiteIDE.app/Contents/Resources
