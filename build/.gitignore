@@ -2,4 +2,5 @@
 !*/
 !.gitignore
 !*.sh
-
+!build_windows_msvc_qt6.cmd
+!deploy_windows_qt6.cmd

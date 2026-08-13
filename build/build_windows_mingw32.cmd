@@ -76,6 +76,7 @@ xcopy %LITEIDE_ROOT%\liteide\bin\* liteide\bin /y
 xcopy %LITEIDE_ROOT%\bin\gotools.exe liteide\bin /y
 xcopy %LITEIDE_ROOT%\bin\gocode.exe liteide\bin /y
 xcopy %LITEIDE_ROOT%\bin\gomodifytags.exe liteide\bin /y
+xcopy %LITEIDE_ROOT%\bin\gopls.exe liteide\bin /y
 xcopy %LITEIDE_ROOT%\liteide\lib\liteide\plugins\*.dll liteide\lib\liteide\plugins /y
 
 xcopy %LITEIDE_ROOT%\deploy liteide\share\liteide /e /y /i

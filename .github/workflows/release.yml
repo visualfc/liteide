@@ -1,0 +1,353 @@
+name: Release binaries
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.asset_suffix }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            qt_version: '5.15.2'
+            qt_arch: gcc_64
+            qt_modules: ''
+            qt_major: 5
+            asset_suffix: linux-x86_64-qt5.tar.gz
+          - os: ubuntu-latest
+            qt_version: '6.8.3'
+            qt_arch: linux_gcc_64
+            qt_modules: qt5compat
+            qt_major: 6
+            asset_suffix: linux-x86_64-qt6.tar.gz
+          - os: macos-latest
+            qt_version: '5.15.2'
+            qt_arch: clang_64
+            qt_modules: ''
+            qt_major: 5
+            asset_suffix: macos-qt5.zip
+          - os: macos-latest
+            qt_version: '6.8.3'
+            qt_arch: clang_64
+            qt_modules: qt5compat
+            qt_major: 6
+            macos_arch: arm64
+            asset_suffix: macos-arm64-qt6.zip
+          - os: macos-latest
+            qt_version: '6.8.3'
+            qt_arch: clang_64
+            qt_modules: qt5compat
+            qt_major: 6
+            macos_arch: universal2
+            asset_suffix: macos-universal2-qt6.zip
+          - os: windows-latest
+            qt_version: '5.15.2'
+            qt_arch: win64_msvc2019_64
+            qt_modules: ''
+            qt_major: 5
+            asset_suffix: windows-x86_64-qt5.zip
+          - os: windows-latest
+            qt_version: '6.8.3'
+            qt_arch: win64_msvc2022_64
+            qt_modules: qt5compat
+            qt_major: 6
+            asset_suffix: windows-x86_64-qt6.zip
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+
+      - name: Build Go tools
+        shell: bash
+        run: |
+          mkdir -p liteidex/bin
+          modules=(
+            github.com/visualfc/gocode@latest
+            github.com/visualfc/gotools@latest
+            github.com/fatih/gomodifytags@latest
+            golang.org/x/tools/gopls@latest
+          )
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            for module in "${modules[@]}"; do
+              GOBIN="$PWD/liteidex/bin" go install "$module"
+            done
+          elif [[ "$RUNNER_OS" == "macOS" && "${{ matrix.macos_arch }}" == "universal2" ]]; then
+            mkdir -p tools/amd64 tools/arm64
+            for tool in gocode gotools gomodifytags gopls; do
+              case "$tool" in
+                gocode) module=github.com/visualfc/gocode ;;
+                gotools) module=github.com/visualfc/gotools ;;
+                gomodifytags) module=github.com/fatih/gomodifytags ;;
+                gopls) module=golang.org/x/tools/gopls ;;
+              esac
+              GOOS=darwin GOARCH=amd64 GOBIN="$PWD/tools/amd64" go install "$module@latest"
+              GOOS=darwin GOARCH=arm64 GOBIN="$PWD/tools/arm64" go install "$module@latest"
+              lipo -create "tools/amd64/$tool" "tools/arm64/$tool" -output "liteidex/bin/$tool"
+              lipo -info "liteidex/bin/$tool" | grep -q 'x86_64 arm64\|arm64 x86_64'
+            done
+          elif [[ "$RUNNER_OS" == "macOS" && "${{ matrix.macos_arch }}" == "arm64" ]]; then
+            for module in "${modules[@]}"; do
+              GOOS=darwin GOARCH=arm64 GOBIN="$PWD/liteidex/bin" go install "$module"
+            done
+          else
+            for module in "${modules[@]}"; do
+              GOBIN="$PWD/liteidex/bin" go install "$module"
+            done
+          fi
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ matrix.qt_version }}
+          host: ${{ runner.os == 'Windows' && 'windows' || runner.os == 'macOS' && 'mac' || 'linux' }}
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          modules: ${{ matrix.qt_modules }}
+          install-deps: ${{ runner.os == 'Linux' }}
+          cache: true
+
+      - name: Set up MSVC 2019
+        if: runner.os == 'Windows' && matrix.qt_major == 5
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.29
+
+      - name: Set up MSVC 2022
+        if: runner.os == 'Windows' && matrix.qt_major == 6
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Remove obsolete AGL dependency (Qt 6 macOS)
+        if: runner.os == 'macOS' && matrix.qt_major == 6
+        shell: bash
+        run: |
+          qt_prefix="$(qmake -query QT_INSTALL_PREFIX)"
+          find "$qt_prefix" -type f \( -name '*.conf' -o -name '*.prf' -o -name '*.prl' \) \
+            -exec perl -pi -e 's/-framework AGL//g' {} +
+
+      - name: Configure and compile
+        shell: bash
+        run: |
+          mkdir -p build-release
+          cd build-release
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            qmake ../liteidex CONFIG+=release CONFIG-=precompile_header
+            nmake /f Makefile
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            qmake_args=(CONFIG+=release 'QMAKE_LIBS_OPENGL=-framework OpenGL')
+            if [[ "${{ matrix.macos_arch }}" == "universal2" ]]; then
+              qmake_args+=('QMAKE_CFLAGS+=-arch x86_64 -arch arm64')
+              qmake_args+=('QMAKE_CXXFLAGS+=-arch x86_64 -arch arm64')
+              qmake_args+=('QMAKE_LFLAGS+=-arch x86_64 -arch arm64')
+            elif [[ "${{ matrix.macos_arch }}" == "arm64" ]]; then
+              qmake_args+=('QMAKE_CFLAGS+=-arch arm64')
+              qmake_args+=('QMAKE_CXXFLAGS+=-arch arm64')
+              qmake_args+=('QMAKE_LFLAGS+=-arch arm64')
+            fi
+            [[ "${{ matrix.qt_major }}" == 6 ]] && qmake_args+=('QMAKE_CXXFLAGS+=-include arm_acle.h')
+            qmake ../liteidex "${qmake_args[@]}"
+            make -j2
+          else
+            qmake ../liteidex CONFIG+=release
+            make -j2
+          fi
+
+      - name: Assemble package (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          rm -rf package
+          mkdir -p package
+          cp -R liteidex/liteide/bin/LiteIDE.app package/
+          cp liteidex/bin/gocode liteidex/bin/gotools liteidex/bin/gomodifytags liteidex/bin/gopls \
+            package/LiteIDE.app/Contents/MacOS/
+          cp -R liteidex/deploy/. package/LiteIDE.app/Contents/Resources/
+          cp -R liteidex/os_deploy/macosx/. package/LiteIDE.app/Contents/Resources/
+          macdeployqt package/LiteIDE.app -always-overwrite
+          cp LICENSE.LGPL LGPL_EXCEPTION.TXT package/
+          if [[ "${{ matrix.macos_arch }}" == "universal2" ]]; then
+            lipo -info package/LiteIDE.app/Contents/MacOS/LiteIDE | grep -q 'x86_64 arm64\|arm64 x86_64'
+          elif [[ "${{ matrix.macos_arch }}" == "arm64" ]]; then
+            file package/LiteIDE.app/Contents/MacOS/LiteIDE | grep -q 'arm64'
+          fi
+          ditto -c -k --sequesterRsrc --keepParent package "liteide-${{ github.event.release.tag_name }}-${{ matrix.asset_suffix }}"
+
+      - name: Assemble packages (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+          OUTPUT: liteide-${{ github.event.release.tag_name }}-linux-x86_64-qt${{ matrix.qt_major }}.AppImage
+        run: |
+          mkdir -p AppDir/usr/bin AppDir/usr/lib/liteide/plugins AppDir/usr/share/liteide
+          cp liteidex/liteide/bin/liteide AppDir/usr/bin/
+          cp liteidex/bin/gocode liteidex/bin/gotools liteidex/bin/gomodifytags liteidex/bin/gopls \
+            AppDir/usr/bin/
+          cp liteidex/liteide/lib/liteide/libliteapp.so AppDir/usr/lib/liteide/
+          cp liteidex/liteide/lib/liteide/plugins/*.so AppDir/usr/lib/liteide/plugins/
+          cp -R liteidex/deploy/. AppDir/usr/share/liteide/
+          cp -R liteidex/os_deploy/linux/. AppDir/usr/share/liteide/
+          cp LICENSE.LGPL LGPL_EXCEPTION.TXT AppDir/usr/
+          cp liteidex/liteide.desktop AppDir/
+          cp liteidex/liteide.png AppDir/
+
+          curl -fsSLo linuxdeploy.AppImage \
+            https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          curl -fsSLo linuxdeploy-plugin-qt.AppImage \
+            https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x linuxdeploy*.AppImage
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          export QMAKE="$(command -v qmake)"
+          ./linuxdeploy.AppImage --appdir AppDir \
+            --desktop-file AppDir/liteide.desktop \
+            --icon-file AppDir/liteide.png \
+            --executable AppDir/usr/bin/liteide \
+            --plugin qt \
+            --output appimage
+
+          appimage="$(find . -maxdepth 1 -type f -name '*.AppImage' \
+            ! -name 'linuxdeploy.AppImage' ! -name 'linuxdeploy-plugin-qt.AppImage' \
+            -print -quit)"
+          test -n "$appimage"
+          mv "$appimage" "liteide-${{ github.event.release.tag_name }}-linux-x86_64-qt${{ matrix.qt_major }}.AppImage"
+
+          cp -R AppDir/usr "liteide-${{ github.event.release.tag_name }}"
+          tar -czf "liteide-${{ github.event.release.tag_name }}-${{ matrix.asset_suffix }}" \
+            "liteide-${{ github.event.release.tag_name }}"
+
+      - name: Assemble package (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Remove-Item package -Recurse -Force -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory package | Out-Null
+          Copy-Item liteidex/liteide/* package -Recurse
+          Copy-Item liteidex/bin/gocode.exe, liteidex/bin/gotools.exe, liteidex/bin/gomodifytags.exe, liteidex/bin/gopls.exe package/bin/
+          New-Item -ItemType Directory package/share/liteide -Force | Out-Null
+          Copy-Item liteidex/deploy/* package/share/liteide -Recurse
+          Copy-Item liteidex/os_deploy/windows/* package/share/liteide -Recurse
+          Copy-Item LICENSE.LGPL, LGPL_EXCEPTION.TXT package
+          windeployqt --no-angle --no-opengl-sw --dir package/bin package/bin/liteapp.dll
+          Compress-Archive -Path package/* -DestinationPath "liteide-${{ github.event.release.tag_name }}-${{ matrix.asset_suffix }}"
+
+      - name: Upload release assets (Linux)
+        if: runner.os == 'Linux'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: |
+            liteide-${{ github.event.release.tag_name }}-${{ matrix.asset_suffix }}
+            liteide-${{ github.event.release.tag_name }}-linux-x86_64-qt${{ matrix.qt_major }}.AppImage
+
+      - name: Upload release asset (Windows and macOS)
+        if: runner.os != 'Linux'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: liteide-${{ github.event.release.tag_name }}-${{ matrix.asset_suffix }}
+
+  archlinux-pkgbuild:
+    name: Arch Linux PKGBUILD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Prepare PKGBUILD archive
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#x}"
+          mkdir -p archlinux-pkgbuild
+          sed -e "s/^pkgver=.*/pkgver=${version}/" \
+              build/liteide_archlinux/PKGBUILD > archlinux-pkgbuild/PKGBUILD
+          cp build/liteide_archlinux/liteide.md archlinux-pkgbuild/
+          cp liteide.desktop archlinux-pkgbuild/
+          zip -r "liteide-${GITHUB_REF_NAME}-archlinux-pkgbuild.zip" archlinux-pkgbuild
+
+      - name: Upload PKGBUILD asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: liteide-${{ github.event.release.tag_name }}-archlinux-pkgbuild.zip
+
+  linux32-qt5:
+    name: Linux i686 Qt 5
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bullseye
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+
+      - name: Install 32-bit build dependencies
+        run: |
+          dpkg --add-architecture i386
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            ca-certificates \
+            build-essential \
+            gcc-multilib \
+            g++-multilib \
+            file \
+            git \
+            qt5-qmake:i386 \
+            qtbase5-dev:i386 \
+            qttools5-dev-tools:i386 \
+            libqt5svg5-dev:i386 \
+            zlib1g-dev:i386
+
+      - name: Build and package
+        shell: bash
+        run: |
+          mkdir -p liteidex/bin
+          for module in \
+            github.com/visualfc/gocode@latest \
+            github.com/visualfc/gotools@latest \
+            github.com/fatih/gomodifytags@latest \
+            golang.org/x/tools/gopls@latest; do
+            GOOS=linux GOARCH=386 GOBIN="$PWD/liteidex/bin" go install "$module"
+          done
+          qmake liteidex CONFIG+=release \
+            QMAKE_CC='gcc -m32' \
+            QMAKE_CXX='g++ -m32' \
+            QMAKE_LINK='g++ -m32'
+          make -j2
+          go run liteidex/src/tools/exportqrc/main.go -root liteidex
+
+          file liteidex/liteide/bin/liteide | grep -q 'ELF 32-bit'
+
+          package_dir="liteide-${GITHUB_REF_NAME}-linux-i686-qt5"
+          rm -rf "$package_dir"
+          mkdir -p "$package_dir/bin" "$package_dir/lib/liteide/plugins" "$package_dir/share/liteide"
+          cp liteidex/liteide/bin/liteide "$package_dir/bin/"
+          cp liteidex/bin/gocode liteidex/bin/gotools liteidex/bin/gomodifytags liteidex/bin/gopls "$package_dir/bin/"
+          cp liteidex/liteide/lib/liteide/libliteapp.so "$package_dir/lib/liteide/"
+          cp liteidex/liteide/lib/liteide/plugins/*.so "$package_dir/lib/liteide/plugins/"
+          cp -R liteidex/deploy/. "$package_dir/share/liteide/"
+          cp -R liteidex/os_deploy/linux/. "$package_dir/share/liteide/"
+          cp liteidex/LICENSE.LGPL liteidex/LGPL_EXCEPTION.TXT "$package_dir/"
+          tar -czf "$package_dir.tar.gz" "$package_dir"
+
+      - name: Upload Linux32 asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: liteide-${{ github.event.release.tag_name }}-linux-i686-qt5.tar.gz
