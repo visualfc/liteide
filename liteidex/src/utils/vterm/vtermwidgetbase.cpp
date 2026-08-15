@@ -58,6 +58,21 @@ bool attrs_is_equal(VTermScreenCellAttrs *a, VTermScreenCellAttrs *b)
     return  a->bold == b->bold && a->italic == b->italic && a->strike == b->strike && a->underline == b->underline;
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+static bool is_valid_cell_char(const VTermScreenCell &cell)
+{
+    if (cell.chars[0] == 0 || cell.chars[0] == static_cast<uint32_t>(-1)) {
+        return false;
+    }
+    for (int i = 0; i < VTERM_MAX_CHARS_PER_CELL && cell.chars[i]; ++i) {
+        if (cell.chars[i] == static_cast<uint32_t>(-1) || cell.chars[i] > 0x10ffff) {
+            return false;
+        }
+    }
+    return true;
+}
+#endif
+
 
 int vterm_damage(VTermRect rect, void *user)
 {
@@ -889,18 +904,30 @@ void VTermWidgetBase::setSelectionUnderWord(int row, int col)
     }
     VTermScreenCell cell;
     this->adjustFetchCell(row,&col,&cell);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    if (!is_valid_cell_char(cell)) {
+#else
     if (!cell.chars[0]) {
+#endif
         int ncol = col+1;
         for (; ncol < m_cols; ++ncol) {
             this->fetchCell(row,ncol,&cell);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (is_valid_cell_char(cell)) {
+#else
             if (cell.chars[0]) {
+#endif
                 break;
             }
         }
         int pcol = col-1;
         for (;pcol >= 0;--pcol) {
             this->fetchCell(row,pcol,&cell);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (is_valid_cell_char(cell)) {
+#else
             if (cell.chars[0]) {
+#endif
                 break;
             }
         }
@@ -911,7 +938,11 @@ void VTermWidgetBase::setSelectionUnderWord(int row, int col)
         int ncol = col+width;
         for (; ncol < m_cols;) {
             this->fetchCell(row,ncol,&cell);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (!is_valid_cell_char(cell)) {
+#else
             if (!cell.chars[0]) {
+#endif
                 break;
             }
             QChar c = QString::fromUcs4(cell.chars)[0];
@@ -925,7 +956,11 @@ void VTermWidgetBase::setSelectionUnderWord(int row, int col)
         int pcol = col-1;
         for (; pcol >= 0;--pcol) {
             this->adjustFetchCell(row,&pcol,&cell);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (!is_valid_cell_char(cell)) {
+#else
             if (!cell.chars[0]) {
+#endif
                 break;
             }
             QChar c = QString::fromUcs4(cell.chars)[0];

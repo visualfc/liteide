@@ -183,6 +183,16 @@ void VTermWidget::keyPressEvent(QKeyEvent *e)
         return;
     }
     if ((e->modifiers() & TermControlModifier) ) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        // Qt key codes for special keys (arrows, function keys, ...) are
+        // outside the UTF-16 range and must not be converted to QChar.
+        const int key = e->key();
+        if (key >= Qt::Key_A && key <= Qt::Key_Underscore) {
+            QByteArray array(1, char(key - Qt::Key_A + 1));
+            m_process->write(array);
+            return;
+        }
+#else
         QChar c(e->key());
         char asciiVal = c.toUpper().toLatin1();
         QByteArray array;
@@ -191,6 +201,7 @@ void VTermWidget::keyPressEvent(QKeyEvent *e)
             m_process->write(array);
             return;
         }
+#endif
     }
     VTermWidgetBase::keyPressEvent(e);
 }
