@@ -119,7 +119,11 @@ PackageBrowser::PackageBrowser(LiteApi::IApplication *app, QObject *parent) :
     m_toolWindowAct = m_liteApp->toolWindowManager()->addToolWindow(Qt::LeftDockWidgetArea,m_widget,"GoPackageBrowser",tr("Go Package Browser"),true);
     connect(m_toolWindowAct,SIGNAL(triggered(bool)),this,SLOT(toggledToolWindow(bool)));
     connect(m_goTool,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(finished(int,QProcess::ExitStatus)));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    connect(m_goTool, &GoTool::error, this, &PackageBrowser::error);
+#else
     connect(m_goTool,SIGNAL(error(QProcess::ProcessError)),this,SLOT(error(QProcess::ProcessError)));
+#endif
     connect(m_treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenuRequested(QPoint)));
     connect(m_treeView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClicked()));
     connect(m_treeView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressed(QModelIndex)));

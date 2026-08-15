@@ -45,8 +45,13 @@ GoTool::GoTool(LiteApi::IApplication *app, QObject *parent) :
     m_process = new Process(this);
     connect(m_process,SIGNAL(readyReadStandardError()),this,SLOT(readError()));
     connect(m_process,SIGNAL(readyReadStandardOutput()),this,SLOT(readOutput()));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    connect(m_process, &QProcess::errorOccurred, this, &GoTool::error);
+    connect(m_process, &QProcess::finished, this, &GoTool::finished);
+#else
     connect(m_process,SIGNAL(errorOccurred(QProcess::ProcessError)),this,SIGNAL(error(QProcess::ProcessError)));
     connect(m_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SIGNAL(finished(int,QProcess::ExitStatus)));
+#endif
 }
 
 GoTool::~GoTool()
