@@ -5,6 +5,8 @@
 #include "golangastapi/golangastapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "fileutil/fileutil.h"
+#include "gopls_global.h"
+#include "goplsoptionfactory.h"
 
 #include <QCoreApplication>
 #include <QApplication>
@@ -26,7 +28,7 @@
 
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_completer(0), m_ready(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
-    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false)
+    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false), m_useFeatures(false)
 {
 }
 
@@ -41,6 +43,8 @@ GoplsPlugin::~GoplsPlugin()
 bool GoplsPlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
+    m_useFeatures = app->settings()->value(GOPLS_USE_FEATURES,false).toBool();
+    app->optionManager()->addFactory(new GoplsOptionFactory(app,this));
     m_client = new GoplsClient(this);
     m_searchResults = new GoplsSearchResults(this);
     LiteApi::IFileSearchManager *searchManager = LiteApi::getFileSearchManager(app);
@@ -54,6 +58,9 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     m_renameAction = new QAction(tr("Rename Symbol (gopls)"),this);
     m_formatAction = new QAction(tr("Format Document (gopls)"),this);
     m_organizeImportsAction = new QAction(tr("Organize Imports (gopls)"),this);
+    m_definitionAction->setEnabled(m_useFeatures);
+    m_referencesAction->setEnabled(m_useFeatures);
+    m_implementationAction->setEnabled(m_useFeatures);
     actions->regAction(m_definitionAction,"Definition","");
     actions->regAction(m_referencesAction,"References","");
     actions->regAction(m_implementationAction,"Implementation","");
@@ -67,7 +74,8 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(m_formatAction,SIGNAL(triggered()),this,SLOT(formatDocument()));
     connect(m_organizeImportsAction,SIGNAL(triggered()),this,SLOT(organizeImports()));
     app->extension()->addObject("LiteApi.IGoplsService",m_client);
-    //connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    connect(app->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_client,SIGNAL(initialized()),this,SLOT(clientInitialized()));
     connect(m_client,SIGNAL(stopped()),this,SLOT(clientStopped()));
     connect(m_client,SIGNAL(logMessage(QString,bool)),this,SLOT(clientLog(QString,bool)));
@@ -78,7 +86,7 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(app->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
     connect(app->editorManager(),SIGNAL(editorSaved(LiteApi::IEditor*)),this,SLOT(editorSaved(LiteApi::IEditor*)));
-    //connect(app->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(workspaceChanged()));
+    connect(app->projectManager(),SIGNAL(currentProjectChanged(LiteApi::IProject*)),this,SLOT(workspaceChanged()));
     LiteApi::IEnvManager *envManager = LiteApi::getEnvManager(app);
     if (envManager) {
         connect(envManager,SIGNAL(currentEnvChanged(LiteApi::IEnv*)),this,SLOT(environmentChanged(LiteApi::IEnv*)));
@@ -94,7 +102,7 @@ QStringList GoplsPlugin::dependPluginList() const
 bool GoplsPlugin::eventFilter(QObject *object, QEvent *event)
 {
     LiteApi::IEditor *editor = m_hoverViewports.value(object);
-    if (!m_ready || !editor || event->type() != QEvent::ToolTip) {
+    if (!m_useFeatures || !m_ready || !editor || event->type() != QEvent::ToolTip) {
         return LiteApi::IPlugin::eventFilter(object,event);
     }
     if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
@@ -134,6 +142,9 @@ QString GoplsPlugin::workspaceRoot() const
 void GoplsPlugin::appLoaded()
 {
     m_appLoaded = true;
+    if (!m_useFeatures) {
+        return;
+    }
     if (m_client->isRunning()) {
         return;
     }
@@ -172,7 +183,6 @@ void GoplsPlugin::clientInitialized()
 {
     m_ready = true;
     m_liteApp->appendLog("Gopls",tr("gopls initialized"));
-    setLegacyCompletionEnabled(false);
     foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
         editorCreated(editor);
         openDocument(editor);
@@ -188,6 +198,7 @@ void GoplsPlugin::clientStopped()
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
         if (editor) {
             configureCompleter(editor,false);
+            configureGocodeCompletion(editor,true);
         }
         m_completer = 0;
     }
@@ -196,23 +207,11 @@ void GoplsPlugin::clientStopped()
     m_completionRoots.clear();
     m_pendingCompletions.clear();
     m_pendingHovers.clear();
-    setLegacyCompletionEnabled(true);
 }
 
 void GoplsPlugin::clientLog(const QString &message, bool error)
 {
     m_liteApp->appendLog("Gopls",message,error);
-}
-
-void GoplsPlugin::setLegacyCompletionEnabled(bool enabled)
-{
-    if (!m_liteApp || !m_liteApp->extension()) {
-        return;
-    }
-    QObject *golangCode = m_liteApp->extension()->findObject("LiteApi.GolangCode");
-    if (golangCode) {
-        QMetaObject::invokeMethod(golangCode,"setGocodeEnabled",Qt::DirectConnection,Q_ARG(bool,enabled));
-    }
 }
 
 bool GoplsPlugin::isGoEditor(LiteApi::IEditor *editor) const
@@ -258,7 +257,7 @@ void GoplsPlugin::currentEditorChanged(LiteApi::IEditor *editor)
         return;
     }
     m_completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
-    configureCompleter(editor,m_completer != 0);
+    configureCompleter(editor,m_useFeatures && m_completer != 0);
 }
 
 void GoplsPlugin::openDocument(LiteApi::IEditor *editor)
@@ -368,6 +367,7 @@ void GoplsPlugin::configureCompleter(LiteApi::IEditor *editor, bool enabled)
     disconnect(completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(completionRequested(QTextCursor,QString,bool)));
     disconnect(completer,SIGNAL(wordCompleted(QString,QString,QString)),this,SLOT(completionAccepted(QString,QString,QString)));
     if (enabled) {
+        configureGocodeCompletion(editor,false);
         completer->setSearchSeparator(false);
         completer->setExternalMode(true);
         connect(completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(completionRequested(QTextCursor,QString,bool)),Qt::UniqueConnection);
@@ -378,10 +378,64 @@ void GoplsPlugin::configureCompleter(LiteApi::IEditor *editor, bool enabled)
     }
 }
 
+void GoplsPlugin::configureGocodeCompletion(LiteApi::IEditor *editor, bool enabled)
+{
+    if (!editor || !m_liteApp || !m_liteApp->extension()) return;
+    QObject *golangCode = m_liteApp->extension()->findObject("LiteApi.GolangCode");
+    if (!golangCode) return;
+    LiteApi::ICompleter *completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
+    if (!completer) return;
+    if (enabled) {
+        QMetaObject::invokeMethod(golangCode,"currentEditorChanged",Qt::DirectConnection,
+                                  Q_ARG(LiteApi::IEditor*,editor));
+    } else {
+        QObject::disconnect(completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),
+                            golangCode,SLOT(prefixChanged(QTextCursor,QString,bool)));
+        QObject::disconnect(completer,SIGNAL(wordCompleted(QString,QString,QString)),
+                            golangCode,SLOT(wordCompleted(QString,QString,QString)));
+    }
+}
+
+void GoplsPlugin::applyOption(const QString &option)
+{
+    if (option != OPTION_GOPLS) return;
+    bool enabled = m_liteApp->settings()->value(GOPLS_USE_FEATURES,false).toBool();
+    if (enabled == m_useFeatures) return;
+    m_useFeatures = enabled;
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (editor) {
+        configureCompleter(editor, enabled && m_completer != 0);
+        if (!enabled) configureGocodeCompletion(editor,true);
+    }
+    if (!enabled) {
+        foreach (int id, m_pendingCompletions) {
+            m_client->notify("$/cancelRequest",QJsonObject{{"id",id}});
+        }
+        m_pendingCompletions.clear();
+        m_completionEditors.clear();
+        m_completionPrefixes.clear();
+        m_completionRoots.clear();
+        foreach (int id, m_pendingHovers) {
+            m_client->notify("$/cancelRequest",QJsonObject{{"id",id}});
+        }
+        m_pendingHovers.clear();
+        m_hintEditors.clear();
+        m_hintPositions.clear();
+    }
+    m_definitionAction->setEnabled(enabled);
+    m_referencesAction->setEnabled(enabled);
+    m_implementationAction->setEnabled(enabled);
+    if (enabled && !m_client->isRunning()) {
+        appLoaded();
+    } else if (!enabled && m_client->isRunning()) {
+        m_client->stop();
+    }
+}
+
 void GoplsPlugin::completionRequested(QTextCursor cursor, QString prefix, bool force)
 {
     Q_UNUSED(cursor);
-    if (!m_ready) {
+    if (!m_useFeatures || !m_ready) {
         return;
     }
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -639,6 +693,7 @@ void GoplsPlugin::addEditorActions(LiteApi::IEditor *editor)
 
 void GoplsPlugin::requestLocations(const QString &method)
 {
+    if (!m_useFeatures) return;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
     if (!m_ready || !isGoEditor(editor) || !textEditor) {
@@ -697,7 +752,7 @@ QString GoplsPlugin::markupText(const QJsonValue &value) const
 
 void GoplsPlugin::hoverRequested(const QTextCursor &cursor, const QPoint &position, bool navigation)
 {
-    if (!m_ready || navigation) {
+    if (!m_useFeatures || !m_ready || navigation) {
         return;
     }
     LiteApi::ILiteEditor *liteEditor = qobject_cast<LiteApi::ILiteEditor*>(sender());
@@ -708,6 +763,7 @@ void GoplsPlugin::hoverRequested(const QTextCursor &cursor, const QPoint &positi
 void GoplsPlugin::requestHover(LiteApi::IEditor *editor, const QTextCursor &cursor,
                                const QPoint &position)
 {
+    if (!m_useFeatures) return;
     if (!isGoEditor(editor) || cursor.selectedText().trimmed().isEmpty()) {
         int oldId = m_pendingHovers.take(editor);
         if (oldId) {
@@ -736,6 +792,7 @@ void GoplsPlugin::requestHover(LiteApi::IEditor *editor, const QTextCursor &curs
 
 void GoplsPlugin::requestSignatureHelp(LiteApi::IEditor *editor)
 {
+    if (!m_useFeatures) return;
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
     if (!textEditor) return;
     QTextCursor cursor = textEditor->textCursor();
