@@ -24,7 +24,29 @@
 #include <QTextBlock>
 #include <QTextDocument>
 #include <QUrl>
+#include <QRegExp>
 #include <algorithm>
+
+static QString formatGoplsInfo(const QString &info)
+{
+    if (!info.startsWith("type")) return info;
+    QRegExp re("([\\w\\s\\.]+)\\{(.+)\\}");
+    if (re.indexIn(info) == 0 && re.matchedLength() == info.length()) {
+        QString formatted = re.cap(1)+" {\n";
+        foreach (QString item, re.cap(2).split(";",qtSkipEmptyParts)) {
+            formatted += "\t"+item.trimmed()+"\n";
+        }
+        return formatted+"}";
+    }
+    return info;
+}
+
+static QString limitGoplsInfo(const QString &info, int maxLines = 10)
+{
+    QStringList lines = info.split("\n");
+    if (lines.size() <= maxLines) return info;
+    return lines.mid(0,maxLines).join("\n")+"\n...";
+}
 
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_completer(0), m_ready(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
@@ -597,7 +619,7 @@ void GoplsPlugin::handleHintResponse(int id, const QString &method, const QJsonV
     }
     QString text;
     if (method == "textDocument/hover") {
-        text = markupText(result.toObject().value("contents"));
+        text = limitGoplsInfo(formatGoplsInfo(markupText(result.toObject().value("contents"))));
     } else {
         QJsonArray signatures = result.toObject().value("signatures").toArray();
         if (!signatures.isEmpty()) {
