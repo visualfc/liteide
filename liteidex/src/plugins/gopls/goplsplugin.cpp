@@ -802,6 +802,11 @@ void GoplsPlugin::requestHover(LiteApi::IEditor *editor, const QTextCursor &curs
     }
     QTextCursor requestCursor = cursor;
     requestCursor.setPosition(cursor.selectionStart());
+    QPoint displayPosition = position;
+    QPlainTextEdit *plainTextEdit = LiteApi::getPlainTextEdit(editor);
+    if (plainTextEdit) {
+        displayPosition = plainTextEdit->mapToGlobal(plainTextEdit->cursorRect(requestCursor).topRight());
+    }
     QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
                        {"position",QJsonObject{{"line",requestCursor.blockNumber()},{"character",requestCursor.positionInBlock()}}}};
     changeDocument(editor);
@@ -813,7 +818,7 @@ void GoplsPlugin::requestHover(LiteApi::IEditor *editor, const QTextCursor &curs
     }
     int id = m_client->request("textDocument/hover",params);
     m_hintEditors.insert(id,editor);
-    m_hintPositions.insert(id,position);
+    m_hintPositions.insert(id,displayPosition);
     m_pendingHovers.insert(editor,id);
 }
 
