@@ -776,7 +776,7 @@ QString GoplsPlugin::markupText(const QJsonValue &value) const
                 const QString &line = lines.at(i);
                 if (line.trimmed().startsWith("```")) inCode = !inCode;
                 markdown += line;
-                if (i + 1 < lines.size()) markdown += inCode ? "\n" : "  \n";
+                if (i + 1 < lines.size()) markdown += inCode ? "\n" : "<br>\n";
             }
             QTextDocument document;
             document.setMarkdown(markdown);
