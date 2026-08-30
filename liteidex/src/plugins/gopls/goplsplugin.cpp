@@ -779,7 +779,12 @@ void GoplsPlugin::hoverRequested(const QTextCursor &cursor, const QPoint &positi
     }
     LiteApi::ILiteEditor *liteEditor = qobject_cast<LiteApi::ILiteEditor*>(sender());
     LiteApi::IEditor *editor = liteEditor;
-    requestHover(editor,cursor,position);
+    QPlainTextEdit *plainTextEdit = LiteApi::getPlainTextEdit(editor);
+    QPoint globalPosition = position;
+    if (plainTextEdit) {
+        globalPosition = plainTextEdit->mapToGlobal(position);
+    }
+    requestHover(editor,cursor,globalPosition);
 }
 
 void GoplsPlugin::requestHover(LiteApi::IEditor *editor, const QTextCursor &cursor,
