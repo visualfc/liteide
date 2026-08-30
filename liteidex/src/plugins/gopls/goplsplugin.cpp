@@ -43,7 +43,17 @@ static QString formatGoplsInfo(const QString &info)
 
 static QString limitGoplsInfo(const QString &info, int maxLines = 10)
 {
-    QStringList lines = info.split("\n");
+    QStringList lines;
+    foreach (const QString &line, info.split("\n")) {
+        QString rest = line;
+        while (rest.length() > 120) {
+            int split = rest.lastIndexOf(' ', 120);
+            if (split < 40) split = 120;
+            lines.append(rest.left(split).trimmed());
+            rest = rest.mid(split).trimmed();
+        }
+        lines.append(rest);
+    }
     if (lines.size() <= maxLines) return info;
     return lines.mid(0,maxLines).join("\n")+"\n...";
 }

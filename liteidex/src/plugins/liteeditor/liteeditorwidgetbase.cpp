@@ -2941,17 +2941,7 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
 
 static QString simpleInfo(const QString &info, int maxLine)
 {
-    QStringList lines;
-    foreach (const QString &line, info.split("\n")) {
-        QString rest = line;
-        while (rest.length() > 120) {
-            int split = rest.lastIndexOf(' ', 120);
-            if (split < 40) split = 120;
-            lines.append(rest.left(split).trimmed());
-            rest = rest.mid(split).trimmed();
-        }
-        lines.append(rest);
-    }
+    QStringList lines = info.split("\n");
     if (lines.size() <= maxLine) {
         return info;
     }
