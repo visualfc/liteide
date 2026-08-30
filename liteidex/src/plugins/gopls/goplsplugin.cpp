@@ -766,10 +766,25 @@ QString GoplsPlugin::markupText(const QJsonValue &value) const
         text.replace("\\n", "\n");
         text.replace("\\r", "\r");
         if (object.value("kind").toString() == "markdown") {
-            // Keep source line breaks. QTextDocument treats Markdown soft
-            // breaks as spaces, which makes gopls hover text one long line.
+#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
+            // Markdown treats ordinary newlines as soft breaks. Convert them
+            // to hard breaks, while preserving newlines inside code fences.
+            QString markdown;
+            bool inCode = false;
+            QStringList lines = text.split("\n");
+            for (int i = 0; i < lines.size(); ++i) {
+                const QString &line = lines.at(i);
+                if (line.trimmed().startsWith("```")) inCode = !inCode;
+                markdown += line;
+                if (i + 1 < lines.size()) markdown += inCode ? "\n" : "  \n";
+            }
+            QTextDocument document;
+            document.setMarkdown(markdown);
+            text = document.toPlainText();
+#else
             text.replace(QRegExp("```[A-Za-z0-9_+.-]*\\n"),QString());
             text.replace("```",QString());
+#endif
         }
         return text.trimmed();
     }
