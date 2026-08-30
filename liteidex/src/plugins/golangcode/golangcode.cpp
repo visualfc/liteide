@@ -63,7 +63,8 @@ GolangCode::GolangCode(LiteApi::IApplication *app, QObject *parent) :
     m_editor(0),
     m_completer(0),
     m_closeOnExit(true),
-    m_allImportHint(true)
+    m_allImportHint(true),
+    m_gocodeEnabled(true)
 {
     g_gocodeInstCount++;
     m_gocodeProcess = new Process(this);
@@ -542,7 +543,7 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
     m_completer = completer;
     if (m_completer) {
         m_completer->setImportList(m_allImportList);
-        if (!m_gocodeCmd.isEmpty()) {
+        if (m_gocodeEnabled && !m_gocodeCmd.isEmpty()) {
             m_completer->setSearchSeparator(false);
             m_completer->setExternalMode(true);
             connect(m_completer,SIGNAL(prefixChanged(QTextCursor,QString,bool)),this,SLOT(prefixChanged(QTextCursor,QString,bool)));
@@ -554,8 +555,20 @@ void GolangCode::setCompleter(LiteApi::ICompleter *completer)
     }
 }
 
+void GolangCode::setGocodeEnabled(bool enabled)
+{
+    if (m_gocodeEnabled == enabled) {
+        return;
+    }
+    m_gocodeEnabled = enabled;
+    setCompleter(m_completer);
+}
+
 void GolangCode::prefixChanged(QTextCursor cur,QString pre,bool force)
 {
+    if (!m_gocodeEnabled) {
+        return;
+    }
     if (m_completer->completionContext() != LiteApi::CompleterCodeContext) {
         return;
     }
