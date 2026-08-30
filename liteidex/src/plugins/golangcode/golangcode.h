@@ -71,7 +71,6 @@ public:
     void loadPkgList();
 //    void loadImportsList(const QProcessEnvironment &env);
 public slots:
-    void setGocodeEnabled(bool enabled);
     void currentEditorChanged(LiteApi::IEditor*);
     void currentEnvChanged(LiteApi::IEnv*);
     void prefixChanged(QTextCursor,QString,bool froce);
@@ -117,7 +116,6 @@ protected:
     QString     m_lastGopathEnv;
     bool        m_closeOnExit;
     bool        m_allImportHint;
-    bool        m_gocodeEnabled;
 };
 
 #endif // GOLANGCODE_H
