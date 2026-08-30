@@ -754,11 +754,17 @@ void GoplsPlugin::findImplementations() { requestLocations("textDocument/impleme
 QString GoplsPlugin::markupText(const QJsonValue &value) const
 {
     if (value.isString()) {
-        return value.toString();
+        QString text = value.toString();
+        // Some gopls versions return escaped newlines in hover markdown.
+        text.replace("\\n", "\n");
+        text.replace("\\r", "\r");
+        return text;
     }
     if (value.isObject()) {
         QJsonObject object = value.toObject();
         QString text = object.value("value").toString();
+        text.replace("\\n", "\n");
+        text.replace("\\r", "\r");
         if (object.value("kind").toString() == "markdown") {
 #if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
             QTextDocument document;
