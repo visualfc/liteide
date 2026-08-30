@@ -22,9 +22,62 @@
 #include <QStandardItem>
 #include <QPlainTextEdit>
 #include <QTextBlock>
-#include <QTextDocument>
+#include <QRegExp>
 #include <QUrl>
 #include <algorithm>
+
+static QString goplsMarkdownToText(QString text)
+{
+    // JSON strings normally contain real newlines, but accept escaped ones too.
+    text.replace("\\n", "\n");
+    text.replace("\\r", "\r");
+
+    QStringList result;
+    bool inCodeBlock = false;
+    const QStringList lines = text.split("\n", Qt::KeepEmptyParts);
+    QRegExp linkPattern("\\[([^\\]]+)\\]\\([^\\)]*\\)");
+    QRegExp bulletPattern("^\\s*[-*+]\\s+");
+    QRegExp pkgDocPattern("^\\s*\\[.* on pkg\\.go\\.dev\\]\\([^\\)]*\\)\\s*$");
+    foreach (QString line, lines) {
+        QString trimmed = line.trimmed();
+        if (trimmed.startsWith("```")) {
+            inCodeBlock = !inCodeBlock;
+            continue;
+        }
+        if (!inCodeBlock) {
+            if (pkgDocPattern.exactMatch(line)) {
+                continue;
+            }
+            if (trimmed == "---" || trimmed == "***" || trimmed == "___") {
+                line.clear();
+            }
+            while (linkPattern.indexIn(line) >= 0) {
+                line.replace(linkPattern.cap(0), linkPattern.cap(1));
+            }
+            line.replace("**", "");
+            line.replace("__", "");
+            line.replace("`", "");
+            if (bulletPattern.indexIn(line) == 0) {
+                line.remove(0, bulletPattern.matchedLength());
+            }
+            // Keep tooltip lines readable without changing code blocks.
+            while (line.size() > 90) {
+                int breakAt = line.lastIndexOf(' ', 90);
+                if (breakAt <= 0) {
+                    break;
+                }
+                result.append(line.left(breakAt));
+                line = line.mid(breakAt + 1);
+            }
+        }
+        result.append(line);
+    }
+    QString plainText = result.join("\n");
+    while (plainText.contains("\n\n\n")) {
+        plainText.replace("\n\n\n", "\n\n");
+    }
+    return plainText.trimmed();
+}
 
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_completer(0), m_ready(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
@@ -722,20 +775,16 @@ void GoplsPlugin::findImplementations() { requestLocations("textDocument/impleme
 QString GoplsPlugin::markupText(const QJsonValue &value) const
 {
     if (value.isString()) {
-        return value.toString();
+        return goplsMarkdownToText(value.toString());
     }
     if (value.isObject()) {
         QJsonObject object = value.toObject();
         QString text = object.value("value").toString();
         if (object.value("kind").toString() == "markdown") {
-#if QT_VERSION >= QT_VERSION_CHECK(5,14,0)
-            QTextDocument document;
-            document.setMarkdown(text);
-            text = document.toPlainText();
-#else
-            text.replace(QRegExp("```[A-Za-z0-9_+.-]*\\n"),QString());
-            text.replace("```",QString());
-#endif
+            text = goplsMarkdownToText(text);
+        } else {
+            text.replace("\\n", "\n");
+            text.replace("\\r", "\r");
         }
         return text.trimmed();
     }
