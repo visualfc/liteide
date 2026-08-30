@@ -781,6 +781,7 @@ QString GoplsPlugin::markupText(const QJsonValue &value) const
             QTextDocument document;
             document.setMarkdown(markdown);
             text = document.toPlainText();
+            text.replace("<br>", "\n", Qt::CaseInsensitive);
 #else
             text.replace(QRegExp("```[A-Za-z0-9_+.-]*\\n"),QString());
             text.replace("```",QString());
