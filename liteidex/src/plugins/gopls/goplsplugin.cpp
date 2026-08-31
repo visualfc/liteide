@@ -5,6 +5,8 @@
 #include "golangastapi/golangastapi.h"
 #include "liteeditorapi/liteeditorapi.h"
 #include "fileutil/fileutil.h"
+#include "gopls_global.h"
+#include "goplsoptionfactory.h"
 
 #include <QCoreApplication>
 #include <QApplication>
@@ -79,7 +81,7 @@ static QString goplsMarkdownToText(QString text)
 
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_completer(0), m_ready(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
-    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false)
+    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false), m_useFeatures(false)
 {
 }
 
@@ -94,6 +96,8 @@ GoplsPlugin::~GoplsPlugin()
 bool GoplsPlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
+    m_useFeatures = app->settings()->value(GOPLS_USE_FEATURES,false).toBool();
+    app->optionManager()->addFactory(new GoplsOptionFactory(app,this));
     m_client = new GoplsClient(this);
     m_searchResults = new GoplsSearchResults(this);
     LiteApi::IFileSearchManager *searchManager = LiteApi::getFileSearchManager(app);
@@ -120,7 +124,8 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
     connect(m_formatAction,SIGNAL(triggered()),this,SLOT(formatDocument()));
     connect(m_organizeImportsAction,SIGNAL(triggered()),this,SLOT(organizeImports()));
     app->extension()->addObject("LiteApi.IGoplsService",m_client);
-    //connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    connect(app,SIGNAL(loaded()),this,SLOT(appLoaded()));
+    connect(app->optionManager(),SIGNAL(applyOption(QString)),this,SLOT(applyOption(QString)));
     connect(m_client,SIGNAL(initialized()),this,SLOT(clientInitialized()));
     connect(m_client,SIGNAL(stopped()),this,SLOT(clientStopped()));
     connect(m_client,SIGNAL(logMessage(QString,bool)),this,SLOT(clientLog(QString,bool)));
@@ -147,11 +152,11 @@ QStringList GoplsPlugin::dependPluginList() const
 bool GoplsPlugin::eventFilter(QObject *object, QEvent *event)
 {
     LiteApi::IEditor *editor = m_hoverViewports.value(object);
-    if (!m_ready || !editor || event->type() != QEvent::ToolTip) {
+    if (!m_useFeatures || !m_ready || !editor || event->type() != QEvent::ToolTip) {
         return LiteApi::IPlugin::eventFilter(object,event);
     }
-    if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
-        return LiteApi::IPlugin::eventFilter(object,event);
+    if (QApplication::keyboardModifiers() & (Qt::ControlModifier | Qt::MetaModifier)) {
+        return true;
     }
     QPlainTextEdit *plainTextEdit = LiteApi::getPlainTextEdit(editor);
     if (!plainTextEdit) {
@@ -224,8 +229,11 @@ void GoplsPlugin::appLoaded()
 void GoplsPlugin::clientInitialized()
 {
     m_ready = true;
+    m_client->setProperty("liteideGoplsActive", m_useFeatures);
     m_liteApp->appendLog("Gopls",tr("gopls initialized"));
-    setLegacyCompletionEnabled(false);
+    if (m_useFeatures) {
+        setLegacyCompletionEnabled(false);
+    }
     foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
         editorCreated(editor);
         openDocument(editor);
@@ -236,6 +244,7 @@ void GoplsPlugin::clientInitialized()
 void GoplsPlugin::clientStopped()
 {
     m_ready = false;
+    m_client->setProperty("liteideGoplsActive", false);
     m_openDocuments.clear();
     if (m_completer) {
         LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -249,7 +258,34 @@ void GoplsPlugin::clientStopped()
     m_completionRoots.clear();
     m_pendingCompletions.clear();
     m_pendingHovers.clear();
+    m_navigationEditors.clear();
+    m_navigationPositions.clear();
+    m_navigationStarts.clear();
+    m_navigationEnds.clear();
+    m_navigationHoverText.clear();
     setLegacyCompletionEnabled(true);
+}
+
+void GoplsPlugin::applyOption(const QString &option)
+{
+    if (option != OPTION_GOPLS) return;
+    bool enabled = m_liteApp->settings()->value(GOPLS_USE_FEATURES,false).toBool();
+    if (enabled == m_useFeatures) return;
+    m_useFeatures = enabled;
+    if (enabled) {
+        if (m_client->isRunning()) {
+            m_client->setProperty("liteideGoplsActive", true);
+            setLegacyCompletionEnabled(false);
+            currentEditorChanged(m_liteApp->editorManager()->currentEditor());
+        } else {
+            appLoaded();
+        }
+    } else if (m_client->isRunning()) {
+        m_client->stop();
+    } else {
+        setLegacyCompletionEnabled(true);
+        currentEditorChanged(m_liteApp->editorManager()->currentEditor());
+    }
 }
 
 void GoplsPlugin::clientLog(const QString &message, bool error)
@@ -307,11 +343,11 @@ void GoplsPlugin::currentEditorChanged(LiteApi::IEditor *editor)
         m_completer->setExternalMode(false);
         m_completer = 0;
     }
-    if (!m_ready || !isGoEditor(editor)) {
+    if (!m_useFeatures || !m_ready || !isGoEditor(editor)) {
         return;
     }
     m_completer = LiteApi::findExtensionObject<LiteApi::ICompleter*>(editor,"LiteApi.ICompleter");
-    configureCompleter(editor,m_completer != 0);
+    configureCompleter(editor,m_useFeatures && m_completer != 0);
 }
 
 void GoplsPlugin::openDocument(LiteApi::IEditor *editor)
@@ -434,7 +470,7 @@ void GoplsPlugin::configureCompleter(LiteApi::IEditor *editor, bool enabled)
 void GoplsPlugin::completionRequested(QTextCursor cursor, QString prefix, bool force)
 {
     Q_UNUSED(cursor);
-    if (!m_ready) {
+    if (!m_useFeatures || !m_ready) {
         return;
     }
     LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
@@ -552,11 +588,15 @@ void GoplsPlugin::handleLocationResponse(int id, const QJsonValue &result, const
 {
     QString requestMethod = m_locationRequests.take(id);
     QString searchText = m_locationSearchText.take(id);
+    LiteApi::IEditor *navigationEditor = m_navigationEditors.take(id);
+    QPoint navigationPosition = m_navigationPositions.take(id);
+    int navigationStart = m_navigationStarts.take(id);
+    int navigationEnd = m_navigationEnds.take(id);
+    QJsonArray locations = result.isArray() ? result.toArray() : QJsonArray{result};
     if (!error.isEmpty()) {
         clientLog(error.value("message").toString(),true);
         return;
     }
-    QJsonArray locations = result.isArray() ? result.toArray() : QJsonArray{result};
     if (requestMethod == "textDocument/definition") {
         if (!locations.isEmpty()) {
             QJsonObject location = locations.first().toObject();
@@ -567,7 +607,42 @@ void GoplsPlugin::handleLocationResponse(int id, const QJsonValue &result, const
                 range = location.value("targetSelectionRange").toObject();
             }
             QJsonObject start = range.value("start").toObject();
+            if (navigationEditor) {
+                QString hoverText = m_navigationHoverText.take(navigationEditor);
+                if (hoverText.isEmpty()) {
+                    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(navigationEditor);
+                    if (liteEditor) {
+                        liteEditor->clearLink();
+                    }
+                    return;
+                }
+                LiteApi::Link link;
+                link.linkTextStart = navigationStart;
+                link.linkTextEnd = navigationEnd;
+                link.cursorPos = navigationPosition;
+                link.showNav = true;
+                link.keepLastLine = true;
+                link.targetFileName = QUrl(uri).toLocalFile();
+                link.targetLine = start.value("line").toInt();
+                link.targetColumn = start.value("character").toInt();
+                QString location = QString("> %1:%2:%3")
+                    .arg(link.targetFileName).arg(link.targetLine + 1).arg(link.targetColumn + 1);
+                link.sourceInfo = hoverText + "\n\n";
+                link.sourceInfo += location;
+                link.targetInfo = link.sourceInfo;
+                LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(navigationEditor);
+                if (liteEditor) {
+                    liteEditor->showLink(link);
+                }
+                return;
+            }
             LiteApi::gotoLine(m_liteApp,QUrl(uri).toLocalFile(),start.value("line").toInt(),start.value("character").toInt(),true,true);
+        }
+        else if (navigationEditor) {
+            LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(navigationEditor);
+            if (liteEditor) {
+                liteEditor->clearLink();
+            }
         }
     } else {
         LiteApi::IFileSearchManager *manager = LiteApi::getFileSearchManager(m_liteApp);
@@ -592,11 +667,18 @@ void GoplsPlugin::handleHintResponse(int id, const QString &method, const QJsonV
         m_pendingHovers.remove(editor);
     }
     if (!editor || !error.isEmpty() || result.isNull()) {
+        if (editor && method == "textDocument/hover") {
+            LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+            if (liteEditor) {
+                liteEditor->showToolTipInfo(position,QString());
+            }
+        }
         return;
     }
     QString text;
     if (method == "textDocument/hover") {
         text = markupText(result.toObject().value("contents"));
+        m_navigationHoverText.insert(editor,text);
     } else {
         QJsonArray signatures = result.toObject().value("signatures").toArray();
         if (!signatures.isEmpty()) {
@@ -609,7 +691,7 @@ void GoplsPlugin::handleHintResponse(int id, const QString &method, const QJsonV
         }
     }
     LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
-    if (liteEditor && !text.isEmpty()) {
+    if (liteEditor) {
         liteEditor->showToolTipInfo(position,text);
     }
 }
@@ -746,11 +828,35 @@ QString GoplsPlugin::markupText(const QJsonValue &value) const
 
 void GoplsPlugin::hoverRequested(const QTextCursor &cursor, const QPoint &position, bool navigation)
 {
-    if (!m_ready || navigation) {
+    if (!m_useFeatures || !m_ready) {
         return;
     }
-    LiteApi::ILiteEditor *liteEditor = qobject_cast<LiteApi::ILiteEditor*>(sender());
-    LiteApi::IEditor *editor = liteEditor;
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    if (navigation) {
+        if (!isGoEditor(editor)) {
+            return;
+        }
+        QTextCursor requestCursor = cursor;
+        requestCursor.setPosition(cursor.selectionStart());
+        changeDocument(editor);
+        QPoint hoverPosition = position;
+        QPlainTextEdit *plainTextEdit = LiteApi::getPlainTextEdit(editor);
+        if (plainTextEdit) {
+            hoverPosition = plainTextEdit->viewport()->mapToGlobal(position);
+        }
+        requestHover(editor,cursor,hoverPosition);
+        QJsonObject params{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}},
+                           {"position",QJsonObject{{"line",requestCursor.blockNumber()},
+                                                    {"character",requestCursor.positionInBlock()}}}};
+        int id = m_client->request("textDocument/definition",params);
+        m_locationRequests.insert(id,"textDocument/definition");
+        m_locationSearchText.insert(id,LiteApi::wordUnderCursor(requestCursor));
+        m_navigationEditors.insert(id,editor);
+        m_navigationPositions.insert(id,position);
+        m_navigationStarts.insert(id,cursor.selectionStart());
+        m_navigationEnds.insert(id,cursor.selectionEnd());
+        return;
+    }
     requestHover(editor,cursor,position);
 }
 
