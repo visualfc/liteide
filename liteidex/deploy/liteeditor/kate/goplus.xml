@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="GoPlus" section="Sources"
-          version="1.00" kateversion="2.4"
-          indenter="cstyle"
-          extensions="*.gop;*.gox;*.xgo"
-          mimetype="text/x-goplus"
-		  package="goplus"
-          priority="5"
-          author="The Go Authors"
-          license="BSD">
+<language name="GoPlus" section="Sources" version="1.00" kateversion="2.4" indenter="cstyle" extensions="*.gop;*.gox;*.xgo" mimetype="text/x-goplus" package="goplus" priority="5" author="The Go Authors" license="BSD">
   <highlighting>
     <list name="keywords">
       <item> break </item>
@@ -67,7 +59,7 @@
     </list>
     <list name="builtin">
       <item> append </item>
-  	  <item> delete </item>
+      <item> delete </item>
       <item> cap </item>
       <item> close </item>
       <item> complex </item>
@@ -91,19 +83,19 @@
         <keyword attribute="Data Type" context="#stay" String="types"/>
         <keyword attribute="Builtin Function" context="#stay" String="builtin"/>
         <DetectIdentifier/>
-        <DetectChar attribute="Symbol" context="#stay" char="{" beginRegion="Brace1" />
-        <DetectChar attribute="Symbol" context="#stay" char="}" endRegion="Brace1" />
-        <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace2" />
-        <DetectChar attribute="Symbol" context="#stay" char=")" endRegion="Brace2" />
-        <DetectChar attribute="Symbol" context="#stay" char="[" beginRegion="Brace3" />
-        <DetectChar attribute="Symbol" context="#stay" char="]" endRegion="Brace3" />
-        <RegExpr attribute="Numbers"  context="#stay" String="\-?\.\d*(e|e\-|e\+)?\d+i?\b"/>
-        <RegExpr attribute="Numbers"  context="#stay" String="\-\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>
-        <RegExpr attribute="Numbers"  context="#stay" String="\b\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>
-        <RegExpr attribute="Numbers"  context="#stay" String="\b-?0[xX][0-9a-fA-F]+\b"/>
-        <RegExpr attribute="Numbers"  context="#stay" String="\b-?\d*r?/\d*r\b"/>
-        <RegExpr attribute="Numbers"  context="#stay" String="\b-?\d*r/\d*r?\b"/>
-        <RegExpr attribute="Numbers"  context="#stay" String="\b-?\d*r\b"/>
+        <DetectChar attribute="Symbol" context="#stay" char="{" beginRegion="Brace1"/>
+        <DetectChar attribute="Symbol" context="#stay" char="}" endRegion="Brace1"/>
+        <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace2"/>
+        <DetectChar attribute="Symbol" context="#stay" char=")" endRegion="Brace2"/>
+        <DetectChar attribute="Symbol" context="#stay" char="[" beginRegion="Brace3"/>
+        <DetectChar attribute="Symbol" context="#stay" char="]" endRegion="Brace3"/>
+        <RegExpr attribute="Numbers" context="#stay" String="\-?\.\d*(e|e\-|e\+)?\d+i?\b"/>
+        <RegExpr attribute="Numbers" context="#stay" String="\-\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>
+        <RegExpr attribute="Numbers" context="#stay" String="\b\d*\.?\d*(e|e\-|e\+)?\d+i?\b"/>
+        <RegExpr attribute="Numbers" context="#stay" String="\b-?0[xX][0-9a-fA-F]+\b"/>
+        <RegExpr attribute="Numbers" context="#stay" String="\b-?\d*r?/\d*r\b"/>
+        <RegExpr attribute="Numbers" context="#stay" String="\b-?\d*r/\d*r?\b"/>
+        <RegExpr attribute="Numbers" context="#stay" String="\b-?\d*r\b"/>
         <HlCOct attribute="Octal" context="#stay"/>
         <HlCHex attribute="Hex" context="#stay"/>
         <HlCChar attribute="Char" context="#stay"/>
@@ -111,16 +103,16 @@
         <DetectChar attribute="String" context="Multiline String" char="`"/>
         <Detect2Chars attribute="Comment" context="Comment 1" char="/" char1="/"/>
         <Detect2Chars attribute="Comment" context="Comment 2" char="/" char1="*" beginRegion="Comment"/>
-        <AnyChar attribute="Symbol" context="#stay" String=":!%&amp;()+,-/.*&lt;=&gt;?[]|~^&#59;"/>
+        <AnyChar attribute="Symbol" context="#stay" String=":!%&amp;()+,-/.*&lt;=&gt;?[]|~^;"/>
       </context>
       <context attribute="Normal Text" lineEndContext="#stay" name="FuncDecl">
-        <DetectChar attribute="Symbol" context="MethodDecl" char="(" beginRegion="Brace2" />
-        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2" />
+        <DetectChar attribute="Symbol" context="MethodDecl" char="(" beginRegion="Brace2"/>
+        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2"/>
         <RegExpr attribute="FuncDecl" context="#pop" String="[\w]+"/>
       </context>
       <context attribute="Normal Text" lineEndContext="#pop" name="MethodDecl">
-        <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace2" />
-        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2" />
+        <DetectChar attribute="Symbol" context="#stay" char="(" beginRegion="Brace2"/>
+        <DetectChar attribute="Symbol" context="#pop" char=")" endRegion="Brace2"/>
         <RegExpr attribute="Normal Text" context="#stay" String="\b[\w]+\s*\*?\w+\b"/>
         <RegExpr attribute="FuncDecl" context="#pop" String="[\w]+"/>
       </context>
@@ -157,32 +149,32 @@
       </context>
     </contexts>
     <itemDatas>
-      <itemData name="Normal Text"  defStyleNum="dsNormal" spellChecking="false"/>
-      <itemData name="Keyword"      defStyleNum="dsKeyword" spellChecking="false"/>
+      <itemData name="Normal Text" defStyleNum="dsNormal" spellChecking="false"/>
+      <itemData name="Keyword" defStyleNum="dsKeyword" spellChecking="false"/>
       <itemData name="Predeclared Identifier" defStyleNum="dsPredeclared" spellChecking="false"/>
       <itemData name="Builtin Function" defStyleNum="dsBuiltinFunc" spellChecking="false"/>
-      <itemData name="Data Type"    defStyleNum="dsDataType" spellChecking="false"/>
-      <itemData name="Numbers"      defStyleNum="dsDecVal" spellChecking="false"/>
-      <itemData name="Decimal"      defStyleNum="dsDecVal" spellChecking="false"/>
-      <itemData name="Octal"        defStyleNum="dsBaseN" spellChecking="false"/>
-      <itemData name="Hex"          defStyleNum="dsBaseN" spellChecking="false"/>
-      <itemData name="Float"        defStyleNum="dsFloat" spellChecking="false"/>
-      <itemData name="Char"         defStyleNum="dsChar" spellChecking="false"/>
-      <itemData name="String"       defStyleNum="dsString"/>
-      <itemData name="FuncDecl"     defStyleNum="dsFuncDecl"/>
-      <itemData name="String Char"  defStyleNum="dsChar"/>
-      <itemData name="String Fmt"   defStyleNum="dsPlaceholder"/>
-      <itemData name="Comment"      defStyleNum="dsComment"/>
-      <itemData name="TODO"         defStyleNum="dsToDo"/>
-      <itemData name="Symbol"       defStyleNum="dsSymbol" spellChecking="false"/>
-      <itemData name="Error"        defStyleNum="dsError" spellChecking="false"/>
+      <itemData name="Data Type" defStyleNum="dsDataType" spellChecking="false"/>
+      <itemData name="Numbers" defStyleNum="dsDecVal" spellChecking="false"/>
+      <itemData name="Decimal" defStyleNum="dsDecVal" spellChecking="false"/>
+      <itemData name="Octal" defStyleNum="dsBaseN" spellChecking="false"/>
+      <itemData name="Hex" defStyleNum="dsBaseN" spellChecking="false"/>
+      <itemData name="Float" defStyleNum="dsFloat" spellChecking="false"/>
+      <itemData name="Char" defStyleNum="dsChar" spellChecking="false"/>
+      <itemData name="String" defStyleNum="dsString"/>
+      <itemData name="FuncDecl" defStyleNum="dsFuncDecl"/>
+      <itemData name="String Char" defStyleNum="dsChar"/>
+      <itemData name="String Fmt" defStyleNum="dsPlaceholder"/>
+      <itemData name="Comment" defStyleNum="dsComment"/>
+      <itemData name="TODO" defStyleNum="dsToDo"/>
+      <itemData name="Symbol" defStyleNum="dsSymbol" spellChecking="false"/>
+      <itemData name="Error" defStyleNum="dsError" spellChecking="false"/>
     </itemDatas>
   </highlighting>
   <general>
     <comments>
-      <comment name="singleLine" start="//" />
-      <comment name="multiLine" start="/*" end="*/" />
+      <comment name="singleLine" start="//"/>
+      <comment name="multiLine" start="/*" end="*/"/>
     </comments>
-    <keywords casesensitive="1" additionalDeliminator="'&quot;" />
+    <keywords casesensitive="1" additionalDeliminator="'&quot;"/>
   </general>
 </language>
