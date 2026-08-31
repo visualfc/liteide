@@ -5,6 +5,13 @@
     <comment>Golang Source File</comment>
     <glob pattern="*.go"/>
   </mime-type>
+  <mime-type type="text/x-goplus" codec="utf-8" package="goplus">
+    <sub-class-of type="text/plain"/>
+    <comment>GoPlus Source File</comment>
+    <glob pattern="*.xgo"/>
+    <glob pattern="*.gox"/>
+    <glob pattern="*.gop"/>
+  </mime-type>
   <mime-type type="text/x-qlang" codec="utf-8" package="qlang">
     <sub-class-of type="text/plain"/>
     <comment>Qlang Source File</comment>
