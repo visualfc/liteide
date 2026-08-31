@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="GoPlus" section="Sources" version="1.00" kateversion="2.4" indenter="cstyle" extensions="*.gop;*.gox;*.xgo" mimetype="text/x-goplus" package="goplus" priority="5" author="The Go Authors" license="BSD">
+<language name="GoPlus" section="Sources" version="1.00" kateversion="2.4" indenter="cstyle" extensions="*.gop;*.gox" mimetype="text/x-goplus" package="goplus" priority="5" author="The Go Authors" license="BSD">
   <highlighting>
     <list name="keywords">
       <item> break </item>
