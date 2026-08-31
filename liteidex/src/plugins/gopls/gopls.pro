@@ -10,8 +10,15 @@ include (../../utils/fileutil/fileutil.pri)
 
 SOURCES += goplsplugin.cpp \
     goplsclient.cpp \
-    goplssearchresults.cpp
+    goplssearchresults.cpp \
+    goplsoption.cpp \
+    goplsoptionfactory.cpp
 
 HEADERS += goplsplugin.h \
     goplsclient.h \
-    goplssearchresults.h
+    goplssearchresults.h \
+    gopls_global.h \
+    goplsoption.h \
+    goplsoptionfactory.h
+
+FORMS += goplsoption.ui

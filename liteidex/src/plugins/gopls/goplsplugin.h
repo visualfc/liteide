@@ -51,6 +51,7 @@ private slots:
     void completionAccepted(const QString &text, const QString &kind, const QString &info);
     void workspaceChanged();
     void environmentChanged(LiteApi::IEnv *environment);
+    void applyOption(const QString &option);
 
 private:
     QString workspaceRoot() const;
@@ -86,6 +87,11 @@ private:
     QHash<LiteApi::IEditor*,int> m_pendingCompletions;
     QHash<int,QString> m_locationRequests;
     QHash<int,QString> m_locationSearchText;
+    QHash<int,LiteApi::IEditor*> m_navigationEditors;
+    QHash<int,QPoint> m_navigationPositions;
+    QHash<int,int> m_navigationStarts;
+    QHash<int,int> m_navigationEnds;
+    QHash<LiteApi::IEditor*,QString> m_navigationHoverText;
     GoplsSearchResults *m_searchResults;
     QAction *m_definitionAction;
     QAction *m_referencesAction;
@@ -101,6 +107,7 @@ private:
     QHash<int,LiteApi::IEditor*> m_editRequestEditors;
     QHash<QObject*,QHash<QString,QJsonArray> > m_completionAdditionalEdits;
     bool m_appLoaded;
+    bool m_useFeatures;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>

@@ -2939,22 +2939,34 @@ void LiteEditorWidgetBase::indentEnter(QTextCursor cur)
     ensureCursorVisible();
 }
 
-static QString simpleInfo(const QString &info, int maxLine)
+static QString simpleInfo(const QString &info, int maxLine, bool keepLastLine)
 {
     QStringList lines = info.split("\n");
     if (lines.size() <= maxLine) {
         return info;
     }
     QStringList out;
-    for (int i = 0; i < maxLine; i++) {
+    int lineCount = keepLastLine ? qMax(0, maxLine - 1) : maxLine;
+    for (int i = 0; i < lineCount; i++) {
         out += lines[i];
+    }
+    if (keepLastLine && !lines.isEmpty()) {
+        while (!out.isEmpty() && out.last().isEmpty()) {
+            out.removeLast();
+        }
+        out += "...";
+        out += lines.last();
+        return out.join("\n");
+    }
+    while (!out.isEmpty() && out.last().isEmpty()) {
+        out.removeLast();
     }
     return out.join("\n")+"\n...";
 }
 
-void LiteEditorWidgetBase::showToolTipInfo(const QPoint &pos, const QString &text)
+void LiteEditorWidgetBase::showToolTipInfo(const QPoint &pos, const QString &text, bool keepLastLine)
 {
-    showTipText(pos,simpleInfo(text,m_maxTipInfoLines),this);
+    showTipText(pos,simpleInfo(text,m_maxTipInfoLines,keepLastLine),this);
 }
 
 void LiteEditorWidgetBase::showTipText(const QPoint &pos, const QString &text, QWidget *widget)
@@ -3267,11 +3279,11 @@ void LiteEditorWidgetBase::showLink(const LiteApi::Link &link)
 {
     if (link.showNav && !link.sourceInfo.isEmpty()) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
-        this->showToolTipInfo(pt,link.sourceInfo);
+        this->showToolTipInfo(pt,link.sourceInfo,link.keepLastLine);
 
     } else if (link.showTip && !link.targetInfo.isEmpty()) {
         QPoint pt = this->mapToGlobal(link.cursorPos);
-        this->showToolTipInfo(pt,link.targetInfo);
+        this->showToolTipInfo(pt,link.targetInfo,link.keepLastLine);
     }
 
     if (!link.showNav) {
@@ -3397,7 +3409,7 @@ void LiteEditorWidgetBase::testUpdateLink(QMouseEvent *e)
         return;
     }
     bool findLink = false;
-    if (e->modifiers() & Qt::ControlModifier) {
+    if (e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier)) {
         // Link emulation behaviour for 'go to definition'
         QTextCursor cursor = cursorForPosition(e->pos());
         if (!cursor.isNull()) {
@@ -3450,7 +3462,7 @@ void LiteEditorWidgetBase::mousePressEvent(QMouseEvent *e)
 void LiteEditorWidgetBase::mouseReleaseEvent(QMouseEvent *e)
 {
     if (m_mouseNavigation && m_linkPressed
-        && (e->modifiers() & Qt::ControlModifier)
+        && (e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier))
         && !(e->modifiers() & Qt::ShiftModifier)
         && e->button() == Qt::LeftButton) {
         if (openLink(m_currentLink)) {

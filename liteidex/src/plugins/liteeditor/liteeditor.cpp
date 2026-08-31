@@ -1455,9 +1455,9 @@ void LiteEditor::setLineEndUnix(bool b)
     }
 }
 
-void LiteEditor::showToolTipInfo(const QPoint &pos, const QString &text)
+void LiteEditor::showToolTipInfo(const QPoint &pos, const QString &text, bool keepLastLine)
 {
-    m_editorWidget->showToolTipInfo(pos,text);
+    m_editorWidget->showToolTipInfo(pos,text,keepLastLine);
 }
 
 void LiteEditor::loadDiff(const QString &diff)
