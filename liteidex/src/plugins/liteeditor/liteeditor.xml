@@ -4,6 +4,7 @@
     <sub-class-of type="text/plain"/>
     <comment>Golang Source File</comment>
     <glob pattern="*.go"/>
+    <glob pattern="*.gox"/>
   </mime-type>
   <mime-type type="text/x-profile">
     <sub-class-of type="text/plain"/>
