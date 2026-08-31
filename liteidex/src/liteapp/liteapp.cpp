@@ -1076,7 +1076,7 @@ void LiteApp::dbclickLogOutput(QTextCursor cur)
 {
     //QRegExp rep("(\\w?:?[\\w\\d_@\\-\\\\/\\.]+):(\\d+):");
     QString text = cur.block().text().trimmed();
-    QRegExp rep("([\\w\\.\\-~/\\\\]+):(\\d+)(?::(\\d+))?");
+    QRegExp rep("([\\w\\.\\-~/\\\\]+):(\\d+)(:(\\d+))?");
     int index = 0;
     QString fileName;
     int line = 0;
@@ -1101,7 +1101,7 @@ void LiteApp::dbclickLogOutput(QTextCursor cur)
             if (QFileInfo::exists(path)) {
                 fileName = path;
                 line = rep.cap(2).toInt();
-                column = rep.cap(3).toInt();
+                column = rep.cap(4).toInt();
                 break;
             }
         }
