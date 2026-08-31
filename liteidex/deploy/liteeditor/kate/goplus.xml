@@ -3,7 +3,7 @@
 <language name="GoPlus" section="Sources"
           version="1.00" kateversion="2.4"
           indenter="cstyle"
-          extensions="*.gop"
+          extensions="*.gop;*.gox;*.xgo"
           mimetype="text/x-goplus"
 		  package="goplus"
           priority="5"
