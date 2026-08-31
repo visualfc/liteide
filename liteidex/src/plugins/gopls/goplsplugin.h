@@ -55,6 +55,7 @@ private slots:
 
 private:
     QString workspaceRoot() const;
+    QString workspaceKey() const;
     void setLegacyCompletionEnabled(bool enabled);
     bool isGoEditor(LiteApi::IEditor *editor) const;
     QString documentUri(LiteApi::IEditor *editor) const;
@@ -81,6 +82,7 @@ private:
     QHash<LiteApi::IEditor*,int> m_documentVersions;
     QSet<LiteApi::IEditor*> m_openDocuments;
     bool m_ready;
+    bool m_restartClient;
     QHash<int,LiteApi::IEditor*> m_completionEditors;
     QHash<int,QString> m_completionPrefixes;
     QHash<int,QString> m_completionRoots;
@@ -107,7 +109,11 @@ private:
     QHash<int,LiteApi::IEditor*> m_editRequestEditors;
     QHash<QObject*,QHash<QString,QJsonArray> > m_completionAdditionalEdits;
     bool m_appLoaded;
+    bool m_loggedProgram;
     bool m_useFeatures;
+    QString m_workspaceKey;
+    QString m_restartReason;
+    QSet<QString> m_metadataWarnings;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>

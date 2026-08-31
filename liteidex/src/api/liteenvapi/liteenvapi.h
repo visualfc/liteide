@@ -26,6 +26,7 @@
 
 #include "liteapi/liteapi.h"
 #include <QProcessEnvironment>
+#include <QProcess>
 #include <QDir>
 #include <QDebug>
 
@@ -118,6 +119,32 @@ inline QProcessEnvironment getCurrentEnvironment(LiteApi::IApplication *app)
     return e;
 }
 
+inline void resolveGoToolchainEnvironment(QProcessEnvironment &env, const QString &workingDirectory)
+{
+    QProcessEnvironment queryEnv = env;
+    // Let GOTOOLCHAIN select the actual toolchain instead of pinning go to a stale GOROOT.
+    queryEnv.remove("GOROOT");
+    QProcess process;
+    process.setProcessEnvironment(queryEnv);
+    if (!workingDirectory.isEmpty()) {
+        process.setWorkingDirectory(workingDirectory);
+    }
+    QString go = QFileInfo(env.value("GOROOT"),"bin/go").filePath();
+#ifdef Q_OS_WIN
+    go += ".exe";
+#endif
+    if (!QFileInfo::exists(go)) {
+        go = "go";
+    }
+    process.start(go,QStringList() << "env" << "GOROOT");
+    if (process.waitForFinished(3000) && process.exitCode() == 0) {
+        QString goroot = QString::fromUtf8(process.readAllStandardOutput()).trimmed();
+        if (!goroot.isEmpty()) {
+            env.insert("GOROOT",goroot);
+        }
+    }
+}
+
 inline QString getDefaultGOOS()
 {
     const char* goos = "";
@@ -183,6 +210,7 @@ inline QProcessEnvironment getSysEnvironment(LiteApi::IApplication *app)
     if (goroot.isEmpty()) {
         goroot = getDefaultGOROOT();
     }
+    env.insert("GOROOT",goroot);
     return env;
 }
 
@@ -225,6 +253,7 @@ inline QProcessEnvironment getGoEnvironment(LiteApi::IApplication *app)
     if (goroot.isEmpty()) {
         goroot = getDefaultGOROOT();
     }
+    env.insert("GOROOT",goroot);
 
     if (app->settings()->value("liteide/use111gomodule",false).toBool()) {
         env.insert("GO111MODULE",app->settings()->value("liteide/go111module").toString());
@@ -299,7 +328,9 @@ inline QStringList getGOPATH(LiteApi::IApplication *app, bool includeGoroot)
 
 inline QString getGOROOT(LiteApi::IApplication *app)
 {
-    return getGoEnvironment(app).value("GOROOT");
+    QProcessEnvironment env = getGoEnvironment(app);
+    resolveGoToolchainEnvironment(env,QString());
+    return env.value("GOROOT");
 }
 
 inline QString lookupSrcRoot(const QString &buildFilePath)
@@ -333,7 +364,9 @@ inline QString lookupParentHasCustom(LiteApi::IApplication *app, const QString &
 inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, const QString &buildFilePath, QString *pCustomBuildPath = 0)
 {
     if (buildFilePath.isEmpty()) {
-        return getGoEnvironment(app);
+        QProcessEnvironment env = getGoEnvironment(app);
+        resolveGoToolchainEnvironment(env,QString());
+        return env;
     }
     QString customKey = "litebuild-custom/"+buildFilePath;
     QString customBuildPath = buildFilePath;
@@ -348,7 +381,9 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
         }
     }
     if (!use_custom_gopath) {
-        return getGoEnvironment(app);
+        QProcessEnvironment env = getGoEnvironment(app);
+        resolveGoToolchainEnvironment(env,buildFilePath);
+        return env;
     }
     if (pCustomBuildPath) {
         *pCustomBuildPath = customBuildPath;
@@ -429,6 +464,7 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, co
         binList.append(QFileInfo(path,"bin/"+goos+"_"+goarch).filePath());
     }
     env.insert("PATH",env.value("PATH")+sep+binList.join(sep)+sep);
+    resolveGoToolchainEnvironment(env,buildFilePath);
     return env;
 }
 
@@ -448,4 +484,3 @@ inline QProcessEnvironment getCustomGoEnvironment(LiteApi::IApplication *app, Li
 
 
 #endif //LITEENVAPI_H
-

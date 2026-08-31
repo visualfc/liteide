@@ -209,7 +209,7 @@ void Env::loadEnv(EnvManager *manager, const QString &filePath)
     manager->addEnv(env);
 }
 
-static QStringList envFilter = QString("GOROOT;GOPATH;GOEXE;GOOS;GOARCH;GOBIN;GOVERSION;GO111MODULE").split(";");
+static QStringList envFilter = QString("GOROOT;GOPATH;GOEXE;GOOS;GOARCH;GOBIN;GOVERSION;GO111MODULE;GOTOOLCHAIN").split(";");
 
 void Env::readStdout()
 {
