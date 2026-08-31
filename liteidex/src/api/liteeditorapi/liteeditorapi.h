@@ -204,6 +204,7 @@ struct Link
         , targetColumn(-1)
         , showTip(false)
         , showNav(false)
+        , keepLastLine(false)
     {}
 
     void clear()
@@ -237,6 +238,7 @@ struct Link
     int targetColumn;
     bool    showTip;
     bool    showNav;
+    bool    keepLastLine;
     QString targetOpenDir;
     QString targetOpenDirInfo;
     QString targetFileName;
@@ -289,7 +291,7 @@ public:
     virtual void setEnableAutoIndentAction(bool b) = 0;
     virtual bool isLineEndUnix() const = 0;
     virtual void setLineEndUnix(bool b) = 0;
-    virtual void showToolTipInfo(const QPoint & pos, const QString & text) = 0;
+    virtual void showToolTipInfo(const QPoint & pos, const QString & text, bool keepLastLine = false) = 0;
     virtual void loadDiff(const QString &diff) = 0;
     virtual void loadTextUseDiff(const QString &text) = 0;
 signals:

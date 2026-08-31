@@ -123,7 +123,7 @@ public:
     virtual void setEnableAutoIndentAction(bool b);
     virtual bool isLineEndUnix() const;
     virtual void setLineEndUnix(bool b);
-    virtual void showToolTipInfo(const QPoint & pos, const QString & text);
+    virtual void showToolTipInfo(const QPoint & pos, const QString & text, bool keepLastLine = false);
     virtual void loadDiff(const QString &diff);
     virtual void loadTextUseDiff(const QString &text);
     virtual QMenu *editorMenu() const;
