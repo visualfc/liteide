@@ -80,8 +80,9 @@ static QString goplsMarkdownToText(QString text)
 }
 
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_completer(0), m_ready(false),
+    m_restartClient(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
-    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false), m_useFeatures(false)
+    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false), m_loggedProgram(false), m_useFeatures(false)
 {
 }
 
@@ -189,6 +190,27 @@ QString GoplsPlugin::workspaceRoot() const
     return QDir::currentPath();
 }
 
+QString GoplsPlugin::workspaceKey() const
+{
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
+    QDir dir(workspaceRoot());
+    if (editor && !editor->filePath().isEmpty()) {
+        dir = QFileInfo(editor->filePath()).absoluteDir();
+    }
+    while (dir.exists()) {
+        if (QFileInfo(dir.filePath("go.work")).isFile()) {
+            return QFileInfo(dir.filePath("go.work")).absoluteFilePath();
+        }
+        if (QFileInfo(dir.filePath("go.mod")).isFile()) {
+            return QFileInfo(dir.filePath("go.mod")).absoluteFilePath();
+        }
+        if (!dir.cdUp()) {
+            break;
+        }
+    }
+    return workspaceRoot();
+}
+
 void GoplsPlugin::appLoaded()
 {
     m_appLoaded = true;
@@ -202,8 +224,9 @@ void GoplsPlugin::appLoaded()
         // gopls is optional; the plugin restores legacy gocode completion when it is unavailable.
         clientLog(tr("gopls was not found on system PATH (hint: go install golang.org/x/tools/gopls@latest)"),true);
         return;
-    } else {
+    } else if (!m_loggedProgram) {
         clientLog(QString("Found gopls at %1").arg(program),false);
+        m_loggedProgram = true;
     }
 
     QString root = workspaceRoot();
@@ -229,8 +252,14 @@ void GoplsPlugin::appLoaded()
 void GoplsPlugin::clientInitialized()
 {
     m_ready = true;
+    m_workspaceKey = workspaceKey();
     m_client->setProperty("liteideGoplsActive", m_useFeatures);
-    m_liteApp->appendLog("Gopls",tr("gopls initialized"));
+    if (m_restartReason.isEmpty()) {
+        m_liteApp->appendLog("Gopls",tr("gopls initialized"));
+    } else {
+        m_liteApp->appendLog("Gopls",tr("gopls reinitialized: %1").arg(m_restartReason));
+        m_restartReason.clear();
+    }
     if (m_useFeatures) {
         setLegacyCompletionEnabled(false);
     }
@@ -263,7 +292,12 @@ void GoplsPlugin::clientStopped()
     m_navigationStarts.clear();
     m_navigationEnds.clear();
     m_navigationHoverText.clear();
+    m_metadataWarnings.clear();
     setLegacyCompletionEnabled(true);
+    if (m_restartClient) {
+        m_restartClient = false;
+        appLoaded();
+    }
 }
 
 void GoplsPlugin::applyOption(const QString &option)
@@ -290,6 +324,12 @@ void GoplsPlugin::applyOption(const QString &option)
 
 void GoplsPlugin::clientLog(const QString &message, bool error)
 {
+    if (message.startsWith("no package metadata for file ")) {
+        if (m_metadataWarnings.contains(message)) {
+            return;
+        }
+        m_metadataWarnings.insert(message);
+    }
     m_liteApp->appendLog("Gopls",message,error);
 }
 
@@ -337,6 +377,12 @@ void GoplsPlugin::editorCreated(LiteApi::IEditor *editor)
 
 void GoplsPlugin::currentEditorChanged(LiteApi::IEditor *editor)
 {
+    QString key = workspaceKey();
+    if (m_appLoaded && m_ready && !key.isEmpty() && key != m_workspaceKey) {
+        workspaceChanged();
+        return;
+    }
+    m_workspaceKey = key;
     if (m_completer) {
         disconnect(m_completer,0,this,0);
         m_completer->setSearchSeparator(true);
@@ -1083,11 +1129,22 @@ void GoplsPlugin::completionAccepted(const QString &text, const QString &, const
 
 void GoplsPlugin::workspaceChanged()
 {
-    //if (!m_appLoaded) return;
+    if (!m_appLoaded) return;
+    QString key = workspaceKey();
+    if (key != m_workspaceKey) {
+        m_restartReason = QString("workspace changed: %1 -> %2").arg(m_workspaceKey, key);
+        m_workspaceKey = key;
+    } else if (m_restartReason.isEmpty()) {
+        m_restartReason = QString("workspace changed: %1").arg(key);
+    }
     m_ready = false;
     m_openDocuments.clear();
-    m_client->stop();
-    appLoaded();
+    if (m_client->isRunning()) {
+        m_restartClient = true;
+        m_client->stop();
+    } else {
+        appLoaded();
+    }
 }
 
 void GoplsPlugin::environmentChanged(LiteApi::IEnv *)
