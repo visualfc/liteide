@@ -222,7 +222,7 @@ void GoplsPlugin::appLoaded()
     QString program = FileUtil::lookupGoBin("gopls",m_liteApp,environment,true);
     if (program.isEmpty()) {
         // gopls is optional; the plugin restores legacy gocode completion when it is unavailable.
-        clientLog(tr("gopls was not found on system PATH (hint: go install golang.org/x/tools/gopls@latest)"),true);
+        clientLog("gopls was not found on system PATH (hint: go install golang.org/x/tools/gopls@latest)",true);
         return;
     } else if (!m_loggedProgram) {
         clientLog(QString("Found gopls at %1").arg(program),false);
@@ -255,9 +255,9 @@ void GoplsPlugin::clientInitialized()
     m_workspaceKey = workspaceKey();
     m_client->setProperty("liteideGoplsActive", m_useFeatures);
     if (m_restartReason.isEmpty()) {
-        m_liteApp->appendLog("Gopls",tr("gopls initialized"));
+        m_liteApp->appendLog("Gopls","gopls initialized");
     } else {
-        m_liteApp->appendLog("Gopls",tr("gopls reinitialized: %1").arg(m_restartReason));
+        m_liteApp->appendLog("Gopls",QString("gopls reinitialized: %1").arg(m_restartReason));
         m_restartReason.clear();
     }
     if (m_useFeatures) {
