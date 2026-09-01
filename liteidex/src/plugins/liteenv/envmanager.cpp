@@ -194,19 +194,20 @@ void Env::loadEnvFile(QIODevice *dev)
     m_env = env;
 }
 
-void Env::loadEnv(EnvManager *manager, const QString &filePath)
+Env *Env::loadEnv(EnvManager *manager, const QString &filePath)
 {
     QFile f(filePath);
     if (!f.open(QIODevice::ReadOnly)) {
-        return;
+        return 0;
     }
 
     Env *env = new Env(manager->application(),manager);
     env->m_filePath = filePath;
-    env->m_id = QFileInfo(filePath).baseName();
+    env->m_id = QFileInfo(filePath).completeBaseName();
     env->loadEnvFile(&f);
     f.close();
     manager->addEnv(env);
+    return env;
 }
 
 static QStringList envFilter = QString("GOROOT;GOPATH;GOEXE;GOOS;GOARCH;GOBIN;GOVERSION;GO111MODULE;GOTOOLCHAIN").split(";");
@@ -375,15 +376,187 @@ void EnvManager::appLoaded()
     this->setCurrentEnvId(id);
 }
 
-void EnvManager::loadEnvFiles(const QString &path)
+void EnvManager::loadEnvFiles(const QString &path, bool userPath)
 {
     QDir dir = path;
     m_liteApp->appendLog("LiteEnv","Loaded environment files from "+path);
     dir.setFilter(QDir::Files | QDir::NoSymLinks);
     dir.setNameFilters(QStringList("*.env"));
     foreach (QString fileName, dir.entryList()) {
-        Env::loadEnv(this,QFileInfo(dir,fileName).absoluteFilePath());
+        Env *env = Env::loadEnv(this,QFileInfo(dir,fileName).absoluteFilePath());
+        if (userPath && env) {
+            for (int i = 0; i < m_envList.size() - 1; ++i) {
+                if (m_envList.at(i)->id() == env->id()) {
+                    LiteApi::IEnv *old = m_envList.takeAt(i);
+                    delete old;
+                    break;
+                }
+            }
+        }
     }
+}
+
+void EnvManager::addUserEnvFile(const QString &filePath)
+{
+    Env *env = Env::loadEnv(this, filePath);
+    if (!env) {
+        return;
+    }
+    for (int i = 0; i < m_envList.size() - 1; ++i) {
+        if (m_envList.at(i)->id() == env->id()) {
+            LiteApi::IEnv *old = m_envList.takeAt(i);
+            if (old == m_curEnv) {
+                m_curEnv = env;
+            }
+            delete old;
+            break;
+        }
+    }
+    if (!m_envCmb) {
+        return;
+    }
+    for (int i = 0; i < m_envCmb->count(); ++i) {
+        if (m_envCmb->itemText(i) == env->id()) {
+            m_envCmb->removeItem(i);
+            break;
+        }
+    }
+    foreach (QAction *oldAct, m_selectActionGroup->actions()) {
+        if (oldAct->text() == env->id()) {
+            m_selectActionGroup->removeAction(oldAct);
+            m_selectMenu->removeAction(oldAct);
+            oldAct->deleteLater();
+            break;
+        }
+    }
+    m_envCmb->addItem(env->id());
+    QAction *act = new QAction(env->id(), this);
+    act->setCheckable(true);
+    m_selectActionGroup->addAction(act);
+    m_selectMenu->addAction(act);
+}
+
+void EnvManager::renameUserEnvFile(const QString &oldPath, const QString &newPath)
+{
+    LiteApi::IEnv *oldEnv = 0;
+    bool wasCurrent = false;
+    foreach (LiteApi::IEnv *env, m_envList) {
+        if (env->filePath() == oldPath) {
+            oldEnv = env;
+            break;
+        }
+    }
+    if (oldEnv) {
+        const QString oldId = oldEnv->id();
+        if (oldEnv == m_curEnv) {
+            wasCurrent = true;
+            m_curEnv = 0;
+        }
+        m_envList.removeAll(oldEnv);
+        foreach (QAction *act, m_selectActionGroup ? m_selectActionGroup->actions() : QList<QAction*>()) {
+            if (act->text() == oldId) {
+                m_selectActionGroup->removeAction(act);
+                if (m_selectMenu) m_selectMenu->removeAction(act);
+                act->deleteLater();
+                break;
+            }
+        }
+        for (int i = 0; i < m_envCmb->count(); ++i) {
+            if (m_envCmb->itemText(i) == oldId) {
+                m_envCmb->removeItem(i);
+                break;
+            }
+        }
+        delete oldEnv;
+    }
+    addUserEnvFile(newPath);
+    if (wasCurrent) {
+        setCurrentEnvId(QFileInfo(newPath).completeBaseName());
+    }
+}
+
+void EnvManager::removeUserEnvFile(const QString &filePath)
+{
+    LiteApi::IEnv *removed = 0;
+    foreach (LiteApi::IEnv *env, m_envList) {
+        if (env->filePath() == filePath) {
+            removed = env;
+            break;
+        }
+    }
+    if (!removed) {
+        return;
+    }
+    const QString id = removed->id();
+    const bool wasCurrent = (removed == m_curEnv);
+    if (wasCurrent) {
+        m_curEnv = 0;
+    }
+    m_envList.removeAll(removed);
+    delete removed;
+    for (int i = 0; i < m_envCmb->count(); ++i) {
+        if (m_envCmb->itemText(i) == id) {
+            m_envCmb->removeItem(i);
+            break;
+        }
+    }
+    foreach (QAction *act, m_selectActionGroup->actions()) {
+        if (act->text() == id) {
+            m_selectActionGroup->removeAction(act);
+            m_selectMenu->removeAction(act);
+            act->deleteLater();
+            break;
+        }
+    }
+    const QString templatePath = m_liteApp->resourcePath() + "/liteenv/" + id + ".env";
+    if (QFileInfo::exists(templatePath)) {
+        addUserEnvFile(templatePath);
+    }
+    if (wasCurrent) {
+        // A removed environment can still have queued go-env signals. Select
+        // the replacement before those signals are delivered.
+        setCurrentEnvId("system");
+    }
+}
+
+QString EnvManager::userEnvPath(const QString &id) const
+{
+    return QDir(m_liteApp->storagePath() + "/liteenv").absoluteFilePath(id + ".env");
+}
+
+bool EnvManager::materializeCurrentEnv()
+{
+    if (!m_curEnv || m_curEnv->filePath().isEmpty()) {
+        return false;
+    }
+    const QString templatePath = m_liteApp->resourcePath() + "/liteenv/" + m_curEnv->id() + ".env";
+    if (QFileInfo(m_curEnv->filePath()).canonicalFilePath() != QFileInfo(templatePath).canonicalFilePath()) {
+        return true;
+    }
+    const QString path = userEnvPath(m_curEnv->id());
+    QDir dir = QFileInfo(path).dir();
+    if (!dir.exists() && !QDir().mkpath(dir.absolutePath())) {
+        return false;
+    }
+    if (!QFileInfo::exists(path) && !QFile::copy(templatePath, path)) {
+        return false;
+    }
+    Env *userEnv = Env::loadEnv(this, path);
+    if (!userEnv) {
+        return false;
+    }
+    for (int i = 0; i < m_envList.size() - 1; ++i) {
+        if (m_envList.at(i)->id() == userEnv->id()) {
+            LiteApi::IEnv *old = m_envList.takeAt(i);
+            if (old == m_curEnv) {
+                m_curEnv = userEnv;
+            }
+            delete old;
+            break;
+        }
+    }
+    userEnv->reload();
+    return true;
 }
 
 void EnvManager::emitEnvChanged()
@@ -441,6 +614,7 @@ bool EnvManager::initWithApp(LiteApi::IApplication *app)
         return false;
     }
     loadEnvFiles(m_liteApp->resourcePath()+"/liteenv");
+    loadEnvFiles(m_liteApp->storagePath()+"/liteenv", true);
 
     m_toolBar = m_liteApp->actionManager()->insertToolBar(ID_TOOLBAR_ENV,tr("Environment Toolbar"));
     m_liteApp->actionManager()->insertViewMenu(LiteApi::ViewMenuToolBarPos,m_toolBar->toggleViewAction());
@@ -516,6 +690,10 @@ void EnvManager::editCurrentEnv()
     if (!m_curEnv) {
         return;
     }
+    if (!materializeCurrentEnv()) {
+        m_liteApp->appendLog("LiteEnv",tr("Cannot create user environment file for %1").arg(m_curEnv->id()),true);
+        return;
+    }
     m_liteApp->fileManager()->openEditor(m_curEnv->filePath(),true);
 }
 
@@ -544,6 +722,8 @@ void EnvManager::editorSaved(LiteApi::IEditor *editor)
     }
     if (m_curEnv && m_curEnv->filePath() == ed->filePath()) {
         m_curEnv->reload();
+    } else if (m_curEnv && userEnvPath(m_curEnv->id()) == ed->filePath()) {
+        materializeCurrentEnv();
     }
 }
 
@@ -555,7 +735,7 @@ void EnvManager::goenvError(const QString &id, const QString &msg)
 
 void EnvManager::goenvChanged(const QString &id)
 {
-    if (id == m_curEnv->id()) {
+    if (m_curEnv && id == m_curEnv->id()) {
         m_liteApp->appendLog("LiteEnv",QString("reset %1 environment for \"go env\"").arg(id),false);
         emitEnvChanged();
     }

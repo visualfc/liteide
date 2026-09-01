@@ -4584,6 +4584,15 @@ wenn die darunter liegende Datei verändert oder gelöscht wurde.</translation>
         <source>Environment changes will take effect after switching environments.</source>
         <translation type="unfinished">Umgebungsänderungen werden erst nach Umschalten der Umgebung wirksam.</translation>
     </message>
+    <message><source>New User Environment</source><translation>Neue Benutzerumgebung</translation></message>
+    <message><source>Delete User Environment</source><translation>Benutzerumgebung löschen</translation></message>
+    <message><source>Rename User Environment</source><translation>Benutzerumgebung umbenennen</translation></message>
+    <message><source>Environment</source><translation>Umgebung</translation></message>
+    <message><source>[System] %1</source><translation>[System] %1</translation></message>
+    <message><source>[User] %1</source><translation>[Benutzer] %1</translation></message>
+    <message><source>Environment ID (based on %1):</source><translation>Umgebungs-ID (basierend auf %1):</translation></message>
+    <message><source>Delete %1?</source><translation>%1 löschen?</translation></message>
+    <message><source>Environment ID:</source><translation>Umgebungs-ID:</translation></message>
 </context>
 <context>
     <name>LiteFindPlugin</name>

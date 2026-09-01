@@ -31,7 +31,7 @@ namespace Ui {
     class LiteEnvOption;
 }
 
-class QFileSystemModel;
+class QStandardItemModel;
 class LiteEnvOption : public LiteApi::IOption
 {
     Q_OBJECT
@@ -46,11 +46,16 @@ public:
     virtual void save();
 public slots:
     void doubleClickedFile(QModelIndex);
+    void newUserTemplate();
+    void deleteUserTemplate();
+    void renameUserTemplate();
 private:
+    void refreshFiles();
+    bool closeEditor(const QString &path);
     LiteApi::IApplication   *m_liteApp;
     QWidget           *m_widget;
     Ui::LiteEnvOption *ui;
-    QFileSystemModel *m_fileModel;
+    QStandardItemModel *m_fileModel;
 };
 
 #endif // LITEENVOPTION_H

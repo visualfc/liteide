@@ -4571,6 +4571,15 @@ Success: %2.</oldsource>
         <source>Environment changes will take effect after switching environments.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message><source>New User Environment</source><translation>新增使用者環境</translation></message>
+    <message><source>Delete User Environment</source><translation>刪除使用者環境</translation></message>
+    <message><source>Rename User Environment</source><translation>重新命名使用者環境</translation></message>
+    <message><source>Environment</source><translation>環境</translation></message>
+    <message><source>[System] %1</source><translation>[系統] %1</translation></message>
+    <message><source>[User] %1</source><translation>[使用者] %1</translation></message>
+    <message><source>Environment ID (based on %1):</source><translation>環境 ID（基於 %1）:</translation></message>
+    <message><source>Delete %1?</source><translation>刪除 %1？</translation></message>
+    <message><source>Environment ID:</source><translation>環境 ID:</translation></message>
 </context>
 <context>
     <name>LiteFindPlugin</name>

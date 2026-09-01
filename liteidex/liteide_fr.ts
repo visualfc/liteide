@@ -4597,6 +4597,15 @@ Success: %2.</oldsource>
         <source>Environment changes will take effect after switching environments.</source>
         <translation>Le changement de l&apos;environnement prendra effet après bascule d&apos;environnements.</translation>
     </message>
+    <message><source>New User Environment</source><translation>Nouvel environnement utilisateur</translation></message>
+    <message><source>Delete User Environment</source><translation>Supprimer l'environnement utilisateur</translation></message>
+    <message><source>Rename User Environment</source><translation>Renommer l'environnement utilisateur</translation></message>
+    <message><source>Environment</source><translation>Environnement</translation></message>
+    <message><source>[System] %1</source><translation>[Système] %1</translation></message>
+    <message><source>[User] %1</source><translation>[Utilisateur] %1</translation></message>
+    <message><source>Environment ID (based on %1):</source><translation>ID d'environnement (basé sur %1) :</translation></message>
+    <message><source>Delete %1?</source><translation>Supprimer %1 ?</translation></message>
+    <message><source>Environment ID:</source><translation>ID d'environnement :</translation></message>
 </context>
 <context>
     <name>LiteFindPlugin</name>
