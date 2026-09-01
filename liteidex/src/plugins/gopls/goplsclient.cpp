@@ -29,7 +29,7 @@ bool GoplsClient::start(const QString &program, const QString &workingDirectory,
     m_process->setProcessEnvironment(environment);
     m_process->start(program,QStringList() << "serve");
     if (!m_process->waitForStarted(3000)) {
-        emit logMessage(tr("Failed to start gopls: %1").arg(m_process->errorString()),true);
+        emit logMessage(QString("Failed to start gopls: %1").arg(m_process->errorString()),true);
         return false;
     }
     m_initializeId = request("initialize",initializeParams);
@@ -123,7 +123,7 @@ void GoplsClient::readOutput()
             }
         }
         if (contentLength < 0) {
-            emit logMessage(tr("Invalid LSP response header"),true);
+            emit logMessage("Invalid LSP response header",true);
             m_buffer.remove(0,headerEnd+4);
             continue;
         }
@@ -135,7 +135,7 @@ void GoplsClient::readOutput()
         QJsonParseError parseError;
         QJsonDocument document = QJsonDocument::fromJson(body,&parseError);
         if (parseError.error != QJsonParseError::NoError || !document.isObject()) {
-            emit logMessage(tr("Invalid JSON from gopls: %1").arg(parseError.errorString()),true);
+            emit logMessage(QString("Invalid JSON from gopls: %1").arg(parseError.errorString()),true);
             continue;
         }
         dispatch(document.object());
@@ -173,7 +173,7 @@ void GoplsClient::processFinished(int, QProcess::ExitStatus)
 {
     m_requests.clear();
     if (!m_stopping) {
-        emit logMessage(tr("gopls stopped unexpectedly"),true);
+        emit logMessage("gopls stopped unexpectedly",true);
     }
     emit stopped();
 }

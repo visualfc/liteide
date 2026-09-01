@@ -4444,6 +4444,15 @@ Success: %2.</oldsource>
         <source>Environment changes will take effect after switching environments.</source>
         <translation>Ortam değişkenleri değişikliği, ortam değiştirildikten sonra etkili olacaktır.</translation>
     </message>
+    <message><source>New User Environment</source><translation>Yeni Kullanıcı Ortamı</translation></message>
+    <message><source>Delete User Environment</source><translation>Kullanıcı Ortamını Sil</translation></message>
+    <message><source>Rename User Environment</source><translation>Kullanıcı Ortamını Yeniden Adlandır</translation></message>
+    <message><source>Environment</source><translation>Ortam</translation></message>
+    <message><source>[System] %1</source><translation>[Sistem] %1</translation></message>
+    <message><source>[User] %1</source><translation>[Kullanıcı] %1</translation></message>
+    <message><source>Environment ID (based on %1):</source><translation>Ortam Kimliği (%1 temel alınarak):</translation></message>
+    <message><source>Delete %1?</source><translation>%1 silinsin mi?</translation></message>
+    <message><source>Environment ID:</source><translation>Ortam Kimliği:</translation></message>
 </context>
 <context>
     <name>LiteFindPlugin</name>
