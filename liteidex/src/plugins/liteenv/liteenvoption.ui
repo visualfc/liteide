@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
+    <width>464</width>
     <height>260</height>
    </rect>
   </property>
@@ -26,6 +26,41 @@
    </item>
    <item>
     <widget class="QTreeView" name="fileTreeView"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="templateLayout">
+     <item>
+      <widget class="QPushButton" name="newButton">
+       <property name="sizePolicy"><sizepolicy hsizetype="Fixed" vsizetype="Preferred"><horstretch>0</horstretch><verstretch>0</verstretch></sizepolicy></property>
+       <property name="text"><string>New User Environment</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="deleteButton">
+       <property name="sizePolicy"><sizepolicy hsizetype="Fixed" vsizetype="Preferred"><horstretch>0</horstretch><verstretch>0</verstretch></sizepolicy></property>
+       <property name="text"><string>Delete User Environment</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="renameButton">
+       <property name="sizePolicy"><sizepolicy hsizetype="Fixed" vsizetype="Preferred"><horstretch>0</horstretch><verstretch>0</verstretch></sizepolicy></property>
+       <property name="text"><string>Rename User Environment</string></property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QLabel" name="label">
