@@ -4608,6 +4608,15 @@ Success: %2.</oldsource>
         <source>Environment changes will take effect after switching environments.</source>
         <translation>Зміни до оточення будуть застосовані після перемикання оточень.</translation>
     </message>
+    <message><source>New User Environment</source><translation>Нове користувацьке оточення</translation></message>
+    <message><source>Delete User Environment</source><translation>Видалити користувацьке оточення</translation></message>
+    <message><source>Rename User Environment</source><translation>Перейменувати користувацьке оточення</translation></message>
+    <message><source>Environment</source><translation>Оточення</translation></message>
+    <message><source>[System] %1</source><translation>[Система] %1</translation></message>
+    <message><source>[User] %1</source><translation>[Користувач] %1</translation></message>
+    <message><source>Environment ID (based on %1):</source><translation>Ідентифікатор оточення (на основі %1):</translation></message>
+    <message><source>Delete %1?</source><translation>Видалити %1?</translation></message>
+    <message><source>Environment ID:</source><translation>Ідентифікатор оточення:</translation></message>
 </context>
 <context>
     <name>LiteFindPlugin</name>
