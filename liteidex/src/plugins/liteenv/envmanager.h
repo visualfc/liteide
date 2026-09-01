@@ -46,7 +46,7 @@ public:
     void loadGoEnv();
 public:
     void loadEnvFile(QIODevice *dev);
-    static void loadEnv(EnvManager *manager, const QString &filePath);
+    static Env *loadEnv(EnvManager *manager, const QString &filePath);
 protected slots:
     void readStdout();
     void readStderr();
@@ -91,8 +91,13 @@ public:
     void setCurrentEnv(LiteApi::IEnv *env);
     void addEnv(LiteApi::IEnv *build);
     void removeEnv(LiteApi::IEnv *build);
-    void loadEnvFiles(const QString &path);
+    void loadEnvFiles(const QString &path, bool userPath = false);
     void emitEnvChanged();
+    QString userEnvPath(const QString &id) const;
+    bool materializeCurrentEnv();
+    void addUserEnvFile(const QString &filePath);
+    void renameUserEnvFile(const QString &oldPath, const QString &newPath);
+    void removeUserEnvFile(const QString &filePath);
 public slots:
     void broadcast(QString module, QString id, QVariant);
 protected:
