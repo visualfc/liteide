@@ -12,6 +12,11 @@
         <property name="text"><string>Use gopls for code completion, mouse information and navigation</string></property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="diagnosticsCheckBox">
+        <property name="text"><string>Show diagnostics from gopls</string></property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

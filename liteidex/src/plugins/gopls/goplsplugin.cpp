@@ -82,7 +82,7 @@ static QString goplsMarkdownToText(QString text)
 GoplsPlugin::GoplsPlugin() : m_liteApp(0), m_client(0), m_completer(0), m_ready(false),
     m_restartClient(false),
     m_searchResults(0), m_definitionAction(0), m_referencesAction(0), m_implementationAction(0)
-    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false), m_loggedProgram(false), m_useFeatures(false)
+    , m_renameAction(0), m_formatAction(0), m_organizeImportsAction(0), m_appLoaded(false), m_loggedProgram(false), m_useFeatures(false), m_showDiagnostics(false)
 {
 }
 
@@ -98,6 +98,7 @@ bool GoplsPlugin::load(LiteApi::IApplication *app)
 {
     m_liteApp = app;
     m_useFeatures = app->settings()->value(GOPLS_USE_FEATURES,false).toBool();
+    m_showDiagnostics = app->settings()->value(GOPLS_SHOW_DIAGNOSTICS,false).toBool();
     app->optionManager()->addFactory(new GoplsOptionFactory(app,this));
     m_client = new GoplsClient(this);
     m_searchResults = new GoplsSearchResults(this);
@@ -303,6 +304,18 @@ void GoplsPlugin::clientStopped()
 void GoplsPlugin::applyOption(const QString &option)
 {
     if (option != OPTION_GOPLS) return;
+    bool showDiagnostics = m_liteApp->settings()->value(GOPLS_SHOW_DIAGNOSTICS,false).toBool();
+    if (showDiagnostics != m_showDiagnostics) {
+        m_showDiagnostics = showDiagnostics;
+        if (!showDiagnostics) {
+            foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
+                LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(editor);
+                if (liteEditor) {
+                    liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad,"gopls");
+                }
+            }
+        }
+    }
     bool enabled = m_liteApp->settings()->value(GOPLS_USE_FEATURES,false).toBool();
     if (enabled == m_useFeatures) return;
     m_useFeatures = enabled;
@@ -966,6 +979,9 @@ void GoplsPlugin::clientNotification(const QString &method, const QJsonValue &pa
         return;
     }
     liteEditor->clearAllNavigateMark(LiteApi::EditorNavigateBad,"gopls");
+    if (!m_showDiagnostics) {
+        return;
+    }
     foreach (QJsonValue value, params.value("diagnostics").toArray()) {
         QJsonObject diagnostic = value.toObject();
         QJsonObject start = diagnostic.value("range").toObject().value("start").toObject();
