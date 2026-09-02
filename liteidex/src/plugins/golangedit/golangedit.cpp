@@ -605,7 +605,7 @@ void GolangEdit::updateLink(const QTextCursor &cursor, const QPoint &pos, bool n
         }
         args << "-b";
         args << "-pos";
-        args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
+        args << QString("%1:%2").arg(info.fileName()).arg(offset);
         args << "-stdin";
         args << "-info";
         args << "-def";
@@ -718,7 +718,7 @@ void GolangEdit::editorJumpToDecl()
             args << tags;
         }
         args << "-pos";
-        args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
+        args << QString("%1:%2").arg(info.fileName()).arg(offset);
         args << "-stdin";
         args << "-def";
         args << ".";
@@ -814,7 +814,7 @@ void GolangEdit::editorFindInfo()
             args << tags;
         }
         args << "-pos";
-        args << QString("\"%1:%2\"").arg(info.fileName()).arg(offset);
+        args << QString("%1:%2").arg(info.fileName()).arg(offset);
         args << "-stdin";
         args << "-info";
         args << "-def";
