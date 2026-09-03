@@ -21,9 +21,11 @@ QString GoplsOption::mimeType() const { return OPTION_GOPLS; }
 void GoplsOption::load()
 {
     ui->enableCheckBox->setChecked(m_liteApp->settings()->value(GOPLS_USE_FEATURES, false).toBool());
+    ui->diagnosticsCheckBox->setChecked(m_liteApp->settings()->value(GOPLS_SHOW_DIAGNOSTICS, false).toBool());
 }
 
 void GoplsOption::save()
 {
     m_liteApp->settings()->setValue(GOPLS_USE_FEATURES, ui->enableCheckBox->isChecked());
+    m_liteApp->settings()->setValue(GOPLS_SHOW_DIAGNOSTICS, ui->diagnosticsCheckBox->isChecked());
 }

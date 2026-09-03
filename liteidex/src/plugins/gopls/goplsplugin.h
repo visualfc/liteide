@@ -111,6 +111,7 @@ private:
     bool m_appLoaded;
     bool m_loggedProgram;
     bool m_useFeatures;
+    bool m_showDiagnostics;
     QString m_workspaceKey;
     QString m_restartReason;
     QSet<QString> m_metadataWarnings;
