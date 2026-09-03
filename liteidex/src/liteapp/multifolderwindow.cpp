@@ -51,6 +51,7 @@ MultiFolderWindow::MultiFolderWindow(LiteApi::IApplication *app, QObject *parent
     connect(m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
     connect(m_folderListView,SIGNAL(enterKeyPressed(QModelIndex)),this,SLOT(enterKeyPressedFolderView(QModelIndex)));
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+    connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
 }
 
 MultiFolderWindow::~MultiFolderWindow()
@@ -166,6 +167,28 @@ void MultiFolderWindow::currentEditorChanged(LiteApi::IEditor *editor)
     m_folderListView->scrollTo(index,QAbstractItemView::EnsureVisible);
     m_folderListView->clearSelection();
     m_folderListView->setCurrentIndex(index);
+}
+
+void MultiFolderWindow::editorAboutToClose(LiteApi::IEditor *editor)
+{
+    if (!m_bSyncEditor || !editor || editor->filePath().isEmpty()) {
+        return;
+    }
+
+    QString folderPath = QFileInfo(editor->filePath()).absolutePath();
+    foreach (LiteApi::IEditor *openEditor, m_liteApp->editorManager()->editorList()) {
+        if (openEditor != editor && !openEditor->filePath().isEmpty()
+                && QFileInfo(openEditor->filePath()).absolutePath() == folderPath) {
+            return;
+        }
+    }
+
+    QList<QModelIndex> indexes = m_folderListView->indexForPath(folderPath);
+    foreach (const QModelIndex &index, indexes) {
+        if (index.isValid()) {
+            m_folderListView->setExpanded(index, false);
+        }
+    }
 }
 
 void MultiFolderWindow::aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info)
