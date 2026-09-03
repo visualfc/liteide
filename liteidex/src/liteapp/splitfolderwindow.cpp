@@ -71,6 +71,7 @@ SplitFolderWindow::SplitFolderWindow(IApplication *app, QObject *parent)
     connect(m_tree,SIGNAL(reloadFolderIndex(QModelIndex)),this,SLOT(reloadFolderIndex(QModelIndex)));
 
     connect(m_liteApp->editorManager(),SIGNAL(currentEditorChanged(LiteApi::IEditor*)),this,SLOT(currentEditorChanged(LiteApi::IEditor*)));
+    connect(m_liteApp->editorManager(),SIGNAL(editorAboutToClose(LiteApi::IEditor*)),this,SLOT(editorAboutToClose(LiteApi::IEditor*)));
 
     QByteArray state = m_liteApp->settings()->value("LiteApp/BoxFolderSplitter").toByteArray();
     m_spliter->restoreState(state);
@@ -239,6 +240,29 @@ void SplitFolderWindow::currentEditorChanged(IEditor *editor)
             m_tree->setCurrentIndex(m_tree->model()->index(i,0));
             m_stacked->setCurrentIndex(i);
             return;
+        }
+    }
+}
+
+void SplitFolderWindow::editorAboutToClose(IEditor *editor)
+{
+    if (!m_bSyncEditor || !editor || editor->filePath().isEmpty()) {
+        return;
+    }
+
+    QString folderPath = QFileInfo(editor->filePath()).absolutePath();
+    foreach (IEditor *openEditor, m_liteApp->editorManager()->editorList()) {
+        if (openEditor != editor && !openEditor->filePath().isEmpty()
+                && QFileInfo(openEditor->filePath()).absolutePath() == folderPath) {
+            return;
+        }
+    }
+
+    for (int i = 0; i < m_stacked->count(); ++i) {
+        FolderView *view = (FolderView*)m_stacked->widget(i);
+        QModelIndex index = view->indexForPath(QDir::toNativeSeparators(folderPath));
+        if (index.isValid()) {
+            view->setExpanded(index, false);
         }
     }
 }
