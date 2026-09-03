@@ -52,6 +52,7 @@ public slots:
     void closeFolderIndex(const QModelIndex &index);
     void reloadFolderIndex(const QModelIndex &index);
     void currentEditorChanged(LiteApi::IEditor *editor);
+    void editorAboutToClose(LiteApi::IEditor *editor);
     void doubleClickedFolderView(const QModelIndex &index);
     void enterKeyPressedFolderView(const QModelIndex &index);
     void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
