@@ -79,12 +79,14 @@ private:
     void setupFromWillContinue();
     void setupFromContinued();
     void setupFromPersistent();
+    void checkRuleProgress(const ProgressData *progress);
 
     void iterateThroughRules(const QString &text,
                              const int length,
                              ProgressData *progress,
                              const bool childRule,
-                             const QList<QSharedPointer<Rule> > &rules);
+                             const QList<QSharedPointer<Rule> > &rules,
+                             const int depth = 0);
 
     void assignCurrentContext();
     bool contextChangeRequired(const QString &contextName) const;
@@ -166,6 +168,8 @@ protected:
     int m_dynamicContextsCounter;
 
     bool m_isBroken;
+    int m_ruleProgressOffset;
+    int m_ruleProgressCount;
     bool m_stringOrComment;
     TextFormatId m_currentFormat;
 
