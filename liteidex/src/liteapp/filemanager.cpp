@@ -42,6 +42,7 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QFileSystemWatcher>
+#include <QCryptographicHash>
 #include <QMessageBox>
 #include <QTimer>
 #include <QDesktopServices>
@@ -547,12 +548,27 @@ void FileManager::applyOption(QString id)
     m_fileWatcherAutoReload = m_liteApp->settings()->value(LITEAPP_FILEWATCHERAUTORELOAD,false).toBool();
 }
 
+static QByteArray fileContentHash(const QString &fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return QByteArray();
+    }
+    QCryptographicHash hash(QCryptographicHash::Sha256);
+    if (!hash.addData(&file)) {
+        return QByteArray();
+    }
+    return hash.result();
+}
+
 void FileManager::updateFileState(const QString &fileName)
 {
     if (fileName.isEmpty()) {
         return;
     }
     m_fileStateMap.insert(fileName,QFileInfo(fileName).lastModified());
+    m_fileSizeMap.insert(fileName,QFileInfo(fileName).size());
+    m_fileHashMap.insert(fileName,fileContentHash(fileName));
     if (!m_fileWatcher->files().contains(fileName)) {
         m_fileWatcher->addPath(fileName);;
     }
@@ -563,6 +579,7 @@ void FileManager::editorCreated(LiteApi::IEditor *editor)
     if (!editor) {
         return;
     }
+    connect(editor,SIGNAL(reloaded()),this,SLOT(editorReloaded()));
     QString fileName = editor->filePath();
     if (!fileName.isEmpty()) {
         updateFileState(fileName);
@@ -577,6 +594,8 @@ void FileManager::editorAboutToClose(LiteApi::IEditor *editor)
     QString fileName = editor->filePath();
     if (!fileName.isEmpty()) {
         m_fileStateMap.remove(fileName);
+        m_fileSizeMap.remove(fileName);
+        m_fileHashMap.remove(fileName);
         m_changedFiles.remove(fileName);
         m_fileWatcher->removePath(fileName);
     }
@@ -588,6 +607,11 @@ void FileManager::editorSaved(LiteApi::IEditor *editor)
         return;
     }
     updateFileState(editor->filePath());
+}
+
+void FileManager::editorReloaded()
+{
+    editorSaved(qobject_cast<LiteApi::IEditor*>(sender()));
 }
 
 void FileManager::fileChanged(QString fileName)
@@ -712,6 +736,14 @@ void FileManager::checkForReload()
                     if (!m_fileWatcher->files().contains(fileName)) {
                         m_fileWatcher->addPath(fileName);;
                     }
+                    // Compare with the last loaded/saved file, not the unsaved editor buffer.
+                    const QFileInfo fileInfo(fileName);
+                    const bool sameSize = fileInfo.size() == m_fileSizeMap.value(fileName, -1);
+                    const QByteArray hash = sameSize ? fileContentHash(fileName) : QByteArray();
+                    if (sameSize && !hash.isEmpty() && hash == m_fileHashMap.value(fileName)) {
+                        m_fileStateMap.insert(fileName,lastModified);
+                        continue;
+                    }
                     if (lastModified > modified) {
                         int ret = QMessageBox::Yes;
                         if (lastReloadRet != QMessageBox::YesToAll) {
@@ -734,9 +766,10 @@ void FileManager::checkForReload()
                             QDateTime lastModified = QFileInfo(fileName).lastModified();
                             QDateTime modified = m_fileStateMap.value(fileName);
                             if (lastModified != modified) {
-                                editor->reload();
-                                m_fileStateMap.insert(fileName,lastModified);
-                                m_liteApp->appendLog("EditorManager",fileName+" reload",false);
+                                if (editor->reload()) {
+                                    updateFileState(fileName);
+                                    m_liteApp->appendLog("EditorManager",fileName+" reload",false);
+                                }
 
                             }
                         }
