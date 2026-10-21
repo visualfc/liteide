@@ -94,6 +94,7 @@ public slots:
     void fileChanged(QString);
     void editorSaved(LiteApi::IEditor*);
     void editorCreated(LiteApi::IEditor*);
+    void editorReloaded();
     void editorAboutToClose(LiteApi::IEditor*);
     void checkForReload();
     void applyOption(QString);
@@ -107,6 +108,8 @@ protected:
     IFolderWindow        *m_folderWindow;
     QFileSystemWatcher   *m_fileWatcher;
     QMap<QString,QDateTime> m_fileStateMap;
+    QMap<QString,qint64> m_fileSizeMap;
+    QMap<QString,QByteArray> m_fileHashMap;
     QSet<QString>           m_changedFiles;
     bool                 m_checkBlockActivated;
     bool                 m_checkOnFocusChange;
