@@ -105,6 +105,8 @@ void Highlighter::highlightBlock(const QString &text)
                                 m_currentContext->definition());
 
             ProgressData progress;
+            m_ruleProgressOffset = -1;
+            m_ruleProgressCount = 0;
             const int length = text.length();
             m_lastRegionChanged = -1;
             while (progress.offset() < length)
@@ -125,6 +127,7 @@ void Highlighter::highlightBlock(const QString &text)
             }
         } catch (const HighlighterException &) {
             m_isBroken = true;
+            m_contexts.clear();
         }
     }
 
@@ -205,12 +208,37 @@ void Highlighter::setupFromPersistent()
     setCurrentBlockState(previousBlockState());
 }
 
+void Highlighter::checkRuleProgress(const ProgressData *progress)
+{
+    // Look-ahead and empty matches may legitimately change contexts without
+    // consuming text. Bound that work per offset, including recursive calls.
+    if (progress->offset() > m_ruleProgressOffset) {
+        m_ruleProgressOffset = progress->offset();
+        m_ruleProgressCount = 0;
+    }
+    if (++m_ruleProgressCount > 1024) {
+        qWarning() << "Syntax highlighter stopped: rules made no progress at block"
+                   << currentBlock().blockNumber() << "offset" << progress->offset()
+                   << "context" << m_currentContext->name();
+        throw HighlighterException();
+    }
+}
+
 void Highlighter::iterateThroughRules(const QString &text,
                                       const int length,
                                       ProgressData *progress,
                                       const bool childRule,
-                                      const QList<QSharedPointer<Rule> > &rules)
+                                      const QList<QSharedPointer<Rule> > &rules,
+                                      const int depth)
 {
+    // Fallthrough and child rules can recurse before returning to the block loop.
+    if (depth > 128) {
+        qWarning() << "Syntax highlighter stopped: rule recursion limit at block"
+                   << currentBlock().blockNumber() << "offset" << progress->offset()
+                   << "context" << m_currentContext->name();
+        throw HighlighterException();
+    }
+    checkRuleProgress(progress);
     typedef QList<QSharedPointer<Rule> >::const_iterator RuleIterator;
 
     bool contextChanged = false;
@@ -231,6 +259,7 @@ void Highlighter::iterateThroughRules(const QString &text,
         }
 
         if (rule->matchSucceed(text, length, progress)) {
+            checkRuleProgress(progress);
             atLeastOneMatch = true;
             if (!m_stringOrComment) {
                 if (!rule->beginRegion().isEmpty()) {
@@ -277,7 +306,7 @@ void Highlighter::iterateThroughRules(const QString &text,
                 progress->setWillContinueLine(false);
             } else {
                 if (rule->hasChildren())
-                    iterateThroughRules(text, length, progress, true, rule->children());
+                    iterateThroughRules(text, length, progress, true, rule->children(), depth + 1);
 
                 if (!rule->context().isEmpty() && contextChangeRequired(rule->context())) {
                     m_currentCaptures = progress->captures();
@@ -313,7 +342,7 @@ void Highlighter::iterateThroughRules(const QString &text,
         if (m_currentContext->isFallthrough()) {
             handleContextChange(m_currentContext->fallthroughContext(),
                                 m_currentContext->definition());
-            iterateThroughRules(text, length, progress, false, m_currentContext->rules());
+            iterateThroughRules(text, length, progress, false, m_currentContext->rules(), depth + 1);
         } else {
             applyFormat(progress->offset(), 1, m_currentContext->itemData(),
                         m_currentContext->definition());
