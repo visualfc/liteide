@@ -58,6 +58,12 @@ MultiFolderView::MultiFolderView(LiteApi::IApplication *app, QWidget *parent)
 
 MultiFolderView::~MultiFolderView()
 {
+    // QTreeView owns persistent indexes for the current model. Reset them and
+    // destroy the model before QTreeView starts tearing down its private data.
+    m_model->clearAll();
+    setModel(0);
+    delete m_model;
+    m_model = 0;
 }
 
 void MultiFolderView::setFilter(QDir::Filters filters)

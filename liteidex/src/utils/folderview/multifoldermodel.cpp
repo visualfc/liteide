@@ -136,7 +136,9 @@ MultiFolderModel::MultiFolderModel(QObject *parent)
 
 MultiFolderModel::~MultiFolderModel()
 {
-
+    // Source models emit model signals during destruction. Remove and delete
+    // them while this proxy and its private signal receiver are still valid.
+    clearAll();
 }
 
 QModelIndex MultiFolderModel::addRootPath(const QString &path)

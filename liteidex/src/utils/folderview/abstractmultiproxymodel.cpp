@@ -65,7 +65,12 @@ AbstractMultiProxyModel::AbstractMultiProxyModel(AbstractMultiProxyModelPrivate 
 */
 AbstractMultiProxyModel::~AbstractMultiProxyModel()
 {
-
+    Q_D(AbstractMultiProxyModel);
+    foreach (const SourceModelIndex &source, d->indexList) {
+        disconnect(source.model, 0, d, 0);
+    }
+    delete d_ptr;
+    d_ptr = 0;
 }
 
 /*!
@@ -94,7 +99,7 @@ bool AbstractMultiProxyModel::removeSourceModel(QAbstractItemModel *sourceModel)
         SourceModelIndex index = i.next();
         if (index.model == sourceModel) {
             this->beginRemoveRows(QModelIndex(),n,n);
-            disconnect(sourceModel,0,this,0);
+            disconnect(sourceModel,0,d,0);
             i.remove();
             this->endRemoveRows();
             return true;
@@ -109,7 +114,7 @@ void AbstractMultiProxyModel::removeAllSourceModel()
     this->beginResetModel();
     Q_D(AbstractMultiProxyModel);
     foreach (SourceModelIndex si, d->indexList) {
-        disconnect(si.model,0,this,0);
+        disconnect(si.model,0,d,0);
     }
     d->indexList.clear();
     this->endResetModel();
