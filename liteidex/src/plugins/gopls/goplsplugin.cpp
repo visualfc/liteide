@@ -293,6 +293,7 @@ void GoplsPlugin::clientStopped()
     m_navigationStarts.clear();
     m_navigationEnds.clear();
     m_navigationHoverText.clear();
+    m_pendingNavigations.clear();
     m_metadataWarnings.clear();
     setLegacyCompletionEnabled(true);
     if (m_restartClient) {
@@ -493,6 +494,8 @@ void GoplsPlugin::editorAboutToClose(LiteApi::IEditor *editor)
     m_completionEditors.remove(requestId);
     m_completionPrefixes.remove(requestId);
     m_completionRoots.remove(requestId);
+    m_navigationEditors.remove(m_pendingNavigations.take(editor));
+    m_navigationHoverText.remove(editor);
     int hoverId = m_pendingHovers.take(editor);
     if (hoverId) {
         m_client->notify("$/cancelRequest",QJsonObject{{"id",hoverId}});
@@ -667,14 +670,11 @@ void GoplsPlugin::handleLocationResponse(int id, const QJsonValue &result, const
             }
             QJsonObject start = range.value("start").toObject();
             if (navigationEditor) {
-                QString hoverText = m_navigationHoverText.take(navigationEditor);
-                if (hoverText.isEmpty()) {
-                    LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(navigationEditor);
-                    if (liteEditor) {
-                        liteEditor->clearLink();
-                    }
+                if (m_pendingNavigations.value(navigationEditor) != id) {
                     return;
                 }
+                m_pendingNavigations.remove(navigationEditor);
+                QString hoverText = m_navigationHoverText.take(navigationEditor);
                 LiteApi::Link link;
                 link.linkTextStart = navigationStart;
                 link.linkTextEnd = navigationEnd;
@@ -686,8 +686,7 @@ void GoplsPlugin::handleLocationResponse(int id, const QJsonValue &result, const
                 link.targetColumn = start.value("character").toInt();
                 QString location = QString("> %1:%2:%3")
                     .arg(link.targetFileName).arg(link.targetLine + 1).arg(link.targetColumn + 1);
-                link.sourceInfo = hoverText + "\n\n";
-                link.sourceInfo += location;
+                link.sourceInfo = hoverText.isEmpty() ? location : hoverText + "\n\n" + location;
                 link.targetInfo = link.sourceInfo;
                 LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(navigationEditor);
                 if (liteEditor) {
@@ -697,7 +696,8 @@ void GoplsPlugin::handleLocationResponse(int id, const QJsonValue &result, const
             }
             LiteApi::gotoLine(m_liteApp,QUrl(uri).toLocalFile(),start.value("line").toInt(),start.value("character").toInt(),true,true);
         }
-        else if (navigationEditor) {
+        else if (navigationEditor && m_pendingNavigations.value(navigationEditor) == id) {
+            m_pendingNavigations.remove(navigationEditor);
             LiteApi::ILiteEditor *liteEditor = LiteApi::getLiteEditor(navigationEditor);
             if (liteEditor) {
                 liteEditor->clearLink();
@@ -911,6 +911,7 @@ void GoplsPlugin::hoverRequested(const QTextCursor &cursor, const QPoint &positi
         m_locationRequests.insert(id,"textDocument/definition");
         m_locationSearchText.insert(id,LiteApi::wordUnderCursor(requestCursor));
         m_navigationEditors.insert(id,editor);
+        m_pendingNavigations.insert(editor,id);
         m_navigationPositions.insert(id,position);
         m_navigationStarts.insert(id,cursor.selectionStart());
         m_navigationEnds.insert(id,cursor.selectionEnd());

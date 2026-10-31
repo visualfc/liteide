@@ -94,6 +94,7 @@ private:
     QHash<int,int> m_navigationStarts;
     QHash<int,int> m_navigationEnds;
     QHash<LiteApi::IEditor*,QString> m_navigationHoverText;
+    QHash<LiteApi::IEditor*,int> m_pendingNavigations;
     GoplsSearchResults *m_searchResults;
     QAction *m_definitionAction;
     QAction *m_referencesAction;
