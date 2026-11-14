@@ -299,6 +299,19 @@ void LiteEditorWidget::inputMethodEvent(QInputMethodEvent *e)
     LiteEditorWidgetBase::inputMethodEvent(e);
 }
 
+QVariant LiteEditorWidget::inputMethodQuery(Qt::InputMethodQuery query) const
+{
+    // Qt 6 QWidgetTextControl::inputMethodQuery calls deleteLater() on the
+    // QMimeData from createMimeDataFromSelection(), which returns null when
+    // nothing is selected. macOS accessibility/Services queries this and crashes.
+    if (query == Qt::ImCurrentSelection) {
+        if (m_inBlockSelectionMode)
+            return copyBlockSelection();
+        return textCursor().selectedText();
+    }
+    return LiteEditorWidgetBase::inputMethodQuery(query);
+}
+
 static void convertToPlainText(QString &txt)
 {
     QChar *uc = txt.data();

@@ -45,6 +45,7 @@ protected:
     void contextMenuEvent(QContextMenuEvent *);
     void keyPressEvent(QKeyEvent *e);
     void inputMethodEvent(QInputMethodEvent * e);
+    QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
     void focusInEvent(QFocusEvent *e);
     void wheelEvent(QWheelEvent *e);
     virtual QMimeData *createMimeDataFromSelection() const;
