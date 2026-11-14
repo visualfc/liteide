@@ -47,6 +47,9 @@ win32 {
     QMAKE_INFO_PLIST = Info.plist
     # Apple Silicon crashes in CoreText/ImageIO when drawing emoji unless the
     # process is signed with the Hardened Runtime (EXC_ARM_DA_ALIGN / 0xbad4007).
+    # Do not grant allow-dyld-environment-variables: Qt Creator injects DYLD_*
+    # and that still trips ImageIO even with the runtime flag. Qt is linked by
+    # absolute Homebrew paths, so DYLD is not needed.
     QMAKE_POST_LINK += codesign --force --deep --sign - --options runtime --entitlements $$shell_quote($$PWD/LiteIDE.entitlements) $$shell_quote($$IDE_APP_PATH/$${IDE_APP_TARGET}.app)
 } else {
     target.path  = $$BINPREFIX
