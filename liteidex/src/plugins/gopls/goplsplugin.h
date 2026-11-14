@@ -5,6 +5,7 @@
 #include "liteenvapi/liteenvapi.h"
 #include <QHash>
 #include <QSet>
+#include <QStringList>
 #include <QTextCursor>
 #include <QPoint>
 #include <QtPlugin>
@@ -62,6 +63,13 @@ private:
     void openDocument(LiteApi::IEditor *editor);
     void changeDocument(LiteApi::IEditor *editor);
     void configureCompleter(LiteApi::IEditor *editor, bool enabled);
+    QJsonObject goplsSettings() const;
+    QStringList parseStandaloneBuildTags(const QString &source) const;
+    bool addStandaloneTags(const QStringList &tags);
+    void resetStandaloneTags();
+    void collectStandaloneTags(LiteApi::IEditor *editor);
+    void sendGoplsSettings();
+    void handleMissingPackageMetadata(const QString &uri);
     QString completionKind(int kind) const;
     void handleEditResponse(int id, const QString &method, const QJsonValue &result, const QJsonObject &error);
     void handleLocationResponse(int id, const QJsonValue &result, const QJsonObject &error);
@@ -115,6 +123,7 @@ private:
     QString m_workspaceKey;
     QString m_restartReason;
     QSet<QString> m_metadataWarnings;
+    QStringList m_standaloneTags;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>

@@ -23,6 +23,7 @@
 #include <QPlainTextEdit>
 #include <QTextBlock>
 #include <QRegExp>
+#include <QSet>
 #include <QUrl>
 #include <algorithm>
 
@@ -230,6 +231,11 @@ void GoplsPlugin::appLoaded()
         m_loggedProgram = true;
     }
 
+    resetStandaloneTags();
+    foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
+        collectStandaloneTags(editor);
+    }
+
     QString root = workspaceRoot();
     QJsonObject capabilities;
     QJsonObject textDocument;
@@ -240,12 +246,17 @@ void GoplsPlugin::appLoaded()
     textDocument.insert("completion",completion);
     textDocument.insert("synchronization",QJsonObject());
     capabilities.insert("textDocument",textDocument);
+    QJsonObject workspace;
+    workspace.insert("applyEdit",true);
+    workspace.insert("configuration",true);
+    capabilities.insert("workspace",workspace);
 
     QJsonObject params;
     params.insert("processId",qint64(QCoreApplication::applicationPid()));
     params.insert("clientInfo",QJsonObject{{"name","LiteIDE"},{"version",m_liteApp->ideVersion()}});
     params.insert("rootUri",QUrl::fromLocalFile(root).toString());
     params.insert("capabilities",capabilities);
+    params.insert("initializationOptions",goplsSettings());
     params.insert("workspaceFolders",QJsonArray{QJsonObject{{"uri",QUrl::fromLocalFile(root).toString()},{"name",QFileInfo(root).fileName()}}});
     m_client->start(program,root,LiteApi::getCustomGoEnvironment(m_liteApp,m_liteApp->editorManager()->currentEditor()),params);
 }
@@ -337,11 +348,24 @@ void GoplsPlugin::applyOption(const QString &option)
 
 void GoplsPlugin::clientLog(const QString &message, bool error)
 {
-    if (message.startsWith("no package metadata for file ")) {
-        if (m_metadataWarnings.contains(message)) {
-            return;
+    const QString prefix = "no package metadata for file ";
+    QStringList lines = message.split('\n',Qt::SkipEmptyParts);
+    bool suppress = !lines.isEmpty();
+    foreach (QString line, lines) {
+        line = line.trimmed();
+        if (line.startsWith(prefix)) {
+            if (m_metadataWarnings.contains(line)) {
+                continue;
+            }
+            m_metadataWarnings.insert(line);
+            handleMissingPackageMetadata(line.mid(prefix.length()).trimmed());
+            suppress = false;
+        } else {
+            suppress = false;
         }
-        m_metadataWarnings.insert(message);
+    }
+    if (suppress) {
+        return;
     }
     m_liteApp->appendLog("Gopls",message,error);
 }
@@ -365,6 +389,135 @@ bool GoplsPlugin::isGoEditor(LiteApi::IEditor *editor) const
 QString GoplsPlugin::documentUri(LiteApi::IEditor *editor) const
 {
     return QUrl::fromLocalFile(QFileInfo(editor->filePath()).absoluteFilePath()).toString();
+}
+
+QJsonObject GoplsPlugin::goplsSettings() const
+{
+    QJsonArray tags;
+    foreach (QString tag, m_standaloneTags) {
+        tags.append(tag);
+    }
+    return QJsonObject{{"standaloneTags",tags}};
+}
+
+void GoplsPlugin::resetStandaloneTags()
+{
+    m_standaloneTags.clear();
+    m_standaloneTags.append("ignore");
+}
+
+bool GoplsPlugin::addStandaloneTags(const QStringList &tags)
+{
+    bool changed = false;
+    foreach (QString tag, tags) {
+        if (tag.isEmpty() || m_standaloneTags.contains(tag)) {
+            continue;
+        }
+        m_standaloneTags.append(tag);
+        changed = true;
+    }
+    if (changed && m_liteApp) {
+        m_liteApp->appendLog("Gopls",QString("standaloneTags: %1").arg(m_standaloneTags.join(", ")),false);
+    }
+    return changed;
+}
+
+void GoplsPlugin::collectStandaloneTags(LiteApi::IEditor *editor)
+{
+    if (!isGoEditor(editor)) {
+        return;
+    }
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) {
+        return;
+    }
+    addStandaloneTags(parseStandaloneBuildTags(QString::fromUtf8(textEditor->utf8Data())));
+}
+
+void GoplsPlugin::sendGoplsSettings()
+{
+    if (!m_client || !m_client->isRunning()) {
+        return;
+    }
+    m_client->notify("workspace/didChangeConfiguration",
+                     QJsonObject{{"settings",QJsonObject{{"gopls",goplsSettings()}}}});
+}
+
+QStringList GoplsPlugin::parseStandaloneBuildTags(const QString &source) const
+{
+    static QSet<QString> knownConstraints;
+    if (knownConstraints.isEmpty()) {
+        foreach (QString name, QStringList()
+                 << "linux" << "darwin" << "windows" << "freebsd" << "netbsd" << "openbsd"
+                 << "dragonfly" << "solaris" << "illumos" << "android" << "ios" << "js"
+                 << "wasip1" << "plan9" << "aix" << "hurd" << "zos" << "nacl"
+                 << "386" << "amd64" << "amd64p32" << "arm" << "arm64" << "arm64be" << "armbe"
+                 << "loong64" << "mips" << "mips64" << "mips64le" << "mips64p32" << "mips64p32le"
+                 << "mipsle" << "ppc" << "ppc64" << "ppc64le" << "riscv" << "riscv64"
+                 << "s390" << "s390x" << "sparc" << "sparc64" << "wasm"
+                 << "cgo" << "unix" << "race" << "msan" << "asan" << "boringcrypto"
+                 << "gc" << "gccgo" << "purego") {
+            knownConstraints.insert(name);
+        }
+    }
+
+    QStringList tags;
+    QRegExp ident("[A-Za-z_][A-Za-z0-9_.]*");
+    foreach (QString line, source.split('\n')) {
+        line = line.trimmed();
+        if (line.startsWith("package ")) {
+            break;
+        }
+        QString expr;
+        if (line.startsWith("//go:build")) {
+            expr = line.mid(10).trimmed();
+        } else if (line.startsWith("// +build")) {
+            expr = line.mid(9).trimmed();
+        } else if (line.startsWith("//+build")) {
+            expr = line.mid(8).trimmed();
+        } else {
+            continue;
+        }
+        int pos = 0;
+        while ((pos = ident.indexIn(expr, pos)) >= 0) {
+            QString tag = ident.cap(0);
+            pos += ident.matchedLength();
+            if (tag.startsWith("go1") || knownConstraints.contains(tag) || tags.contains(tag)) {
+                continue;
+            }
+            tags.append(tag);
+        }
+    }
+    return tags;
+}
+
+void GoplsPlugin::handleMissingPackageMetadata(const QString &uri)
+{
+    QString fileName = QUrl(uri).toLocalFile();
+    if (fileName.isEmpty()) {
+        return;
+    }
+    QString source;
+    LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (textEditor) {
+        source = QString::fromUtf8(textEditor->utf8Data());
+    } else {
+        QFile file(fileName);
+        if (!file.open(QFile::ReadOnly)) {
+            return;
+        }
+        source = QString::fromUtf8(file.readAll());
+    }
+    if (!addStandaloneTags(parseStandaloneBuildTags(source))) {
+        return;
+    }
+    sendGoplsSettings();
+    if (editor && m_openDocuments.contains(editor)) {
+        m_client->notify("textDocument/didClose",QJsonObject{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}}});
+        m_openDocuments.remove(editor);
+        openDocument(editor);
+    }
 }
 
 void GoplsPlugin::editorCreated(LiteApi::IEditor *editor)
@@ -418,13 +571,17 @@ void GoplsPlugin::openDocument(LiteApi::IEditor *editor)
     if (!textEditor) {
         return;
     }
+    QString text = QString::fromUtf8(textEditor->utf8Data());
+    if (addStandaloneTags(parseStandaloneBuildTags(text))) {
+        sendGoplsSettings();
+    }
     int version = 1;
     m_documentVersions.insert(editor,version);
     QJsonObject textDocument;
     textDocument.insert("uri",documentUri(editor));
     textDocument.insert("languageId","go");
     textDocument.insert("version",version);
-    textDocument.insert("text",QString::fromUtf8(textEditor->utf8Data()));
+    textDocument.insert("text",text);
     m_client->notify("textDocument/didOpen",QJsonObject{{"textDocument",textDocument}});
     m_openDocuments.insert(editor);
 }
@@ -1075,9 +1232,14 @@ void GoplsPlugin::serverRequest(int id, const QString &method, const QJsonValue 
         m_client->reply(id,QJsonObject{{"applied",true}});
     } else if (method == "workspace/configuration") {
         QJsonArray result;
+        QJsonObject settings = goplsSettings();
         foreach (QJsonValue item, params.toObject().value("items").toArray()) {
-            Q_UNUSED(item);
-            result.append(QJsonObject());
+            QString section = item.toObject().value("section").toString();
+            if (section.isEmpty() || section == "gopls") {
+                result.append(settings);
+            } else {
+                result.append(QJsonValue());
+            }
         }
         m_client->reply(id,result);
     } else {
