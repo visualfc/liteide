@@ -61,13 +61,14 @@ private:
     bool isGoEditor(LiteApi::IEditor *editor) const;
     QString documentUri(LiteApi::IEditor *editor) const;
     void openDocument(LiteApi::IEditor *editor);
+    void reloadDocument(LiteApi::IEditor *editor);
     void changeDocument(LiteApi::IEditor *editor);
     void configureCompleter(LiteApi::IEditor *editor, bool enabled);
     QJsonObject goplsSettings() const;
-    QStringList parseStandaloneBuildTags(const QString &source) const;
-    bool addStandaloneTags(const QStringList &tags);
+    QStringList parseCustomBuildTags(const QString &source) const;
+    bool setBuildTags(const QStringList &tags);
+    bool applyEditorBuildTags(LiteApi::IEditor *editor, bool send);
     void resetStandaloneTags();
-    void collectStandaloneTags(LiteApi::IEditor *editor);
     void sendGoplsSettings();
     void handleMissingPackageMetadata(const QString &uri);
     QString completionKind(int kind) const;
@@ -124,6 +125,7 @@ private:
     QString m_restartReason;
     QSet<QString> m_metadataWarnings;
     QStringList m_standaloneTags;
+    QStringList m_buildTags;
 };
 
 class PluginFactory : public LiteApi::PluginFactoryT<GoplsPlugin>
