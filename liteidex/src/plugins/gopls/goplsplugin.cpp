@@ -232,9 +232,7 @@ void GoplsPlugin::appLoaded()
     }
 
     resetStandaloneTags();
-    foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
-        collectStandaloneTags(editor);
-    }
+    applyEditorBuildTags(m_liteApp->editorManager()->currentEditor(),false);
 
     QString root = workspaceRoot();
     QJsonObject capabilities;
@@ -275,6 +273,7 @@ void GoplsPlugin::clientInitialized()
     if (m_useFeatures) {
         setLegacyCompletionEnabled(false);
     }
+    applyEditorBuildTags(m_liteApp->editorManager()->currentEditor(),true);
     foreach (LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
         editorCreated(editor);
         openDocument(editor);
@@ -353,12 +352,13 @@ void GoplsPlugin::clientLog(const QString &message, bool error)
     bool suppress = !lines.isEmpty();
     foreach (QString line, lines) {
         line = line.trimmed();
-        if (line.startsWith(prefix)) {
+        int index = line.indexOf(prefix);
+        if (index >= 0) {
             if (m_metadataWarnings.contains(line)) {
                 continue;
             }
             m_metadataWarnings.insert(line);
-            handleMissingPackageMetadata(line.mid(prefix.length()).trimmed());
+            handleMissingPackageMetadata(line.mid(index+prefix.length()).trimmed());
             suppress = false;
         } else {
             suppress = false;
@@ -397,41 +397,59 @@ QJsonObject GoplsPlugin::goplsSettings() const
     foreach (QString tag, m_standaloneTags) {
         tags.append(tag);
     }
-    return QJsonObject{{"standaloneTags",tags}};
+    QJsonArray flags;
+    if (!m_buildTags.isEmpty()) {
+        flags.append(QString("-tags=%1").arg(m_buildTags.join(",")));
+    }
+    return QJsonObject{{"standaloneTags",tags},{"buildFlags",flags}};
 }
 
 void GoplsPlugin::resetStandaloneTags()
 {
     m_standaloneTags.clear();
     m_standaloneTags.append("ignore");
+    m_buildTags.clear();
 }
 
-bool GoplsPlugin::addStandaloneTags(const QStringList &tags)
+bool GoplsPlugin::setBuildTags(const QStringList &tags)
 {
-    bool changed = false;
+    QStringList filtered;
     foreach (QString tag, tags) {
-        if (tag.isEmpty() || m_standaloneTags.contains(tag)) {
+        if (tag.isEmpty() || filtered.contains(tag)) {
             continue;
         }
-        m_standaloneTags.append(tag);
-        changed = true;
+        filtered.append(tag);
     }
-    if (changed && m_liteApp) {
-        m_liteApp->appendLog("Gopls",QString("standaloneTags: %1").arg(m_standaloneTags.join(", ")),false);
+    if (filtered == m_buildTags) {
+        return false;
     }
-    return changed;
+    m_buildTags = filtered;
+    if (m_liteApp) {
+        if (m_buildTags.isEmpty()) {
+            m_liteApp->appendLog("Gopls","buildFlags: (cleared)",false);
+        } else {
+            m_liteApp->appendLog("Gopls",QString("buildFlags: -tags=%1").arg(m_buildTags.join(",")),false);
+        }
+    }
+    return true;
 }
 
-void GoplsPlugin::collectStandaloneTags(LiteApi::IEditor *editor)
+bool GoplsPlugin::applyEditorBuildTags(LiteApi::IEditor *editor, bool send)
 {
     if (!isGoEditor(editor)) {
-        return;
+        return false;
     }
     LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
     if (!textEditor) {
-        return;
+        return false;
     }
-    addStandaloneTags(parseStandaloneBuildTags(QString::fromUtf8(textEditor->utf8Data())));
+    if (!setBuildTags(parseCustomBuildTags(QString::fromUtf8(textEditor->utf8Data())))) {
+        return false;
+    }
+    if (send) {
+        sendGoplsSettings();
+    }
+    return true;
 }
 
 void GoplsPlugin::sendGoplsSettings()
@@ -443,7 +461,7 @@ void GoplsPlugin::sendGoplsSettings()
                      QJsonObject{{"settings",QJsonObject{{"gopls",goplsSettings()}}}});
 }
 
-QStringList GoplsPlugin::parseStandaloneBuildTags(const QString &source) const
+QStringList GoplsPlugin::parseCustomBuildTags(const QString &source) const
 {
     static QSet<QString> knownConstraints;
     if (knownConstraints.isEmpty()) {
@@ -481,8 +499,14 @@ QStringList GoplsPlugin::parseStandaloneBuildTags(const QString &source) const
         int pos = 0;
         while ((pos = ident.indexIn(expr, pos)) >= 0) {
             QString tag = ident.cap(0);
+            int start = pos;
             pos += ident.matchedLength();
-            if (tag.startsWith("go1") || knownConstraints.contains(tag) || tags.contains(tag)) {
+            if (start > 0 && expr.at(start-1) == QLatin1Char('!')) {
+                continue;
+            }
+            if (tag == "true" || tag == "false" || tag.startsWith("go1") ||
+                    tag.startsWith("goexperiment") || knownConstraints.contains(tag) ||
+                    tags.contains(tag)) {
                 continue;
             }
             tags.append(tag);
@@ -497,27 +521,22 @@ void GoplsPlugin::handleMissingPackageMetadata(const QString &uri)
     if (fileName.isEmpty()) {
         return;
     }
-    QString source;
     LiteApi::IEditor *editor = m_liteApp->editorManager()->findEditor(fileName,true);
-    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
-    if (textEditor) {
-        source = QString::fromUtf8(textEditor->utf8Data());
-    } else {
-        QFile file(fileName);
-        if (!file.open(QFile::ReadOnly)) {
-            return;
-        }
-        source = QString::fromUtf8(file.readAll());
-    }
-    if (!addStandaloneTags(parseStandaloneBuildTags(source))) {
+    if (!editor || editor != m_liteApp->editorManager()->currentEditor()) {
         return;
     }
-    sendGoplsSettings();
-    if (editor && m_openDocuments.contains(editor)) {
-        m_client->notify("textDocument/didClose",QJsonObject{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}}});
-        m_openDocuments.remove(editor);
-        openDocument(editor);
+    LiteApi::ITextEditor *textEditor = LiteApi::getTextEditor(editor);
+    if (!textEditor) {
+        return;
     }
+    QStringList tags = parseCustomBuildTags(QString::fromUtf8(textEditor->utf8Data()));
+    bool changed = setBuildTags(tags);
+    if (changed) {
+        sendGoplsSettings();
+    } else if (m_buildTags.isEmpty()) {
+        return;
+    }
+    reloadDocument(editor);
 }
 
 void GoplsPlugin::editorCreated(LiteApi::IEditor *editor)
@@ -549,6 +568,9 @@ void GoplsPlugin::currentEditorChanged(LiteApi::IEditor *editor)
         return;
     }
     m_workspaceKey = key;
+    if (m_ready && applyEditorBuildTags(editor,true)) {
+        reloadDocument(editor);
+    }
     if (m_completer) {
         disconnect(m_completer,0,this,0);
         m_completer->setSearchSeparator(true);
@@ -572,9 +594,6 @@ void GoplsPlugin::openDocument(LiteApi::IEditor *editor)
         return;
     }
     QString text = QString::fromUtf8(textEditor->utf8Data());
-    if (addStandaloneTags(parseStandaloneBuildTags(text))) {
-        sendGoplsSettings();
-    }
     int version = 1;
     m_documentVersions.insert(editor,version);
     QJsonObject textDocument;
@@ -584,6 +603,16 @@ void GoplsPlugin::openDocument(LiteApi::IEditor *editor)
     textDocument.insert("text",text);
     m_client->notify("textDocument/didOpen",QJsonObject{{"textDocument",textDocument}});
     m_openDocuments.insert(editor);
+}
+
+void GoplsPlugin::reloadDocument(LiteApi::IEditor *editor)
+{
+    if (!editor || !m_client || !m_client->isRunning() || !m_openDocuments.contains(editor)) {
+        return;
+    }
+    m_client->notify("textDocument/didClose",QJsonObject{{"textDocument",QJsonObject{{"uri",documentUri(editor)}}}});
+    m_openDocuments.remove(editor);
+    openDocument(editor);
 }
 
 void GoplsPlugin::changeDocument(LiteApi::IEditor *editor)
